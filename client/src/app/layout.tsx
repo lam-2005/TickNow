@@ -31,7 +31,7 @@ export default function RootLayout({
         className={`${beVietNamPro.variable} ${oswald.variable} antialiased`}
       >
         <Header />
-        <main>{children}</main>
+        <main className="min-h-screen">{children}</main>
         <Footer />
       </body>
     </html>
