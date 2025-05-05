@@ -21,10 +21,10 @@ const Header = () => {
     <header
       className={`${
         pathname === "/"
-          ? " bg-gradient-to-b from-[rgba(0,0,0,.7)] via-[rgba(0,0,0,.2)] to-[rgba(0,0,0,0)]"
+          ? " bg-gradient-to-b from-[rgba(0,0,0,.7)] via-[rgba(0,0,0,.2)] to-[rgba(0,0,0,0)] "
           : "bg-background-card"
       } 
-      min-w-screen fixed z-999 transition-all duration-500
+      min-w-screen transition-all duration-500 fixed z-999 top-0
     [&.active]:bg-background-card ${activeHeader && "active"}`}
     >
       <div className="py-4 flex-between pl-10 pr-15">
@@ -64,7 +64,7 @@ const Header = () => {
           <form
             action=""
             className="group min-w-[220px] max-w-2xs py-2 flex items-center bg-[rgba(0,0,0,.4)]
-             border-b-[2px] border-[rgba(255,255,255,.5)] backdrop-blur-[1.75px] 
+             border-1 border-[rgba(255,255,255,.5)] backdrop-blur-[1.75px] 
              focus-within:border-white transition-colors duration-500"
           >
             <button type="button" className="px-2 flex-center border-0 ">
