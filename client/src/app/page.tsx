@@ -3,10 +3,11 @@ import React from "react";
 import Button from "./components/Button/Button";
 import Movie from "./components/Movie/Movie";
 import Slideshow from "./components/Slideshow/Slideshow";
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import CustomSlider from "./components/CustomSlider/CustomSlider";
+import Link from "next/link";
+import Offer from "./components/Offer/Offer";
 export default function Home() {
   return (
     <>
@@ -14,22 +15,42 @@ export default function Home() {
       <div className="">
         <section className="bg-background py-10">
           <div className="container flex flex-col ">
-            <h2 className="self-center">Phim Đang Chiếu</h2>
-            <div
-              className="grid gap-x-5 gap-y-10 mt-5 grid-cols-2
-            md:grid-cols-3 sm:grid-cols-2 xl:grid-cols-5 lg:grid-cols-4"
-            >
-              <Movie />
-              <Movie />
-              <Movie />
-              <Movie />
-              <Movie />
-              <Movie />
-              <Movie />
-              <Movie />
-              <Movie />
-              <Movie />
-            </div>
+            <h2 className="self-center mb-5">Phim Đang Chiếu</h2>
+            <CustomSlider xl={4} lg={3} md={2} sm={2}>
+              <div className="px-2">
+                <Movie />
+              </div>
+              <div className="px-2">
+                <Movie />
+              </div>
+              <div className="px-2">
+                <Movie />
+              </div>
+              <div className="px-2">
+                <Movie />
+              </div>
+              <div className="px-2">
+                <Movie />
+              </div>
+              <div className="px-2">
+                <Movie />
+              </div>
+              <div className="px-2">
+                <Movie />
+              </div>
+              <div className="px-2">
+                <Movie />
+              </div>
+              <div className="px-2">
+                <Movie />
+              </div>
+              <div className="px-2">
+                <Movie />
+              </div>
+              <div className="px-2">
+                <Movie />
+              </div>
+            </CustomSlider>
             <Button
               title="Xem tất cả"
               className="mt-10 self-center bg-transparent border-primary border-2 before:border-primary 
@@ -39,8 +60,8 @@ export default function Home() {
         </section>
         <section className="bg-[url('/background.jpg')] bg-top bg-cover py-10">
           <div className="container flex flex-col">
-            <h2 className="self-center">Phim Sắp Chiếu</h2>
-            <CustomSlider>
+            <h2 className="self-center mb-5">Phim Sắp Chiếu</h2>
+            <CustomSlider xl={4} lg={3} md={2} sm={2}>
               <div className="px-2">
                 <Movie />
               </div>
@@ -84,7 +105,39 @@ export default function Home() {
         </section>
         <article>
           <div className="container flex flex-col py-10">
-            <h2 className="self-start">Khuyến Mãi</h2>
+            <div className="flex justify-between items-center mb-5 px-2">
+              <h2 className="self-start">Khuyến Mãi</h2>
+              <Link
+                href={"#"}
+                className="hover:text-primary transition-colors duration-500"
+              >
+                Xem tất cả
+              </Link>
+            </div>
+            <CustomSlider
+              slidesToScroll={4}
+              slidesToShow={4}
+              xl={3}
+              lg={2}
+              md={2}
+              sm={1}
+            >
+              <div className="px-2">
+                <Offer />
+              </div>
+              <div className="px-2">
+                <Offer />
+              </div>
+              <div className="px-2">
+                <Offer />
+              </div>
+              <div className="px-2">
+                <Offer />
+              </div>
+              <div className="px-2">
+                <Offer />
+              </div>
+            </CustomSlider>
           </div>
         </article>
       </div>

@@ -6,12 +6,20 @@ interface SliderProps {
   slidesToScroll?: number;
   infinite?: boolean;
   children: React.ReactNode;
+  xl?: number;
+  lg?: number;
+  md?: number;
+  sm?: number;
 }
 const CustomSlider = ({
   slidesToShow = 5,
   slidesToScroll = 5,
   infinite = false,
   children,
+  xl,
+  lg,
+  md,
+  sm,
 }: SliderProps) => {
   const settings = {
     infinite,
@@ -26,24 +34,33 @@ const CustomSlider = ({
       {
         breakpoint: 1280,
         settings: {
-          slidesToShow: 4,
-          slidesToScroll: 4,
+          slidesToShow: xl,
+          slidesToScroll: xl,
         },
       },
       {
         breakpoint: 1023,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
+          slidesToShow: lg,
+          slidesToScroll: lg,
           infinite: false,
         },
       },
       {
         breakpoint: 767,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToShow: md,
+          slidesToScroll: md,
           initialSlide: 2,
+          infinite: false,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: sm,
+          slidesToScroll: sm,
+          initialSlide: 1,
           infinite: false,
         },
       },

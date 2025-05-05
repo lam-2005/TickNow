@@ -47,9 +47,9 @@
 }
 @layer components {
   .btn-primary {
-    @apply relative flex py-2 px-5 rounded-[10px] items-center justify-center 
+    @apply relative flex py-2.5 px-5 rounded-full items-center justify-center 
     overflow-hidden bg-primary font-semibold text-white shadow-2xl 
-    transition-all duration-500 hover:before:rounded-xl
+    transition-all duration-500 hover:before:rounded-full
     before:absolute before:inset-0 before:border-0 before:border-white 
     before:duration-200 before:ease-linear hover:bg-white
     hover:text-primary hover:shadow-primary hover:before:border-[25px];
@@ -75,6 +75,12 @@
   .flex-column {
     display: flex;
     flex-direction: column;
+  }
+  .absolute-center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
   }
 
   input[type="search"]::-webkit-search-cancel-button {
