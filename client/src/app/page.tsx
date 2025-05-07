@@ -15,7 +15,15 @@ export default function Home() {
       <div className="">
         <section className="bg-background py-10">
           <div className="container flex flex-col ">
-            <h2 className="self-center mb-5">Phim Đang Chiếu</h2>
+            <div className="flex justify-between items-center mb-5 px-2">
+              <h2 className="self-start">Phim Đang Chiếu</h2>
+              <Link
+                href={"#"}
+                className="hover:text-primary transition-colors duration-500"
+              >
+                Xem tất cả
+              </Link>
+            </div>
             <CustomSlider xl={4} lg={3} md={2} sm={2}>
               <div className="px-2">
                 <Movie />
@@ -51,11 +59,6 @@ export default function Home() {
                 <Movie />
               </div>
             </CustomSlider>
-            <Button
-              title="Xem tất cả"
-              className="mt-10 self-center bg-transparent border-primary border-2 before:border-primary 
-              text-primary  hover:text-white hover:shadow-primary hover:bg-primary"
-            />
           </div>
         </section>
         <section className="bg-[url('/background.jpg')] bg-top bg-cover py-10">

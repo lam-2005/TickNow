@@ -12,10 +12,10 @@ const Offer = () => {
         />
       </div>
       <div className="px-2 mt-2 group-hover:text-primary">
-        <time className="line-clamp-2 text-sm text-subtitle mb-1">
+        <time className="line-clamp-2 text-[clamp(0.75rem,2vw,0.875rem)] text-subtitle mb-1">
           01/01/2025
         </time>
-        <h3 className="font-text font-bold text-lg uppercase line-clamp-2">
+        <h3 className="font-text font-bold capitalize line-clamp-2">
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo fugiat
           sapiente sed, perferendis repellendus quasi nisi blanditiis nam
           veritatis! Accusantium ab enim voluptatem assumenda, ea rem. Incidunt
