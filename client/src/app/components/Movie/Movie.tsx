@@ -21,7 +21,7 @@ const Movie = () => {
         </div>
         <div className="flex absolute -bottom-5 w-full justify-evenly z-10">
           <button
-            className="group/button text-white bg-primary rounded-full w-10 h-10 flex-center
+            className="group/button text-white bg-primary rounded-full sm:size-11.25 max-sm:size-9 flex-center
       hover:bg-white transition-colors duration-500"
           >
             <span className="text-[1rem] group-hover/button:text-primary block transition-colors duration-500">
@@ -29,7 +29,7 @@ const Movie = () => {
             </span>
           </button>
           <button
-            className="group/button text-white bg-primary rounded-full w-10 h-10 flex-center
+            className="group/button text-white bg-primary rounded-full sm:size-11.25 max-sm:size-9 flex-center
       hover:bg-white transition-colors duration-500"
           >
             <span className="group-hover/button:text-primary block transition-colors duration-500 text-2xl">
