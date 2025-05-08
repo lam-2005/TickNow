@@ -6,9 +6,12 @@ import React, { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { linkNavbar, LinkNavbarType } from "../../links";
 import { GiHamburgerMenu } from "react-icons/gi";
+import MenuDropDown from "./MenuDropDown";
+import { IoMdClose } from "react-icons/io";
 const Header = () => {
   const pathname = usePathname();
-  const [activeHeader, setActiveHeader] = useState(false);
+  const [activeHeader, setActiveHeader] = useState<boolean>(false);
+  const [openMenuDropDown, setOpenMenuDropDown] = useState<boolean>(false);
   useEffect(() => {
     const handleChangeHeader = () => {
       setActiveHeader(window.scrollY > 50);
@@ -23,12 +26,19 @@ const Header = () => {
       className={`${
         pathname === "/"
           ? " bg-gradient-to-b from-[rgba(0,0,0,.7)] via-[rgba(0,0,0,.2)] to-[rgba(0,0,0,0)] "
-          : "bg-background-card"
+          : "bg-background-card "
       } 
-      min-w-screen transition-all duration-500 fixed z-999 top-0
-    [&.active]:bg-background-card ${activeHeader && "active"}`}
+      w-full transition-colors duration-300 fixed z-999 top-0 max-[480px]:sticky max-[480px]:bg-background-card max-[480px]:border-b-2 border-primary [&.active]:border-b-2
+    [&.active]:bg-background-card  ${activeHeader && "active"}`}
     >
-      <div className="py-4 flex-between container">
+      <MenuDropDown openMenuDropDown={openMenuDropDown} />
+      {openMenuDropDown && (
+        <div
+          className="w-screen h-screen absolute z-1000 top-0 left-0 backdrop-blur-[5px] brightness-50 lg:hidden"
+          onClick={() => setOpenMenuDropDown(false)}
+        ></div>
+      )}
+      <div className="py-4 max-[480px]:py-2 flex-between container gap-2.5">
         <Link href={"/"} className="logo-size aspect-[5/1] relative">
           <Image
             src="/logo/logo.png"
@@ -61,16 +71,11 @@ const Header = () => {
           </ul>
         </nav>
         <div className="flex gap-5 items-center">
-          <button type="button" className="flex-center border-0 ">
-            <span className="font-bold text-[clamp(1.125rem,3vw,1.5rem)] lg:hidden">
-              <FiSearch />
-            </span>
-          </button>
           <form
             action=""
-            className="group min-w-[220px] max-w-2xs py-2 flex items-center bg-[rgba(0,0,0,.4)]
-             border-1 border-[rgba(255,255,255,.5)] backdrop-blur-[1.75px] max-lg:hidden 
-             focus-within:border-white transition-colors duration-500"
+            className="group w-full max-w-2xs py-2 flex items-center bg-[rgba(0,0,0,.4)]
+             border-1 border-[rgba(255,255,255,.5)] backdrop-blur-[1.75px]  
+             focus-within:border-white transition-colors duration-500 "
           >
             <button type="button" className="px-2 flex-center border-0 ">
               <span className="font-bold">
@@ -89,13 +94,31 @@ const Header = () => {
             href={"#"}
             className="flex-col items-center gap-[3px] hover:text-primary transition-colors duration-500 max-lg:hidden"
           >
-            <span className="block font-semibold">Đăng nhập</span>
+            <span className="block font-semibold text-nowrap">Đăng nhập</span>
           </Link>
-          <button className="lg:hidden">
-            <span className="text-[clamp(1.125rem,3vw,1.5rem)]">
-              <GiHamburgerMenu />
-            </span>
-          </button>
+          {openMenuDropDown ? (
+            <button
+              className="lg:hidden relative z-1001"
+              onClick={() => {
+                setOpenMenuDropDown(false);
+              }}
+            >
+              <span className="text-2xl">
+                <IoMdClose />
+              </span>
+            </button>
+          ) : (
+            <button
+              className="lg:hidden"
+              onClick={() => {
+                setOpenMenuDropDown(true);
+              }}
+            >
+              <span className="text-icon">
+                <GiHamburgerMenu />
+              </span>
+            </button>
+          )}
         </div>
       </div>
     </header>

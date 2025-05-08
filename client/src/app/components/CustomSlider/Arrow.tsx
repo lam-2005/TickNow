@@ -8,8 +8,8 @@ export function SampleNextArrow(props: ArrowType) {
   const { onClick, className } = props;
   return (
     <button
-      className={`w-11.25 h-11.25 lg:bg-[rgba(255,255,255,.3)] bg-white
-      text-lg rounded-[50%] absolute top-1/2 right-0 z-10 -translate-y-[70px] translate-x-[20px]
+      className={`sm:size-11.25 max-sm:size-9 lg:bg-[rgba(255,255,255,.3)] bg-white
+      text-lg rounded-[50%] absolute top-1/2 right-0 z-10 -translate-y-[70px] sm:translate-x-[20px] max-sm:translate-x-[15px]
       flex-center text-black hover:bg-white 
       ${
         className?.includes("slick-disabled")
@@ -29,10 +29,10 @@ export function SampleNextArrow(props: ArrowType) {
 export function SamplePrevArrow(props: ArrowType) {
   const { onClick, className } = props;
   return (
-    <div
-      className={`w-11.25 h-11.25 lg:bg-[rgba(255,255,255,.3)] bg-white text-lg rounded-[50%] 
+    <button
+      className={`sm:size-11.25 max-sm:size-9 lg:bg-[rgba(255,255,255,.3)] bg-white text-lg rounded-[50%] 
       flex-center text-black hover:bg-white absolute top-1/2 left-0 z-10
-      -translate-y-[70px] -translate-x-[20px]
+      -translate-y-[70px] sm:-translate-x-[20px] max-sm:-translate-x-[10px]
             ${
               className?.includes("slick-disabled")
                 ? "opacity-0 pointer-events-none"
@@ -44,6 +44,6 @@ export function SamplePrevArrow(props: ArrowType) {
       <span>
         <FaChevronLeft />
       </span>
-    </div>
+    </button>
   );
 }

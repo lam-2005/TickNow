@@ -14,6 +14,24 @@
   --color-subtitle: #b0b0b0;
   --font-text: var(--font-be-vietnam-pro-sans);
   --font-heading: var(--font-oswald-sans);
+  --animate-move: move 500ms forwards;
+  --animate-move-out: move-out 500ms forwards;
+  @keyframes move {
+    0% {
+      left: -270px;
+    }
+    100% {
+      left: 0;
+    }
+  }
+  @keyframes move-out {
+    0% {
+      left: 0px;
+    }
+    100% {
+      left: -270px;
+    }
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -26,7 +44,7 @@
 @layer base {
   html,
   body {
-    @apply max-w-screen overflow-x-hidden;
+    @apply max-w-screen overflow-x-hidden scroll-smooth;
   }
   body {
     @apply bg-background text-foreground font-text;
@@ -69,12 +87,24 @@
   .container {
     @apply h-fit mx-auto px-5;
   }
-  @layer utilities {
-    .logo-size {
-      width: clamp(85px, 20vw, 150px);
+  .slick-dots {
+    @apply flex! gap-7.5 justify-center bottom-0! -translate-y-[30px] absolute! z-10 max-lg:hidden!;
+    li {
+      @apply w-fit! h-fit! m-0! [&.slick-active_div]:scale-115! [&.slick-active_div]:shadow-[0_0_10px_3px]
+      [&.slick-active_div_img]:brightness-60!
+      [&.slick-active_div_p]:text-white!
+      [&.slick-active_div_p]:bottom-1/2!
+      [&.slick-active_div_p]:translate-y-1/2
+      [&.slick-active_div]:border-b-4 [&.slick-active_div]:border-b-primary;
     }
   }
-  .font-icon {
+}
+@layer utilities {
+  .logo-size {
+    width: clamp(85px, 20vw, 150px);
+  }
+
+  .text-icon {
     font-size: clamp(1.125rem, 3vw, 1.5rem);
   }
   .flex-center {
