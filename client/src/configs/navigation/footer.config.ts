@@ -1,26 +1,5 @@
-// header
-export interface LinkNavbarType {
-  id: number;
-  url: string;
-  name: string;
-}
-const linkNavbar: LinkNavbarType[] = [
-  { id: 1, url: "/", name: "Trang chủ" },
-  { id: 2, url: "/movies", name: "Phim chiếu" },
-  { id: 3, url: "/movie-schedule", name: "Lịch chiếu" },
-  { id: 4, url: "/cinema", name: "Rạp chiếu" },
-];
+import { FooterLinkType } from "@/interfaces/navigation.interface";
 
-// footer
-export interface FooterLinkType {
-  id: number;
-  title: string;
-  children: childrenFooterLinkType[];
-}
-export interface childrenFooterLinkType {
-  url: string;
-  name: string;
-}
 const footerLink: FooterLinkType[] = [
   {
     id: 1,
@@ -84,4 +63,4 @@ const footerLink: FooterLinkType[] = [
   },
 ];
 
-export { linkNavbar, footerLink };
+export { footerLink };

@@ -3,7 +3,7 @@ import Image from "next/image";
 import Button from "../Button/Button";
 import { FaPlay } from "react-icons/fa6";
 import { TiInfoLarge } from "react-icons/ti";
-const Movie = () => {
+const Movie = ({ name, image }: { name: string; image: string }) => {
   return (
     <div className="group w-full flex-column items-center gap-2.5">
       <div
@@ -13,8 +13,9 @@ const Movie = () => {
         <div className="w-full h-full relative rounded-xl overflow-hidden">
           <Image
             fill
-            src={"/movies/phim.webp"}
+            src={`/movies/${image}`}
             alt="Phim"
+            sizes="300px"
             className="object-cover 
         group-hover:scale-110 transition-transform duration-300"
           />
@@ -42,7 +43,7 @@ const Movie = () => {
         className="font-semibold line-clamp-1 px-2.5 
     group-hover:text-primary transition-colors duration-500 mt-2.5"
       >
-        Phim
+        {name}
       </h3>
       <Button title="Đặt vé ngay" />
     </div>

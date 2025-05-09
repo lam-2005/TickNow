@@ -1,4 +1,4 @@
-import { childrenFooterLinkType } from "@/app/links";
+import { childrenFooterLinkType } from "@/interfaces/navigation.interface";
 
 function FooterNav({
   title,

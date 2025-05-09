@@ -3,8 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { linkNavbar } from "@/configs/navigation/header.config";
+import { LinkNavbarType } from "@/interfaces/navigation.interface";
 import { FiSearch } from "react-icons/fi";
-import { linkNavbar, LinkNavbarType } from "../../links";
 import { GiHamburgerMenu } from "react-icons/gi";
 import MenuDropDown from "./MenuDropDown";
 import { IoMdClose } from "react-icons/io";
@@ -25,10 +26,10 @@ const Header = () => {
     <header
       className={`${
         pathname === "/"
-          ? " bg-gradient-to-b from-[rgba(0,0,0,.7)] via-[rgba(0,0,0,.2)] to-[rgba(0,0,0,0)] "
-          : "bg-background-card "
+          ? " bg-gradient-to-b from-[rgba(0,0,0,.7)] via-[rgba(0,0,0,.2)] to-[rgba(0,0,0,0)] border-b-0"
+          : "bg-background-card border-b-2"
       } 
-      w-full transition-colors duration-300 fixed z-999 top-0 max-[480px]:sticky max-[480px]:bg-background-card max-[480px]:border-b-2 border-primary [&.active]:border-b-2
+      w-full transition-colors duration-300 fixed z-999 top-0 max-[480px]:sticky max-[480px]:bg-background-card max-[480px]:border-b-2 border-primary [&.active]:border-b-2 
     [&.active]:bg-background-card  ${activeHeader && "active"}`}
     >
       <MenuDropDown openMenuDropDown={openMenuDropDown} />
@@ -45,6 +46,8 @@ const Header = () => {
             alt="logo-ticknow"
             fill
             className="object-cover"
+            sizes="(max-width: 768px) 85px, 20vw"
+            priority
           />
         </Link>
         <nav className="max-lg:hidden">
@@ -60,7 +63,7 @@ const Header = () => {
                 >
                   <span
                     className="absolute w-full h-0.5 bottom-0 left-0 bg-primary scale-0 
-                group-hover:scale-100 transition-transform duration-500 
+                group-hover:scale-100 transition-transform duration-600 origin-left
                 group-[.active]:scale-100 "
                     aria-hidden="true"
                   ></span>

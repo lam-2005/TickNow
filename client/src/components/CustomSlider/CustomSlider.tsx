@@ -1,21 +1,8 @@
 import React from "react";
 import Slider from "react-slick";
-import { SampleNextArrow, SamplePrevArrow } from "./Arrow";
+import { SampleArrow } from "./Arrow";
+import SliderProps from "@/interfaces/slider.interface";
 
-interface SliderProps {
-  slidesToShow?: number;
-  slidesToScroll?: number;
-  infinite?: boolean;
-  dots?: boolean;
-  customPaging?: (i?: number) => React.ReactElement;
-  appendDots?: (dots: React.ReactNode) => React.ReactElement;
-
-  children: React.ReactNode;
-  xl?: number;
-  lg?: number;
-  md?: number;
-  sm?: number;
-}
 const CustomSlider = ({
   slidesToShow = 5,
   slidesToScroll = 5,
@@ -37,8 +24,22 @@ const CustomSlider = ({
     dots,
     slidesToScroll,
     initialSlide: 0,
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
+    nextArrow: (
+      <SampleArrow
+        type={0}
+        styleBtn="sm:size-11.25 max-sm:size-9 lg:bg-[rgba(255,255,255,.3)] bg-white
+      text-lg rounded-[50%] absolute top-1/2 right-0 z-10 -translate-y-[70px] sm:translate-x-[20px] max-sm:translate-x-[15px]
+      flex-center text-black hover:bg-white "
+      />
+    ),
+    prevArrow: (
+      <SampleArrow
+        type={1}
+        styleBtn="sm:size-11.25 max-sm:size-9 lg:bg-[rgba(255,255,255,.3)] bg-white text-lg rounded-[50%] 
+      flex-center text-black hover:bg-white absolute top-1/2 left-0 z-10
+      -translate-y-[70px] sm:-translate-x-[20px] max-sm:-translate-x-[10px]"
+      />
+    ),
     appendDots,
     customPaging,
     responsive: [

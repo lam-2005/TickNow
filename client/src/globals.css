@@ -3,12 +3,14 @@
 :root {
   --background-card: #070707;
   --background: #1a1a1a;
+  --background-loading: #2a2a2a;
   --foreground: #fff;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-background-card: var(--background-card);
+  --color-loading: var(--background-loading);
   --color-foreground: var(--foreground);
   --color-primary: #ff3131;
   --color-subtitle: #b0b0b0;
@@ -76,10 +78,10 @@
   .btn-primary {
     @apply relative flex py-2.5 px-5 rounded-[6px] items-center justify-center 
     overflow-hidden bg-primary font-semibold text-white shadow-2xl 
-    transition-all duration-500 hover:before:rounded-[6px]
+    transition-all! duration-500 ease-linear hover:before:rounded-[6px]
     before:absolute before:inset-0 before:border-0 before:border-white 
-    before:duration-200 before:ease-linear hover:bg-white
-    hover:text-primary hover:shadow-primary hover:before:border-[25px] max-lg:py-1.25 max-lg:px-3;
+    before:duration-200 before:ease-linear hover:bg-white max-lg:py-1.25
+    hover:text-primary hover:shadow-primary hover:before:border-[25px] max-lg:px-3;
     span {
       @apply relative z-10;
     }
@@ -87,15 +89,16 @@
   .container {
     @apply h-fit mx-auto px-5;
   }
+
   .slick-dots {
-    @apply flex! gap-7.5 justify-center bottom-0! -translate-y-[30px] absolute! z-10 max-lg:hidden!;
+    @apply flex! gap-7.5 max-lg:gap-4 justify-center bottom-0! pb-7.5! pt-10! max-lg:py-5!  absolute! z-10;
     li {
-      @apply w-fit! h-fit! m-0! [&.slick-active_div]:scale-115! [&.slick-active_div]:shadow-[0_0_10px_3px]
-      [&.slick-active_div_img]:brightness-60!
+      @apply w-fit! h-fit! m-0! lg:[&.slick-active_div]:scale-115! lg:[&.slick-active_div]:shadow-[0_0_10px_3px] max-lg:[&.slick-active_div]:scale-115! max-lg:brightness-50
+      [&.slick-active_div_img]:brightness-60! max-lg:[&.slick-active]:brightness-100
       [&.slick-active_div_p]:text-white!
       [&.slick-active_div_p]:bottom-1/2!
       [&.slick-active_div_p]:translate-y-1/2
-      [&.slick-active_div]:border-b-4 [&.slick-active_div]:border-b-primary;
+      lg:[&.slick-active_div]:border-b-4 lg:[&.slick-active_div]:border-b-primary;
     }
   }
 }

@@ -1,11 +1,9 @@
 import React from "react";
 import Button from "../Button/Button";
-import { linkNavbar, LinkNavbarType } from "@/app/links";
-interface MenuDropDownProps {
-  openMenuDropDown: boolean;
-}
+import { LinkNavbarType } from "@/interfaces/navigation.interface";
+import { linkNavbar } from "@/configs/navigation/header.config";
 
-const MenuDropDown = ({ openMenuDropDown }: MenuDropDownProps) => {
+const MenuDropDown = ({ openMenuDropDown }: { openMenuDropDown: boolean }) => {
   return (
     <div
       className={`fixed z-1001  w-[250px] h-screen bg-background backdrop-blur-[5px] transition-all duration-500 -left-[270px] p-5 lg:hidden
