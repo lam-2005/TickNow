@@ -1,8 +1,9 @@
-import { footerLink, FooterLinkType } from "@/app/links";
 import Image from "next/image";
 import React from "react";
 import { FaFacebook, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 import FooterNav from "./FooterNav";
+import { footerLink } from "@/configs/navigation/footer.config";
+import { FooterLinkType } from "@/interfaces/navigation.interface";
 
 const Footer = () => {
   return (
@@ -16,6 +17,8 @@ const Footer = () => {
                 alt="logo-ticknow"
                 fill
                 className="object-cover"
+                sizes="(max-width: 768px) 85px, 20vw"
+                priority
               />
             </div>
             <p className="font-semibold">Đặt vé dễ dàng, tận hưởng trọn vẹn</p>
