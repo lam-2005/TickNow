@@ -4,9 +4,8 @@ const SkeletonLoading = () => (
   <div className="w-full group animate-pulse">
     <div className="relative w-full aspect-[7/4] rounded-2xl overflow-hidden bg-loading"></div>
     <div className="px-2 mt-2 flex-column gap-[5px]">
-      <div className="bg-loading w-[40%] h-5  rounded-full"></div>
-      <div className="w-full aspect-[10/1] bg-loading rounded-full"></div>
-      <div className="w-full aspect-[10/1] bg-loading rounded-full"></div>
+      <div className="bg-loading w-[40%] aspect-[10/1] h-4"></div>
+      <h3 className="text-transparent bg-loading w-full aspect-[10/1] h-4"></h3>
     </div>
   </div>
 );

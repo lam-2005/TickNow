@@ -37,7 +37,7 @@ export default function Home() {
     <>
       <Slideshow />
       <div className="">
-        <section className="bg-background py-10">
+        <section className="bg-background py-10 ">
           <div className="container flex flex-col ">
             <div className="flex justify-between items-center mb-5 px-2">
               <h2 className="self-start uppercase" data-aos="fade-right">
@@ -64,8 +64,7 @@ export default function Home() {
               title="Xem tất cả"
               dataAos="fade-up"
               dataAosDelay={0}
-              className="mt-10 self-center bg-primary border-primary border-0 before:border-white 
-              text-white  hover:text-primary hover:shadow-white hover:bg-white"
+              className="self-center mt-10"
             />
           </div>
         </section>

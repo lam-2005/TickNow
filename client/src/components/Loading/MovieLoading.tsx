@@ -3,8 +3,7 @@ import CustomSlider from "../CustomSlider/CustomSlider";
 const SkeletonLoading = () => (
   <div className="group w-full flex-column items-center gap-2.5 animate-pulse">
     <div className="w-full aspect-[2/3] relative z-9 bg-loading rounded-xl "></div>
-    <h3 className="text-transparent bg-loading w-full rounded-full aspect-[10/1]"></h3>
-    <div className="w-[70%] bg-loading aspect-[88/26] rounded-full"></div>
+    <h3 className="text-transparent bg-loading w-full  aspect-[10/1] h-4"></h3>
   </div>
 );
 
