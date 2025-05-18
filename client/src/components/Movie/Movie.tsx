@@ -17,10 +17,10 @@ const Movie = ({ name, image }: { name: string; image: string }) => {
             alt="Phim"
             sizes="300px"
             className="object-cover 
-        group-hover:scale-110 transition-transform duration-300"
+        group-hover:scale-110 transition-transform duration-300 "
           />
         </div>
-        <div className="flex absolute -bottom-5 w-full justify-evenly z-10">
+        <div className=" flex absolute -bottom-5 w-full justify-evenly z-10">
           <button
             className="group/button text-white bg-primary rounded-full sm:size-11.25 max-sm:size-9 flex-center
       hover:bg-white transition-colors duration-500"
@@ -41,7 +41,7 @@ const Movie = ({ name, image }: { name: string; image: string }) => {
       </div>
       <h3
         className="font-semibold line-clamp-1 px-2.5 
-    group-hover:text-primary transition-colors duration-500 mt-2.5"
+    group-hover:text-primary transition-colors duration-500 mt-4"
       >
         {name}
       </h3>

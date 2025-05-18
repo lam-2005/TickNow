@@ -9,10 +9,13 @@ import { FiSearch } from "react-icons/fi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import MenuDropDown from "./MenuDropDown";
 import { IoMdClose } from "react-icons/io";
+import UserFormContainer from "../UserFormContainer/UserFormContainer";
 const Header = () => {
   const pathname = usePathname();
   const [activeHeader, setActiveHeader] = useState<boolean>(false);
   const [openMenuDropDown, setOpenMenuDropDown] = useState<boolean>(false);
+  const [openUserFormContainer, setOpenUserFormContainer] =
+    useState<boolean>(false);
   useEffect(() => {
     const handleChangeHeader = () => {
       setActiveHeader(window.scrollY > 50);
@@ -32,6 +35,11 @@ const Header = () => {
       w-full transition-colors duration-300 fixed z-999 top-0 max-[480px]:sticky max-[480px]:bg-background-card max-[480px]:border-b-2 border-primary [&.active]:border-b-2 
     [&.active]:bg-background-card  ${activeHeader && "active"}`}
     >
+      {openUserFormContainer && (
+        <UserFormContainer
+          setOpenUserFormContainer={() => setOpenUserFormContainer(false)}
+        />
+      )}
       <MenuDropDown openMenuDropDown={openMenuDropDown} />
       {openMenuDropDown && (
         <div
@@ -95,6 +103,7 @@ const Header = () => {
 
           <Link
             href={"#"}
+            onClick={() => setOpenUserFormContainer(true)}
             className="flex-col items-center gap-[3px] hover:text-primary transition-colors duration-500 max-lg:hidden"
           >
             <span className="block font-semibold text-nowrap">Đăng nhập</span>

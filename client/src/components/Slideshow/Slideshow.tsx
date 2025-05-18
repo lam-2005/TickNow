@@ -176,13 +176,13 @@ const Slideshow = () => {
                   <div className="flex gap-5">
                     <Button
                       dataAos="fade-up"
-                      dataAosDelay={300}
+                      dataAosDelay={100}
                       title="Đặt vé ngay"
-                      className="text-xl font-semibold lg:w-[200px]"
+                      className="text-xl font-semibold lg:w-[200px] relative"
                     />
                     <Button
                       dataAos="fade-up"
-                      dataAosDelay={400}
+                      dataAosDelay={100}
                       title="Xem trailer"
                       className="text-xl  bg-transparent border-1 border-white lg:hidden"
                     />

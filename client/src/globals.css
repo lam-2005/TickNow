@@ -68,7 +68,7 @@
   p,
   span,
   a {
-    @apply text-[clamp(0.675rem,2vw,1rem)];
+    @apply text-[clamp(0.875rem,2vw,1rem)];
   }
   button {
     cursor: pointer;
@@ -76,12 +76,11 @@
 }
 @layer components {
   .btn-primary {
-    @apply relative flex py-2.5 px-5 rounded-[6px] items-center justify-center 
-    overflow-hidden bg-primary font-semibold text-white shadow-2xl 
-    transition-all! duration-500 ease-linear hover:before:rounded-[6px]
-    before:absolute before:inset-0 before:border-0 before:border-white 
-    before:duration-200 before:ease-linear hover:bg-white max-lg:py-1.25
-    hover:text-primary hover:shadow-primary hover:before:border-[25px] max-lg:px-3;
+    @apply relative flex py-2.5 px-5 rounded-[100px] items-center justify-center 
+    overflow-hidden bg-primary font-semibold text-white transition-all duration-500
+     before:absolute before:size-full before:bg-amber-50 before:rounded-full before:scale-0 hover:before:scale-100 before:transition-all hover:text-primary before:duration-500 before:inset-0 disabled:cursor-not-allowed
+     disabled:brightness-50 disabled:hover:before:scale-0 disabled:hover:text-white;
+
     span {
       @apply relative z-10;
     }
@@ -135,5 +134,8 @@
     filter: invert(24%) sepia(96%) saturate(7493%) hue-rotate(358deg)
       brightness(93%) contrast(119%);
     cursor: pointer;
+  }
+  .no-scrollbar {
+    @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
   }
 }
