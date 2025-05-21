@@ -29,7 +29,7 @@ const CustomSlider = ({
         type={0}
         styleBtn="sm:size-11.25 max-sm:size-9 lg:bg-[rgba(255,255,255,.3)] bg-white
       text-lg rounded-[50%] absolute top-1/2 right-0 z-10 -translate-y-[70px] sm:translate-x-[20px] max-sm:translate-x-[15px]
-      flex-center text-black hover:bg-white "
+      flex-center text-black hover:bg-white shadow-lg shadow-black/20"
       />
     ),
     prevArrow: (
@@ -37,7 +37,7 @@ const CustomSlider = ({
         type={1}
         styleBtn="sm:size-11.25 max-sm:size-9 lg:bg-[rgba(255,255,255,.3)] bg-white text-lg rounded-[50%] 
       flex-center text-black hover:bg-white absolute top-1/2 left-0 z-10
-      -translate-y-[70px] sm:-translate-x-[20px] max-sm:-translate-x-[10px]"
+      -translate-y-[70px] sm:-translate-x-[20px] max-sm:-translate-x-[10px] shadow-lg shadow-black/20"
       />
     ),
     appendDots,

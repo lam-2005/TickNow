@@ -24,8 +24,6 @@ const useTouched = () => {
   const touchedConfirmPassword = () =>
     setTouched({ ...touched, confirmPassword: true });
   const touchedPhone = () => setTouched({ ...touched, phone: true });
-  console.log(123);
-
   return {
     touched,
     touchedEmail,

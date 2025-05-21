@@ -6,12 +6,14 @@ const Button = ({
   dataAosDelay,
   dataAos,
   disabled,
+  type,
 }: {
   title: string;
   className?: string;
   dataAosDelay?: number;
   dataAos?: string;
   disabled?: boolean;
+  type?: "submit" | "button" | "reset";
 }) => {
   return (
     <button
@@ -19,6 +21,7 @@ const Button = ({
       data-aos-delay={dataAosDelay}
       data-aos={dataAos}
       disabled={disabled}
+      type={type}
     >
       <span>{title}</span>
     </button>

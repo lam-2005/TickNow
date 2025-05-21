@@ -1,4 +1,4 @@
-export type SignupFields = {
+export type FieldsType = {
   email?: string;
   fullName?: string;
   dateOfBirth?: string;
@@ -7,15 +7,15 @@ export type SignupFields = {
   confirmPassword?: string;
 };
 
-type SignupErrors = {
+type ErrorsType = {
   [key: string]: string;
 };
 
 export const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const phoneRegex = /^0\d{9}$/;
 
-const validateSignup = (values: SignupFields): SignupErrors => {
-  const errors: SignupErrors = {};
+const validateForm = (values: FieldsType): ErrorsType => {
+  const errors: ErrorsType = {};
 
   if (!values.email || values.email.trim() === "") {
     errors.email = "Email là bắt buộc";
@@ -52,4 +52,4 @@ const validateSignup = (values: SignupFields): SignupErrors => {
   return errors;
 };
 
-export default validateSignup;
+export default validateForm;

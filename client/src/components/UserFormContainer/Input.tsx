@@ -21,9 +21,9 @@ const Input = (props: InputType) => {
           value={props.value}
           onChange={props.onChange}
           onBlur={props.onBlur}
-          className={`peer/input w-full h-full outline-0 p-3 text-white border-1 border-gray-500 backdrop-blur-[1.75px] focus:border-white transition-colors duration-500 rounded-md ${
+          className={`peer/input w-full h-full outline-0 p-3 text-foreground border-1 border-gray-500 backdrop-blur-[1.75px] focus:border-foreground transition-colors duration-500 rounded-md ${
             props.type === "date"
-              ? "bg-transparent appearance-none [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:cursor-pointer "
+              ? "dark:bg-transparent dark:appearance-none dark:[&::-webkit-calendar-picker-indicator]:invert dark:[&::-webkit-calendar-picker-indicator]:cursor-pointer "
               : ""
           }
           [&[type='date']]:p-2.5
@@ -32,15 +32,15 @@ const Input = (props: InputType) => {
           `}
         />
         <label
-          className={`absolute left-0 p-1.5 pointer-events-none text-subtitle ml-1.5 transition-all duration-500 
-         bg-background 
+          className={`absolute left-0 p-1.5 pointer-events-none text-foreground ml-1.5 transition-all duration-500 
+         bg-background-card dark:text-subtitle
          peer-focus/input:scale-80 peer-focus/input:-translate-y-5 
-         peer-focus/input:text-white
+         peer-focus/input:text-foreground
          peer-focus/input:peer-required/input:after:content-['_*'] 
          after:text-red-500
          ${
            props.value
-             ? "-translate-y-5 scale-80 text-white peer-required/input:after:content-['_*'] "
+             ? "-translate-y-5 scale-80 text-foreground peer-required/input:after:content-['_*'] "
              : "translate-y-1"
          }
          `}
