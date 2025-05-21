@@ -3,8 +3,8 @@ import Button from "../Button/Button";
 import Input from "./Input";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import React, { useState } from "react";
-import { validateLogin } from "@/utils/validation/login.validate";
 import useTouched from "@/hooks/useTouched";
+import validateForm from "@/utils/validate";
 const LoginForm = ({
   setOpenForm,
   setOpenReset,
@@ -13,10 +13,10 @@ const LoginForm = ({
   setOpenReset: () => void;
 }) => {
   const { touched, touchedEmail, touchedPassword } = useTouched();
-  const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const errors = validateLogin({ email, password });
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const errors = validateForm({ email, password });
   return (
     <>
       <h2 className="text-2xl font-semibold">Đăng nhập vào TichNow</h2>
@@ -63,19 +63,19 @@ const LoginForm = ({
           disabled={errors.email || errors.password ? true : false}
         />
       </form>
-      <div className="text-subtitle text-center space-y-1 mt-5 ">
+      <div className="text-foreground text-center space-y-1 mt-5 ">
         <p className="text-base">Gặp sự cố khi đăng nhập?</p>
         <div className="flex gap-1 flex-wrap justify-center">
           <span
             onClick={setOpenReset}
-            className="text-primary text-base font-semibold cursor-pointer hover:text-white transition-colors duration-500"
+            className="text-primary text-base font-semibold cursor-pointer hover:text-foreground transition-colors duration-500"
           >
             Khôi phục mật khẩu
           </span>{" "}
           hoặc{" "}
           <span
             onClick={setOpenForm}
-            className="text-primary text-base font-semibold cursor-pointer hover:text-white transition-colors duration-500"
+            className="text-primary text-base font-semibold cursor-pointer hover:text-foreground transition-colors duration-500"
           >
             Đăng ký tài khoản
           </span>

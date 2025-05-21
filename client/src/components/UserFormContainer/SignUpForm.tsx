@@ -2,15 +2,14 @@
 import React, { useState } from "react";
 import Input from "./Input";
 import Button from "../Button/Button";
-import validateSignup, {
-  SignupFields,
-} from "@/utils/validation/signup.validate";
+import validateSignup, { FieldsType } from "@/utils/validate";
 import useTouched from "@/hooks/useTouched";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 
 const SignUpForm = ({ setOpenForm }: { setOpenForm: () => void }) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState<boolean>(false);
   const {
     touched,
     touchedEmail,
@@ -20,7 +19,7 @@ const SignUpForm = ({ setOpenForm }: { setOpenForm: () => void }) => {
     touchedConfirmPassword,
     touchedPhone,
   } = useTouched();
-  const [formData, setFormData] = useState<SignupFields>({
+  const [formData, setFormData] = useState<FieldsType>({
     email: "",
     fullName: "",
     dateOfBirth: "",
@@ -141,7 +140,7 @@ const SignUpForm = ({ setOpenForm }: { setOpenForm: () => void }) => {
           Bạn đã có tài khoản?{" "}
           <span
             onClick={setOpenForm}
-            className="text-primary text-base font-semibold cursor-pointer hover:text-white transition-colors duration-500"
+            className="text-primary text-base font-semibold cursor-pointer hover:text-foreground transition-colors duration-500"
           >
             Đăng nhập
           </span>

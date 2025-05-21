@@ -21,7 +21,8 @@ const MenuDropDown = ({ openMenuDropDown }: { openMenuDropDown: boolean }) => {
             <li key={link.id} className="flex-1 flex">
               <a
                 href={link.url}
-                className={`group text-white font-semibold relative text-base flex-1
+                className={`
+                  group text-foreground font-semibold relative text-base flex-1 
                hover:text-primary py-2 transition-colors duration-500
                `}
               >

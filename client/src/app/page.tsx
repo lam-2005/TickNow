@@ -8,11 +8,9 @@ import CustomSlider from "@/components/CustomSlider/CustomSlider";
 import Link from "next/link";
 import Offer from "@/components/Offer/Offer";
 import { MovieType } from "@/interfaces/movie.interface";
-import axios from "axios";
 import MovieLoading from "@/components/Loading/MovieLoading";
 import MovieContainer from "@/components/Movie/MovieContainer";
 import OfferLoading from "@/components/Loading/OfferLoading";
-console.log(axios.isCancel("something"));
 export default function Home() {
   const [loading, setLoading] = useState<boolean>(true);
   const [data1, setData1] = useState<MovieType[] | []>([]);
@@ -56,10 +54,17 @@ export default function Home() {
         </section>
         <section className="bg-[url('/background.jpg')] bg-top bg-cover py-10">
           <div className="container flex flex-col">
-            <h2 className="self-center mb-5 uppercase" data-aos="fade-up">
+            <h2
+              className="self-center mb-5 uppercase text-white"
+              data-aos="fade-up"
+            >
               Phim Sắp Chiếu
             </h2>
-            {!loading ? <MovieContainer data={data1} /> : <MovieLoading />}
+            {!loading ? (
+              <MovieContainer data={data1} textColor="text-white" />
+            ) : (
+              <MovieLoading />
+            )}
             <Button
               title="Xem tất cả"
               dataAos="fade-up"
