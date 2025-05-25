@@ -5,23 +5,13 @@ import Image from "next/image";
 import Slider from "react-slick";
 import { SampleArrow } from "../CustomSlider/Arrow";
 import { MovieType } from "@/interfaces/movie.interface";
+import { stopVideo } from "@/utils/handleUX";
 
 const Slideshow = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<MovieType[] | []>([]);
   const [fade, setFade] = useState<boolean>(false);
   const [currentSlide, setCurrentSlide] = useState<number>(0);
-  const stopVideo = (index: number) => {
-    const iframe = document.getElementById(
-      `iframe-${index}`
-    ) as HTMLIFrameElement | null;
-    if (iframe && iframe.contentWindow) {
-      iframe.contentWindow.postMessage(
-        '{"event":"command","func":"pauseVideo","args":""}',
-        "*"
-      );
-    }
-  };
 
   useEffect(() => {
     data.forEach((item, index) => {
@@ -58,7 +48,7 @@ const Slideshow = () => {
       const item = data[i];
       return (
         <div
-          className="lg:w-43 xl:w-55 lg:aspect-video relative lg:rounded-[6px] lg:overflow-hidden lg:transition-transform lg:duration-500 lg:shadow-white
+          className="lg:w-43 xl:w-55 lg:aspect-video relative lg:rounded-[6px] lg:overflow-hidden lg:transition-transform lg:duration-500 lg:shadow-white 
         md:w-2.75 max-md:w-2.5 md:aspect-square max-md:aspect-square
           "
           data-aos="zoom-in"
@@ -96,18 +86,18 @@ const Slideshow = () => {
     nextArrow: (
       <SampleArrow
         type={0}
-        styleBtn="absolute top-1/2 right-0 z-800 -translate-x-[10px] [&_span]:text-5xl -translate-y-1/2 [&_span]:max-[730px]:text-3xl [&_span]:max-sm:text-2xl max-[670px]:translate-x-[10px] lg:hidden"
+        styleBtn="absolute top-1/2 right-0 z-800 -translate-x-[10px] [&_span]:text-5xl -translate-y-1/2 [&_span]:max-[730px]:text-3xl [&_span]:max-sm:text-2xl max-[670px]:translate-x-[10px] lg:hidden [&_span]:text-white"
       />
     ),
     prevArrow: (
       <SampleArrow
         type={1}
-        styleBtn="absolute top-1/2 left-0 z-800 translate-x-[10px] [&_span]:text-5xl -translate-y-1/2 [&_span]:max-[730px]:text-3xl [&_span]:max-sm:text-2xl max-[670px]:translate-x-[-5px] lg:hidden"
+        styleBtn="absolute top-1/2 left-0 z-800 translate-x-[10px] [&_span]:text-5xl -translate-y-1/2 [&_span]:max-[730px]:text-3xl [&_span]:max-sm:text-2xl max-[670px]:translate-x-[-5px] lg:hidden [&_span]:text-white"
       />
     ),
   };
   return (
-    <div className=" w-screen max-h-screen aspect-[16/9] relative z-1 ">
+    <div className=" w-screen max-h-screen aspect-[16/9] relative z-1 *:text-white ">
       {!loading ? (
         <Slider {...settings} lazyLoad="ondemand" fade={fade}>
           {data.map((item: MovieType, i: number) => (
@@ -140,7 +130,7 @@ const Slideshow = () => {
                     <span
                       data-aos="fade-up"
                       data-aos-delay={100}
-                      className="bg-primary py-0.5 px-2 rounded-[5px] font-semibold italic"
+                      className="bg-primary py-0.5 px-2 rounded-[5px] font-semibold italic text-white"
                     >
                       {item.age}+
                     </span>
@@ -151,7 +141,11 @@ const Slideshow = () => {
                       aria-hidden="true"
                     ></span>
 
-                    <span data-aos="fade-up" data-aos-delay={300}>
+                    <span
+                      data-aos="fade-up"
+                      data-aos-delay={300}
+                      className="text-white"
+                    >
                       {item.time}min
                     </span>
                     <span
@@ -160,7 +154,11 @@ const Slideshow = () => {
                       className="w-px h-3.5 bg-subtitle block"
                       aria-hidden="true"
                     ></span>
-                    <span data-aos="fade-up" data-aos-delay={400}>
+                    <span
+                      data-aos="fade-up"
+                      className="text-white"
+                      data-aos-delay={400}
+                    >
                       {item.category}
                     </span>
                   </div>
@@ -176,13 +174,13 @@ const Slideshow = () => {
                   <div className="flex gap-5">
                     <Button
                       dataAos="fade-up"
-                      dataAosDelay={300}
+                      dataAosDelay={100}
                       title="Đặt vé ngay"
-                      className="text-xl font-semibold lg:w-[200px]"
+                      className="text-xl font-semibold lg:w-[200px] relative"
                     />
                     <Button
                       dataAos="fade-up"
-                      dataAosDelay={400}
+                      dataAosDelay={100}
                       title="Xem trailer"
                       className="text-xl  bg-transparent border-1 border-white lg:hidden"
                     />

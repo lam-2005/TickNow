@@ -10,7 +10,7 @@ export function SampleArrow(props: ArrowType) {
   const { onClick, className, styleBtn, type } = props;
   return (
     <button
-      className={`${styleBtn}
+      className={`${styleBtn} 
       ${
         className?.includes("slick-disabled")
           ? "opacity-0 pointer-events-none"
@@ -19,7 +19,9 @@ export function SampleArrow(props: ArrowType) {
       `}
       onClick={onClick}
     >
-      <span>{type === 0 ? <FaChevronRight /> : <FaChevronLeft />}</span>
+      <span className="text-black">
+        {type === 0 ? <FaChevronRight /> : <FaChevronLeft />}
+      </span>
     </button>
   );
 }
