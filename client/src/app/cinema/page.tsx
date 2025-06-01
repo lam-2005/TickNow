@@ -12,6 +12,8 @@ const Cinema = () => {
         <Location />
       </div>
     </div>;
+
+
 };
 
 export default Cinema;
