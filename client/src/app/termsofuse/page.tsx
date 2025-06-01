@@ -4,7 +4,7 @@ const termsOfUse
  = () => {
   return (
     <div className="pl-4">
-      <h1 className="flex-center text-white z-11 text-3xl font-bold mt-8 mb-4">ĐIỀU KHOẢN SỬ DỤNG</h1>
+      <h1 className="flex-center text-foreground text-3xl font-bold mt-8 mb-4">ĐIỀU KHOẢN SỬ DỤNG</h1>
       <p>Chào mừng và cảm ơn Quý Khách Hàng đã đến với website: ticknow.vn <br />
       Website này thuộc quyền sở hữu và được quản lý bởi nhóm TickNow – sinh viên năm cuối Trường Cao đẳng FPT Polytechnic Hồ Chí Minh, địa chỉ tại Công viên Phần mềm Quang Trung, Quận 12, TP. Hồ Chí Minh. <br />
       Website được sử dụng cho các hoạt động đặt vé xem phim và cung cấp thông tin liên quan đến hệ thống rạp chiếu phim Cinestar Cinemas, bao gồm các chi nhánh phụ thuộc, công ty con, công ty thành viên và các tổ chức liên quan mà Cinestar Cinemas có góp vốn đầu tư (gọi chung là Cinestar Cinemas trong Quy Định Chung này). <br />

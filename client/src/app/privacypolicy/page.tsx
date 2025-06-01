@@ -3,7 +3,7 @@ import React from "react";
 const privacyPolicy = () => {
   return (
     <div className="pl-4">
-      <h1 className="flex-center text-white z-11 text-3xl font-bold mt-8 mb-4">CHÍNH SÁCH BẢO MẬT</h1>
+      <h1 className="flex-center text-foreground text-3xl font-bold mt-8 mb-4">CHÍNH SÁCH BẢO MẬT</h1>
       <p>TickNow cam kết sẽ bảo mật những thông tin mang tính riêng tư của bạn. Bạn vui lòng đọc bản “Chính sách bảo mật” dưới đây để hiểu hơn những cam kết mà chúng tôi thực hiện nhằm tôn trọng và bảo vệ quyền lợi của người truy cập.</p>
       <p>1. MỤC ĐÍCH THU THẬP THÔNG TIN</p>
         <div className="pl-4">
