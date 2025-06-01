@@ -1,6 +1,7 @@
 import React from "react";
 
-const privacyPolicy = () => {
+const termsOfUse
+ = () => {
   return (
     <div className="pl-4">
       <h1 className="flex-center text-white z-11 text-3xl font-bold mt-8 mb-4">ĐIỀU KHOẢN SỬ DỤNG</h1>
@@ -76,4 +77,5 @@ const privacyPolicy = () => {
   );
 };
 
-export default privacyPolicy;
+export default termsOfUse
+;
