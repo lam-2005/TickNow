@@ -13,7 +13,7 @@ const AboutPage = () => {
       </section>
       <section className="text-center mb-16">
         <h1 className="flex-center text-white z-11 text-3xl font-bold mt-8 mb-4">SỨ MỆNH</h1>
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-6 pl-4">
           <div className="bg-gray-800 p-6 rounded-lg">
             <h3 className="text-primary font-bold text-xl mb-2">01</h3>
             <p>Góp phần tăng trưởng thị phần điện ảnh, văn hóa, giải trí của người Việt Nam.</p>
