@@ -20,7 +20,7 @@ const Header = () => {
   return (
     <header
       className={`${
-        pathname === "/"
+        pathname === "/" || pathname === "/movie"
           ? " min-[480px]:bg-gradient-to-b from-[rgba(0,0,0,.7)] via-[rgba(0,0,0,.2)] to-[rgba(0,0,0,0)] absolute z-999 top-0 max-[480px]:sticky max-[480px]:bg-background-card min-[480px]:[&_.color-icon]:text-white "
           : "bg-background-card sticky z-999 top-0"
       } 
