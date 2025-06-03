@@ -2,7 +2,7 @@
 import AddBtn from "@/admin_components/Button/AddBtn";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import OptionTable from "@/admin_components/OptionTable/OptionTable";
-import Table from "@/admin_components/Table/Table";
+import Table, { Column } from "@/admin_components/Table/Table";
 import React from "react";
 interface User {
   id: number;
@@ -14,7 +14,7 @@ const users: User[] = [
   { id: 1, name: "John Doe", email: "john@example.com", sdt: "0123456789" },
   { id: 2, name: "Jane Smith", email: "jane@example.com", sdt: "0123456789" },
 ];
-const col = [
+const col: Column<User>[] = [
   { key: "id", title: "ID" },
   { key: "name", title: "Name" },
   { key: "email", title: "Email" },
