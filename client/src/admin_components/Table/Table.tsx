@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 
-interface Column<T> {
+export interface Column<T> {
   key?: keyof T;
   title: string;
   render?: (row: T) => React.ReactNode;
