@@ -1,24 +1,49 @@
-import React from "react";
-
+"use client";
+import React, { useState, useEffect } from "react";
+import BackgroundPage from "@/components/BackgroundPage/BackgroundPage";
+import Link from "next/link";
+import MovieLoading from "@/components/Loading/MovieLoading";
+import MovieContainer from "@/components/Movie/MovieContainer";
+import { MovieType } from "@/interfaces/movie.interface";
 const Movies = () => {
+  const [loading, setLoading] = useState<boolean>(true);
+    const [data1, setData1] = useState<MovieType[] | []>([]);
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          setLoading(true);
+          const res = await fetch(
+            "http://localhost:5000/movies?_limit=10&status=2"
+          );
+          const getData = await res.json();
+          setData1(getData);
+        } catch (error) {
+          console.error("Error fetching users:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchData();
+    }, []);
   return (
     <div className="">
-      <div className="relative w-screen h-[40vh] max-lg:h-[50vh] bg-[url('/background_cinema.jpg')] bg-cover bg-center bg-no-repeat flex ">
-        <div className="w-full h-full backdrop-blur-xs brightness-50 absolute top-0 left-0 z-10"></div>
-        <h1 className="absolute-center text-white z-11 text-4xl font-medium text-nowrap">
-          Phim chiếu rạp
-        </h1>
-        <div
-          className="md:w-[650px] lg:h-[70px] md:h-[65px] sm:w-[600px] h-[55px] w-[90vw] rounded-[99px] bg-background-card absolute z-11 bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 overflow-hidden flex shadow-black/50
-        shadow-lg dark:shadow-gray-500/50"
-        >
-          <div className="w-1/3 h-full  cursor-pointer"></div>
-          <div className="w-px h-full bg-subtitle"></div>
-          <div className="w-1/3 h-full  cursor-pointer"></div>
-          <div className="w-px h-full bg-subtitle"></div>
-          <div className="w-1/3 h-full  cursor-pointer"></div>
+      <BackgroundPage title="Phim chiếu rạp" image="background_movie.jpg" />
+      <div className="container flex flex-col">
+        <div className="flex justify-between items-center mb-5 px-2">
+          <div className="flex gap-3 ">
+            <h1 className="text-primary">PHIM ĐANG CHIẾU</h1>
+            <h1>PHIM SẮP CHIẾU</h1>
+          </div>
+          <Link
+            href={"#"}
+            data-aos="fade-left"
+            className="hover:text-primary transition-colors duration-500"
+          >
+            Xem tất cả
+          </Link>
         </div>
-      </div>
+       {!loading ? <MovieContainer data={data1} /> : <MovieLoading />}
+       </div>
     </div>
   );
 };
