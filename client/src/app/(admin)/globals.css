@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+:root {
+  --background-card: #fff;
+  --background: #f1f1f1;
+  --background-loading: #b0b0b0;
+  --foreground: #212631;
+  --color-text: #212529;
+  --border-container: #dbdfe6;
+  --border-navbar: #323a49;
+
+  @theme inline {
+    --color-background: var(--background);
+    --color-background-card: var(--background-card);
+    --color-loading: var(--background-loading);
+    --color-foreground: var(--foreground);
+    --color-primary: #007bff;
+    --color-subtitle: #b0b0b0;
+    --font-text: var(--font-be-vietnam-pro-sans);
+    --font-heading: var(--font-oswald-sans);
+    --color-border-container: var(--border-container);
+    --color-border-navbar: var(--border-navbar);
+    --color-content: var(--color-text);
+  }
+
+  @layer base {
+    body {
+      @apply bg-background text-content font-text h-screen flex;
+    }
+    main {
+      @apply w-full;
+    }
+  }
+  @layer components {
+    .card {
+      @apply m-7.5 bg-white p-5 rounded-[10px] flex flex-col gap-5;
+    }
+    .btn {
+      @apply bg-primary border-transparent flex items-center rounded-[5px] gap-[5px] p-2.5 font-semibold transition-none text-sm text-white cursor-pointer hover:brightness-80;
+      span {
+        @apply text-lg flex items-center justify-center text-white;
+      }
+    }
+  }
+  @layer utilities {
+    .flex-center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .flex-between {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .flex-column {
+      display: flex;
+      flex-direction: column;
+    }
+    .absolute-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    input[type="search"]::-webkit-search-cancel-button {
+      filter: invert(24%) sepia(96%) saturate(7493%) hue-rotate(358deg)
+        brightness(93%) contrast(119%);
+      cursor: pointer;
+    }
+    .no-scrollbar {
+      @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+    }
+  }
+}

@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro, Oswald } from "next/font/google";
-import "@/globals.css";
-import Header from "@/components/Header/Header";
-import Footer from "@/components/Footer/Footer";
-import AOSConfig from "@/configs/aos.config";
-import { ThemeProvider } from "@/hooks/useTheme";
-import ThemeLayout from "@/components/ThemeLayout/ThemeLayout";
+import "./globals.css";
+import Navbar from "@/admin_components/Navbar/Navbar";
+import Header from "@/admin_components/Header/Header";
 
 const beVietNamPro = Be_Vietnam_Pro({
   weight: ["300", "700"],
@@ -32,16 +29,13 @@ export default function RootLayout({
   return (
     <html lang="vi">
       <body
-        className={`${beVietNamPro.variable} ${oswald.variable} antialiased`}
+        className={`${beVietNamPro.variable} ${oswald.variable} antialiased `}
       >
-        <ThemeProvider>
-          <ThemeLayout>
-            <AOSConfig />
-            <Header />
-            <main className="min-h-screen">{children}</main>
-            <Footer />
-          </ThemeLayout>
-        </ThemeProvider>
+        <Navbar />
+        <main className="w-full">
+          <Header />
+          {children}
+        </main>
       </body>
     </html>
   );

@@ -156,5 +156,3 @@ html[data-theme="dark"] {
     @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
   }
 }
-
-
