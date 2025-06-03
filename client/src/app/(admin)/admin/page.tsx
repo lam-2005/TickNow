@@ -38,6 +38,7 @@ const Admin = () => {
         <AddBtn />
       </HeadingCard>
       <OptionTable />
+      <OptionTable />
       <Table column={col} data={users} />
     </div>
   );
