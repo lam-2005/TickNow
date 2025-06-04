@@ -1,7 +1,10 @@
+"use client";
 import React from "react";
 import Button from "../Button/Button";
+import { useRouter } from "next/navigation";
 
 const DetailTicket = () => {
+  const router = useRouter();
   return (
     <div className="bg-background-card p-5 w-full rounded-[10px] flex-between mt-5">
       <div className="space-y-2.5">
@@ -30,7 +33,7 @@ const DetailTicket = () => {
             title="Quay lại"
             className="bg-transparent border-1 border-foreground text-foreground before:bg-primary [&_span]:text-foreground hover:[&_span]:text-white hover:border-primary"
           />
-          <Button title="Thanh toán" />
+          <Button title="Thanh toán" onClick={() => router.push("/payment")} />
         </div>
       </div>
     </div>
