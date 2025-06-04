@@ -8,7 +8,7 @@ const DetailTicket = () => {
   return (
     <div className="bg-background-card p-5 w-full rounded-[10px] flex-between mt-5">
       <div className="space-y-2.5">
-        <h2>Phim Sets</h2>
+        <h2>Phim Chiếu Rạp</h2>
         <p>
           <strong>TickNow Quận 12 (Thành phố Hồ Chí Minh)</strong>
         </p>

@@ -1,5 +1,5 @@
 export interface MovieType {
-  id?: number | string;
+  id: number | string;
   name: string;
   date: string;
   director: string;

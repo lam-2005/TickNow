@@ -9,7 +9,7 @@ import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 const Navbar = () => {
   const pathname = usePathname();
   return (
-    <div className="group active bg-foreground h-screen sticky text-white z-1000 flex flex-col top-0 left-0 min-w-[230px] max-w-[300px]">
+    <div className="group active bg-foreground max-h-screen h-full sticky text-white z-1000 flex flex-col top-0 left-0 min-w-[230px] max-w-[300px]">
       <Link
         href={"/admin"}
         className="h-[80px] sticky top-0 z-1000 flex-center py-[15px]  border-b-1 border-border-navbar"

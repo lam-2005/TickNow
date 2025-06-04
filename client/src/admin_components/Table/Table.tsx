@@ -29,14 +29,14 @@ const Table = <T extends { id: string | number }>({
           </tr>
         </thead>
         <tbody
-          className=" [&_tr]:bg-[#fdfdfd] [&_tr]:even:bg-[#f0f0f0] [&_tr]:hover:bg-[#f0f0f0]
+          className="[&_tr]:bg-[#fdfdfd] [&_tr]:even:bg-[#f0f0f0] [&_tr]:hover:bg-[#f0f0f0]
         "
         >
           {data.map((row, index) => (
             <tr key={row.id} className="">
               <td>{index + 1}</td>
               {column.map((col) => (
-                <td key={col.title}>
+                <td key={col.title} className="">
                   {col.render
                     ? col.render(row)
                     : col.key

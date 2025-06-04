@@ -39,9 +39,14 @@ const Movie = ({
       </div>
       <h3
         className={`font-semibold line-clamp-1 px-2.5 
-    group-hover:text-primary transition-colors duration-500 mt-4 ${textColor}`}
+    mt-4 ${textColor}`}
       >
-        <Link href={"/detail"}>{name}</Link>
+        <Link
+          href={"/detail"}
+          className="group-hover:text-primary transition-colors duration-500 "
+        >
+          {name}
+        </Link>
       </h3>
       <Button title="Đặt vé ngay" onClick={() => router.push("/detail")} />
     </div>

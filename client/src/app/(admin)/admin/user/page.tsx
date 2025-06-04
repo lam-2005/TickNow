@@ -56,7 +56,6 @@ const UserManagement = () => {
     },
   ];
   const col = [
-    { key: "id", title: "ID" },
     { key: "name", title: "Name" },
     { key: "phone", title: "Phone Number" },
     { key: "email", title: "Email" },
@@ -76,10 +75,12 @@ const UserManagement = () => {
       render(row: UserType) {
         return (
           <div className="flex gap-2">
-            <button className="px-3 py-1 bg-blue-500 text-white rounded"
-               onClick={() => handleEdit(row.id)}>Edit</button>
-            <button className="px-3 py-1 bg-red-500 text-white rounded"
-               onClick={() => handleDelete(row.id)}>Xóa</button>
+            <button className="px-3 py-1 bg-blue-500 text-white rounded">
+              Edit
+            </button>
+            <button className="px-3 py-1 bg-red-500 text-white rounded">
+              Xóa
+            </button>
           </div>
         );
       },
@@ -97,6 +98,4 @@ const UserManagement = () => {
   );
 };
 
-
 export default UserManagement;
-

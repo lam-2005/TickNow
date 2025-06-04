@@ -28,7 +28,7 @@
       @apply bg-background text-content font-text h-screen flex;
     }
     main {
-      @apply w-full;
+      @apply w-full max-h-screen overflow-y-auto;
     }
   }
   @layer components {

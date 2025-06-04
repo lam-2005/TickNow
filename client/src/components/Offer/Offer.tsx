@@ -7,6 +7,7 @@ const Offer = () => {
         <Image
           src={"/offers/offer.png"}
           fill
+          alt=""
           priority
           sizes="350px"
           className="group-hover:scale-110 transition-transform duration-300"

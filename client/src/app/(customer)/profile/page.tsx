@@ -1,7 +1,10 @@
+"use client";
 import Button from "@/components/Button/Button";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const Profile = () => {
+  const router = useRouter();
   return (
     <div className="container flex-column items-center mt-10 gap-10">
       <h2>Thông tin cá nhân</h2>
@@ -9,7 +12,10 @@ const Profile = () => {
         <button className="active [&.active]:bg-primary [&.active]:border-transparent [&.active]:text-white py-2.5 px-5 rounded-[100px] font-bold hover:bg-primary hover:text-white hover:border-transparent transition-colors duration-300 border-1 border-foreground text-sm">
           Tài khoản của tôi
         </button>
-        <button className="py-2.5 px-5 rounded-[100px] font-bold hover:bg-primary hover:text-white hover:border-transparent transition-colors duration-300 border-1 border-foreground text-sm">
+        <button
+          onClick={() => router.push("/booking-history")}
+          className="py-2.5 px-5 rounded-[100px] font-bold hover:bg-primary hover:text-white hover:border-transparent transition-colors duration-300 border-1 border-foreground text-sm"
+        >
           Lịch sử đặt vé
         </button>
       </div>
