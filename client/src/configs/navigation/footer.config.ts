@@ -6,7 +6,7 @@ const footerLink: FooterLinkType[] = [
     title: "ticknow",
     children: [
       {
-        url: "/#",
+        url: "/about",
         name: "Về chúng tôi",
       },
       {
@@ -38,11 +38,11 @@ const footerLink: FooterLinkType[] = [
     title: "điều khoản dịch vụ",
     children: [
       {
-        url: "/#",
+        url: "/privacypolicy",
         name: "Chính sách bảo mật",
       },
       {
-        url: "/#",
+        url: "/termsofuse",
         name: "Điều khoản sử dụng",
       },
     ],

@@ -5,162 +5,98 @@ import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import OptionTable from "@/admin_components/OptionTable/OptionTable";
 import Table from "@/admin_components/Table/Table";
 
-interface User {
-  id: string;               // ✅ thêm ID để dùng trong thao tác
-  name: string;
-  phone: string;            // ✅ đổi từ number sang string
-  email: string;
-  password: string;
-  year: number;
-  status: string;
-  role: number;
-}
+import { UserType } from "@/interfaces/user.interface";
 
-const vouchers: User[] = [
-  {
-    id: "1",
-    name: "Nguyễn Văn A",
-    phone: "84901234567",
-    email: "nguyenvana@example.com",
-    password: "Password123!",
-    year: 2000,
-    status: "Hoạt động",
-    role: 1,
-  },
-  {
-    id: "2",
-    name: "Trần Thị B",
-    phone: "84981234567",
-    email: "tranthib@example.com",
-    password: "TranThiB2024!",
-    year: 2001,
-    status: "Ngừng hoạt động",
-    role: 0,
-  },
-  {
-    id: "3",
-    name: "Lê Văn C",
-    phone: "84911234567",
-    email: "levanc@example.com",
-    password: "LeVanC@123",
-    year: 1998,
-    status: "Hoạt động",
-    role: 2,
-  },
-  {
-    id: "4",
-    name: "Phạm Thị D",
-    phone: "84881234567",
-    email: "phamthid@example.com",
-    password: "Dpass456$",
-    year: 1999,
-    status: "Ngừng hoạt động",
-    role: 1,
-  },
-  {
-    id: "5",
-    name: "Hoàng Văn E",
-    phone: "84921234567",
-    email: "hoangvane@example.com",
-    password: "HoangE!789",
-    year: 2002,
-    status: "Hoạt động",
-    role: 0,
-  },
-  {
-    id: "6",
-    name: "Đặng Thị F",
-    phone: "84931234567",
-    email: "dangthif@example.com",
-    password: "DangF@2025",
-    year: 2003,
-    status: "Hoạt động",
-    role: 2,
-  },
-  {
-    id: "7",
-    name: "Bùi Văn G",
-    phone: "84941234567",
-    email: "buivang@example.com",
-    password: "BuiG#001",
-    year: 1997,
-    status: "Ngừng hoạt động",
-    role: 1,
-  },
-  {
-    id: "8",
-    name: "Võ Thị H",
-    phone: "84951234567",
-    email: "vothih@example.com",
-    password: "VoThiH_456",
-    year: 2000,
-    status: "Hoạt động",
-    role: 0,
-  },
-  {
-    id: "9",
-    name: "Đỗ Văn I",
-    phone: "84961234567",
-    email: "dovani@example.com",
-    password: "DoIpass987",
-    year: 2001,
-    status: "Ngừng hoạt động",
-    role: 2,
-  },
-  {
-    id: "10",
-    name: "Ngô Thị J",
-    phone: "84971234567",
-    email: "ngothij@example.com",
-    password: "NgoJ@321",
-    year: 1995,
-    status: "Hoạt động",
-    role: 1,
-  },
-];
-
-const col = [
-  { key: "name", title: "Tên Người Dùng" },
-  { key: "phone", title: "Số điện thoại" },
-  { key: "year", title: "Tuổi" },
-  { key: "status", title: "Trạng thái" },
-  { key: "role", title: "Phân quyền" },
-  {
-    key: "actions",
-    title: "Thao tác",
-    render(row: User) {
-      return (
-        <div className="flex space-x-2">
-            <button className="text-blue-500 hover:underline" onClick={() => handleEdit(row.id)}>
-            Sửa
-          </button>
-          <button className="text-red-500 hover:underline" onClick={() => handleDelete(row.id)}>
-            Xóa
-          </button>
-        </div>
-      );
+const UserManagement = () => {
+  const users: UserType[] = [
+    {
+      id: "advwrvsd",
+      name: "Nguyễn Văn Aanh",
+      phone: "0912345678",
+      email: "nguyenvana@example.com",
+      year: 1990,
+      status: 1,
+      role: true,
     },
-  },
-];
+    {
+      id: "aadfaca",
+      name: "Trần Thị BinZ",
+      phone: "0987654321",
+      email: "tranthib@example.com",
+      year: 1985,
+      status: 0,
+      role: false,
+    },
+    {
+      id: "abc13323",
+      name: "Lê Văn Cừ",
+      phone: "0909090909",
+      email: "levanc@example.com",
+      year: 2000,
+      status: 1,
+      role: true,
+    },
+    {
+      id: "user-004",
+      name: "Phạm Thị Duy",
+      phone: "0938123456",
+      email: "phamthid@example.com",
+      year: 1995,
+      status: 1,
+      role: false,
+    },
+    {
+      id: "3333w232",
+      name: "Hoàng Văn Em",
+      phone: "0977123456",
+      email: "hoangvane@example.com",
+      year: 1988,
+      status: 1,
+      role: true,
+    },
+  ];
+  const col = [
+    { key: "id", title: "ID" },
+    { key: "name", title: "Name" },
+    { key: "phone", title: "Phone Number" },
+    { key: "email", title: "Email" },
+    { key: "year", title: "Year" },
+    {
+      key: "status",
+      title: "Status",
+      render: (row: UserType) => (row.status === 1 ? "Active" : "Inactive"),
+    },
+    {
+      key: "role",
+      title: "Role",
+      render: (row: UserType) => (row.role ? "Admin" : "User"),
+    },
+    {
+      title: "Action",
+      render(row: UserType) {
+        return (
+          <div className="flex gap-2">
+            <button className="px-3 py-1 bg-blue-500 text-white rounded"
+               onClick={() => handleEdit(row.id)}>Edit</button>
+            <button className="px-3 py-1 bg-red-500 text-white rounded"
+               onClick={() => handleDelete(row.id)}>Xóa</button>
+          </div>
+        );
+      },
+    },
+  ];
 
-const handleEdit = (id: string) => {
-  console.log("Edit", id);
-};
-
-const handleDelete = (id: string) => {
-  console.log("Delete", id);
-};
-
-const AdminVoucher = () => {
   return (
     <div className="card">
-      <HeadingCard title="Quản lý Voucher">
+      <HeadingCard title="Quản Lý Người Dùng">
         <AddBtn />
       </HeadingCard>
       <OptionTable />
-      <Table column={col} data={vouchers} />
+      <Table column={col} data={users} />
     </div>
   );
 };
 
-export default AdminVoucher;
+
+export default UserManagement;
+

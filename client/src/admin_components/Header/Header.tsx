@@ -13,7 +13,7 @@ const Header = () => {
               <FiMenu />
             </span>
           </button>
-          <div className="capitalize">Trang chu</div>
+          <div className="capitalize">Trang Chủ</div>
         </div>
         <div className="flex items-center gap-2.5">
           <button>
