@@ -1,7 +1,15 @@
 import Image from "next/image";
 import React from "react";
 
-const BackgroundPage = ({ title, image }: { title: string; image: string }) => {
+const BackgroundPage = ({
+  title,
+  image,
+  children,
+}: {
+  title: string;
+  image: string;
+  children?: React.ReactNode;
+}) => {
   return (
     <div className={`relative w-screen h-[40vh] max-lg:h-[50vh] flex`}>
       <div className="w-full h-full  absolute top-0 left-0 z-10 ">
@@ -16,6 +24,7 @@ const BackgroundPage = ({ title, image }: { title: string; image: string }) => {
       <h1 className="absolute-center text-white z-11 text-4xl font-medium text-nowrap">
         {title}
       </h1>
+      {children}
     </div>
   );
 };

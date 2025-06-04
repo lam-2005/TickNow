@@ -1,10 +1,14 @@
+import Link from "next/link";
 import React from "react";
 const TimeScreening = () => (
-  <div className="flex-center py-2 px-4 border-2 border-primary w-fit rounded-[5px] text-sm cursor-pointer hover:bg-primary hover:text-white transition-all">
+  <Link
+    href={"/booking"}
+    className="flex-center py-2 px-4 border-2 border-primary w-fit rounded-[5px] text-sm cursor-pointer hover:bg-primary hover:text-white transition-all"
+  >
     21:00 - 23:00
-  </div>
+  </Link>
 );
-const ShowType = ({ type }: { type: "Phụ đề" | "Lồng tiếng" }) => (
+export const ShowType = ({ type }: { type: "Phụ đề" | "Lồng tiếng" }) => (
   <div className="flex gap-7.5 items-center">
     <p className="w-25">{type}</p>
     <div className="flex gap-2.5 flex-wrap">
@@ -35,7 +39,7 @@ const ShowtimeCard = () => {
     <div className="flex gap-7.5 min-h-[430px] bg-background-card p-5 container w-[80%] rounded-xl">
       <div className="max-w-[227px] w-full aspect-[2/3] max-h-[340px] bg-amber-500"></div>
       <div className="space-y-[10px] flex-1">
-        <h1>Phim Sét</h1>
+        <h1>Phim chiếu rạp</h1>
         <div className="space-y-[5px]">
           <div className="flex gap-2.5">
             <p className="w-[100px] ">Ngày chiếu</p>

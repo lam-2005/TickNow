@@ -29,7 +29,7 @@ const roomLayout = {
 
 const Booking = () => {
   return (
-    <div className="container space-y-[50px]">
+    <div className="container space-y-[50px] mt-10">
       <StageBooking />
       <div className="flex-column items-center gap-5">
         <h2>Chọn ghế - Phòng 2</h2>

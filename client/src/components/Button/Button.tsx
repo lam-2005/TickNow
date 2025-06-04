@@ -7,6 +7,7 @@ const Button = ({
   dataAos,
   disabled,
   type,
+  onClick,
 }: {
   title: string;
   className?: string;
@@ -14,6 +15,7 @@ const Button = ({
   dataAos?: string;
   disabled?: boolean;
   type?: "submit" | "button" | "reset";
+  onClick?: () => void;
 }) => {
   return (
     <button
@@ -22,6 +24,7 @@ const Button = ({
       data-aos={dataAos}
       disabled={disabled}
       type={type}
+      onClick={onClick}
     >
       <span>{title}</span>
     </button>
