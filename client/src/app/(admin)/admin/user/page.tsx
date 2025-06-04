@@ -4,6 +4,7 @@ import AddBtn from "@/admin_components/Button/AddBtn";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import OptionTable from "@/admin_components/OptionTable/OptionTable";
 import Table from "@/admin_components/Table/Table";
+
 import { UserType } from "@/interfaces/user.interface";
 
 const UserManagement = () => {
@@ -96,4 +97,6 @@ const UserManagement = () => {
   );
 };
 
+
 export default UserManagement;
+

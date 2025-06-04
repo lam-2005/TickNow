@@ -2,7 +2,7 @@
 import AddBtn from "@/admin_components/Button/AddBtn";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import OptionTable from "@/admin_components/OptionTable/OptionTable";
-import Table from "@/admin_components/Table/Table";
+import Table, { Column } from "@/admin_components/Table/Table";
 import React from "react";
 import Image from "next/image";
 
@@ -52,7 +52,7 @@ const cinemas: Cinema[] = [
   },
 ];
 
-const col = [
+const col: Column<Cinema>[] = [
   { key: "name", title: "Tên rạp" },
   { key: "detail_location", title: "Địa chỉ" },
   {
@@ -71,7 +71,6 @@ const col = [
     },
   },
   {
-    key: "actions",
     title: "Thao tác",
     render(row: Cinema) {
       return (

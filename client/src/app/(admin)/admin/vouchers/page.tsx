@@ -3,7 +3,7 @@ import React from "react";
 import AddBtn from "@/admin_components/Button/AddBtn";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import OptionTable from "@/admin_components/OptionTable/OptionTable";
-import Table from "@/admin_components/Table/Table";
+import Table, { Column } from "@/admin_components/Table/Table";
 
 interface Voucher {
   id: string;
@@ -75,7 +75,7 @@ const vouchers: Voucher[] = [
   },
 ];
 
-const col = [
+const col: Column<Voucher>[] = [
   { key: "code", title: "Mã" },
   { key: "name", title: "Tên Voucher" },
   { key: "discount", title: "Giảm (%)" },
@@ -85,15 +85,20 @@ const col = [
   { key: "daSuDung", title: "Đã dùng" },
   { key: "trangThai", title: "Trạng thái" },
   {
-    key: "actions", // cần thiết nếu Table dùng key để định danh
     title: "Thao tác",
     render(row: Voucher) {
       return (
         <div className="flex space-x-2">
-          <button className="text-blue-500 hover:underline" onClick={() => handleEdit(row.id)}>
+          <button
+            className="text-blue-500 hover:underline"
+            onClick={() => handleEdit(row.id)}
+          >
             Sửa
           </button>
-          <button className="text-red-500 hover:underline" onClick={() => handleDelete(row.id)}>
+          <button
+            className="text-red-500 hover:underline"
+            onClick={() => handleDelete(row.id)}
+          >
             Xóa
           </button>
         </div>
