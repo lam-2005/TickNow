@@ -1,10 +1,12 @@
 "use client";
+
 import BackgroundPage from "@/components/BackgroundPage/BackgroundPage";
 import Offer from "@/components/Offer/Offer";
 import React from "react";
 
 const Post = () => {
   return (
+
     <>
       <BackgroundPage
         image="background_post.jpg"
@@ -27,3 +29,4 @@ const Post = () => {
 };
 
 export default Post;
+
