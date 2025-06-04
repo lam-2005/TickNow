@@ -6,7 +6,7 @@ const footerLink: FooterLinkType[] = [
     title: "ticknow",
     children: [
       {
-        url: "/#",
+        url: "/about",
         name: "Về chúng tôi",
       },
       {
