@@ -39,7 +39,7 @@ export default function RootLayout({
           <ThemeLayout>
             <AOSConfig />
             <Header />
-            <main className="min-h-screen">{children}</main>
+            <main className="">{children}</main>
             <Footer />
           </ThemeLayout>
         </ThemeProvider>
