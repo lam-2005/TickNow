@@ -80,7 +80,7 @@ export default function Home() {
                 Khuyến Mãi
               </h2>
               <Link
-                href={"#"}
+                href={"/post"}
                 data-aos="fade-left"
                 className="hover:text-primary transition-colors duration-500"
               >

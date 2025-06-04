@@ -20,8 +20,8 @@ const Header = () => {
   return (
     <header
       className={`${
-        pathname === "/"
-          ? " min-[480px]:bg-gradient-to-b from-[rgba(0,0,0,.7)] via-[rgba(0,0,0,.2)] to-[rgba(0,0,0,0)] absolute z-999 top-0 max-[480px]:sticky max-[480px]:bg-background-card min-[480px]:[&_.color-icon]:text-white "
+        pathname === "/" || pathname.startsWith("/detail")
+          ? " min-[480px]:bg-gradient-to-b from-[rgba(0,0,0,.7)] via-[rgba(0,0,0,.2)] to-[rgba(0,0,0,0)] absolute z-999 top-0 max-[480px]:sticky max-[480px]:bg-background-card min-[480px]:[&_.color-icon]:text-white  "
           : "bg-background-card sticky z-999 top-0"
       } 
       w-full transition-colors duration-300 `}
@@ -57,7 +57,9 @@ const Header = () => {
                   href={link.url}
                   className={`group font-semibold relative
                hover:text-primary py-2 transition-colors duration-500 [.active]:text-primary ${
-                 pathname === "/" ? "text-white" : "text-foreground"
+                 pathname === "/" || pathname.startsWith("/detail")
+                   ? "text-white"
+                   : "text-foreground"
                }
                ${pathname === link.url && "active"}
                `}
@@ -79,7 +81,7 @@ const Header = () => {
             action=""
             className={`
               ${
-                pathname === "/"
+                pathname === "/" || pathname.startsWith("/detail")
                   ? " min-[480px]:border-[rgba(255,255,255,.5)] min-[480px]:focus-within:border-white min-[480px]:[&_button_span]:text-white min-[480px]:[&>span]:bg-white min-[480px]:[&>input]:text-white border-transparent"
                   : "border-transparent focus-within:border-transparent"
               }
@@ -107,7 +109,9 @@ const Header = () => {
           >
             <span
               className={`block font-semibold text-nowrap transition-colors duration-500 ${
-                pathname === "/" ? "text-white" : "text-foreground"
+                pathname === "/" || pathname.startsWith("/detail")
+                  ? "text-white"
+                  : "text-foreground"
               } text-icon`}
             >
               <FaUser />
