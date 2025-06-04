@@ -66,13 +66,13 @@ const MovieSection = () => {
   ];
 
   return (
-    <div className="container">
+    <div className="">
       <BackgroundPage title="Lịch chiếu phim" image="background_movie.jpg" />
-      <div className="flex gap-8 mb-4">
+      <div className="flex gap-8 mb-4 container ">
         <h1 className="text-primary text-xl">PHIM ĐANG CHIẾU</h1>
         <h1 className="text-foreground text-xl">PHIM SẮP CHIẾU</h1>
       </div>
-      <div className="grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+      <div className="container grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
         {movies.map((movie) => (
           <Movie key={movie.id} name={movie.title} image={movie.image} />
         ))}
