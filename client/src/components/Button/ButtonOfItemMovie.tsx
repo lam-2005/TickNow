@@ -14,11 +14,12 @@ const ButtonInfo = () => {
     </button>
   );
 };
-const ButtonPlay = () => {
+const ButtonPlay = ({ onClick }: { onClick: () => void }) => {
   return (
     <button
       className="group/button bg-primary rounded-full sm:size-11.25 max-sm:size-9 flex-center shadow-lg shadow-black/20
       hover:bg-white transition-colors duration-500"
+      onClick={onClick}
     >
       <span className="text-[1rem] group-hover/button:text-primary block transition-colors duration-500 text-white">
         <FaPlay />

@@ -102,6 +102,9 @@ html[data-theme="dark"] {
       @apply relative z-10;
     }
   }
+  .btn-secondary {
+    @apply bg-transparent border-1 border-foreground text-foreground before:bg-primary [&_span]:text-foreground hover:[&_span]:text-white hover:border-primary w-full;
+  }
   .container {
     @apply h-fit mx-auto px-5;
   }

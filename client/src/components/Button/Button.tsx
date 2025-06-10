@@ -8,6 +8,7 @@ const Button = ({
   disabled,
   type,
   onClick,
+  btnSecondary,
 }: {
   title: string;
   className?: string;
@@ -16,10 +17,11 @@ const Button = ({
   disabled?: boolean;
   type?: "submit" | "button" | "reset";
   onClick?: () => void;
+  btnSecondary?: boolean;
 }) => {
   return (
     <button
-      className={`btn-primary ${className}`}
+      className={`btn-primary ${btnSecondary && "btn-secondary"} ${className}`}
       data-aos-delay={dataAosDelay}
       data-aos={dataAos}
       disabled={disabled}

@@ -18,11 +18,7 @@ const MovieContainer = ({
           data-aos="fade-up"
           data-aos-delay={(index + 1) * 100}
         >
-          <Movie
-            name={item.name}
-            image={item.image as string}
-            textColor={textColor}
-          />
+          <Movie info={item} textColor={textColor} />
         </div>
       ))}
     </CustomSlider>

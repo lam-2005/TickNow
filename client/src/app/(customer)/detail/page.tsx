@@ -1,7 +1,7 @@
 "use client";
 import Select, { SelectField } from "@/components/Select/Select";
 import { ShowType } from "@/components/ShowtimeList/ShowtimeCard";
-import { useTheme } from "@/hooks/useTheme";
+import { useTheme } from "@/hooks/contexts/useTheme";
 import React from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import { RiMapPin2Fill } from "react-icons/ri";

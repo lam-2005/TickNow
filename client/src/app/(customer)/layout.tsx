@@ -4,8 +4,8 @@ import "@/globals.css";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import AOSConfig from "@/configs/aos.config";
-import { ThemeProvider } from "@/hooks/useTheme";
 import ThemeLayout from "@/components/ThemeLayout/ThemeLayout";
+import AppProvider from "@/hooks/contexts/AppProvider";
 // import { usePathname } from "next/navigation";
 
 const beVietNamPro = Be_Vietnam_Pro({
@@ -35,14 +35,14 @@ export default function RootLayout({
       <body
         className={`${beVietNamPro.variable} ${oswald.variable} antialiased`}
       >
-        <ThemeProvider>
+        <AppProvider>
           <ThemeLayout>
             <AOSConfig />
             <Header />
             <main className="">{children}</main>
             <Footer />
           </ThemeLayout>
-        </ThemeProvider>
+        </AppProvider>
       </body>
     </html>
   );

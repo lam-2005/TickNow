@@ -1,12 +1,10 @@
 "use client";
-import { useTheme } from "@/hooks/useTheme";
+import { useTheme } from "@/hooks/contexts/useTheme";
 import React from "react";
 import { FaMoon, FaSun } from "react-icons/fa";
 
 const ThemeToggle = () => {
   const { theme, toggleTheme } = useTheme();
-  console.log(theme);
-
   return (
     <div>
       <button

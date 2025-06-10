@@ -72,7 +72,7 @@ const MovieSection = () => {
   const [activeTab, setActiveTab] = useState("now");
   return (
     <div className="">
-      <BackgroundPage image="background_movie.jpg" title="Lịch chiếu phim">
+      <BackgroundPage image="background_movie.jpg" title="Phim chiếu rạp">
         <div className=" absolute z-20 bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2">
           <Select>
             <SelectField icon={<FaCalendarAlt />} label="Chọn ngày chiếu" />
@@ -111,7 +111,7 @@ const MovieSection = () => {
       </div>
       <div className="container grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
         {movies.map((movie) => (
-          <Movie key={movie.id} name={movie.title} image={movie.image} />
+          <Movie key={movie.id} info={movie} />
         ))}
       </div>
     </div>
