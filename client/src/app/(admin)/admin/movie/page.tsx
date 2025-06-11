@@ -12,7 +12,7 @@ const MovieManagement = () => {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const res = await fetch("http://localhost:5000/movies");
+        const res = await fetch("http://localhost:5000/movies?_limit=5");
         const data = await res.json();
         setMovies(data);
       } catch (error) {
@@ -25,7 +25,6 @@ const MovieManagement = () => {
   }, []);
 
   const col: Column<MovieType>[] = [
-    { key: "id", title: "ID" },
     { key: "name", title: "Name" },
     { key: "date", title: "Date" },
     { key: "director", title: "Director" },

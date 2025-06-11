@@ -9,7 +9,7 @@ import { MovieType } from "@/interfaces/movie.interface";
 
 const MovieSection = () => {
   const [activeTab, setActiveTab] = useState<"now" | "coming">("now");
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState<MovieType[] | []>([]);
 
   const fetchMovies = async (status: number) => {
     try {
@@ -41,7 +41,7 @@ const MovieSection = () => {
         )}
       </BackgroundPage>
 
-      <div className="bg-black text-foreground container py-10 mt-10 flex items-center justify-between">
+      <div className="bg-background text-foreground container py-10 mt-10 flex items-center justify-between">
         <div className="flex gap-6">
           <h1
             onClick={() => setActiveTab("now")}
