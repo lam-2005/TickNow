@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import TrailerPopup from "../Popup/TrailerPopup";
 import { MovieType } from "@/interfaces/movie.interface";
+import InfoPopup from "../Popup/InfoPopup";
 const Movie = ({
   info,
   textColor,
@@ -24,7 +25,7 @@ const Movie = ({
           onClose={() => setOpenTrailer(false)}
         />
       )}
-
+      {infoPopup && <InfoPopup info={info} onClose={closeInfo}/>}
       <div className="group w-full flex-column items-center gap-2.5">
         <div
           className="w-full aspect-[2/3] relative z-9 
