@@ -41,7 +41,7 @@ const Header = () => {
       <div className="py-4 max-[480px]:py-2 flex-between container gap-2.5">
         <Link href={"/"} className="logo-size aspect-[5/1] relative">
           <Image
-            src="/logo/logo.png"
+            src="/logo/logo.webp"
             alt="logo-ticknow"
             fill
             className="object-cover"

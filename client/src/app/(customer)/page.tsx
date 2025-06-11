@@ -52,7 +52,7 @@ export default function Home() {
             {!loading ? <MovieContainer data={data1} /> : <MovieLoading />}
           </div>
         </section>
-        <section className="bg-[url('/background.jpg')] bg-top bg-cover py-10">
+        <section className="bg-[url('/background.webp')] bg-top bg-cover py-10">
           <div className="container flex flex-col">
             <h2
               className="self-center mb-5 uppercase text-white"

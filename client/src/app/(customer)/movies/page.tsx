@@ -11,7 +11,7 @@ const MovieSection = () => {
     {
       id: 1,
       title: "QUỶ NHẬP TRÀNG",
-      image: "quy_nhap_trang.jpg",
+      image: "quy_nhap_trang.webp",
       date: "07.05.2025",
     },
     {
@@ -41,7 +41,7 @@ const MovieSection = () => {
     {
       id: 6,
       title: "QUỶ NHẬP TRÀNG",
-      image: "quy_nhap_trang.jpg",
+      image: "quy_nhap_trang.webp",
       date: "07.05.2025",
     },
     {
@@ -72,7 +72,7 @@ const MovieSection = () => {
   const [activeTab, setActiveTab] = useState("now");
   return (
     <div className="">
-      <BackgroundPage image="background_movie.jpg" title="Phim chiếu rạp">
+      <BackgroundPage image="background_movie.webp" title="Phim chiếu rạp">
         <div className=" absolute z-20 bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2">
           <Select>
             <SelectField icon={<FaCalendarAlt />} label="Chọn ngày chiếu" />

@@ -6,10 +6,9 @@ import React from "react";
 
 const Post = () => {
   return (
-
     <>
       <BackgroundPage
-        image="background_post.jpg"
+        image="background_post.webp"
         title="Khuyến mãi và Ưu đãi"
       ></BackgroundPage>
       <div className="container mt-10">
@@ -29,4 +28,3 @@ const Post = () => {
 };
 
 export default Post;
-

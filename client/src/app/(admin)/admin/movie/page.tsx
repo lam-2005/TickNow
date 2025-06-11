@@ -20,7 +20,7 @@ const MovieManagement = () => {
       text_summary:
         "The Avengers assemble once more to reverse Thanos' actions and restore balance to the universe.",
       status: 1,
-      image: "avengers.jpg",
+      image: "avengers.webp",
       banner: null,
       trailer: "https://www.youtube.com/watch?v=TcMBFSGVi1c",
       date_added: "2025-06-03",
@@ -38,7 +38,7 @@ const MovieManagement = () => {
       text_summary:
         "A poor family schemes to become employed by a wealthy household by infiltrating their lives.",
       status: 1,
-      image: "parasite.jpg",
+      image: "parasite.webp",
       banner: null,
       trailer: "https://www.youtube.com/watch?v=5xH0HfJHsaY",
       date_added: "2025-06-01",
@@ -56,7 +56,7 @@ const MovieManagement = () => {
       text_summary:
         "A thief who steals corporate secrets through dream-sharing is given a task to plant an idea instead.",
       status: 1,
-      image: "inception.jpg",
+      image: "inception.webp",
       banner: null,
       trailer: "https://www.youtube.com/watch?v=YoHD9XEInc0",
       date_added: "2025-05-28",
@@ -74,7 +74,7 @@ const MovieManagement = () => {
       text_summary:
         "The aging patriarch of an organized crime dynasty transfers control of his empire to his son.",
       status: 1,
-      image: "godfather.jpg",
+      image: "godfather.webp",
       banner: null,
       trailer: "https://www.youtube.com/watch?v=sY1S34973zA",
       date_added: "2025-05-20",
@@ -92,7 +92,7 @@ const MovieManagement = () => {
       text_summary:
         "A young girl enters a magical world ruled by gods, spirits, and a witch, where humans are transformed into beasts.",
       status: 1,
-      image: "spirited_away.jpg",
+      image: "spirited_away.webp",
       banner: null,
       trailer: "https://www.youtube.com/watch?v=ByXuk9QqQkk",
       date_added: "2025-05-15",
@@ -110,7 +110,7 @@ const MovieManagement = () => {
       text_summary:
         "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
       status: 1,
-      image: "interstellar.jpg",
+      image: "interstellar.webp",
       banner: null,
       trailer: "https://www.youtube.com/watch?v=zSWdZVtXT7E",
       date_added: "2025-05-10",
@@ -128,7 +128,7 @@ const MovieManagement = () => {
       text_summary:
         "Two teenagers share a profound connection after they find themselves swapping bodies.",
       status: 1,
-      image: "yourname.jpg",
+      image: "yourname.webp",
       banner: null,
       trailer: "https://www.youtube.com/watch?v=xU47nhruN-Q",
       date_added: "2025-05-08",
@@ -146,7 +146,7 @@ const MovieManagement = () => {
       text_summary:
         "In Gotham City, a mentally troubled comedian embarks on a downward spiral that leads to crime.",
       status: 1,
-      image: "joker.jpg",
+      image: "joker.webp",
       banner: null,
       trailer: "https://www.youtube.com/watch?v=zAGVQLHvwOY",
       date_added: "2025-04-30",
@@ -164,7 +164,7 @@ const MovieManagement = () => {
       text_summary:
         "A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the Titanic.",
       status: 1,
-      image: "titanic.jpg",
+      image: "titanic.webp",
       banner: null,
       trailer: "https://www.youtube.com/watch?v=kVrqfYjkTdQ",
       date_added: "2025-04-25",
@@ -182,7 +182,7 @@ const MovieManagement = () => {
       text_summary:
         "Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
       status: 1,
-      image: "dark_knight.jpg",
+      image: "dark_knight.webp",
       banner: null,
       trailer: "https://www.youtube.com/watch?v=EXeTwQWrcwY",
       date_added: "2025-04-20",

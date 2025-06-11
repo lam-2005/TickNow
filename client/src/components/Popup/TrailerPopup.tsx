@@ -1,6 +1,5 @@
 import React from "react";
-import { createPortal } from "react-dom";
-import { IoMdClose } from "react-icons/io";
+import PopupContainer from "./PopupContainer";
 
 const TrailerPopup = ({
   name,
@@ -11,37 +10,22 @@ const TrailerPopup = ({
   url: string;
   onClose: () => void;
 }) => {
-  return createPortal(
-    <div className="min-w-screen min-h-screen w-full h-full fixed top-0 left-0 z-1500">
-      <div
-        className="w-full h-full bg-[rgba(0,0,0,0.7)] backdrop-blur-xs"
-        onClick={onClose}
-      ></div>
-      <div className="max-w-[700px] absolute top-1/2 left-1/2 -translate-1/2 w-full flex-column items-center gap-2.5 p-5 rounded-[10px] bg-background-card">
-        <button
-          className="absolute top-0 right-0 translate-y-5 -translate-x-5"
-          onClick={onClose}
-        >
-          <span className="text-2xl">
-            <IoMdClose />
-          </span>
-        </button>
-        <h2>{name}</h2>
-        <div className="flex-1 flex gap-5 justify-end max-lg:hidden w-full">
-          <iframe
-            className={`rounded-2xl aspect-[16/9] w-full`}
-            src={`${url}?autoplay=1&enablejsapi=1`}
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer;  encrypted-media;"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-            loading="lazy"
-          ></iframe>
-        </div>
+  return (
+    <PopupContainer onClose={onClose}>
+      <h2>{name}</h2>
+      <div className="flex-1 flex gap-5 justify-end max-lg:hidden w-full">
+        <iframe
+          className={`rounded-2xl aspect-[16/9] w-full`}
+          src={`${url}?autoplay=1&enablejsapi=1`}
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer;  encrypted-media;"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+          loading="lazy"
+        ></iframe>
       </div>
-    </div>,
-    document.body
+    </PopupContainer>
   );
 };
 

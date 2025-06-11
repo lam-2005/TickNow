@@ -1,5 +1,7 @@
 import Button from "@/components/Button/Button";
+import Ticket from "@/components/Movie/Ticket";
 import { useStage } from "@/hooks/contexts/useStage";
+import { MovieType } from "@/interfaces/movie.interface";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -9,40 +11,9 @@ const Payment = () => {
   const { prevStage } = useStage();
   return (
     <div className="flex gap-5 ">
-      <div className="space-y-5 bg-background-card p-5 rounded-[10px] max-w-3/5 w-full h-fit">
-        <h2>Thông tin phim</h2>
-        <div className="flex items-center gap-5">
-          <div className="bg-amber-400 max-w-[200px] w-full max-h-[300px] h-full aspect-[2/3] rounded-[15px] "></div>
-          <div className="space-y-2.5">
-            <h2>Phim chiếu rap</h2>
-            <div className="flex gap-2.5">
-              <span className="block max-w-[200px] w-full">Rạp chiếu</span>
-              <strong className="line-clamp-2">
-                TickNow Quận 12 (Thành phố Hồ Chí Minh)
-              </strong>
-            </div>
-            <div className="flex gap-2.5">
-              <span className="block w-[200px]">Thời lượng</span>
-              <strong>120 phút</strong>
-            </div>{" "}
-            <div className="flex gap-2.5">
-              <span className="block w-[200px]">Phòng chiếu</span>
-              <strong>02</strong>
-            </div>{" "}
-            <div className="flex gap-2.5">
-              <span className="block w-[200px]">Ngày chiếu</span>
-              <strong>9:20 - 27/05/2025</strong>
-            </div>{" "}
-            <div className="flex gap-2.5">
-              <span className="block w-[200px]">Định dạng</span>
-              <strong>2D Phụ đề</strong>
-            </div>
-            <div className="flex gap-2.5">
-              <span className="block w-[200px]">Ghế</span>
-              <strong>B1, B2, B3, B4</strong>
-            </div>
-          </div>
-        </div>
+      <div className="space-y-5 bg-background-card p-5 rounded-[10px] max-w-7/10 w-full h-fit">
+        <h2>Thông tin vé</h2>
+        <Ticket info={{} as MovieType} />
       </div>
       <div className="flex-column items-center bg-background-card flex-1 p-5 rounded-[10px] gap-5">
         <h2>Thanh toán</h2>
@@ -52,7 +23,7 @@ const Payment = () => {
             <div className="active [&.active]:border-primary w-full border-2 border-foreground flex gap-2.5 items-center py-2.5 px-[15px] rounded-[5px] hover:border-primary transition-colors duration-300">
               <div className="size-7.5 bg-amber-200 rounded-[5px] relative overflow-hidden">
                 <Image
-                  src={"/logo/vnpay.jpg"}
+                  src={"/logo/vnpay.webp"}
                   alt="vnpay-logo"
                   sizes="30px"
                   fill
@@ -65,7 +36,7 @@ const Payment = () => {
               <div className="size-7.5 bg-amber-200 rounded-[5px] relative overflow-hidden">
                 {" "}
                 <Image
-                  src={"/logo/momo.png"}
+                  src={"/logo/momo.webp"}
                   alt="momo-logo"
                   fill
                   sizes="30px"

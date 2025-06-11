@@ -5,7 +5,7 @@ const Offer = () => {
     <div className="w-full group rounded-2xl dark:bg-transparent dark:shadow-none">
       <div className="relative w-full aspect-[7/4] overflow-hidden rounded-2xl">
         <Image
-          src={"/offers/offer.png"}
+          src={"/offers/offer.webp"}
           fill
           alt=""
           priority

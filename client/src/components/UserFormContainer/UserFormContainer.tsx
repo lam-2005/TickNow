@@ -34,7 +34,7 @@ const UserFormContainer = ({
         </button>
         <div className="mt-10 mb-5">
           <Image
-            src="/logo/logo.png"
+            src="/logo/logo.webp"
             alt="logo-ticknow"
             height={50}
             className="object-cover"

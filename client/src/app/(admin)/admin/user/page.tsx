@@ -3,7 +3,7 @@ import React from "react";
 import AddBtn from "@/admin_components/Button/AddBtn";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import OptionTable from "@/admin_components/OptionTable/OptionTable";
-import Table, { Column } from "@/admin_components/Table/Table";
+import Table from "@/admin_components/Table/Table";
 
 import { UserType } from "@/interfaces/user.interface";
 
@@ -55,7 +55,7 @@ const UserManagement = () => {
       role: true,
     },
   ];
-  const col: Column<UserType>[] = [
+  const col = [
     { key: "name", title: "Name" },
     { key: "phone", title: "Phone Number" },
     { key: "email", title: "Email" },
