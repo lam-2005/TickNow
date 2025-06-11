@@ -77,9 +77,9 @@ const Slideshow = () => {
     slidesToScroll: 1,
     pauseOnHover: true,
     initialSlide: 0,
-
     autoplaySpeed: 5000,
     autoplay: true,
+    lazyLoad: "progressive",
     afterChange: (current: number) => {
       setCurrentSlide(current);
     },
@@ -112,7 +112,7 @@ const Slideshow = () => {
                   fill
                   sizes="100vw"
                   className="object-cover"
-                  priority
+                  loading="lazy"
                 />
               </div>
               <div className="w-full h-full absolute top-0 left-0 brightness-40 backdrop-blur-[0px] z-1"></div>

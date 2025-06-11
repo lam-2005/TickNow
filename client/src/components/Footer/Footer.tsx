@@ -13,7 +13,7 @@ const Footer = () => {
           <section className="flex-column gap-2.5 max-lg:items-center max-lg:self-center">
             <div className="logo-size aspect-[5/1] relative">
               <Image
-                src="/logo/logo.png"
+                src="/logo/logo.webp"
                 alt="logo-ticknow"
                 fill
                 className="object-cover"

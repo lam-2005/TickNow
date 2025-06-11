@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Button from "../Button/Button";
 import { ButtonInfo, ButtonPlay } from "../Button/ButtonOfItemMovie";
@@ -7,6 +7,9 @@ import Link from "next/link";
 import TrailerPopup from "../Popup/TrailerPopup";
 import { MovieType } from "@/interfaces/movie.interface";
 import InfoPopup from "../Popup/InfoPopup";
+
+import usePopup from "@/hooks/usePopup";
+
 const Movie = ({
   info,
   textColor,
@@ -15,14 +18,21 @@ const Movie = ({
   textColor?: string;
 }) => {
   const router = useRouter();
-  const [openTrailer, setOpenTrailer] = useState<boolean>(false);
+  const {
+    trailerPopup,
+    openTrailer,
+    infoPopup,
+    openInfo,
+    closeInfo,
+    closeTrailer,
+  } = usePopup();
   return (
     <>
-      {openTrailer && (
+      {trailerPopup && (
         <TrailerPopup
           name={info.name}
           url={info.trailer}
-          onClose={() => setOpenTrailer(false)}
+          onClose={closeTrailer}
         />
       )}
       {infoPopup && <InfoPopup info={info} onClose={closeInfo}/>}
@@ -38,14 +48,15 @@ const Movie = ({
                 src={`/movies/${info.image as string}`}
                 alt="Phim"
                 sizes="300px"
+                loading="lazy"
                 className="object-cover 
             group-hover:scale-110 transition-transform duration-300 "
               />
             </div>
           </Link>
           <div className=" flex absolute -bottom-5 w-full justify-evenly z-10">
-            <ButtonPlay onClick={() => setOpenTrailer(true)} />
-            <ButtonInfo />
+            <ButtonPlay onClick={openTrailer} />
+            <ButtonInfo onClick={openInfo} />
           </div>
         </div>
         <h3

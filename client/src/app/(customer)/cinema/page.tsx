@@ -7,7 +7,7 @@ import { RiMapPin2Fill } from "react-icons/ri";
 const Cinema = () => {
   return (
     <div>
-      <BackgroundPage image="background_cinema.jpg" title="Rạp chiếu">
+      <BackgroundPage image="background_cinema.webp" title="Rạp chiếu">
         <div className=" absolute z-20 bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2">
           <Select>
             <SelectField icon={<RiMapPin2Fill />} label="Toàn quốc" />

@@ -13,7 +13,9 @@ const MovieSection = () => {
 
   const fetchMovies = async (status: number) => {
     try {
-      const res = await fetch(`http://localhost:5000/movies?_limit=10&status=${status}`);
+      const res = await fetch(
+        `http://localhost:5000/movies?_limit=10&status=${status}`
+      );
       const data = await res.json();
       setMovies(data);
     } catch (error) {

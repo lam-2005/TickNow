@@ -1,7 +1,7 @@
 {
   "movies": [
     {
-      "id": "1",
+      "id": 1,
       "name": "QUỶ NHẬP TRÀNG",
       "date": "07/03/2025",
       "director": "Pom Nguyễn",
@@ -12,12 +12,13 @@
       "time": 122,
       "text_summary": "Phim lấy cảm hứng từ câu chuyện có thật và “truyền thuyết kinh dị nhất về người chết sống lại” - Ở một ngôi làng vùng cao, cặp vợ chồng Quang và Như sống bằng nghề mai táng. Cuộc sống yên bình của họ bị xáo trộn khi phát hiện một cỗ quan tài vô chủ trên mảnh đất nhà mình. Từ đây, những hiện tượng kỳ lạ bắt đầu xảy ra và ám ảnh cả ngôi làng.",
       "status": 2,
-      "image": "quy_nhap_trang.jpg",
+      "image": "quy_nhap_trang.webp",
       "banner": "quy_nhap_trang.webp",
-      "trailer": "https://www.youtube.com/embed/EB0nnm6akjA?si=pvBO2RbLlbOq4fI6"
+      "trailer": "https://www.youtube.com/embed/EB0nnm6akjA?si=pvBO2RbLlbOq4fI6",
+      "date_added": "2025-05-08"
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "Địa Đạo: Mặt Trời Trong Bóng Tối",
       "date": "25/03/2025",
       "director": "Bùi Thạc Chuyên",
@@ -29,11 +30,12 @@
       "text_summary": "Bên trên hầm, xe tăng rầm rập bắn tỉa, bom đạn mù mịt, lính Mỹ rà soát cả khu rừng. Đội trưởng Bảy Theo cùng đồng đội phải đương đầu với những khó khăn của mình ra sao? Câu chuyện về những người lính kiên cường trong năm tháng khói lửa sẽ được kể trong Địa Đạo: Mặt Trời Trong Bóng Tối dưới góc nhìn điện ảnh của Đạo diễn Bùi Thạc Chuyên.",
       "status": 2,
       "image": "dia_dao_mat_troi_trong_bong_toi.webp",
-      "banner": "dia_dao_mat_troi_trong_bong_toi.jpg",
-      "trailer": "https://www.youtube.com/embed/xh6IDHjvytU?si=Q6THaR8Q2y8U88dX"
+      "banner": "dia_dao_mat_troi_trong_bong_toi.webp",
+      "trailer": "https://www.youtube.com/embed/xh6IDHjvytU?si=Q6THaR8Q2y8U88dX",
+      "date_added": "2025-05-08"
     },
     {
-      "id": "3",
+      "id": 3,
       "name": "Phim Điện Ảnh Ninja Rantaro: Giải Cứu Quân Sư",
       "date": "28/03/2025",
       "director": "Masaya Fujimori",
@@ -45,11 +47,12 @@
       "text_summary": "Sau khi thầy Doi chấp nhận quyết đấu với Moroizumi Sonemon, ông đã mất tích không rõ tung tích. Khi nghe tin này, các thầy giáo cùng các học sinh lớp 6 lập tức tiến hành một cuộc tìm kiếm toàn diện. Giữa tình thế hỗn loạn, Kirimaru vô tình tìm được manh mối về tung tích của thầy Doi. Cùng lúc đó, trong khi nhóm học sinh lớp 6 đang ráo riết tìm kiếm, quân sư lạnh lùng của đội Ninja Dokutake - Tenki bất ngờ xuất hiện. Điều khiến mọi người kinh ngạc là khuôn mặt của Tenki lại giống hệt thầy Doi! Kẻ địch hùng mạnh đang ở trước mắt, các học viên Ninja của Học viện Nhẫn Thuật buộc phải thể hiện sự gắn kết mạnh mẽ mới có thể vượt qua thử thách chưa từng có này. Liệu Rantarou, Kirimaru và Shinbei có thể giải cứu thầy Doi thành công không?",
       "status": 2,
       "image": "phim_dien_anh_ninja_rantoro_k_giai_cuu_quan_su.webp",
-      "banner": "phim_dien_anh_ninja_rantoro_k_giai_cuu_quan_su.jpg",
-      "trailer": "https://www.youtube.com/embed/ulOb1dBMS6U?si=DILpGhePD9Z2TnBn"
+      "banner": "phim_dien_anh_ninja_rantoro_k_giai_cuu_quan_su.webp",
+      "trailer": "https://www.youtube.com/embed/ulOb1dBMS6U?si=DILpGhePD9Z2TnBn",
+      "date_added": "2025-05-08"
     },
     {
-      "id": "4",
+      "id": 4,
       "name": "Huyết Án Truy Hành",
       "date": "28/03/2025",
       "director": "Man Ki Kwok",
@@ -61,11 +64,12 @@
       "text_summary": "Vào một đêm mưa, thi thể Gia Kỳ - con gái của cảnh sát Lạc Nhất Ngôn phát hiện tử vong. Vì không đủ bằng chứng kết tội, Khâu Tuấn Văn (nghi phạm) được thả tự do. Lạc Nhất Ngôn rời khỏi lực lượng cảnh sát. Thế nhưng, những cái chết không hề dừng lại, Lạc Nhất Ngôn nhận ra nhiều cô gái khác cũng bị sát hại dã man với cách thức giống nhau khiến ông tin rằng hung thủ thực sự vẫn còn đang nhởn nhơ ngoài vòng pháp luật. Qua quá trình điều tra, ông dần tìm ra nhân chứng duy nhất chứng kiến cảnh phạm tội của hung thủ. Đáng tiếc thay, nhân chứng lại là một cô bé thiểu năng trí tuệ. Bao nhiêu biến cố dần ập đến khiến người cha, người chồng, Lạc Nhất Ngôn gần như ngã quỵ… Liệu rằng Lạc Nhất Ngôn sẽ buông bỏ hiện thực hay ông sẽ vùng lên giành lại công lý cho con gái bị sát hại thảm thương?",
       "status": 2,
       "image": "huyet-an-truy-hanh_LT.webp",
-      "banner": "huyet-an-truy-hanh_LT.jpg",
-      "trailer": "https://www.youtube.com/embed/kPVXy5rTO7A?si=bSfxrP4y0gvZe063"
+      "banner": "huyet-an-truy-hanh_LT.webp",
+      "trailer": "https://www.youtube.com/embed/kPVXy5rTO7A?si=bSfxrP4y0gvZe063",
+      "date_added": "2025-05-08"
     },
     {
-      "id": "5",
+      "id": 5,
       "name": "Thiếu Nữ Ánh Trăng",
       "date": "28/03/2025",
       "director": "Chuang Ching-shen",
@@ -77,11 +81,12 @@
       "text_summary": "Một hệ thống giáo dục 'đặc biệt' tại Đài Loan vào những năm 1997 chia lớp học thành 2 dạng lớp đêm và lớp ngày. Học sinh lớp ngày luôn được xem là ưu tú hơn khiến Ai - một học sinh lớp đêm luôn mang trong mình nỗi mặc cảm sâu sắc. 'Cô gái ánh trăng' lớp đêm - Ai luôn mong được đắm mình trong hào quang của những 'ánh mặt trời' lớp ngày và cô đã kết thân với Min. Ai quyết định giả làm học sinh lớp ngày, cùng với Min, họ trải qua những tháng ngày vui vẻ nhất và vô tình cùng mến mộ một chàng trai. Hào quang vụt tắt khi vỏ bọc mỏng manh của Ai bị phát hiện, cuốn Ai vào vòng xoáy của tình yêu, tình bạn và những trăn trở ngọt ngào lẫn chông chênh của tuổi thanh xuân.",
       "status": 2,
       "image": "thieu-nu-anh-trang.webp",
-      "banner": "thieu-nu-anh-trang.jpg",
-      "trailer": "https://www.youtube.com/embed/xh4EIV3cicw?si=VSkpFYywVWPmZsv1"
+      "banner": "thieu-nu-anh-trang.webp",
+      "trailer": "https://www.youtube.com/embed/xh4EIV3cicw?si=VSkpFYywVWPmZsv1",
+      "date_added": "2025-05-08"
     },
     {
-      "id": "6",
+      "id": 6,
       "name": "Cuốc Xe Kinh Hoàng",
       "date": "28/03/2025",
       "director": "Bruce Goodison",
@@ -93,11 +98,12 @@
       "text_summary": "Một tên tài xế taxi đưa một cặp đôi tới một con đường hẻo lánh bị ma ám, tiết lộ động cơ ghê rợn cùng ý định thật sự của hắn.",
       "status": 2,
       "image": "cuoc-xe-kinh-hoang.webp",
-      "banner": "cuoc-xe-kinh-hoang.jpg",
-      "trailer": "https://www.youtube.com/embed/sm66bc2juJE?si=Wd9g7H5cWzMrcsaU"
+      "banner": "cuoc-xe-kinh-hoang.webp",
+      "trailer": "https://www.youtube.com/embed/sm66bc2juJE?si=Wd9g7H5cWzMrcsaU",
+      "date_added": "2025-05-08"
     },
     {
-      "id": "7",
+      "id": 7,
       "name": "Âm Dương Lộ",
       "date": "28/03/2025",
       "director": "Hoàng Tuấn Cường",
@@ -109,11 +115,12 @@
       "text_summary": "Vì mưu sinh, một cử nhân thất nghiệp lén cha chở một thi thể nữ về Tây Nguyên ngay giữa đêm khuya. Trên hành trình, anh buộc phải đối mặt với một thế giới siêu nhiên đầy rẫy vong linh, một cô gái bí ẩn anh đem lòng tơ tưởng và một sự thật hắc ám gắn liền với chiếc xe cứu thương mà anh đang cầm lái",
       "status": 2,
       "image": "am-duong-lo.webp",
-      "banner": "am-duong-lo.jpg",
-      "trailer": "https://www.youtube.com/embed/Hy9-IIroldw?si=NEYH9YKyoVi1ef8s"
+      "banner": "am-duong-lo.webp",
+      "trailer": "https://www.youtube.com/embed/Hy9-IIroldw?si=NEYH9YKyoVi1ef8s",
+      "date_added": "2025-05-08"
     },
     {
-      "id": "8",
+      "id": 8,
       "name": "Nghề Siêu Khó Nói",
       "date": "21/03/2025",
       "director": "LEE Jong-suk",
@@ -125,11 +132,12 @@
       "text_summary": "Dan-bi vốn mơ ước trở thành một tác giả truyện thiếu nhi, nhưng trớ trêu thay, cô lại khởi đầu sự nghiệp tại Đội Bảo vệ Thanh thiếu niên, nơi chuyên kiểm duyệt nội dung khiêu dâm bất hợp pháp. Một ngày nọ, Dan-bi vô tình gây ra tai nạn và phải bồi thường một khoản tiền khổng lồ cho CEO Hwang – ông trùm trong ngành văn học mạng 18+. Từ đây, cô buộc phải ký thỏa thuận viết truyện người lớn để trả nợ. Vốn chưa từng viết truyện người lớn, Dan-bi gặp đủ tình huống dở khóc dở cười. Nhưng nhờ sự cổ vũ của đồng nghiệp Jung-seok - người đang vật lộn với chứng khó “lên”, và nhờ vốn sống phong phú từ hội bạn thân mê buôn chuyện giường chiếu, cô bỗng phát hiện ra tài năng sáng tác thiên phú mà chính mình cũng không ngờ tới…",
       "status": 2,
       "image": "nghe-sieu-kho-noi-poster.webp",
-      "banner": "nghe-sieu-kho-noi-poster.jpg",
-      "trailer": "https://www.youtube.com/embed/25NyBoZOoWc?si=7nW18HKhubBfx6oL"
+      "banner": "nghe-sieu-kho-noi-poster.webp",
+      "trailer": "https://www.youtube.com/embed/25NyBoZOoWc?si=7nW18HKhubBfx6oL",
+      "date_added": "2025-05-08"
     },
     {
-      "id": "9",
+      "id": 9,
       "name": "Nàng Bạch Tuyết",
       "date": "21/03/2025",
       "director": "Marc Webb",
@@ -141,11 +149,12 @@
       "text_summary": "Bản chuyển thể bộ phim hoạt hình nổi tiếng 'Bạch Tuyết Và Bảy Chú Lùn' của Disney năm 1937.",
       "status": 2,
       "image": "nang-bach-tuyet.webp",
-      "banner": "nang-bach-tuyet.jpg",
-      "trailer": "https://www.youtube.com/embed/_lSVVn1Os0o?si=4aZbNVwW5ElRzpr1"
+      "banner": "nang-bach-tuyet.webp",
+      "trailer": "https://www.youtube.com/embed/_lSVVn1Os0o?si=4aZbNVwW5ElRzpr1",
+      "date_added": "2025-05-08"
     },
     {
-      "id": "10",
+      "id": 10,
       "name": "Nhà Ga Ma Chó",
       "date": "21/03/2025",
       "director": "Luis Prieto",
@@ -157,11 +166,12 @@
       "text_summary": "Nhà Ga Ma Chó kể về một bí ẩn đã khiến ga tàu điện ngầm Rocafort ở Barcelona phải rúng động suốt nhiều năm, và điều này đã hoàn toàn xâm nhập vào cuộc sống của Laura kể từ khi cô bắt đầu làm việc tại đây. Cô dần khám phá ra rằng nhiều người đã qua đời tại đây trong những hoàn cảnh hết sức kỳ lạ. Vậy sự thật ẩn sau những cái chết bí ẩn này là gì?",
       "status": 2,
       "image": "poster-nha-ga-ma-cho.webp",
-      "banner": "poster-nha-ga-ma-cho.jpg",
-      "trailer": "https://www.youtube.com/embed/hF3lLs0LH14?si=ipmseJsKEXjIxtPO"
+      "banner": "poster-nha-ga-ma-cho.webp",
+      "trailer": "https://www.youtube.com/embed/hF3lLs0LH14?si=ipmseJsKEXjIxtPO",
+      "date_added": "2025-05-08"
     },
     {
-      "id": "11",
+      "id": 11,
       "name": "Gấu Yêu Của Anh",
       "date": "04/04/2025",
       "director": "Ping Lumpraploeng",
@@ -174,10 +184,11 @@
       "status": 1,
       "image": "gau-yeu-cua-anh.webp",
       "banner": "",
-      "trailer": "https://www.youtube.com/embed/VQOOUxTah0w?si=nb3dtx5OVcYg9m-J"
+      "trailer": "https://www.youtube.com/embed/VQOOUxTah0w?si=nb3dtx5OVcYg9m-J",
+      "date_added": "2025-05-08"
     },
     {
-      "id": "12",
+      "id": 12,
       "name": "Một Bộ Phim Minecraft",
       "date": "04/04/2025",
       "director": "Jared Hess",
@@ -189,11 +200,12 @@
       "text_summary": "Chào mừng bạn đến với thế giới của Minecraft, nơi sự sáng tạo không chỉ giúp bạn chế tạo mà còn là yếu tố quan trọng để sống sót! Bốn kẻ lạc lõng - Garrett 'The Garbage Man' Garrison (Momoa), Henry (Hansen), Natalie (Myers) và Dawn (Brooks) - bất ngờ gặp rắc rối khi họ bị kéo qua cánh cửa bí ẩn dẫn đến Overworld: một thế giới kỳ lạ được tạo bởi những khối lập phương và phát triển nhờ vào trí tưởng tượng. Để trở về nhà, họ cần phải làm chủ được thế giới này (và bảo vệ nó khỏi những thực thể tà ác như Piglins và Thây Ma) trong khi dấn thân vào chuyến phiêu lưu màu nhiệm với một thợ chế tạo chuyên nghiệp và khó lường - Steve (Black). Chuyến hành trình này sẽ thách thức sự can đảm của cả năm người, thúc đẩy họ tìm lại với những phẩm chất làm nên sự đặc biệt của riêng mình,... đồng thời là những kỹ năng cần thiết để trở lại với thế giới thật.",
       "status": 1,
       "image": "minecraft.webp",
-      "banner": "minecraft.jpg",
-      "trailer": "https://www.youtube.com/embed/O1f6L1Pqu28?si=IZJX6sksPivBHlMb"
+      "banner": "minecraft.webp",
+      "trailer": "https://www.youtube.com/embed/O1f6L1Pqu28?si=IZJX6sksPivBHlMb",
+      "date_added": "2025-05-08"
     },
     {
-      "id": "13",
+      "id": 13,
       "name": "Mật Vụ Phụ Hồ",
       "date": "04/04/2025",
       "director": "David Ayer",
@@ -205,11 +217,12 @@
       "text_summary": "Levon Cade - cựu biệt kích tinh nhuệ thuộc lực lượng Thủy quân Lục chiến Hoàng gia Anh. Sau khi nghỉ hưu, anh sống cuộc đời yên bình là một công nhân xây dựng tại Chicago (Mỹ). Levon có mối quan hệ rất tốt với gia đình ông chủ Joe Garcia (Michael Peña). Một ngày nọ, cô con gái tuổi teen Jenny (Arianna Rivas) của Joe bị bắt cóc khiến chàng cựu quân nhân phải sử dụng lại các kỹ năng giết chóc của mình để giúp đỡ.",
       "status": 1,
       "image": "mat-vu-phu-ho.webp",
-      "banner": "mat-vu-phu-ho.jpg",
-      "trailer": "https://www.youtube.com/embed/LYrmg2lRjCs?si=cAxW_M-ZTIpmkOom"
+      "banner": "mat-vu-phu-ho.webp",
+      "trailer": "https://www.youtube.com/embed/LYrmg2lRjCs?si=cAxW_M-ZTIpmkOom",
+      "date_added": "2025-05-08"
     },
     {
-      "id": "14",
+      "id": 14,
       "name": "Oán Linh Nhập Xác",
       "date": "04/04/2025",
       "director": "Upi Avianto",
@@ -221,11 +234,12 @@
       "text_summary": "Oán Linh Nhập Xác xoay quanh hành trình đầy bí ẩn của hai chị em gái Hanif và Isti trong căn nhà ma quái. Mồ côi cha mẹ, chuyển lên thành phố sống từ lâu, Hanif và Isti bất ngờ phải trở về quê nhà sau cuộc gọi từ người dì, thông báo rằng chú của họ đang gặp nguy kịch. Luôn miệng cầu xin hai chị em tha thứ, chú Khair qua đời trong tình trạng yếu ớt và lạnh cóng, còn Hanif và Isti bắt đầu trải qua những sự việc kinh hoàng, thậm chí đe dọa đến mạng sống. Khi người chú không hề siêu thoát mà hóa thành oan hồn đem thảm họa đến căn nhà, Hanif và Isti phải cùng nhau vượt qua, nhưng cũng từ đó khám phá ra những bí mật bị chôn giấu ở nơi đây, về cái chết thảm khốc của cha mẹ và những thành viên khác trong gia đình mình.",
       "status": 1,
       "image": "oan-linh-nhap-xac-poster.webp",
-      "banner": "oan-linh-nhap-xac-poster.jpg",
-      "trailer": "https://www.youtube.com/embed/5vXzMvh4sMU?si=gAKqSFChf6OgRENS"
+      "banner": "oan-linh-nhap-xac-poster.webp",
+      "trailer": "https://www.youtube.com/embed/5vXzMvh4sMU?si=gAKqSFChf6OgRENS",
+      "date_added": "2025-05-08"
     },
     {
-      "id": "15",
+      "id": 15,
       "name": "Pororo Thám Hiểm Đại Dương Xanh",
       "date": "04/04/2025",
       "director": "Kim Hyunho, Yoon Jewan",
@@ -237,11 +251,12 @@
       "text_summary": "Gặp gỡ Pororo và những người bạn trong chuyến phiêu lưu thám hiểm đại dương cùng vô vàn những điều kỳ bí và những bài học bổ ích về biển xanh dành cho các bạn nhỏ. Ước mơ trở thành vệ binh bảo vệ biển cả, Pororo cùng các bạn đã đến thăm binh đoàn Red Hunter nhưng lại vô tình bị 'quái vật' Seatus nuốt chửng. Để giải cứu bạn của mình, Pororo đã vô tình chạm mặt với Marine và phát hiện ra những âm mưu phía sau của binh đoàn Red Hunter.",
       "status": 1,
       "image": "poporo.webp",
-      "banner": "poporo.jpg",
-      "trailer": "https://www.youtube.com/embed/PIVQG-2BWHo?si=meogekfBwxQCBsuS"
+      "banner": "poporo.webp",
+      "trailer": "https://www.youtube.com/embed/PIVQG-2BWHo?si=meogekfBwxQCBsuS",
+      "date_added": "2025-05-08"
     },
     {
-      "id": "16",
+      "id": 16,
       "name": "Buổi Hẹn Hò Kinh Hoàng",
       "date": "11/04/2025",
       "director": "Christopher Landon",
@@ -253,11 +268,12 @@
       "text_summary": "Buổi hẹn hò đầu tiên sau nhiều năm của Violet nhanh chóng trở thành ác mộng khi cô nhận được những tin nhắn ẩn danh kỳ lạ. Kẻ gửi đe dọa giết con trai và em gái cô nếu cô không làm theo yêu cầu của hắn. Trong tuyệt vọng, Violet bị ép đến giới hạn cuối cùng: giết Henry, người đàn ông đang ngồi trước mặt cô. Đương nhiên, Violet không thể làm chuyện điên rồ đó. Cuối phim, cảnh sát đã xuất hiện để giải cứu Violet và Henry, đồng thời tống cổ kẻ nặc danh kia vào tù.",
       "status": 1,
       "image": "drop.webp",
-      "banner": "drop.jpg",
-      "trailer": "https://www.youtube.com/embed/cQ1eYm_XIcA?si=eUkqnXHm9-80_CsH"
+      "banner": "drop.webp",
+      "trailer": "https://www.youtube.com/embed/cQ1eYm_XIcA?si=eUkqnXHm9-80_CsH",
+      "date_added": "2025-05-08"
     },
     {
-      "id": "17",
+      "id": 17,
       "name": "Tà Thuật Huyết Ngải",
       "date": "11/04/2025",
       "director": "Putipong Saisikaew",
@@ -269,11 +285,12 @@
       "text_summary": "Câu chuyện xoay quanh PANOR, một cô gái trẻ ngây thơ sinh ra vào ngày đen tối khi một người nào đó trong làng giải phóng lời nguyền ma thuật đen. Panor được coi là điềm xấu, một người phụ nữ bị nguyền rủa mang lại vận rủi cho ngôi làng và bất kỳ ai dành thời gian với cô đều có nguy cơ trở thành nạn nhân của ma thuật đen. Panor sớm phát hiện ra rằng có thứ gì đó đen tối và mạnh mẽ đã theo dõi cô kể từ ngày cô được sinh ra, nguyền rủa cô phải sống một cuộc sống khốn khổ.",
       "status": 1,
       "image": "ta-thuat-huyet-ngai.webp",
-      "banner": "ta-thuat-huyet-ngai.jpg",
-      "trailer": "https://www.youtube.com/embed/3pciNGgdY_g?si=NQrqIIiPWL2rs78R"
+      "banner": "ta-thuat-huyet-ngai.webp",
+      "trailer": "https://www.youtube.com/embed/3pciNGgdY_g?si=NQrqIIiPWL2rs78R",
+      "date_added": "2025-05-08"
     },
     {
-      "id": "18",
+      "id": 18,
       "name": "Tìm Xác: Ma Không Đầu",
       "date": "18/04/2025",
       "director": "Bùi Văn Hải",
@@ -285,11 +302,12 @@
       "text_summary": "'Tìm Xác - Ma Không Đầu' xoay quanh câu chuyện của Tiến (Tiến Luật) làm nghề hốt xác, sống cùng người mẹ loạn thần và Thành (Ngô Kiến Huy) là một tài xế xe cứu thương. Cả hai gặp nhau trong chuyến xe cứu thương đang chở một cái xác không đầu. Từ đây, Tiến và Thành gặp phải những hiện tượng quỷ dị dẫn họ đến một hành trình đầy những bất ngờ, nhiều trắc trở, khó đoán nhằm truy tìm các bộ phần còn lại của cái xác không đầu nhằm xác minh danh tính của cái xác.",
       "status": 1,
       "image": "tim-xac.webp",
-      "banner": "tim-xac.jpg",
-      "trailer": "https://www.youtube.com/embed/Ij19LCYrGrE?si=Ook7wzC8VENXhhOx"
+      "banner": "tim-xac.webp",
+      "trailer": "https://www.youtube.com/embed/Ij19LCYrGrE?si=Ook7wzC8VENXhhOx",
+      "date_added": "2025-05-08"
     },
     {
-      "id": "19",
+      "id": 19,
       "name": "Đêm Thánh: Hội Săn Quỷ",
       "date": "25/04/2025",
       "director": "Lim Dae-hee",
@@ -301,11 +319,12 @@
       "text_summary": "Tổ đội săn lùng và tiêu diệt các thế lực tôn thờ quỷ dữ với những sức mạnh siêu nhiên khác nhau gồm “tay đấm” Ma Dong-seok, Seohuyn (SNSD) và David Lee hứa hẹn mở ra cuộc chiến săn quỷ khốc liệt nhất dịp lễ 30/4 này!",
       "status": 1,
       "image": "dem-thanh-doi-san-quy.webp",
-      "banner": "dem-thanh-doi-san-quy.jpg",
-      "trailer": "https://www.youtube.com/embed/RWZ5psmKxDk?si=cGjN6PP2EcltOoHy"
+      "banner": "dem-thanh-doi-san-quy.webp",
+      "trailer": "https://www.youtube.com/embed/RWZ5psmKxDk?si=cGjN6PP2EcltOoHy",
+      "date_added": "2025-05-08"
     },
     {
-      "id": "20",
+      "id": 20,
       "name": "Mật Danh: Kế Toán 2",
       "date": "25/04/2025",
       "director": "Gavin O'Connor",
@@ -317,11 +336,12 @@
       "text_summary": "Christian Wolff (Ben Affleck) sở hữu tài năng giải quyết những vấn đề phức tạp. Khi một người bạn cũ bị ám sát, để lại một thông điệp mơ hồ yêu cầu 'truy tìm kế toán', Wolff bị cuốn vào việc giải quyết vụ án. Nhận ra rằng cần phải có những biện pháp cực đoan, Wolff đã liên lạc với người anh trai xa cách và vô cùng nguy hiểm của mình, Brax (Jon Bernthal), để cùng nhau điều tra. Cùng với Phó Giám đốc Cục Tài chính Marybeth Medina (Cynthia Addai-Robinson), họ phát hiện ra một âm mưu chết người, trở thành mục tiêu của một mạng lưới sát thủ tàn bạo, sẵn sàng làm mọi thứ để chôn vùi những bí mật của mình.",
       "status": 1,
       "image": "mat-danh-ke-toan.webp",
-      "banner": "mat-danh-ke-toan.jpg",
-      "trailer": "https://www.youtube.com/embed/x3wVJU0lZ1M?si=bmhyLqXuvO8oKWVU"
+      "banner": "mat-danh-ke-toan.webp",
+      "trailer": "https://www.youtube.com/embed/x3wVJU0lZ1M?si=bmhyLqXuvO8oKWVU",
+      "date_added": "2025-05-08"
     },
     {
-      "id": "21",
+      "id": 21,
       "name": "Kayara: Cô Bé Chiến Binh",
       "date": "04/04/2025",
       "director": "César Zelada",
@@ -333,14 +353,116 @@
       "text_summary": "Kayara, một thiếu nữ xinh đẹp và mạnh mẽ, quyết tâm trở thành nữ sứ giả đầu tiên của Đế chế Inca. Trên hành trình đầy thử thách, cô gái phải vượt qua nhiều khó khăn và sự hiểm trở để bảo vệ thành phố Vàng khỏi những nguy cơ khai thác và cứu bạn bè, gia đình khỏi những mối đe dọa bất ngờ. Trong hành trình đầy thử thách đó, Kayara học được rằng sức mạnh thực sự không chỉ nằm ở thể chất mà còn ở sức mạnh của trí tuệ và sự đoàn kết.",
       "status": 1,
       "image": "kayara.webp",
-      "banner": "kayara.jpg",
-      "trailer": "https://www.youtube.com/embed/9MFHYvdtrRw?si=7t9CziixhOnKW-ec"
+      "banner": "kayara.webp",
+      "trailer": "https://www.youtube.com/embed/9MFHYvdtrRw?si=7t9CziixhOnKW-ec",
+      "date_added": "2025-05-08"
+    },
+    {
+      "id": 22,
+      "name": "Lật Mặt 8: Vòng Tay Nắng",
+      "date": "2025-04-30",
+      "director": "Lý Hải",
+      "nation": "Việt Nam",
+      "age": 13,
+      "category": "Gia đình, Tâm lý",
+      "language": "Tiếng Việt",
+      "time": 135,
+      "text_summary": "Phần thứ 8 trong loạt phim \"Lật Mặt\" tiếp tục mang đến câu chuyện cảm động về tình cảm gia đình, với những tình huống hài hước và cảm động.",
+      "status": 1,
+      "image": "lat-mat-8.webp",
+      "banner": "lat-mat-8.webp",
+      "trailer": "https://www.youtube.com/embed/W_0AMP9yO1w?si=j2wnhyAKkW3wefm9",
+      "date_added": "2025-05-08"
+    },
+    {
+      "id": 23,
+      "name": "Thám Tử Kiên: Kỳ Án Không Đầu",
+      "date": "2025-04-28",
+      "director": "Victor Vũ",
+      "nation": "Việt Nam",
+      "age": 16,
+      "category": "Kinh dị",
+      "language": "Tiếng Việt",
+      "time": 131,
+      "text_summary": "Một vụ án bí ẩn không có đầu mối khiến thám tử Kiên phải đối mặt với những thử thách chưa từng có.",
+      "status": 1,
+      "image": "tham-tu-kien.webp",
+      "banner": "tham-tu-kien.webp",
+      "trailer": "https://www.youtube.com/embed/QiXNbEKF3U0?si=48nddxOumpDE0HMV",
+      "date_added": "2025-05-08"
+    },
+    {
+      "id": 24,
+      "name": "Biệt Đội Sấm Sét",
+      "date": "2025-04-30",
+      "director": "Jake Schreier",
+      "nation": "Việt Nam",
+      "age": 13,
+      "category": "Phiêu lưu",
+      "language": "Tiếng Việt",
+      "time": 126,
+      "text_summary": "Một nhóm người trẻ tuổi hợp tác để giải cứu thế giới khỏi một mối đe dọa siêu nhiên.",
+      "status": 1,
+      "image": "biet-doi-sam-set.webp",
+      "banner": "biet-doi-sam-set.webp",
+      "trailer": "https://www.youtube.com/embed/AWE9xJ5SL3o?si=lb6iescfjy3E3H-j",
+      "date_added": "2025-05-08"
+    },
+    {
+      "id": 25,
+      "name": "Khủng Long Xanh Du Hành Thế Giới Truyện Tranh",
+      "date": "2025-04-30",
+      "director": "Wojtek Wawszczyk",
+      "nation": "Hàn Quốc",
+      "age": 0,
+      "category": "Hoạt hình",
+      "language": "Tiếng Việt (lồng tiếng)",
+      "time": 90,
+      "text_summary": "Chú khủng long xanh đáng yêu bắt đầu cuộc phiêu lưu kỳ thú qua các thế giới truyện tranh đầy màu sắc.",
+      "status": 1,
+      "image": "khung-long-xanh.webp",
+      "banner": "khung-long-xanh.webp",
+      "trailer": "https://www.youtube.com/embed/LWOK4OP66BE?si=S-5u3p1da5PQBvZH",
+      "date_added": "2025-05-08"
+    },
+    {
+      "id": 26,
+      "name": "Địa Đạo: Mặt Trời Trong Bóng Tối",
+      "date": "2025-04-04",
+      "director": "Bùi Thạc Chuyên",
+      "nation": "Việt Nam",
+      "age": 0,
+      "category": "Chiến tranh, Lịch sử",
+      "language": "Tiếng Việt",
+      "time": 0,
+      "text_summary": "Phim kể về những chiến sĩ kiên cường trong hệ thống địa đạo huyền thoại trong thời kỳ kháng chiến.",
+      "status": 1,
+      "image": "dia-dao-mat-troi.webp",
+      "banner": "dia-dao-mat-troi.webp",
+      "trailer": "https://www.youtube.com/embed/xh6IDHjvytU?si=Sm8on13G8f70OZHw",
+      "date_added": "2025-05-08"
     }
   ],
   "brand": [
     {
       "id": "1",
-      "name": "cinema"
+      "name": "Cinestar",
+      "image": "logo_Cinestar.webp"
+    },
+    {
+      "id": "2",
+      "name": "Beta Cinemas",
+      "image": "logo_beta.webp"
+    },
+    {
+      "id": "3",
+      "name": "CGV Cinemas",
+      "image": "logo_CGV.webp"
+    },
+    {
+      "id": "4",
+      "name": "Galaxy Cinema",
+      "image": "logo_Galaxy.webp"
     }
   ],
   "location": [
@@ -351,11 +473,87 @@
     {
       "id": "2",
       "city": "Hà Nội"
+    },
+    {
+      "id": "3",
+      "city": "Đà Nẵng"
+    },
+    {
+      "id": "4",
+      "city": "Cần Thơ"
+    },
+    {
+      "id": "5",
+      "city": "Biên Hòa"
+    },
+    {
+      "id": "6",
+      "city": "Long Khánh"
+    },
+    {
+      "id": "7",
+      "city": "Bắc Giang"
+    },
+    {
+      "id": "8",
+      "city": "Lào Cai"
+    },
+    {
+      "id": "9",
+      "city": "Vĩnh Yên"
+    },
+    {
+      "id": "10",
+      "city": "Kiên Giang"
+    },
+    {
+      "id": "11",
+      "city": "Hải Phòng"
+    },
+    {
+      "id": "12",
+      "city": "Bến Tre"
+    },
+    {
+      "id": "13",
+      "city": "Cà Mau"
+    },
+    {
+      "id": "14",
+      "city": "Vinh"
+    },
+    {
+      "id": "15",
+      "city": "Nha Trang"
+    },
+    {
+      "id": "16",
+      "city": "Hạ Long"
+    },
+    {
+      "id": "17",
+      "city": "Bình Dương"
+    },
+    {
+      "id": "18",
+      "city": "Thừa Thiên Huế"
+    },
+    {
+      "id": "19",
+      "city": "Tây Ninh"
+    },
+    {
+      "id": "20",
+      "city": "Bà Rịa - Vũng Tàu"
+    },
+    {
+      "id": "21",
+      "city": "Huế"
     }
   ],
   "thear": [
     {
-      "id": "1",
+      "id": 1,
       "id_brand": 1,
       "name": "Cinestar Quốc Thanh",
       "location": {
@@ -364,7 +562,7 @@
       }
     },
     {
-      "id": "2",
+      "id": 2,
       "id_brand": 1,
       "name": "Cinestar Hai Bà Trưng",
       "location": {
@@ -373,18 +571,172 @@
       }
     },
     {
-      "id": "7d87",
+      "id": 3,
       "id_brand": 1,
-      "name": "tao quang nef",
+      "name": "Cinestar Sinh Viên",
       "location": {
-        "city": "K",
-        "detail": "310 kkkkkkk"
+        "city": 17,
+        "detail": "Nhà Văn hóa Sinh viên, Đại học Quốc gia TP.HCM, Phường Đông Hòa, Thị xã Dĩ An, Bình Dương"
+      }
+    },
+    {
+      "id": 4,
+      "id_brand": 2,
+      "name": "Beta Thanh Xuân",
+      "location": {
+        "city": 2,
+        "detail": "Tầng hầm B1, tòa nhà Golden West, số 2 Lê Văn Thiêm, phường Nhân Chính, quận Thanh Xuân, Hà Nội"
+      }
+    },
+    {
+      "id": 5,
+      "id_brand": 2,
+      "name": "Beta Giải Phóng",
+      "location": {
+        "city": 2,
+        "detail": "Tầng 3, tòa IP2, Chung cư Imperial Plaza, 360 Giải Phóng, phường Phương Liệt, quận Thanh Xuân, Hà Nội"
+      }
+    },
+    {
+      "id": 6,
+      "id_brand": 2,
+      "name": "Beta Quang Trung",
+      "location": {
+        "city": 1,
+        "detail": "645 Quang Trung, phường 11, quận Gò Vấp, TP. Hồ Chí Minh"
+      }
+    },
+    {
+      "id": 7,
+      "id_brand": 2,
+      "name": "Beta Trần Quang Khải",
+      "location": {
+        "city": 1,
+        "detail": "62 Đ. Trần Quang Khải, Phường Tân Định, Quận 1, Hồ Chí Minh"
+      }
+    },
+    {
+      "id": 8,
+      "id_brand": 2,
+      "name": "Beta Ung Văn Khiêm",
+      "location": {
+        "city": 1,
+        "detail": "tòa nhà PAX SKY, 26 Ung Văn Khiêm, Phường 25, Bình Thạnh, Hồ Chí Minh"
+      }
+    },
+    {
+      "id": 9,
+      "id_brand": 2,
+      "name": "Beta Long Khánh",
+      "location": {
+        "city": 6,
+        "detail": "Tầng 5, Siêu thị Hoàng Đức, số 198 Hùng Vương, phường Xuân An, TP. Long Khánh, Đồng Nai"
+      }
+    },
+    {
+      "id": 10,
+      "id_brand": 2,
+      "name": "Beta Bắc Giang",
+      "location": {
+        "city": 7,
+        "detail": "Tầng 4, siêu thị Co.opmart Bắc Giang, 51 Nguyễn Văn Cừ, phường Ngô Quyền, TP. Bắc Giang"
+      }
+    },
+    {
+      "id": 11,
+      "id_brand": 2,
+      "name": "Beta TRMall Phú Quốc",
+      "location": {
+        "city": 10,
+        "detail": "Trung tâm thương mại TRMall, Thành phố Phú Quốc, tỉnh Kiên Giang"
+      }
+    },
+    {
+      "id": 12,
+      "id_brand": 3,
+      "name": "CGV Vincom Đồng Khởi",
+      "location": {
+        "city": 1,
+        "detail": "72 Lê Thánh Tôn, P. Bến Nghé, Quận 1, TP. Hồ Chí Minh"
+      }
+    },
+    {
+      "id": 13,
+      "id_brand": 3,
+      "name": "CGV Hoàng Văn Thụ",
+      "location": {
+        "city": 1,
+        "detail": "Tầng 1 và 2, Gala Center, số 415, Hoàng Văn Thụ, Phường 2, Quận Tân Bình, TP. Hồ Chí Minh"
+      }
+    },
+    {
+      "id": 14,
+      "id_brand": 3,
+      "name": "CGV Vincom Gò Vấp",
+      "location": {
+        "city": 1,
+        "detail": "Tầng 5, TTTM Vincom Plaza Gò Vấp, 12 Phan Văn Trị, P.7, Quận Gò Vấp, TP. Hồ Chí Minh"
+      }
+    },
+    {
+      "id": 15,
+      "id_brand": 3,
+      "name": "CGV Aeon Mall Bình Tân",
+      "location": {
+        "city": 1,
+        "detail": "Tầng 3, TTTM Aeon Mall Bình Tân, Số 1 đường số 17A, khu phố 11, P. Bình Trị Đông B, Quận Bình Tân, TP. Hồ Chí Minh"
+      }
+    },
+    {
+      "id": 16,
+      "id_brand": 3,
+      "name": "CGV Sư Vạn Hạnh",
+      "location": {
+        "city": 1,
+        "detail": "Tầng 6, Vạn Hạnh Mall, 11 Sư Vạn Hạnh, Phường 12, Quận 10, TP. Hồ Chí Minh"
+      }
+    },
+    {
+      "id": 17,
+      "id_brand": 3,
+      "name": "CGV Aeon Mall Long Biên",
+      "location": {
+        "city": 2,
+        "detail": "27 Cổ Linh, Quận Long Biên, Hà Nội"
+      }
+    },
+    {
+      "id": 18,
+      "id_brand": 4,
+      "name": "Galaxy Quang Trung",
+      "location": {
+        "city": 1,
+        "detail": "Lầu 3, Trung tâm thương mại Coopmart, 304A Quang Trung, Phường 11, Quận Gò Vấp, TP. Hồ Chí Minh"
+      }
+    },
+    {
+      "id": 19,
+      "id_brand": 4,
+      "name": "Galaxy Tân Bình",
+      "location": {
+        "city": 1,
+        "detail": "246 Nguyễn Hồng Đào, Phường 13, Quận Tân Bình, TP. Hồ Chí Minh"
+      }
+    },
+    {
+      "id": 20,
+      "id_brand": 4,
+      "name": "Galaxy Trung Chánh",
+      "location": {
+        "city": 1,
+        "detail": "Trung tâm văn hóa Quận 12, Số 09 Quốc Lộ 22, Phường Trung Mỹ Tây, Quận 12, TP. Hồ Chí Minh"
       }
     }
   ],
+
   "room": [
     {
-      "id": "1",
+      "id": 1,
       "code_room": 1,
       "id_thear": 1,
       "diagram": {
@@ -414,7 +766,7 @@
       }
     },
     {
-      "id": "2",
+      "id": 2,
       "id_thear": 1,
       "room_code": 3,
       "diagram": {
@@ -429,7 +781,7 @@
       }
     },
     {
-      "id": "3",
+      "id": 3,
       "id_thear": 1,
       "room_code": 4,
       "diagram": {
@@ -447,7 +799,7 @@
       }
     },
     {
-      "id": "4",
+      "id": 4,
       "id_thear": 1,
       "room_code": 2,
       "diagram": {
@@ -467,7 +819,7 @@
       }
     },
     {
-      "id": "5",
+      "id": 5,
       "id_thear": 1,
       "room_code": 5,
       "diagram": {
@@ -501,8 +853,2335 @@
         },
         "element_selecting": []
       }
+    },
+    {
+      "id": 6,
+      "code_room": 6,
+      "id_thear": 2,
+      "diagram": {
+        "row": 4,
+        "colunm": 5,
+        "element_remove": {
+          "E": [3]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 7,
+      "code_room": 2,
+      "id_thear": 2,
+      "diagram": {
+        "row": 13,
+        "colunm": 15,
+        "element_remove": {
+          "A": [1, 2, 3, 4],
+          "B": [1, 2, 3, 4],
+          "C": [1, 2, 3, 4],
+          "D": [1, 2, 3, 4],
+          "E": [1, 2, 3, 4],
+          "F": [1, 2, 3, 4],
+          "G": [1, 2, 3, 4],
+          "H": [1, 2, 3, 4],
+          "J": [1, 2, 3, 4],
+          "K": [1, 2, 3, 4],
+          "L": [3, 4],
+          "M": [3, 4],
+          "N": [3, 4],
+          "O": [3, 4, 10]
+        },
+        "double_Chair": {
+          "P": [1, 2, 3]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 8,
+      "code_room": 3,
+      "id_thear": 2,
+      "diagram": {
+        "row": 16,
+        "colunm": 15,
+        "element_remove": {
+          "A": [1, 2, 3, 4],
+          "B": [1, 2, 3, 4],
+          "C": [1, 2, 3, 4],
+          "D": [1, 2, 3, 4],
+          "E": [1, 2, 3, 4],
+          "F": [1, 2, 3, 4],
+          "G": [1, 2, 3, 4],
+          "H": [1, 2, 3, 4],
+          "J": [1, 2, 3, 4],
+          "K": [3, 4],
+          "L": [3, 4],
+          "M": [3, 4],
+          "N": [3, 4],
+          "O": [6, 10, 11]
+        },
+        "double_Chair": {
+          "P": [1, 2, 3]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 9,
+      "code_room": 1,
+      "id_thear": 2,
+      "diagram": {
+        "row": 18,
+        "colunm": 14,
+        "element_remove": {
+          "A": [1, 2, 5, 6],
+          "B": [1, 2, 5, 6],
+          "C": [1, 2, 5, 6],
+          "D": [1, 2, 5, 6],
+          "E": [1, 2, 5, 6],
+          "F": [1, 2, 5, 6],
+          "G": [1, 2, 5, 6],
+          "H": [1, 2, 5, 6],
+          "J": [1, 2, 5, 6],
+          "K": [5, 6],
+          "L": [5, 6],
+          "M": [5, 6],
+          "N": [5, 6],
+          "O": []
+        },
+        "double_Chair": {
+          "O": [1, 2]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 10,
+      "code_room": 5,
+      "id_thear": 3,
+      "diagram": {
+        "row": 26,
+        "colunm": 15,
+        "element_remove": {
+          "A": [1, 2, 3, 4, 5, 6, 7, 8, 11, 14, 16, 19, 22, 25],
+          "B": [1, 2, 3, 4, 5, 6, 7, 8, 11, 14, 16, 19, 22, 25],
+          "C": [1, 2, 3, 4, 5, 6, 7, 8, 11, 14, 16, 19, 22, 25],
+          "D": [1, 2, 3, 4, 5, 6, 7, 8, 11, 14, 16, 19, 22, 25],
+          "E": [1, 2, 3, 4, 5, 6, 7, 8, 11, 14, 16, 19, 22, 25],
+          "F": [1, 2, 3, 4, 5, 6, 7, 8, 11, 14, 16, 19, 22, 25],
+          "G": [1, 2, 3, 4, 5, 6, 7, 8, 11, 14, 16, 19, 22, 25],
+          "H": [1, 2, 3, 4, 5, 6, 7, 8, 11, 14, 16, 19, 22, 25],
+          "J": [1, 2, 3, 4, 5, 6, 7, 8, 11, 14, 16, 19, 22, 25],
+          "K": [3, 4, 5, 6, 7, 8, 11, 14, 16, 19, 22, 25],
+          "L": [3, 4, 5, 6, 7, 8, 11, 14, 16, 19, 22, 25],
+          "M": [3, 4, 5, 6, 7, 8, 11, 14, 16, 19, 22, 25],
+          "N": [3, 4, 5, 6, 7, 8, 11, 14, 16, 19, 22, 25],
+          "O": [1, 4, 5, 8, 9, 11, 14, 16, 18, 19, 22, 25, 26]
+        },
+        "double_Chair": {
+          "O": [1, 2],
+          "P": [1]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 11,
+      "code_room": 2,
+      "id_thear": 3,
+      "diagram": {
+        "row": 21,
+        "colunm": 10,
+        "element_remove": {
+          "A": [1, 2, 5, 6, 7],
+          "B": [1, 2, 5, 6, 7],
+          "C": [1, 2, 5, 6, 7],
+          "D": [1, 2, 5, 6, 7, 21],
+          "E": [1, 2, 5, 6, 7, 21],
+          "F": [1, 2, 5, 6, 7],
+          "G": [1, 2, 5, 6, 7],
+          "H": [1, 2, 5, 6, 7],
+          "J": [1, 2, 5, 6, 7]
+        },
+        "double_Chair": {
+          "K": [1, 2, 3, 4, 5, 6, 7, 8]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 12,
+      "code_room": 3,
+      "id_thear": 3,
+      "diagram": {
+        "row": 22,
+        "colunm": 14,
+        "element_remove": {
+          "A": [1, 2, 3, 6, 7, 8, 22],
+          "B": [1, 2, 3, 6, 7, 8],
+          "C": [1, 2, 3, 6, 7, 8],
+          "D": [1, 2, 3, 6, 7, 8],
+          "E": [1, 2, 3, 6, 7, 8],
+          "F": [1, 2, 3, 6, 7, 8],
+          "G": [1, 2, 5, 6, 7, 22],
+          "H": [1, 2, 5, 6, 7, 22],
+          "J": [6, 7, 8],
+          "K": [6, 7, 8],
+          "L": [6, 7, 8],
+          "M": [1, 2, 6, 7, 8, 22],
+          "N": [1, 2, 3, 6, 7, 8, 20, 21, 22]
+        },
+        "double_Chair": {
+          "O": [1, 2, 3, 4, 5]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 13,
+      "code_room": 1,
+      "id_thear": 3,
+      "diagram": {
+        "row": 19,
+        "colunm": 14,
+        "element_remove": {
+          "A": [19],
+          "B": [1, 19],
+          "C": [19],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": [1],
+          "J": [1],
+          "K": [],
+          "L": [],
+          "M": [],
+          "N": [1, 2]
+        },
+        "double_Chair": {
+          "O": [1, 2, 3, 4, 5, 6, 7]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 14,
+      "code_room": 5,
+      "id_thear": 4,
+      "diagram": {
+        "row": 10,
+        "colunm": 10,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [10],
+          "G": [10],
+          "H": [10],
+          "I": []
+        },
+        "double_Chair": {
+          "J": [1, 2, 3, 4]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 15,
+      "code_room": 4,
+      "id_thear": 4,
+      "diagram": {
+        "row": 15,
+        "colunm": 10,
+        "element_remove": {
+          "A": [14, 15],
+          "B": [15],
+          "C": [15],
+          "D": [2, 3, 4],
+          "E": [],
+          "F": [],
+          "G": [14, 15],
+          "H": [14, 15],
+          "I": [14, 15]
+        },
+        "double_Chair": {
+          "J": [1, 2, 3, 4, 5, 6]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 16,
+      "code_room": 2,
+      "id_thear": 4,
+      "diagram": {
+        "row": 15,
+        "colunm": 12,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [1],
+          "D": [1, 10, 15],
+          "E": [1],
+          "F": [],
+          "G": [],
+          "H": [],
+          "I": [],
+          "J": [1, 2],
+          "K": [1, 2]
+        },
+        "double_Chair": {
+          "L": [1, 2, 3, 4, 5, 6]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 17,
+      "code_room": 1,
+      "id_thear": 4,
+      "diagram": {
+        "row": 15,
+        "colunm": 12,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [1, 2, 15],
+          "D": [1, 15],
+          "E": [],
+          "F": [7, 8, 9, 10, 11, 12, 13, 14, 15],
+          "G": [],
+          "H": [],
+          "I": [],
+          "J": [11, 12, 13, 14, 15],
+          "K": [1, 10, 11, 12, 13, 14, 15]
+        },
+        "double_Chair": {
+          "L": [1, 2, 3, 4, 5]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 18,
+      "code_room": 6,
+      "id_thear": 4,
+      "diagram": {
+        "row": 15,
+        "colunm": 9,
+        "element_remove": {
+          "A": [15],
+          "B": [8, 15],
+          "C": [14, 15],
+          "D": [],
+          "E": [15],
+          "F": [],
+          "G": [14, 15],
+          "H": [14, 15]
+        },
+        "double_Chair": {
+          "I": [1, 2, 3, 4, 5]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 19,
+      "code_room": 3,
+      "id_thear": 4,
+      "diagram": {
+        "row": 15,
+        "colunm": 11,
+        "element_remove": {
+          "A": [15],
+          "B": [],
+          "C": [8, 15],
+          "D": [8, 9, 10, 11, 15],
+          "E": [15],
+          "F": [],
+          "G": [15],
+          "H": [15],
+          "I": [15],
+          "J": [3, 4, 5, 6, 13, 14, 15]
+        },
+        "double_Chair": {
+          "K": [1, 2, 3, 4, 5, 6]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 20,
+      "code_room": 3,
+      "id_thear": 5,
+      "diagram": {
+        "row": 12,
+        "colunm": 10,
+        "element_remove": {
+          "A": [12],
+          "B": [12],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": [],
+          "I": []
+        },
+        "double_Chair": {
+          "J": [1, 2, 3, 4]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 21,
+      "code_room": 5,
+      "id_thear": 5,
+      "diagram": {
+        "row": 12,
+        "colunm": 9,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": [],
+          "I": []
+        },
+        "double_Chair": {
+          "J": [1, 2, 3, 4, 5]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 22,
+      "code_room": 1,
+      "id_thear": 5,
+      "diagram": {
+        "row": 11,
+        "colunm": 11,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": [],
+          "I": [],
+          "J": []
+        },
+        "double_Chair": {
+          "K": [1, 2, 3]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 23,
+      "code_room": 4,
+      "id_thear": 5,
+      "diagram": {
+        "row": 12,
+        "colunm": 10,
+        "element_remove": {
+          "A": [12],
+          "B": [12],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": [],
+          "I": []
+        },
+        "double_Chair": {
+          "J": [1, 2, 3]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 24,
+      "code_room": 6,
+      "id_thear": 5,
+      "diagram": {
+        "row": 11,
+        "colunm": 11,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": [],
+          "I": [],
+          "J": []
+        },
+        "double_Chair": {
+          "k": [1, 2, 3, 4]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 25,
+      "code_room": 2,
+      "id_thear": 5,
+      "diagram": {
+        "row": 12,
+        "colunm": 9,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": []
+        },
+        "double_Chair": {
+          "I": [1, 2, 3, 4, 5]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 26,
+      "code_room": 4,
+      "id_thear": 6,
+      "diagram": {
+        "row": 17,
+        "colunm": 10,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [1, 2],
+          "G": [1, 2],
+          "H": [1, 2],
+          "I": [1, 2]
+        },
+        "double_Chair": {
+          "J": [1, 2, 3, 4, 5, 6]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 27,
+      "code_room": 2,
+      "id_thear": 6,
+      "diagram": {
+        "row": 12,
+        "colunm": 11,
+        "element_remove": {
+          "A": [1, 2],
+          "B": [1, 2],
+          "C": [1, 2],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": [],
+          "I": [],
+          "J": []
+        },
+        "double_Chair": {
+          "K": [1, 2, 3, 4, 5]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 28,
+      "code_room": 5,
+      "id_thear": 6,
+      "diagram": {
+        "row": 17,
+        "colunm": 12,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [1, 2],
+          "G": [1, 2],
+          "H": [1, 2],
+          "I": [1, 2],
+          "J": [1, 2],
+          "K": [1, 2]
+        },
+        "double_Chair": {
+          "L": [1, 2, 3, 4, 5, 6]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 29,
+      "code_room": 3,
+      "id_thear": 6,
+      "diagram": {
+        "row": 16,
+        "colunm": 12,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [1, 2],
+          "G": [1, 2],
+          "H": [1, 2],
+          "I": [1, 2],
+          "J": [1, 2],
+          "K": [1, 2]
+        },
+        "double_Chair": {
+          "L": [1, 2, 3, 4, 5, 6]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 30,
+      "code_room": 1,
+      "id_thear": 6,
+      "diagram": {
+        "row": 12,
+        "colunm": 11,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": [],
+          "I": [],
+          "J": []
+        },
+        "double_Chair": {
+          "k": [1, 2, 3, 4]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 31,
+      "code_room": 6,
+      "id_thear": 6,
+      "diagram": {
+        "row": 12,
+        "colunm": 11,
+        "element_remove": {
+          "A": [1, 2],
+          "B": [1, 2],
+          "C": [1, 2],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": [],
+          "I": [],
+          "J": []
+        },
+        "double_Chair": {
+          "k": [1, 2, 3, 4]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 32,
+      "code_room": 3,
+      "id_thear": 7,
+      "diagram": {
+        "row": 14,
+        "colunm": 7,
+        "element_remove": {
+          "A": [1, 2, 3],
+          "B": [1, 2, 3],
+          "C": [1, 2, 3],
+          "D": [1, 2, 3],
+          "E": [1, 2, 3],
+          "F": [1, 2, 3],
+          "G": [14]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 32,
+      "code_room": 1,
+      "id_thear": 7,
+      "diagram": {
+        "row": 15,
+        "colunm": 9,
+        "element_remove": {
+          "A": [1, 2, 3, 4],
+          "B": [1, 2, 3, 4],
+          "C": [1, 2, 3, 4],
+          "D": [1, 2, 3, 4],
+          "E": [1, 2, 3, 4],
+          "F": [1, 2, 3, 4],
+          "G": [1, 2, 3, 4],
+          "H": [1, 2, 3, 4],
+          "I": [15]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 33,
+      "code_room": 5,
+      "id_thear": 7,
+      "diagram": {
+        "row": 10,
+        "colunm": 5,
+        "element_remove": {
+          "A": [1, 2],
+          "B": [1, 2],
+          "C": [1, 2],
+          "D": [1, 2],
+          "E": [10]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 34,
+      "code_room": 4,
+      "id_thear": 7,
+      "diagram": {
+        "row": 12,
+        "colunm": 6,
+        "element_remove": {
+          "A": [3],
+          "B": [3],
+          "C": [3],
+          "D": [3],
+          "E": [3],
+          "F": [3, 4]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 35,
+      "code_room": 2,
+      "id_thear": 7,
+      "diagram": {
+        "row": 11,
+        "colunm": 5,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [1]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 36,
+      "code_room": 4,
+      "id_thear": 8,
+      "diagram": {
+        "row": 12,
+        "colunm": 11,
+        "element_remove": {
+          "A": [1, 2, 3, 4],
+          "B": [1, 2, 3, 4],
+          "C": [1, 2, 3, 4],
+          "D": [1, 2, 3, 4],
+          "E": [1, 2, 3, 4],
+          "F": [1, 2],
+          "G": [1, 2],
+          "H": [1, 2],
+          "I": [1, 2],
+          "J": []
+        },
+        "double_Chair": {
+          "k": [1, 2, 3, 4, 5, 6]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 37,
+      "code_room": 2,
+      "id_thear": 8,
+      "diagram": {
+        "row": 11,
+        "colunm": 12,
+        "element_remove": {
+          "A": [1],
+          "B": [1],
+          "C": [1],
+          "D": [1],
+          "E": [1],
+          "F": [],
+          "G": [],
+          "H": [],
+          "I": [],
+          "J": [],
+          "k": []
+        },
+        "double_Chair": {
+          "L": [1, 2, 3, 4, 5]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 38,
+      "code_room": 5,
+      "id_thear": 8,
+      "diagram": {
+        "row": 11,
+        "colunm": 12,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [1, 2],
+          "G": [1, 2],
+          "H": [1, 2],
+          "I": [1, 2],
+          "J": [1]
+        },
+        "double_Chair": {
+          "K": [1, 2, 3, 4, 5, 6]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 39,
+      "code_room": 1,
+      "id_thear": 8,
+      "diagram": {
+        "row": 12,
+        "colunm": 12,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [1],
+          "E": [1],
+          "F": [],
+          "G": [],
+          "H": [],
+          "I": [],
+          "J": [],
+          "K": []
+        },
+        "double_Chair": {
+          "L": [1, 2, 3, 4, 5]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 40,
+      "code_room": 3,
+      "id_thear": 8,
+      "diagram": {
+        "row": 12,
+        "colunm": 11,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": [],
+          "I": [],
+          "J": []
+        },
+        "double_Chair": {
+          "K": [1, 2, 3, 4, 5, 6]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 41,
+      "code_room": 1,
+      "id_thear": 9,
+      "diagram": {
+        "row": 12,
+        "colunm": 8,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": [1]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 42,
+      "code_room": 2,
+      "id_thear": 9,
+      "diagram": {
+        "row": 13,
+        "colunm": 7,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [11, 12, 13]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 43,
+      "code_room": 3,
+      "id_thear": 10,
+      "diagram": {
+        "row": 18,
+        "colunm": 13,
+        "element_remove": {
+          "A": [6],
+          "B": [6],
+          "C": [6],
+          "D": [6],
+          "E": [6],
+          "F": [6],
+          "G": [6],
+          "H": [6, 17, 18],
+          "I": [6, 17, 18],
+          "J": [6, 17, 18],
+          "k": [6, 17, 18],
+          "L": [6, 17, 18]
+        },
+        "double_Chair": {
+          "M": [1, 2, 3, 4, 5, 6, 7]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 44,
+      "code_room": 1,
+      "id_thear": 10,
+      "diagram": {
+        "row": 16,
+        "colunm": 11,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": [],
+          "I": [],
+          "J": []
+        },
+        "double_Chair": {
+          "K": [1, 2, 3, 4, 5, 6, 7]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 45,
+      "code_room": 2,
+      "id_thear": 10,
+      "diagram": {
+        "row": 13,
+        "colunm": 13,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": [1, 2],
+          "I": [1, 2],
+          "J": [1, 2],
+          "K": [1, 2],
+          "L": [1, 2]
+        },
+        "double_Chair": {
+          "M": [1, 2, 3, 4, 5]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 46,
+      "code_room": 2,
+      "id_thear": 11,
+      "diagram": {
+        "row": 6,
+        "colunm": 8,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": []
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 47,
+      "code_room": 3,
+      "id_thear": 11,
+      "diagram": {
+        "row": 9,
+        "colunm": 9,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": [],
+          "I": []
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 48,
+      "code_room": 1,
+      "id_thear": 11,
+      "diagram": {
+        "row": 6,
+        "colunm": 8,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": []
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 49,
+      "code_room": 8,
+      "id_thear": 12,
+      "diagram": {
+        "row": 8,
+        "colunm": 6,
+        "element_remove": {
+          "A": [3],
+          "B": [3],
+          "C": [3],
+          "D": [3],
+          "E": [3],
+          "F": [1, 2, 3]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 50,
+      "code_room": 7,
+      "id_thear": 12,
+      "diagram": {
+        "row": 11,
+        "colunm": 7,
+        "element_remove": {
+          "A": [3],
+          "B": [3],
+          "C": [3],
+          "D": [3],
+          "E": [3],
+          "F": [3],
+          "G": [1, 2, 3]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 51,
+      "code_room": 6,
+      "id_thear": 12,
+      "diagram": {
+        "row": 11,
+        "colunm": 7,
+        "element_remove": {
+          "A": [9],
+          "B": [9],
+          "C": [9],
+          "D": [9],
+          "E": [9],
+          "F": [9],
+          "G": [9, 19, 11]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 52,
+      "code_room": 5,
+      "id_thear": 12,
+      "diagram": {
+        "row": 8,
+        "colunm": 6,
+        "element_remove": {
+          "A": [6],
+          "B": [6],
+          "C": [6],
+          "D": [6],
+          "E": [6],
+          "F": [6, 7, 8]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 53,
+      "code_room": 4,
+      "id_thear": 12,
+      "diagram": {
+        "row": 11,
+        "colunm": 7,
+        "element_remove": {
+          "A": [9],
+          "B": [9],
+          "C": [9],
+          "D": [9],
+          "E": [9],
+          "F": [9],
+          "G": [9, 10, 11]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 54,
+      "code_room": 3,
+      "id_thear": 12,
+      "diagram": {
+        "row": 7,
+        "colunm": 4,
+        "element_remove": {
+          "A": [3],
+          "B": [3],
+          "C": [3],
+          "D": [1, 2, 3]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 55,
+      "code_room": 2,
+      "id_thear": 12,
+      "diagram": {
+        "row": 7,
+        "colunm": 4,
+        "element_remove": {
+          "A": [3],
+          "B": [3],
+          "C": [3],
+          "D": [1, 2, 3]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 56,
+      "code_room": 3,
+      "id_thear": 13,
+      "diagram": {
+        "row": 12,
+        "colunm": 7,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": []
+        },
+        "double_Chair": {
+          "G": [1, 2, 3, 4, 5, 6]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 57,
+      "code_room": 6,
+      "id_thear": 13,
+      "diagram": {
+        "row": 12,
+        "colunm": 7,
+        "element_remove": {
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": [],
+          "J": [],
+          "K": [],
+          "L": [],
+          "M": []
+        },
+        "double_Chair": {
+          "N": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 58,
+      "code_room": 4,
+      "id_thear": 14,
+      "diagram": {
+        "row": 19,
+        "colunm": 12,
+        "element_remove": {
+          "A": [17, 18, 19],
+          "B": [17, 18, 19],
+          "C": [17, 18, 19],
+          "D": [17, 18, 19],
+          "E": [17, 18, 19],
+          "F": [17, 18, 19],
+          "G": [17, 18, 19],
+          "H": [17, 18, 19],
+          "J": [17, 18, 19],
+          "K": [17, 18, 19],
+          "L": [17]
+        },
+        "double_Chair": {
+          "M": [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 59,
+      "code_room": 2,
+      "id_thear": 14,
+      "diagram": {
+        "row": 16,
+        "colunm": 12,
+        "element_remove": {
+          "A": [1, 2, 3],
+          "B": [1, 2, 3],
+          "C": [1, 2, 3],
+          "D": [1, 2, 3],
+          "E": [1, 2, 3],
+          "F": [1, 2, 3],
+          "G": [1, 2, 3],
+          "H": [1, 2, 3],
+          "J": [1, 2, 3],
+          "K": [1, 2, 3],
+          "L": [3]
+        },
+        "double_Chair": {
+          "M": [1, 2, 3, 4, 5, 6, 7, 8]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 60,
+      "code_room": 3,
+      "id_thear": 14,
+      "diagram": {
+        "row": 20,
+        "colunm": 12,
+        "element_remove": {
+          "A": [1, 2, 16],
+          "B": [1, 2, 16],
+          "C": [1, 2, 16],
+          "D": [1, 2, 16],
+          "E": [1, 2, 16],
+          "F": [1, 2, 16],
+          "G": [1, 2, 16],
+          "H": [1, 2, 16],
+          "J": [1, 2, 16],
+          "K": [1, 2, 16],
+          "L": [16]
+        },
+        "double_Chair": {
+          "M": [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 61,
+      "code_room": 5,
+      "id_thear": 14,
+      "diagram": {
+        "row": 18,
+        "colunm": 12,
+        "element_remove": {
+          "A": [16, 17, 18],
+          "B": [16, 17, 18],
+          "C": [16, 17, 18],
+          "D": [16, 17, 18],
+          "E": [16, 17, 18],
+          "F": [16, 17, 18],
+          "G": [16, 17, 18],
+          "H": [16, 17, 18],
+          "J": [16, 17, 18],
+          "K": [16, 17, 18],
+          "L": [18]
+        },
+        "double_Chair": {
+          "M": [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 62,
+      "code_room": 1,
+      "id_thear": 14,
+      "diagram": {
+        "row": 16,
+        "colunm": 12,
+        "element_remove": {
+          "A": [14, 15, 16],
+          "B": [14, 15, 16],
+          "C": [14, 15, 16],
+          "D": [14, 15, 16],
+          "E": [14, 15, 16],
+          "F": [14, 15, 16],
+          "G": [14, 15, 16],
+          "H": [14, 15, 16],
+          "J": [14, 15, 16],
+          "K": [14, 15, 16],
+          "L": [14]
+        },
+        "double_Chair": {
+          "M": [1, 2, 3, 4, 5, 6, 7, 8]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 63,
+      "code_room": 1,
+      "id_thear": 15,
+      "diagram": {
+        "row": 20,
+        "colunm": 9,
+        "element_remove": {
+          "A": [3, 18],
+          "B": [3, 18],
+          "C": [3, 18],
+          "D": [3, 18],
+          "E": [3, 18],
+          "F": [3, 18],
+          "G": [3, 18],
+          "H": [3, 18]
+        },
+        "double_Chair": {
+          "S": [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 64,
+      "code_room": 6,
+      "id_thear": 15,
+      "diagram": {
+        "row": 13,
+        "colunm": 11,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": [],
+          "J": [],
+          "K": []
+        },
+        "double_Chair": {
+          "S": [1, 2, 3, 4, 5, 6, 7, 8]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 65,
+      "code_room": 3,
+      "id_thear": 15,
+      "diagram": {
+        "row": 15,
+        "colunm": 12,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": [],
+          "J": [],
+          "K": [],
+          "L": []
+        },
+        "double_Chair": {
+          "S": [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 66,
+      "code_room": 4,
+      "id_thear": 15,
+      "diagram": {
+        "row": 16,
+        "colunm": 10,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": [],
+          "J": []
+        },
+        "double_Chair": {
+          "S": [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 67,
+      "code_room": 5,
+      "id_thear": 15,
+      "diagram": {
+        "row": 16,
+        "colunm": 10,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": [],
+          "J": []
+        },
+        "double_Chair": {
+          "S": [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 69,
+      "code_room": 2,
+      "id_thear": 15,
+      "diagram": {
+        "row": 11,
+        "colunm": 8,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": []
+        },
+        "double_Chair": {
+          "S": [1, 2, 3, 4, 5, 6, 7]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 70,
+      "code_room": 2,
+      "id_thear": 16,
+      "diagram": {
+        "row": 18,
+        "colunm": 9,
+        "element_remove": {
+          "A": [5, 14],
+          "B": [5, 14],
+          "C": [5, 14],
+          "D": [5, 14],
+          "E": [5, 14],
+          "F": [5, 14],
+          "G": [5, 14],
+          "H": [5, 14],
+          "I": [5, 14]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 71,
+      "code_room": 5,
+      "id_thear": 16,
+      "diagram": {
+        "row": 17,
+        "colunm": 11,
+        "element_remove": {
+          "A": [1, 2, 3, 4],
+          "B": [1, 2, 3],
+          "C": [1, 2, 3],
+          "D": [1, 2, 3],
+          "E": [1, 2, 3],
+          "F": [1, 2, 3],
+          "G": [1, 2, 3],
+          "H": [1, 2, 3],
+          "J": [1, 2, 3],
+          "K": [3]
+        },
+        "double_Chair": {
+          "L": [1, 2, 3, 4, 5, 6, 7, 8]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 72,
+      "code_room": 6,
+      "id_thear": 16,
+      "diagram": {
+        "row": 19,
+        "colunm": 12,
+        "element_remove": {
+          "A": [16, 17, 18, 19],
+          "B": [17, 18, 19],
+          "C": [17, 18, 19],
+          "D": [17, 18, 19],
+          "E": [17, 18, 19],
+          "F": [17, 18, 19],
+          "G": [17, 18, 19],
+          "H": [17, 18, 19],
+          "J": [17, 18, 19],
+          "K": [17, 18, 19],
+          "L": [17]
+        },
+        "double_Chair": {
+          "M": [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 73,
+      "code_room": 8,
+      "id_thear": 16,
+      "diagram": {
+        "row": 19,
+        "colunm": 13,
+        "element_remove": {
+          "A": [19],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": [],
+          "J": [],
+          "K": [],
+          "L": [],
+          "M": []
+        },
+        "double_Chair": {
+          "N": [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 74,
+      "code_room": 7,
+      "id_thear": 16,
+      "diagram": {
+        "row": 12,
+        "colunm": 9,
+        "element_remove": {
+          "A": [12],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": []
+        },
+        "double_Chair": {
+          "J": [1, 2, 3, 4, 5, 6]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 75,
+      "code_room": 3,
+      "id_thear": 16,
+      "diagram": {
+        "row": 30,
+        "colunm": 12,
+        "element_remove": {
+          "A": [1, 2, 3, 8, 26, 20],
+          "B": [1, 2, 3, 8, 26],
+          "C": [1, 2, 3, 8, 26],
+          "D": [1, 2, 3, 8, 26],
+          "E": [1, 2, 3, 8, 26],
+          "F": [1, 2, 3, 8, 26],
+          "G": [1, 2, 3, 8, 26],
+          "H": [1, 2, 3, 8, 26],
+          "J": [8, 26],
+          "K": [8, 26],
+          "L": [8, 26]
+        },
+        "double_Chair": {
+          "M": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 76,
+      "code_room": 9,
+      "id_thear": 16,
+      "diagram": {
+        "row": 14,
+        "colunm": 10,
+        "element_remove": {
+          "A": [1],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": [],
+          "J": []
+        },
+        "double_Chair": {
+          "K": [1, 2, 3, 4, 5, 6, 7]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 77,
+      "code_room": 1,
+      "id_thear": 17,
+      "diagram": {
+        "row": 11,
+        "colunm": 10,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": [],
+          "J": []
+        },
+        "double_Chair": {
+          "K": [1, 2, 3, 4, 5, 6]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 78,
+      "code_room": 5,
+      "id_thear": 17,
+      "diagram": {
+        "row": 23,
+        "colunm": 13,
+        "element_remove": {
+          "A": [1, 2, 5, 19],
+          "B": [1, 2, 5, 19],
+          "C": [1, 2, 5, 19],
+          "D": [1, 2, 5, 19],
+          "E": [1, 2, 5, 19],
+          "F": [1, 2, 5, 19],
+          "G": [1, 2, 5, 19],
+          "H": [1, 2, 5, 19],
+          "I": [1, 2, 5, 19],
+          "J": [7, 22],
+          "K": [7, 22],
+          "L": [7, 22]
+        },
+        "double_Chair": {
+          "M": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 79,
+      "code_room": 8,
+      "id_thear": 17,
+      "diagram": {
+        "row": 24,
+        "colunm": 12,
+        "element_remove": {
+          "A": [5, 19, 22, 23, 24],
+          "B": [5, 19, 22, 23, 24],
+          "C": [5, 19, 22, 23, 24],
+          "D": [5, 19, 22, 23, 24],
+          "E": [5, 19, 22, 23, 24],
+          "F": [5, 19, 22, 23, 24],
+          "G": [5, 19, 22, 23, 24],
+          "H": [5, 19, 22, 23, 24],
+          "I": [5, 19],
+          "J": [5, 19],
+          "K": [5, 19]
+        },
+        "double_Chair": {
+          "L": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 81,
+      "code_room": 2,
+      "id_thear": 17,
+      "diagram": {
+        "row": 14,
+        "colunm": 9,
+        "element_remove": {
+          "A": [3],
+          "B": [3],
+          "C": [3],
+          "D": [3],
+          "E": [3],
+          "F": [3],
+          "G": [3],
+          "H": [3]
+        },
+        "double_Chair": {
+          "I": [1, 2, 3, 4, 5, 6, 7]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 82,
+      "code_room": 4,
+      "id_thear": 17,
+      "diagram": {
+        "row": 24,
+        "colunm": 12,
+        "element_remove": {
+          "A": [1, 2, 7, 22],
+          "B": [1, 2, 7, 22],
+          "C": [1, 2, 7, 22],
+          "D": [1, 2, 7, 22],
+          "E": [1, 2, 7, 22],
+          "F": [1, 2, 7, 22],
+          "G": [1, 2, 7, 22],
+          "H": [1, 2, 7, 22],
+          "I": [5, 19],
+          "J": [5, 19],
+          "K": [5, 19]
+        },
+        "double_Chair": {
+          "L": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 83,
+      "code_room": 9,
+      "id_thear": 17,
+      "diagram": {
+        "row": 15,
+        "colunm": 10,
+        "element_remove": {
+          "A": [3, 13],
+          "B": [3, 13],
+          "C": [3, 13, 15],
+          "D": [3, 13, 15],
+          "E": [3, 13],
+          "F": [3, 13],
+          "G": [3, 13],
+          "H": [3, 13],
+          "I": [3, 13]
+        },
+        "double_Chair": {
+          "J": [1, 2, 3, 4, 5, 6, 7]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 84,
+      "code_room": 7,
+      "id_thear": 17,
+      "diagram": {
+        "row": 20,
+        "colunm": 11,
+        "element_remove": {
+          "A": [5, 16, 19, 20],
+          "B": [5, 16, 19, 20],
+          "C": [5, 16, 19, 20],
+          "D": [5, 16, 19, 20],
+          "E": [5, 16, 19, 20],
+          "F": [5, 16, 19, 20],
+          "G": [5, 16, 19, 20],
+          "H": [5, 16],
+          "I": [5, 16],
+          "J": [5, 16]
+        },
+        "double_Chair": {
+          "K": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        },
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 85,
+      "code_room": 1,
+      "id_thear": 18,
+      "diagram": {
+        "row": 15,
+        "colunm": 10,
+        "element_remove": {
+          "A": [3, 4, 5, 14, 15],
+          "B": [3, 4, 5, 14, 15],
+          "C": [3, 4, 5, 14, 15],
+          "D": [3, 4, 5, 14, 15],
+          "E": [3, 4, 5, 14, 15],
+          "F": [3, 4, 5, 14, 15],
+          "G": [3, 4, 5, 14, 15],
+          "H": [3, 4, 5],
+          "I": [3, 4, 5],
+          "J": [3, 4, 5]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 86,
+      "code_room": 5,
+      "id_thear": 18,
+      "diagram": {
+        "row": 17,
+        "colunm": 10,
+        "element_remove": {
+          "A": [3, 4, 5, 16, 17],
+          "B": [3, 4, 5, 16, 17],
+          "C": [3, 4, 5, 16, 17],
+          "D": [3, 4, 5, 16, 17],
+          "E": [3, 4, 5, 16, 17],
+          "F": [3, 4, 5, 16, 17],
+          "G": [3, 4, 5, 16, 17],
+          "H": [3, 4, 5],
+          "I": [3, 4, 5],
+          "J": [1]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 87,
+      "code_room": 4,
+      "id_thear": 18,
+      "diagram": {
+        "row": 14,
+        "colunm": 10,
+        "element_remove": {
+          "A": [1, 2, 11, 12],
+          "B": [1, 2, 11, 12],
+          "C": [1, 2, 11, 12],
+          "D": [1, 2, 11, 12],
+          "E": [1, 2, 11, 12],
+          "F": [1, 2, 11, 12],
+          "G": [1, 2, 11, 12],
+          "H": [11, 12],
+          "I": [11, 12],
+          "J": []
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 88,
+      "code_room": 2,
+      "id_thear": 18,
+      "diagram": {
+        "row": 17,
+        "colunm": 12,
+        "element_remove": {
+          "A": [3, 4, 5, 16, 17],
+          "B": [3, 4, 5, 16, 17],
+          "C": [3, 4, 5, 16, 17],
+          "D": [3, 4, 5, 16, 17],
+          "E": [3, 4, 5, 16, 17],
+          "F": [3, 4, 5, 16, 17],
+          "G": [3, 4, 5, 16, 17],
+          "H": [3, 4, 5, 16, 17],
+          "I": [3, 4, 5, 16, 17],
+          "J": [3, 4, 5],
+          "K": [3, 4, 5],
+          "L": [1]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 89,
+      "code_room": 3,
+      "id_thear": 18,
+      "diagram": {
+        "row": 16,
+        "colunm": 12,
+        "element_remove": {
+          "A": [1, 2, 13, 14],
+          "B": [1, 2, 13, 14],
+          "C": [1, 2, 13, 14],
+          "D": [1, 2, 13, 14],
+          "E": [1, 2, 13, 14],
+          "F": [1, 2, 13, 14],
+          "G": [1, 2, 13, 14],
+          "H": [1, 2, 13, 14],
+          "I": [1, 2, 13, 14],
+          "J": [13, 14],
+          "K": [13, 14],
+          "L": []
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 90,
+      "code_room": 1,
+      "id_thear": 19,
+      "diagram": {
+        "row": 21,
+        "colunm": 11,
+        "element_remove": {
+          "A": [1, 2, 3, 4, 5],
+          "B": [1, 2, 3, 4, 5],
+          "C": [1, 2, 3, 4, 5],
+          "D": [1, 2, 3, 4, 5],
+          "E": [1, 2, 3, 4, 5],
+          "F": [1, 2, 3, 4, 5],
+          "G": [1, 2, 3, 4, 5],
+          "H": [1, 2, 3, 4, 5],
+          "I": [3, 4],
+          "J": [3, 4],
+          "K": [8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 91,
+      "code_room": 4,
+      "id_thear": 19,
+      "diagram": {
+        "row": 21,
+        "colunm": 11,
+        "element_remove": {
+          "A": [1, 2, 3, 4, 5],
+          "B": [1, 2, 3, 4, 5],
+          "C": [1, 2, 3, 4, 5],
+          "D": [1, 2, 3, 4, 5],
+          "E": [1, 2, 3, 4, 5],
+          "F": [1, 2, 3, 4, 5],
+          "G": [1, 2, 3, 4, 5],
+          "H": [1, 2, 3, 4, 5],
+          "I": [3, 4],
+          "J": [3, 4],
+          "K": [8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 92,
+      "code_room": 2,
+      "id_thear": 19,
+      "diagram": {
+        "row": 21,
+        "colunm": 13,
+        "element_remove": {
+          "A": [1, 2, 3, 4, 5],
+          "B": [1, 2, 3, 4, 5],
+          "C": [1, 2, 3, 4, 5],
+          "D": [1, 2, 3, 4, 5],
+          "E": [1, 2, 3, 4, 5],
+          "F": [1, 2, 3, 4, 5],
+          "G": [1, 2, 3, 4, 5],
+          "H": [1, 2, 3, 4, 5],
+          "I": [1, 2, 3, 4, 5],
+          "J": [4, 5],
+          "K": [4, 5],
+          "L": [4, 5],
+          "M": [7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 93,
+      "code_room": 5,
+      "id_thear": 19,
+      "diagram": {
+        "row": 21,
+        "colunm": 13,
+        "element_remove": {
+          "A": [1, 2, 3, 4, 5],
+          "B": [1, 2, 3, 4, 5],
+          "C": [1, 2, 3, 4, 5],
+          "D": [1, 2, 3, 4, 5],
+          "E": [1, 2, 3, 4, 5],
+          "F": [1, 2, 3, 4, 5],
+          "G": [1, 2, 3, 4, 5],
+          "H": [1, 2, 3, 4, 5],
+          "I": [1, 2, 3, 4, 5],
+          "J": [4, 5],
+          "K": [4, 5],
+          "L": [4, 5],
+          "M": [6, 7, 8, 9, 10, 11, 12, 13, 14]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 94,
+      "code_room": 3,
+      "id_thear": 19,
+      "diagram": {
+        "row": 21,
+        "colunm": 13,
+        "element_remove": {
+          "A": [1, 2, 3, 4, 5],
+          "B": [1, 2, 3, 4, 5],
+          "C": [1, 2, 3, 4, 5],
+          "D": [1, 2, 3, 4, 5],
+          "E": [1, 2, 3, 4, 5],
+          "F": [1, 2, 3, 4, 5],
+          "G": [1, 2, 3, 4, 5],
+          "H": [1, 2, 3, 4, 5],
+          "I": [1, 2, 3, 4, 5],
+          "J": [4, 5],
+          "K": [4, 5],
+          "L": [4, 5],
+          "M": [6, 7, 8, 9, 10, 11, 12, 13, 14]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 95,
+      "code_room": 3,
+      "id_thear": 20,
+      "diagram": {
+        "row": 16,
+        "colunm": 11,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": [],
+          "I": [],
+          "J": [],
+          "K": [1, 1616]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 96,
+      "code_room": 2,
+      "id_thear": 20,
+      "diagram": {
+        "row": 16,
+        "colunm": 9,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": [],
+          "I": [1, 16]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 97,
+      "code_room": 1,
+      "id_thear": 20,
+      "diagram": {
+        "row": 20,
+        "colunm": 12,
+        "element_remove": {
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "E": [],
+          "F": [],
+          "G": [],
+          "H": [],
+          "I": [],
+          "J": [],
+          "K": [],
+          "L": [1, 20]
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 98,
+      "code_room": 6,
+      "id_thear": 20,
+      "diagram": {
+        "row": 20,
+        "colunm": 13,
+        "element_remove": {
+          "A": [1, 2, 3, 4, 5, 19, 20],
+          "B": [1, 2, 3, 4, 5, 19, 20],
+          "C": [1, 2, 3, 4, 5, 19, 20],
+          "D": [1, 2, 3, 4, 5, 19, 20],
+          "E": [1, 2, 3, 4, 5, 19, 20],
+          "F": [1, 2, 3, 4, 5, 19, 20],
+          "G": [1, 2, 3, 4, 5, 19, 20],
+          "H": [1, 2, 3, 4, 5, 19, 20],
+          "I": [3, 4, 5, 19, 20],
+          "J": [3, 4, 5, 19, 20],
+          "K": [3, 4, 5, 19, 20],
+          "L": [3, 4, 5, 19, 20],
+          "M": []
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
+    },
+    {
+      "id": 99,
+      "code_room": 4,
+      "id_thear": 20,
+      "diagram": {
+        "row": 23,
+        "colunm": 13,
+        "element_remove": {
+          "A": [1, 2, 3, 4, 22, 23],
+          "B": [1, 2, 3, 4, 22, 23],
+          "C": [1, 2, 3, 4, 22, 23],
+          "D": [1, 2, 3, 4, 22, 23],
+          "E": [1, 2, 3, 4, 22, 23],
+          "F": [1, 2, 3, 4, 22, 23],
+          "G": [1, 2, 3, 4, 22, 23],
+          "H": [1, 2, 3, 4, 22, 23],
+          "I": [1, 2, 3, 4, 22, 23],
+          "J": [1, 2, 3, 4, 22, 23],
+          "K": [3, 4, 22, 23],
+          "L": [3, 4, 22, 23],
+          "M": [3, 4, 22, 23],
+          "N": []
+        },
+        "double_Chair": {},
+        "element_selected": {},
+        "element_selecting": {}
+      }
     }
   ],
+
   "ticket": [
     {
       "id": "",
@@ -514,7 +3193,7 @@
   ],
   "bill": [
     {
-      "id": "1",
+      "id": 1,
       "id_user": 2,
       "id_ticket": "",
       "id_payment": "",
@@ -524,14 +3203,14 @@
   ],
   "payments": [
     {
-      "id": "1",
+      "id": 1,
       "bank_number": 1028312672,
       "bank_brand": "Vietcombank",
       "QR_code": "",
       "name": "Trần Văn Giới"
     },
     {
-      "id": "2",
+      "id": 2,
       "bank_number": 84375837534,
       "bank_brand": "Momo",
       "QR_code": "",
@@ -540,7 +3219,7 @@
   ],
   "user": [
     {
-      "id": "1",
+      "id": 1,
       "name": "Hoàng Duyệt",
       "sdt": "0901234567",
       "email": "hoangduyet1122@gmail.com",
@@ -552,7 +3231,7 @@
       "type_admin": "none"
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "Trần Văn Giới",
       "sdt": "0912345678",
       "email": "trangioi479@gmail.com",
@@ -564,7 +3243,7 @@
       "type_admin": "super"
     },
     {
-      "id": "3",
+      "id": 3,
       "name": "Phan Phúc Lâm",
       "sdt": "0923456789",
       "email": "phanphuclam1122@gmail.com",
@@ -576,7 +3255,7 @@
       "type_admin": "standard"
     },
     {
-      "id": "4",
+      "id": 4,
       "name": "Nguyễn Thế Quang",
       "sdt": "0934567890",
       "email": "nguyenthequang1122@gmail.com",
@@ -588,7 +3267,7 @@
       "type_admin": "none"
     },
     {
-      "id": "5",
+      "id": 5,
       "name": "Lê Thị Nhã Tú",
       "sdt": "0945678901",
       "email": "lethinhatu1122@gmail.com",
@@ -600,7 +3279,7 @@
       "type_admin": "none"
     },
     {
-      "id": "7",
+      "id": 7,
       "name": "Nguyễn Thế Gia An",
       "sdt": "0967890123",
       "email": "nguyenthegiaan1122@gmail.com",
@@ -612,7 +3291,7 @@
       "type_admin": "none"
     },
     {
-      "id": "8",
+      "id": 8,
       "name": "Nguyễn Đức Mạnh",
       "sdt": "0978901234",
       "email": "nguyenducmanh1122@gmail.com",
@@ -624,7 +3303,7 @@
       "type_admin": "none"
     },
     {
-      "id": "9",
+      "id": 9,
       "name": "Trương Minh Hoàng",
       "sdt": "0989012345",
       "email": "truongminhhoang1122@gmail.com",
@@ -636,7 +3315,7 @@
       "type_admin": "super"
     },
     {
-      "id": "10",
+      "id": 10,
       "name": "Nguyễn Minh Kiệt",
       "sdt": "0990123456",
       "email": "nguyenminhkiet1122@gmail.com",
@@ -658,141 +3337,108 @@
       "status": "inactive",
       "role": "admin",
       "type_admin": "super"
-    },
-    {
-      "id": "bee8",
-      "name": "123",
-      "sdt": "0123456789",
-      "email": "phuclam251005@gmail.com",
-      "password": "123",
-      "year": "2025-04-17",
-      "cinema": "Cinema",
-      "status": "active",
-      "role": "user",
-      "repass": "123"
     }
   ],
   "vouchers": [
     {
       "code": "SALEOFF10",
       "name": "10 % Off Sale",
-      "discount": "10",
+      "discount": "10%",
       "startDay": "15/03/2025",
       "endDay": "15/04/2025",
       "soLuong": 30,
       "daSuDung": 16,
-      "trangThai": "Hoạt Động",
-      "id": "99f8"
+      "trangThai": "Kích hoạt"
     },
     {
       "code": "SALEOFF15",
       "name": "15 % Off Sale",
-      "discount": "15",
+      "discount": "15%",
       "startDay": "15/03/2025",
       "endDay": "15/04/2025",
       "soLuong": 30,
       "daSuDung": 16,
-      "trangThai": "Kích Hoạt",
-      "id": "7d5b"
+      "trangThai": "Kích hoạt"
     },
     {
       "code": "SALEOFF20",
       "name": "20 % Off Sale",
-      "discount": "20",
+      "discount": "20%",
       "startDay": "15/03/2025",
       "endDay": "15/04/2025",
       "soLuong": 40,
       "daSuDung": 26,
-      "trangThai": "Hoạt Động",
-      "id": "9e63"
+      "trangThai": "Kích hoạt"
     },
     {
       "code": "WELCOME",
       "name": "New User",
-      "discount": "25",
+      "discount": "25%",
       "startDay": "15/03/2025",
       "endDay": "15/04/2025",
       "soLuong": 100,
       "daSuDung": 5,
-      "trangThai": "Kích Hoạt",
-      "id": "58aa"
+      "trangThai": "Kích hoạt"
     },
     {
       "code": "OFFER2025",
       "name": "Holiday offer",
-      "discount": "10",
+      "discount": "10%",
       "startDay": "15/03/2025",
       "endDay": "15/04/2025",
       "soLuong": 50,
       "daSuDung": 10,
-      "trangThai": "Kích Hoạt",
-      "id": "5fcd"
+      "trangThai": "Kích hoạt"
     },
     {
       "code": "SALEOFF10",
       "name": "10 % Off Sale",
-      "discount": "10",
+      "discount": "10%",
       "startDay": "15/03/2025",
       "endDay": "15/04/2025",
       "soLuong": 30,
       "daSuDung": 16,
-      "trangThai": "Hoạt Động",
-      "id": "4da0"
+      "trangThai": "Kích hoạt"
     },
     {
       "code": "SALEOFF10",
       "name": "10 % Off Sale",
-      "discount": "10",
+      "discount": "10%",
       "startDay": "15/03/2025",
       "endDay": "15/04/2025",
       "soLuong": 30,
       "daSuDung": 16,
-      "trangThai": "Hoạt Động",
-      "id": "3f9e"
+      "trangThai": "Kích hoạt"
     },
     {
       "code": "SALEOFF10",
       "name": "10 % Off Sale",
-      "discount": "10",
+      "discount": "10%",
       "startDay": "15/03/2025",
       "endDay": "15/04/2025",
       "soLuong": 30,
       "daSuDung": 16,
-      "trangThai": "Hoạt Động",
-      "id": "6a93"
+      "trangThai": "Kích hoạt"
     },
     {
       "code": "SALEOFF10",
       "name": "10 % Off Sale",
-      "discount": "10",
+      "discount": "10%",
       "startDay": "15/03/2025",
       "endDay": "15/04/2025",
       "soLuong": 30,
       "daSuDung": 16,
-      "trangThai": "Kích Hoạt",
-      "id": "183f"
+      "trangThai": "Kích hoạt"
     },
     {
       "code": "SALEOFF10",
       "name": "10 % Off Sale",
-      "discount": "10",
+      "discount": "10%",
       "startDay": "15/03/2025",
       "endDay": "15/04/2025",
       "soLuong": 30,
       "daSuDung": 16,
-      "trangThai": "Kích Hoạt",
-      "id": "1146"
-    },
-    {
-      "id": "5dee",
-      "name": "Duyệt Đẹp Trai",
-      "code": "HoangDuyetDepTrai",
-      "startDay": "2025-04-16",
-      "endDay": "2025-04-30",
-      "soLuong": 100,
-      "discount": "90",
-      "trangThai": "Hoạt Động",
-      "daSuDung": 0
+      "trangThai": "Kích hoạt"
     }
   ]
 }

@@ -1,4 +1,7 @@
 "use client";
+import TicketPopup from "@/components/Popup/TicketPopup";
+import usePopup from "@/hooks/usePopup";
+import { MovieType } from "@/interfaces/movie.interface";
 import { useRouter } from "next/navigation";
 import React from "react";
 import TicketPopup from "@/components/Popup/TicketPopup";
@@ -6,6 +9,7 @@ import { MovieType } from "@/interfaces/movie.interface";
 import usePopup from "@/hooks/usePopup";
 const Profile = () => {
   const router = useRouter();
+
   const {ticketPopup, openTicket, closeTicket} = usePopup()
    return (
     <div className="container flex-column items-center mt-10 gap-10">

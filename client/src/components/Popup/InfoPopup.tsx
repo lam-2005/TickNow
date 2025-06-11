@@ -78,3 +78,4 @@ const InfoPopup = ({
 };
 
 export default InfoPopup;
+
