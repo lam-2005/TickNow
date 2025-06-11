@@ -48,4 +48,6 @@ const Ticket = ({ info }: { info: MovieType }) => {
   );
 };
 
+
 export default Ticket;
+
