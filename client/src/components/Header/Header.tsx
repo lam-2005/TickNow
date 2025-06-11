@@ -40,7 +40,9 @@ const Header = () => {
   return (
     <header className={`${headerClass} w-full transition-colors duration-300`}>
       {openUserFormContainer && (
-        <UserFormContainer setOpenUserFormContainer={() => setOpenUserFormContainer(false)} />
+        <UserFormContainer
+          setOpenUserFormContainer={() => setOpenUserFormContainer(false)}
+        />
       )}
 
       <MenuDropDown openMenuDropDown={openMenuDropDown} />
@@ -98,13 +100,14 @@ const Header = () => {
             </button>
             <span className="w-[1px] h-3 bg-foreground"></span>
             <input
+              onClick={() => setIsSearchOpen(!isSearchOpen)}
               type="search"
               placeholder="Tìm kiếm"
               className="w-full h-full outline-0 px-2 text-foreground text-xs"
             />
 
             {isSearchOpen && (
-              <div className="absolute top-full right-0 mt-2 z-50">
+              <div className="absolute top-[calc(100%_+_20px)] right-0 mt-2 z-50">
                 <div className="absolute -top-4 right-4 w-0 h-0 border-l-[16px] border-r-[16px] border-b-[16px] border-l-transparent border-r-transparent border-b-white" />
                 <SearchPopup />
               </div>
@@ -114,7 +117,9 @@ const Header = () => {
             onClick={() => setOpenUserFormContainer(true)}
             className={`hidden lg:flex flex-col items-center gap-[3px] hover:[&_span]:text-primary`}
           >
-            <span className={`block font-semibold transition-colors duration-500 ${textColorClass}`}>
+            <span
+              className={`block font-semibold text-2xl transition-colors duration-500 ${textColorClass}`}
+            >
               <FaUser />
             </span>
           </button>
@@ -123,7 +128,11 @@ const Header = () => {
             className="lg:hidden relative z-1001"
             onClick={() => setOpenMenuDropDown(!openMenuDropDown)}
           >
-            <span className={`color-icon text-icon text-2xl ${openMenuDropDown ? "text-white" : ""}`}>
+            <span
+              className={`color-icon text-icon text-2xl ${
+                openMenuDropDown ? "text-white" : ""
+              }`}
+            >
               {openMenuDropDown ? <IoMdClose /> : <GiHamburgerMenu />}
             </span>
           </button>
