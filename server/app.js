@@ -51,7 +51,3 @@ module.exports = app;
 app.get('/', function(req,res) {
   res.send('<h1>hello</h1>')
 })
-
-app.listen(port,hostName, () => {
-  console.log(`${port} && ${hostName}`);
-})
