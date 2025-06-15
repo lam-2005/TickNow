@@ -6,6 +6,7 @@ const logger = require('morgan');
 const cors = require('cors');
 
 const CONNECT_DB = require('./config/database');
+
 const corsOptionsDelegate = require('./middlewares/corsOption');
 const { notFoundHandler, generalErrorHandler } = require('./utils/errorHandler');
 
@@ -21,6 +22,7 @@ app.set('view engine', 'hbs');
 
 // middlewares
 app.use(cors(corsOptionsDelegate));
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
