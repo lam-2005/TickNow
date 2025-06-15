@@ -1,23 +1,9 @@
-<<<<<<< Updated upstream
 
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
-=======
-require('dotenv').config();
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-const mongoose = require('mongoose');
-
-// host & port
-const port =  process.env.PORT || 5000;
-const hostName = process.env.HOST_NAME;
->>>>>>> Stashed changes
 
 const CONNECT_DB = require('./config/database');
 const corsOptionsDelegate = require('./middlewares/corsOption');
@@ -64,11 +50,5 @@ module.exports = app;
 
 app.get('/', function(req,res) {
   res.send('<h1>hello</h1>')
-<<<<<<< Updated upstream
-=======
-})
 
-app.listen(port,hostName, () => {
-  console.log(`${port} && ${hostName}`);
->>>>>>> Stashed changes
 })

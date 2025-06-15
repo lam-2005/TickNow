@@ -1,7 +1,6 @@
 {
     "genres": [
         {
-<<<<<<< Updated upstream
           "name": "Tâm Lý"
         },
         {
@@ -27,15 +26,11 @@
         },
         {
           "name": "Khoa Học Viễn Tưởng"
-=======
-            "name": ""
->>>>>>> Stashed changes
         }
     ],
 
     "movies": [
         {
-<<<<<<< Updated upstream
             "name": "Buôn Thần Bán Thánh",
             "release_date": "23-05-2025",
             "nation": "Thái Lan",
@@ -410,27 +405,11 @@
             "banner": "to_doi_gau_nhi_banner.jpg",
             "genre": "",
             "status": "Sắp Chiếu"
-=======
-            "name": "",
-            "release_date": "",
-            "director": "",
-            "nation": "",
-            "age": "",
-            "genre": "",
-            "duration": "",
-            "description": "",
-            "actor": "",
-            "trailer": "",
-            "image": "",
-            "banner": "",
-            "id_Genre": ""
->>>>>>> Stashed changes
         }
     ],
 
     "location": [
         {
-<<<<<<< Updated upstream
             "name": "Hà Nội"
         },
         {
@@ -497,33 +476,16 @@
             "location": {
                 "id_location": "",
                 "deatil_location": "Tầng 3, TTTM AEON Mall, TP.Thuận An, Bình Dương"
-=======
-            "name": ""
+        }
         }
     ],
 
-    "cinema": [
-        {
-            "name": "",
-            "image": "",
-            "location": {
-                "id_location": "",
-                "deatil_location": ""
->>>>>>> Stashed changes
-            }
-        }
-    ],
 
     "room": [
         {
-<<<<<<< Updated upstream
           "code_room": 1,
           "id_thear": "684a4cc5a290f33e71b13b42",
-=======
           "id": 1,
-          "code_room": 1,
-          "id_thear": 1,
->>>>>>> Stashed changes
           "diagram": {
             "row": 13,
             "colunm": 22,
@@ -540,13 +502,10 @@
               "J": [7, 8, 22],
               "K": [3, 6, 7, 8, 16]
             },
-<<<<<<< Updated upstream
-=======
             "double_Chair": {
               "L": [1, 2, 4, 5],
               "M": [2, 3, 4]
             },
->>>>>>> Stashed changes
             "element_selected": {
               "A": [10, 11]
             },
@@ -554,37 +513,20 @@
           }
         },
         {
-<<<<<<< Updated upstream
           "room_code": 3,
           "id_thear": "684a4cc5a290f33e71b13b42",
-=======
           "id": 2,
-          "id_thear": 1,
-          "room_code": 3,
->>>>>>> Stashed changes
           "diagram": {
             "row": 9,
             "colunm": 17,
             "element_remove": {},
-<<<<<<< Updated upstream
-=======
-            "double_Chair": {
-              "I": [1, 2, 3, 4, 5, 6, 7, 8]
-            },
->>>>>>> Stashed changes
             "element_selected": {},
             "element_selecting": []
           }
         },
         {
-<<<<<<< Updated upstream
           "room_code": 2,
           "id_thear": "684a4cc5a290f33e71b13b42",
-=======
-          "id": 3,
-          "id_thear": 1,
-          "room_code": 4,
->>>>>>> Stashed changes
           "diagram": {
             "row": 12,
             "colunm": 17,
@@ -592,25 +534,13 @@
               "A": [1, 2, 3],
               "B": [1, 2, 3]
             },
-<<<<<<< Updated upstream
-=======
-            "double_Chair": {
-              "L": [1, 2, 3, 4, 5, 6, 7]
-            },
->>>>>>> Stashed changes
             "element_selected": {},
             "element_selecting": []
           }
         },
         {
-<<<<<<< Updated upstream
           "room_code": 1,
           "id_thear": "684a4cc5a290f33e71b13b43",
-=======
-          "id": 4,
-          "id_thear": 1,
-          "room_code": 2,
->>>>>>> Stashed changes
           "diagram": {
             "row": 6,
             "colunm": 8,
@@ -622,23 +552,13 @@
               "E": [2, 3, 4, 7],
               "F": [1, 2, 3, 4, 5, 7, 8]
             },
-<<<<<<< Updated upstream
-=======
-            "double_Chair": {},
->>>>>>> Stashed changes
             "element_selected": {},
             "element_selecting": []
           }
         },
         {
-<<<<<<< Updated upstream
           "room_code": 2,
           "id_thear": "684a4cc5a290f33e71b13b43",
-=======
-          "id": 5,
-          "id_thear": 1,
-          "room_code": 5,
->>>>>>> Stashed changes
           "diagram": {
             "row": 19,
             "colunm": 17,
@@ -660,12 +580,9 @@
               "P": [3, 4],
               "Q": [3, 4, 10, 11, 12]
             },
-<<<<<<< Updated upstream
-=======
             "double_Chair": {
               "R": [1, 2, 3, 4, 5, 6]
             },
->>>>>>> Stashed changes
             "element_selected": {
               "F": [1, 2, 3, 4],
               "P": [3, 4],
@@ -675,14 +592,9 @@
           }
         },
         {
-<<<<<<< Updated upstream
-          "code_room": 3,
-          "id_thear": "684a4cc5a290f33e71b13b43",
-=======
           "id": 6,
           "code_room": 6,
           "id_thear": 2,
->>>>>>> Stashed changes
           "diagram": {
             "row": 4,
             "colunm": 5,
@@ -695,14 +607,8 @@
           }
         },
         {
-<<<<<<< Updated upstream
           "code_room": 1,
           "id_thear": "684a4cc5a290f33e71b13b44",
-=======
-          "id": 7,
-          "code_room": 2,
-          "id_thear": 2,
->>>>>>> Stashed changes
           "diagram": {
             "row": 13,
             "colunm": 15,
@@ -722,25 +628,13 @@
               "N": [3, 4],
               "O": [3, 4, 10]
             },
-<<<<<<< Updated upstream
-=======
-            "double_Chair": {
-              "P": [1, 2, 3]
-            },
->>>>>>> Stashed changes
             "element_selected": {},
             "element_selecting": {}
           }
         },
         {
-<<<<<<< Updated upstream
           "code_room": 2,
           "id_thear": "684a4cc5a290f33e71b13b44",
-=======
-          "id": 8,
-          "code_room": 3,
-          "id_thear": 2,
->>>>>>> Stashed changes
           "diagram": {
             "row": 16,
             "colunm": 15,
@@ -760,25 +654,13 @@
               "N": [3, 4],
               "O": [6, 10, 11]
             },
-<<<<<<< Updated upstream
-=======
-            "double_Chair": {
-              "P": [1, 2, 3]
-            },
->>>>>>> Stashed changes
             "element_selected": {},
             "element_selecting": {}
           }
         },
         {
-<<<<<<< Updated upstream
           "code_room": 3,
           "id_thear": "684a4cc5a290f33e71b13b44",
-=======
-          "id": 9,
-          "code_room": 1,
-          "id_thear": 2,
->>>>>>> Stashed changes
           "diagram": {
             "row": 18,
             "colunm": 14,
@@ -806,14 +688,8 @@
           }
         },
         {
-<<<<<<< Updated upstream
           "code_room": 1,
           "id_thear": "684a4cc5a290f33e71b13b45",
-=======
-          "id": 10,
-          "code_room": 5,
-          "id_thear": 3,
->>>>>>> Stashed changes
           "diagram": {
             "row": 26,
             "colunm": 15,
@@ -833,26 +709,13 @@
               "N": [3, 4, 5, 6, 7, 8, 11, 14, 16, 19, 22, 25],
               "O": [1, 4, 5, 8, 9, 11, 14, 16, 18, 19, 22, 25, 26]
             },
-<<<<<<< Updated upstream
-=======
-            "double_Chair": {
-              "O": [1, 2],
-              "P": [1]
-            },
->>>>>>> Stashed changes
             "element_selected": {},
             "element_selecting": {}
           }
         }, 
          {
-<<<<<<< Updated upstream
           "code_room": 2,
           "id_thear": "684a4cc5a290f33e71b13b45",
-=======
-          "id": 11,
-          "code_room": 2,
-          "id_thear": 3,
->>>>>>> Stashed changes
           "diagram": {
             "row": 21,
             "colunm": 10,
@@ -867,25 +730,13 @@
               "H": [1, 2, 5, 6, 7],
               "J": [1, 2, 5, 6, 7]
             },
-<<<<<<< Updated upstream
-=======
-            "double_Chair": {
-              "K": [1, 2, 3, 4, 5, 6, 7, 8]
-            },
->>>>>>> Stashed changes
             "element_selected": {},
             "element_selecting": {}
           }
         },
         {
-<<<<<<< Updated upstream
           "code_room": 3,
           "id_thear": "684a4cc5a290f33e71b13b45",
-=======
-          "id": 12,
-          "code_room": 3,
-          "id_thear": 3,
->>>>>>> Stashed changes
           "diagram": {
             "row": 22,
             "colunm": 14,
@@ -904,25 +755,13 @@
               "M": [1, 2, 6, 7, 8, 22],
               "N": [1, 2, 3, 6, 7, 8, 20, 21, 22]
             },
-<<<<<<< Updated upstream
-=======
-            "double_Chair": {
-              "O": [1, 2, 3, 4, 5]
-            },
->>>>>>> Stashed changes
             "element_selected": {},
             "element_selecting": {}
           }
         },
         {
-<<<<<<< Updated upstream
           "code_room": 1,
           "id_thear": "684a4cc5a290f33e71b13b46",
-=======
-          "id": 13,
-          "code_room": 1,
-          "id_thear": 3,
->>>>>>> Stashed changes
           "diagram": {
             "row": 19,
             "colunm": 14,
@@ -941,25 +780,13 @@
               "M": [],
               "N": [1, 2]
             },
-<<<<<<< Updated upstream
-=======
-            "double_Chair": {
-              "O": [1, 2, 3, 4, 5, 6, 7]
-            },
->>>>>>> Stashed changes
             "element_selected": {},
             "element_selecting": {}
           }
         },
         {
-<<<<<<< Updated upstream
           "code_room": 2,
           "id_thear": "684a4cc5a290f33e71b13b46",
-=======
-          "id": 14,
-          "code_room": 5,
-          "id_thear": 4,
->>>>>>> Stashed changes
           "diagram": {
             "row": 10,
             "colunm": 10,
@@ -974,25 +801,13 @@
               "H": [10],
               "I": []
             },
-<<<<<<< Updated upstream
-=======
-            "double_Chair": {
-              "J": [1, 2, 3, 4]
-            },
->>>>>>> Stashed changes
             "element_selected": {},
             "element_selecting": {}
           }
         },
         {
-<<<<<<< Updated upstream
           "code_room": 3,
           "id_thear": "684a4cc5a290f33e71b13b46",
-=======
-          "id": 15,
-          "code_room": 4,
-          "id_thear": 4,
->>>>>>> Stashed changes
           "diagram": {
             "row": 15,
             "colunm": 10,
@@ -1007,25 +822,13 @@
               "H": [14, 15],
               "I": [14, 15]
             },
-<<<<<<< Updated upstream
-=======
-            "double_Chair": {
-              "J": [1, 2, 3, 4, 5, 6]
-            },
->>>>>>> Stashed changes
             "element_selected": {},
             "element_selecting": {}
           }
         },
         {
-<<<<<<< Updated upstream
           "code_room": 2,
           "id_thear": "684a4cc5a290f33e71b13b47",
-=======
-          "id": 16,
-          "code_room": 2,
-          "id_thear": 4,
->>>>>>> Stashed changes
           "diagram": {
             "row": 15,
             "colunm": 12,
@@ -1043,25 +846,13 @@
               "K": [1, 2]
             
             },
-<<<<<<< Updated upstream
-=======
-            "double_Chair": {
-              "L": [1, 2, 3, 4, 5, 6]
-            },
->>>>>>> Stashed changes
             "element_selected": {},
             "element_selecting": {}
           }
         },
         {
-<<<<<<< Updated upstream
           "code_room": 1,
           "id_thear": "684a4cc5a290f33e71b13b47",
-=======
-          "id": 17,
-          "code_room": 1,
-          "id_thear": 4,
->>>>>>> Stashed changes
           "diagram": {
             "row": 15,
             "colunm": 12,
@@ -1079,25 +870,13 @@
               "K": [1, 10, 11, 12, 13, 14, 15]
             
             },
-<<<<<<< Updated upstream
-=======
-            "double_Chair": {
-              "L": [1, 2, 3, 4, 5]
-            },
->>>>>>> Stashed changes
             "element_selected": {},
             "element_selecting": {}
           }
         },
         {
-<<<<<<< Updated upstream
           "code_room": 3,
           "id_thear": "684a4cc5a290f33e71b13b47",
-=======
-          "id": 18,
-          "code_room": 6,
-          "id_thear": 4,
->>>>>>> Stashed changes
           "diagram": {
             "row": 15,
             "colunm": 9,
@@ -1111,63 +890,6 @@
               "G": [14, 15],
               "H": [14, 15]
             },
-<<<<<<< Updated upstream
-=======
-            "double_Chair": {
-              "I": [1, 2, 3, 4, 5]
-            },
-            "element_selected": {},
-            "element_selecting": {}
-          }
-        },
-        {
-          "id": 19,
-          "code_room": 3,
-          "id_thear": 4,
-          "diagram": {
-            "row": 15,
-            "colunm": 11,
-            "element_remove": {
-              "A": [15],
-              "B": [],
-              "C": [8, 15],
-              "D": [8, 9, 10, 11, 15],
-              "E": [15],
-              "F": [],
-              "G": [15],
-              "H": [15],
-              "I": [15],
-              "J": [3, 4, 5, 6, 13, 14, 15]
-            },
-            "double_Chair": {
-              "K": [1, 2, 3, 4, 5, 6]
-            },
-            "element_selected": {},
-            "element_selecting": {}
-          }
-        },
-        {
-          "id": 20,
-          "code_room": 3,
-          "id_thear": 5,
-          "diagram": {
-            "row": 12,
-            "colunm": 10,
-            "element_remove": {
-              "A": [12],
-              "B": [12],
-              "C": [],
-              "D": [],
-              "E": [],
-              "F": [],
-              "G": [],
-              "H": [],
-              "I": []
-            },
-            "double_Chair": {
-              "J": [1, 2, 3, 4]
-            },
->>>>>>> Stashed changes
             "element_selected": {},
             "element_selecting": {}
           }
@@ -1177,28 +899,18 @@
 
     "screenings": [
         {
-<<<<<<< Updated upstream
           "id_room": "684d23f393b6ec82733bd8e4",
           "id_movie": "6849ada3c9f09ed33ae9022a",
           "time_start": "8:20",
           "time_end": "10:25",
           "date": "06-14-2025",
           "status": "Hoạt Động"
-=======
-            "id_room": "",
-            "id_film": "",
-            "time_start": "",
-            "time_end": "",
-            "date": "",
-            "status": ""
->>>>>>> Stashed changes
         }
     ],
 
 
     "vouchers": [
         {
-<<<<<<< Updated upstream
             "code": "XINCHAO",
             "discount_type": 10,
             "user_count": 0,
@@ -1206,60 +918,33 @@
             "start_date": "06-15-2025",
             "end_date": "06-31-2025",
             "is_active": "Hoạt Động"
-=======
-            "code": "",
-            "discount_type": "",
-            "user_count": "",
-            "max_users": "",
-            "start_date": "",
-            "end_date": "",
-            "is_active": ""
->>>>>>> Stashed changes
         }
     ],
 
     "ticket": [
         {
-<<<<<<< Updated upstream
             "id_user": "684d212093b6ec82733bd8db",
             "id_screening": "684d27dc93b6ec82733bd90d",
             "id_seat": ["A1","A2"],
             "id_voucher": "",
             "price": 90000,
             "type": "Đã Thanh Toán"
-=======
-            "id_user": "",
-            "id_screening": "",
-            "id_seat": "",
-            "id_voucher": "",
-            "price": "",
-            "type": ""
->>>>>>> Stashed changes
         }
     ],
 
     "trasition": [
         {
-<<<<<<< Updated upstream
+
             "id_ticket": "684d284993b6ec82733bd910",
             "id_payMethod": "684d203393b6ec82733bd8d4",
             "amount": 90000,
             "payment_time": "06-14-2025",
             "status": "Thành Công"
-=======
-            "id_ticket": "",
-            "id_voucher": "",
-            "id_payMethod": "",
-            "amount": "",
-            "payment_time": "",
-            "status": ""
->>>>>>> Stashed changes
         }
     ],
 
     "payMethod": [
         {
-<<<<<<< Updated upstream
             "name": "MoMo",
             "description": "Ví MoMo là một ứng dụng ví điện tử tại Việt Nam, cho phép người dùng thực hiện nhiều giao dịch tài chính như thanh toán hóa đơn, chuyển tiền, mua sắm trực tuyến và nhiều dịch vụ khác. Ứng dụng này được Ngân hàng Nhà nước cấp phép và quản lý hoạt động, đồng thời là đối tác chiến lược của nhiều ngân hàng lớn tại Việt Nam, đảm bảo tính an toàn và bảo mật cho người dùng.",
             "logo": "MoMo_Logo.png",
@@ -1274,17 +959,11 @@
             "type": "Chuyển Khoản",
             "dateCreta": "14-06-2025",
             "is_active": "Không Hoạt Động"
-=======
-            "name": "",
-            "description": "",
-            "is_active": ""
->>>>>>> Stashed changes
         }
     ],
 
     "users": [
         {
-<<<<<<< Updated upstream
             "name": "Trần Văn Giới",
             "phone": "0375837534",
             "email": "trangioi479@gmail.com",
@@ -1292,51 +971,27 @@
             "year": "2005",
             "status": "Hoạt Động",
             "role": true
-=======
-            "name": "",
-            "phone": "",
-            "email": "",
-            "password": "",
-            "year": "",
-            "status": "",
-            "role": ""
->>>>>>> Stashed changes
         }
     ],
 
     "rates": [
         {
-<<<<<<< Updated upstream
             "id_movie": "6849ada3c9f09ed33ae9022a",
             "id_ticket": "684d284993b6ec82733bd910",
             "score": 4.5,
             "comment": "Phim Rất Hay",
             "date": "06-14-2025"
-=======
-            "id_film": "",
-            "id_ticket": "",
-            "score": "",
-            "comment": "",
-            "date": ""
->>>>>>> Stashed changes
+
         }
     ],
 
     "posts": [
         {
-<<<<<<< Updated upstream
             "id_user": "684d212093b6ec82733bd8db",
             "content" : "Hello các bạn nha, chào mừng các bạn đến với Ticknow",
             "start_day": "14-06-2025",
             "end_day": "30-06-2025",
             "status": "Hoạt Động",
-=======
-            "id_user": "",
-            "content" : "",
-            "start_day": "",
-            "end_day": "",
-            "status": "",
->>>>>>> Stashed changes
             "img": ""
         }
     ]
