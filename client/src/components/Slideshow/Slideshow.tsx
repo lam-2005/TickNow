@@ -6,7 +6,7 @@ import Slider from "react-slick";
 import { SampleArrow } from "../CustomSlider/Arrow";
 import { MovieType } from "@/interfaces/movie.interface";
 import { stopVideo } from "@/utils/handleUX";
-
+import * as movieService from "@/services/movie.service";
 const Slideshow = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<MovieType[] | []>([]);
@@ -14,7 +14,7 @@ const Slideshow = () => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
 
   useEffect(() => {
-    data.forEach((item, index) => {
+    data.forEach((_, index) => {
       if (currentSlide !== index) {
         stopVideo(index);
       }
@@ -28,20 +28,18 @@ const Slideshow = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+  const getMovieNow = async () => {
+    try {
+      const res = await movieService.getMovieList("?_limit=5&status=2");
+      setData(res);
+    } catch (error) {
+      console.error("Fetch movies failed:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const res = await fetch("http://localhost:5000/movies?_limit=5");
-        const getData = await res.json();
-        setData(getData);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
+    getMovieNow();
   }, []);
   const settings = {
     customPaging: function (i: number) {

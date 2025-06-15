@@ -11,25 +11,22 @@ import { MovieType } from "@/interfaces/movie.interface";
 import MovieLoading from "@/components/Loading/MovieLoading";
 import MovieContainer from "@/components/Movie/MovieContainer";
 import OfferLoading from "@/components/Loading/OfferLoading";
+import * as movieService from "@/services/movie.service";
 export default function Home() {
   const [loading, setLoading] = useState<boolean>(true);
-  const [data1, setData1] = useState<MovieType[] | []>([]);
+  const [data, setData] = useState<MovieType[] | []>([]);
+  const getMovieNow = async () => {
+    try {
+      const res = await movieService.getMovieList("?_limit=10&status=2");
+      setData(res);
+    } catch (error) {
+      console.error("Fetch movie failed:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const res = await fetch(
-          "http://localhost:5000/movies?_limit=10&status=2"
-        );
-        const getData = await res.json();
-        setData1(getData);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
+    getMovieNow();
   }, []);
   return (
     <>
@@ -49,7 +46,7 @@ export default function Home() {
                 Xem tất cả
               </Link>
             </div>
-            {!loading ? <MovieContainer data={data1} /> : <MovieLoading />}
+            {!loading ? <MovieContainer data={data} /> : <MovieLoading />}
           </div>
         </section>
         <section className="bg-[url('/background.webp')] bg-top bg-cover py-10">
@@ -61,7 +58,7 @@ export default function Home() {
               Phim Sắp Chiếu
             </h2>
             {!loading ? (
-              <MovieContainer data={data1} textColor="text-white" />
+              <MovieContainer data={data} textColor="text-white" />
             ) : (
               <MovieLoading />
             )}
@@ -96,7 +93,7 @@ export default function Home() {
                 md={2}
                 sm={1}
               >
-                {data1.map((item: MovieType, index: number) => (
+                {data.map((item: MovieType, index: number) => (
                   <div
                     className="px-2"
                     key={item.id}
