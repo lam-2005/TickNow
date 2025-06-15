@@ -1,9 +1,20 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+const ticketControler = require('../controler/ticket.controler');
+
+router.get('/', async (req, res, next) => {
+    try {
+        const tickets  = await ticketControler.getTickets();
+        if( tickets ){
+            return res.status(200).json({ screening: tickets , status: true, message: 'Lấy dữ liệu thành công'})
+        }else{
+            return res.status(404).json({ status: false, message: 'Lấy dữ liêu không thành công' })
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({status: false, message: 'Lấy dữ liệu không thành công'})
+    }
+})
 
 module.exports = router;

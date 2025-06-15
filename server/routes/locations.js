@@ -1,9 +1,21 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router()
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'location' });
-});
+const locationControler = require('../controler/locations.conteoler');
 
-module.exports = router;
+router.get('/', async (req,res,next) => {
+    try{
+        const locations = await locationControler.getLocation();
+        console.log(locations);
+        if(locations){
+            return res.status(200).json({ locations: locations ,status: true, message: 'Lấy dữ liệu thành công'})
+        }else{
+            return res.status(404).json({ status: false, message: 'Lấy dữ liệu thất bại' })
+        }
+    }catch(error){
+        console.error(error);
+        return res.status(500).json({status: false, message: 'Lấy dữ liệu location thất bại'})
+    }
+})
+
+module.exports = router
