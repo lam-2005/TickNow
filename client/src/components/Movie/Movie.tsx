@@ -35,7 +35,7 @@ const Movie = ({
           onClose={closeTrailer}
         />
       )}
-      {infoPopup && <InfoPopup info={info} onClose={closeInfo}/>}
+      {infoPopup && <InfoPopup info={info} onClose={closeInfo} />}
       <div className="group w-full flex-column items-center gap-2.5">
         <div
           className="w-full aspect-[2/3] relative z-9 
@@ -45,7 +45,7 @@ const Movie = ({
             <div className="w-full h-full relative rounded-xl overflow-hidden">
               <Image
                 fill
-                src={`/movies/${info.image as string}`}
+                src={`http://localhost:1001/images/movie/${info.image}`}
                 alt="Phim"
                 sizes="300px"
                 loading="lazy"

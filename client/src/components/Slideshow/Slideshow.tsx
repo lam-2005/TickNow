@@ -31,7 +31,7 @@ const Slideshow = () => {
   const getMovieNow = async () => {
     try {
       const res = await movieService.getMovieList("?_limit=5&status=2");
-      setData(res);
+      setData(res?.data);
     } catch (error) {
       console.error("Fetch movies failed:", error);
     } finally {
@@ -100,7 +100,7 @@ const Slideshow = () => {
         <Slider {...settings} lazyLoad="ondemand" fade={fade}>
           {data.map((item: MovieType, i: number) => (
             <div
-              key={item.id}
+              key={item._id}
               className="relative w-full h-full max-h-screen aspect-[16/9]"
             >
               <div className="w-full h-full relative">
@@ -144,7 +144,7 @@ const Slideshow = () => {
                       data-aos-delay={300}
                       className="text-white"
                     >
-                      {item.time}min
+                      {item.duration} phút
                     </span>
                     <span
                       data-aos="fade-up"
@@ -157,7 +157,7 @@ const Slideshow = () => {
                       className="text-white"
                       data-aos-delay={400}
                     >
-                      {item.category}
+                      {item.genre}
                     </span>
                   </div>
                   <p
@@ -167,7 +167,7 @@ const Slideshow = () => {
                     data-aos="fade-right"
                     data-aos-delay={300}
                   >
-                    {item.text_summary}
+                    {item.description}
                   </p>
                   <div className="flex gap-5">
                     <Button

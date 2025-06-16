@@ -17,8 +17,9 @@ export default function Home() {
   const [data, setData] = useState<MovieType[] | []>([]);
   const getMovieNow = async () => {
     try {
-      const res = await movieService.getMovieList("?_limit=10&status=2");
-      setData(res);
+      const res = await movieService.getMovieList("");
+      console.log(res?.data);
+      setData(res?.data);
     } catch (error) {
       console.error("Fetch movie failed:", error);
     } finally {
@@ -96,7 +97,7 @@ export default function Home() {
                 {data.map((item: MovieType, index: number) => (
                   <div
                     className="px-2"
-                    key={item.id}
+                    key={item._id}
                     data-aos="fade-up"
                     data-aos-delay={(index + 1) * 100}
                   >

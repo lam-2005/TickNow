@@ -14,7 +14,7 @@ const MovieContainer = ({
       {data.map((item: MovieType, index: number) => (
         <div
           className="px-2 "
-          key={item.id}
+          key={item._id}
           data-aos="fade-up"
           data-aos-delay={(index + 1) * 100}
         >
