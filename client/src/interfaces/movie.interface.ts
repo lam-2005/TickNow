@@ -1,17 +1,16 @@
 export interface MovieType {
-  id: number | string;
+  _id: number | string;
   name: string;
-  date: string;
-  director: string;
+  release_date: string;
   nation: string;
-  age: number | string;
-  category: string;
-  language: string;
-  time: number | string;
-  text_summary: string;
-  status: number | string;
-  image: File | null | string;
-  banner: File | null;
+  age: string | number;
+  duration: number;
+  description: string;
+  director: string;
+  actor: string;
   trailer: string;
-  date_added: string;
+  image: string;
+  banner: string;
+  genre: number[] | string[];
+  status: string;
 }

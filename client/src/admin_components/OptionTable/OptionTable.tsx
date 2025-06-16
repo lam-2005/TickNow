@@ -22,12 +22,12 @@ const OptionTable = () => {
         />
       </div>
 
-      <button className={"btn"}>
+      {/* <button className={"btn"}>
         <span>
           <CgExport />
         </span>
         Xuất dữ liệu
-      </button>
+      </button> */}
     </div>
   );
 };
