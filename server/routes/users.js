@@ -7,7 +7,7 @@ router.get('/', async (req, res, next) => {
     try {
         const users  = await userControler.getUsers();
         if( users ){
-            return res.status(200).json({ user: users , status: true, message: 'Lấy dữ liệu thành công'})
+            return res.status(200).json({ data: users , status: true, message: 'Lấy dữ liệu thành công'})
         }else{
             console.log(users);
             return res.status(404).json({ status: false, message: 'Lấy dữ liêu không thành công' })

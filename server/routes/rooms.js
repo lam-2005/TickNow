@@ -7,7 +7,7 @@ router.get('/', async (req, res, next) => {
     try {
         const rooms = await roomControler.getRooms();
         if(rooms){
-            return res.status(200).json({ room: rooms, status: true, message: 'Lấy dữ liệu thành công'})
+            return res.status(200).json({ data: rooms, status: true, message: 'Lấy dữ liệu thành công'})
         }else{
             return res.status(404).json({ status: false, message: 'Lấy dữ liêu không thành công' })
         }

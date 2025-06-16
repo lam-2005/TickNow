@@ -7,7 +7,7 @@ router.get('/', async (req, res, next) => {
     try {
         const vouchers  = await voucherControler.getVouchers();
         if( vouchers ){
-            return res.status(200).json({ voucher: vouchers , status: true, message: 'Lấy dữ liệu thành công'})
+            return res.status(200).json({ data: vouchers , status: true, message: 'Lấy dữ liệu thành công'})
         }else{
             return res.status(404).json({ status: false, message: 'Lấy dữ liêu không thành công' })
         }
