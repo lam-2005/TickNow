@@ -1,7 +1,7 @@
 // Pagination.tsx
 import React from "react";
 
-const Pagination: React.FC = () => {
+const Pagination = () => {
   return (
     <div className="flex items-center justify-end py-4 pr-4">
       <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
