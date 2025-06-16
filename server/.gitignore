@@ -1,0 +1,23 @@
+# Node modules
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.*          # Ignore .env.development, .env.production...
+
+# System files
+.DS_Store
+
+# Output builds or runtime
+dist/
+build/
+logs/
+
+# Editor folders
+.vscode/
+.idea/

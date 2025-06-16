@@ -26,7 +26,6 @@ const getScreeings = async () => {
 
             const movieName = movieMap.get(movieId);
             const roomCode = roomMap.get(roomId);
-            console.log(roomMap);
             return {
                 ...screening.toObject(),
                 movieName: movieName,

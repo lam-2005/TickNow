@@ -7,7 +7,7 @@ router.get('/', async (req, res, next) => {
     try{
         const payMethods = await payMethodControler.getPayMethod();
         if(payMethods){
-            res.status(200).json({ payMethod: payMethods, status: true, message: "Lấy dữ liệu thành công"})
+            res.status(200).json({ data: payMethods, status: true, message: "Lấy dữ liệu thành công"})
         }else{
             res.status(404).json({status:false, message: "Lỗi lấy dữ liệu từ server"});
         }
