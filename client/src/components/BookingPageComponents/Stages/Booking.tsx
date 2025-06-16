@@ -30,7 +30,7 @@ const Booking = () => {
       <h2>Chọn ghế - Phòng 2</h2>
       <div className="w-4/5 h-[148px] relative">
         <Image
-          src={"/screen.png"}
+          src={"/screen.webp"}
           fill
           sizes="1280"
           alt=""

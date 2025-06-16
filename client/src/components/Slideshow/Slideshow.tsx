@@ -6,7 +6,8 @@ import Slider from "react-slick";
 import { SampleArrow } from "../CustomSlider/Arrow";
 import { MovieType } from "@/interfaces/movie.interface";
 import { stopVideo } from "@/utils/handleUX";
-
+import * as movieService from "@/services/movie.service";
+import env from "@/configs/environment";
 const Slideshow = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<MovieType[] | []>([]);
@@ -14,7 +15,7 @@ const Slideshow = () => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
 
   useEffect(() => {
-    data.forEach((item, index) => {
+    data.forEach((_, index) => {
       if (currentSlide !== index) {
         stopVideo(index);
       }
@@ -28,20 +29,18 @@ const Slideshow = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+  const getMovieNow = async () => {
+    try {
+      const res = await movieService.getMovieList();
+      setData(res?.data);
+    } catch (error) {
+      console.error("Fetch movies failed:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const res = await fetch("http://localhost:5000/movies?_limit=5");
-        const getData = await res.json();
-        setData(getData);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
+    getMovieNow();
   }, []);
   const settings = {
     customPaging: function (i: number) {
@@ -55,7 +54,7 @@ const Slideshow = () => {
           data-aos-delay={(i + 1) * 100}
         >
           <Image
-            src={`/banner/${item.banner}`}
+            src={`${env.IMG_API_URL}/banner/${item.banner}`}
             alt=""
             fill
             priority
@@ -77,9 +76,9 @@ const Slideshow = () => {
     slidesToScroll: 1,
     pauseOnHover: true,
     initialSlide: 0,
-
     autoplaySpeed: 5000,
     autoplay: true,
+    lazyLoad: "progressive",
     afterChange: (current: number) => {
       setCurrentSlide(current);
     },
@@ -102,17 +101,17 @@ const Slideshow = () => {
         <Slider {...settings} lazyLoad="ondemand" fade={fade}>
           {data.map((item: MovieType, i: number) => (
             <div
-              key={item.id}
+              key={item._id}
               className="relative w-full h-full max-h-screen aspect-[16/9]"
             >
               <div className="w-full h-full relative">
                 <Image
-                  src={`/banner/${item.banner}`}
+                  src={`${env.IMG_API_URL}/banner/${item.banner}`}
                   alt=""
                   fill
                   sizes="100vw"
                   className="object-cover"
-                  priority
+                  loading="lazy"
                 />
               </div>
               <div className="w-full h-full absolute top-0 left-0 brightness-40 backdrop-blur-[0px] z-1"></div>
@@ -146,7 +145,7 @@ const Slideshow = () => {
                       data-aos-delay={300}
                       className="text-white"
                     >
-                      {item.time}min
+                      {item.duration} phút
                     </span>
                     <span
                       data-aos="fade-up"
@@ -159,7 +158,7 @@ const Slideshow = () => {
                       className="text-white"
                       data-aos-delay={400}
                     >
-                      {item.category}
+                      {"Đang cập nhật"}
                     </span>
                   </div>
                   <p
@@ -169,7 +168,7 @@ const Slideshow = () => {
                     data-aos="fade-right"
                     data-aos-delay={300}
                   >
-                    {item.text_summary}
+                    {item.description}
                   </p>
                   <div className="flex gap-5">
                     <Button

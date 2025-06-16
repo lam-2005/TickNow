@@ -1,4 +1,5 @@
 "use client";
+import { ButtonPlay } from "@/components/Button/ButtonOfItemMovie";
 import Select, { SelectField } from "@/components/Select/Select";
 import { ShowType } from "@/components/ShowtimeList/ShowtimeCard";
 import { useTheme } from "@/hooks/contexts/useTheme";
@@ -37,7 +38,12 @@ const Movie = () => {
           ></div>
         </div>
         <div className="container flex gap-[25px] w-full absolute bottom-0 left-1/2 -translate-x-1/2">
-          <div className="max-w-[204px] max-h-[300px] aspect-[2/3] w-full bg-red-400 rounded-[15px]"></div>
+          <div className="relative max-w-[204px] max-h-[300px] aspect-[2/3] w-full bg-red-400 rounded-[15px]">
+            <ButtonPlay
+              onClick={() => null}
+              className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2"
+            />
+          </div>
           <div className="space-y-2.5">
             <div className="flex items-center gap-2.5">
               <h1>Phim Chieu Rap</h1>

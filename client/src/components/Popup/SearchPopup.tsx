@@ -71,16 +71,28 @@ const SearchPopup = () => {
   return (
     <div className="relative z-50">
       <div className="w-[420px] bg-white shadow-2xl rounded-xl p-4 text-gray-800">
+<<<<<<< HEAD
         {/* Recently Searched */}
         <div className="text-xs text-gray-500 font-medium uppercase">Tìm kiếm gần đây</div>
+=======
+        <div className="text-xs text-gray-500 font-medium uppercase">
+          Tìm kiếm gần đây
+        </div>
+>>>>>>> main
         <div className="text-sm mt-1 mb-2">
           <span className="font-semibold" style={{ color: "#070707" }}>
             → Doraemon Movie 44: Nobita và Cuộc Phiêu...
           </span>
         </div>
+<<<<<<< HEAD
 
         {/* Now Showing */}
         <div className="text-xs text-gray-500 font-medium uppercase mt-3">Phim đang chiếu</div>
+=======
+        <div className="text-xs text-gray-500 font-medium uppercase mt-3">
+          Phim đang chiếu
+        </div>
+>>>>>>> main
         <div className="mt-2 flex flex-col gap-2 h-[500px] overflow-y-auto overflow-x-hidden max-h-[500px]">
           {movies.map((movie, index) => (
             <div
@@ -96,12 +108,20 @@ const SearchPopup = () => {
                 />
               </div>
               <div className="flex flex-col justify-between text-sm">
-                <p className="font-semibold leading-tight line-clamp-2" style={{ color: "#070707" }}>
+                <p
+                  className="font-semibold leading-tight line-clamp-2"
+                  style={{ color: "#070707" }}
+                >
                   {movie.title}
-                </p><p className="text-xs text-gray-500 mt-1 line-clamp-1">{movie.genre}</p>
+                </p>
+                <p className="text-xs text-gray-500 mt-1 line-clamp-1">
+                  {movie.genre}
+                </p>
                 <div className="flex items-center gap-2 text-xs mt-1">
                   {movie.rating && (
-                    <span className="text-yellow-500 font-medium">⭐ {movie.rating}</span>
+                    <span className="text-yellow-500 font-medium">
+                      ⭐ {movie.rating}
+                    </span>
                   )}
                 </div>
               </div>

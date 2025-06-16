@@ -7,7 +7,7 @@ const Location = () => {
       {/* Phần ảnh nền */}
       <div className="relative w-full h-40">
         <Image
-          src={`/banner/drop.jpg`}
+          src={`/banner/drop.webp`}
           alt="Ảnh rạp chiếu"
           fill
           priority
@@ -23,10 +23,7 @@ const Location = () => {
         <p className="text-foreground text-sm leading-relaxed mt-2.5">
           12, Phường Trung Mỹ Tây, Quận 12, Thành phố Hồ Chí Minh
         </p>
-        <Button
-        title="Xem chi tiết"
-        className="mt-5"
-        />
+        <Button title="Xem chi tiết" className="mt-5" />
       </div>
     </div>
   );
