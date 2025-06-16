@@ -4,22 +4,22 @@ const ticketControler = require('../controler/ticket.controler');
 
 const getRate = async () => {
     try {
-        const movies = await movieControler.getMovies()
+        const movies = await movieControler.getMovies();
         const movieMap = new Map();
         movies.forEach(movie => {
-            movieMap.set(movie._id.toString(), movie.name)
+            movieMap.set(movie._id, movie.name)
         })
 
         const tickets = await ticketControler.getTickets();
         const ticketMap = new Map();
         tickets.forEach(ticket => {
-            ticketMap.set(ticket._id.toString(), ticket.userName)
+            ticketMap.set(ticket._id, ticket.userName)
         })
 
         const rates = await rateModel.find();
         const result =  rates.map(rate => {
-            const userName = ticketMap.get(rate.id_ticket.toString());
-            const movieName = movieMap.get(rate.id_movie.toString());
+            const userName = ticketMap.get(rate.id_ticket);
+            const movieName = movieMap.get(rate.id_movie);
 
             return {
                 ...rate.toObject(),

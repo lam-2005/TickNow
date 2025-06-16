@@ -7,7 +7,9 @@ const getScreeings = async () => {
     try {
 
         const movies = await movieControler.getMovies();
+
         const movieMap = new Map()
+
         movies.forEach(movie => {
             movieMap.set(movie._id.toString(), movie.name)
         });

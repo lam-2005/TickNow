@@ -16,7 +16,7 @@ const movieSchema = new Schema({
     image: {type: String, required: true},
     banner: {type: String, required: true},
     genre: [ { _id: false, id: { type: ObjectId, ref: 'genre', required: true } } ],
-    status: { type: String, required: false, default: 'Sắp Chiếu' }
+    status: { type: String, enum: ['Đang Chiếu', 'Sắp Chiếu', 'Ngưng Chiếu'], required: false, default: 'Sắp Chiếu' }
     
 });
 
