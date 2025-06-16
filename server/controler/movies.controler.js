@@ -14,7 +14,6 @@ const getMovies = async () => {
 const getMovieStatus = async (status) => {
     try {
         const validStatus = [ "Đang Chiếu", "Sắp Chiếu" ];
-        console.log(status);
         if (!status || !validStatus.includes(status)) {
             throw new Error("❌ Trạng thái phim không hợp lệ");
         }
@@ -27,5 +26,20 @@ const getMovieStatus = async (status) => {
     }
 };
 
+const getDetailMovie = async (id) => {
+     try {
 
-module.exports = { getMovies, getMovieStatus };
+        if (!id ) {
+            throw new Error("❌ id phim không hợp lệ");
+        }
+
+        const movies = await movieModel.findById(id);
+        return movies;
+    } catch (error) {
+        console.error(error.message);
+        throw new Error('❌ Lỗi lấy dữ liệu của movie');
+    }
+}
+
+
+module.exports = { getMovies, getMovieStatus, getDetailMovie };
