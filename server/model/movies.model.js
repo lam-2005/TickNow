@@ -15,7 +15,7 @@ const movieSchema = new Schema({
     trailer: {type: String, required: true},
     image: {type: String, required: true},
     banner: {type: String, required: true},
-    genre: [ { id: { type: ObjectId, ref: 'genre', required: true } } ],
+    genre: [ { _id: false, id: { type: ObjectId, ref: 'genre', required: true } } ],
     status: { type: String, required: false, default: 'Sắp Chiếu' }
     
 });
