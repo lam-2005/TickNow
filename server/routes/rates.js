@@ -7,7 +7,7 @@ router.get('/', async (req, res, next) => {
     try {
         const rates = await rateControler.getRate();
         if(rates){
-            return res.status(200).json({ rate: rates ,status: true, message: "Lấy dữ liệu thành công"})
+            return res.status(200).json({ data: rates ,status: true, message: "Lấy dữ liệu thành công"})
         }else{
             return res.status(404).json({status: false, message: "lấy dữ liệu không thành công"});
         }

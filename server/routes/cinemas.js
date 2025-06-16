@@ -17,7 +17,7 @@ router.get('/', async function(req, res, next){
 
 
         if(cinemas){
-            return res.status(200).json({ cinemas: cinemas ,status: true, message: "Lấy dữ liệu thành công"})
+            return res.status(200).json({ data: cinemas ,status: true, message: "Lấy dữ liệu thành công"})
         }else{
             return res.status(404).json({status: false, message: "Không thể lấy dữ liệu trên server"})
         }

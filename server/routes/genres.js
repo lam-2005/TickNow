@@ -7,7 +7,7 @@ router.get('/', async (req, res, next) => {
     try{
         const genres = await genreControler.getGenres();
         if(genres){
-            return res.status(200).json({genres: genres, status: true, message: 'lấy dữ liệu thành công'})
+            return res.status(200).json({ data: genres, status: true, message: 'lấy dữ liệu thành công'})
         }else{
             return res.status(404).json({status: false, message: 'Lấy dữ liệu không thành công'})
         }
