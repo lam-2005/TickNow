@@ -30,7 +30,7 @@ const Slideshow = () => {
   }, []);
   const getMovieNow = async () => {
     try {
-      const res = await movieService.getMovieList("?_limit=5&status=2");
+      const res = await movieService.getMovieList("?status=Sắp chiếu");
       setData(res?.data);
     } catch (error) {
       console.error("Fetch movies failed:", error);
@@ -53,7 +53,7 @@ const Slideshow = () => {
           data-aos-delay={(i + 1) * 100}
         >
           <Image
-            src={`/banner/${item.banner}`}
+            src={`http://localhost:5000/images/banner/${item.banner}`}
             alt=""
             fill
             priority
@@ -105,7 +105,7 @@ const Slideshow = () => {
             >
               <div className="w-full h-full relative">
                 <Image
-                  src={`/banner/${item.banner}`}
+                  src={`http://localhost:5000/images/banner/${item.banner}`}
                   alt=""
                   fill
                   sizes="100vw"

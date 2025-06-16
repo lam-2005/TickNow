@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
       {
         protocol: "http",
         hostname: "localhost",
-        port: "1001",
+        port: "5000",
         pathname: "/images/**",
         search: "",
       },

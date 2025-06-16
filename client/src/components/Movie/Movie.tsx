@@ -45,7 +45,7 @@ const Movie = ({
             <div className="w-full h-full relative rounded-xl overflow-hidden">
               <Image
                 fill
-                src={`http://localhost:1001/images/movie/${info.image}`}
+                src={`http://localhost:5000/images/movie/${info.image}`}
                 alt="Phim"
                 sizes="300px"
                 loading="lazy"
