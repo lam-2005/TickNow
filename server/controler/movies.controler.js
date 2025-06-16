@@ -1,9 +1,13 @@
 const movieModel = require('../model/movies.model');
+const mapGenre = require('../utils/mapGenreMovie');
 
 const getMovies = async () => {
     try{
+
         const movies = await movieModel.find();
-        return movies;
+        const result = mapGenre.mapGenreMovie(movies)
+        return result;
+        
     }catch(error){
         console.error(error.message)
         throw new Error('❌ Lỗi lấy dữ liệu của movie')
@@ -19,7 +23,8 @@ const getMovieStatus = async (status) => {
         }
 
         const movies = await movieModel.find({ status });
-        return movies;
+        const result = mapGenre.mapGenreMovie(movies)
+        return result;
     } catch (error) {
         console.error(error.message);
         throw new Error('❌ Lỗi lấy dữ liệu của movie');
@@ -34,7 +39,8 @@ const getDetailMovie = async (id) => {
         }
 
         const movies = await movieModel.findById(id);
-        return movies;
+        const result = mapGenre.mapGenreMovieOne(movies)
+        return result;
     } catch (error) {
         console.error(error.message);
         throw new Error('❌ Lỗi lấy dữ liệu của movie');
