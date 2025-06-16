@@ -7,6 +7,7 @@ import { SampleArrow } from "../CustomSlider/Arrow";
 import { MovieType } from "@/interfaces/movie.interface";
 import { stopVideo } from "@/utils/handleUX";
 import * as movieService from "@/services/movie.service";
+import env from "@/configs/environment";
 const Slideshow = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<MovieType[] | []>([]);
@@ -30,7 +31,7 @@ const Slideshow = () => {
   }, []);
   const getMovieNow = async () => {
     try {
-      const res = await movieService.getMovieList("?status=Sắp chiếu");
+      const res = await movieService.getMovieList();
       setData(res?.data);
     } catch (error) {
       console.error("Fetch movies failed:", error);
@@ -53,7 +54,7 @@ const Slideshow = () => {
           data-aos-delay={(i + 1) * 100}
         >
           <Image
-            src={`http://localhost:5000/images/banner/${item.banner}`}
+            src={`${env.IMG_API_URL}/banner/${item.banner}`}
             alt=""
             fill
             priority
@@ -105,7 +106,7 @@ const Slideshow = () => {
             >
               <div className="w-full h-full relative">
                 <Image
-                  src={`http://localhost:5000/images/banner/${item.banner}`}
+                  src={`${env.IMG_API_URL}/banner/${item.banner}`}
                   alt=""
                   fill
                   sizes="100vw"
@@ -157,7 +158,7 @@ const Slideshow = () => {
                       className="text-white"
                       data-aos-delay={400}
                     >
-                      {item.genre}
+                      {"Đang cập nhật"}
                     </span>
                   </div>
                   <p

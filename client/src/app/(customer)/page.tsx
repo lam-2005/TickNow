@@ -13,21 +13,39 @@ import MovieContainer from "@/components/Movie/MovieContainer";
 import OfferLoading from "@/components/Loading/OfferLoading";
 import * as movieService from "@/services/movie.service";
 export default function Home() {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [data, setData] = useState<MovieType[] | []>([]);
+  const [loadingNow, setLoadingNow] = useState<boolean>(true);
+  const [loadingComingSoon, setLoadingComingSoon] = useState<boolean>(true);
+  const [moviesNow, setMoviesNow] = useState<MovieType[] | []>([]);
+  const [moviesComingSoon, setMoviesComingSoon] = useState<MovieType[] | []>(
+    []
+  );
+
   const getMovieNow = async () => {
     try {
-      const res = await movieService.getMovieList("");
-      console.log(res?.data);
-      setData(res?.data);
+      const res = await movieService.getMovieList("?status=Đang Chiếu");
+      setMoviesNow(res?.data);
     } catch (error) {
       console.error("Fetch movie failed:", error);
     } finally {
-      setLoading(false);
+      setLoadingNow(false);
+    }
+  };
+
+  const getMovieComingSoon = async () => {
+    try {
+      const res = await movieService.getMovieList("?status=Sắp Chiếu");
+      setMoviesComingSoon(res?.data);
+    } catch (error) {
+      console.error("Fetch movie failed:", error);
+    } finally {
+      setLoadingComingSoon(false);
     }
   };
   useEffect(() => {
     getMovieNow();
+  }, []);
+  useEffect(() => {
+    getMovieComingSoon();
   }, []);
   return (
     <>
@@ -47,7 +65,11 @@ export default function Home() {
                 Xem tất cả
               </Link>
             </div>
-            {!loading ? <MovieContainer data={data} /> : <MovieLoading />}
+            {!loadingNow ? (
+              <MovieContainer data={moviesNow} />
+            ) : (
+              <MovieLoading />
+            )}
           </div>
         </section>
         <section className="bg-[url('/background.webp')] bg-top bg-cover py-10">
@@ -58,8 +80,8 @@ export default function Home() {
             >
               Phim Sắp Chiếu
             </h2>
-            {!loading ? (
-              <MovieContainer data={data} textColor="text-white" />
+            {!loadingComingSoon ? (
+              <MovieContainer data={moviesComingSoon} textColor="text-white" />
             ) : (
               <MovieLoading />
             )}
@@ -85,7 +107,7 @@ export default function Home() {
                 Xem tất cả
               </Link>
             </div>
-            {!loading ? (
+            {!loadingComingSoon ? (
               <CustomSlider
                 slidesToScroll={4}
                 slidesToShow={4}
@@ -94,7 +116,7 @@ export default function Home() {
                 md={2}
                 sm={1}
               >
-                {data.map((item: MovieType, index: number) => (
+                {moviesComingSoon.map((item: MovieType, index: number) => (
                   <div
                     className="px-2"
                     key={item._id}

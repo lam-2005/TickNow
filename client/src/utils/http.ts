@@ -1,6 +1,7 @@
+import env from "@/configs/environment";
 import axios from "axios";
 const instance = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: env.API_URL,
 });
 // Add a response interceptor
 instance.interceptors.response.use(

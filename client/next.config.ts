@@ -1,3 +1,4 @@
+import env from "@/configs/environment";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -6,8 +7,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "http",
-        hostname: "localhost",
-        port: "5000",
+        hostname: `${env.HOSTNAME}`,
+        port: env.PORT,
         pathname: "/images/**",
         search: "",
       },
