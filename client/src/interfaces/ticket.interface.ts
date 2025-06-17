@@ -1,0 +1,11 @@
+export interface Ticket {
+  _id: string;               // ID của vé (MongoDB ObjectId)
+  id_user: string;           // ID người dùng đặt vé
+  id_screening: string;      // ID suất chiếu
+  price: number;             // Giá vé
+  type: "Đã Thanh Toán" | "Chưa Thanh Toán"; // Trạng thái vé
+  seat: string[];            // Danh sách ghế, ví dụ ["A1", "A2"]
+  userName: string;          // Tên người dùng
+  screeningTime: string;     // Thời gian chiếu
+}
+
