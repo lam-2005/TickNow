@@ -32,7 +32,7 @@ const Slideshow = () => {
   const getMovieNow = async () => {
     try {
       const res = await movieService.getMovieList();
-      setData(res?.data);
+      setData(res?.data.movie);
     } catch (error) {
       console.error("Fetch movies failed:", error);
     } finally {

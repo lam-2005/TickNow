@@ -23,7 +23,7 @@ export default function Home() {
   const getMovieNow = async () => {
     try {
       const res = await movieService.getMovieList("?status=Đang Chiếu");
-      setMoviesNow(res?.data);
+      setMoviesNow(res?.data.movie);
     } catch (error) {
       console.error("Fetch movie failed:", error);
     } finally {
@@ -34,7 +34,7 @@ export default function Home() {
   const getMovieComingSoon = async () => {
     try {
       const res = await movieService.getMovieList("?status=Sắp Chiếu");
-      setMoviesComingSoon(res?.data);
+      setMoviesComingSoon(res?.data.movie);
     } catch (error) {
       console.error("Fetch movie failed:", error);
     } finally {
