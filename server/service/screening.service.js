@@ -1,12 +1,12 @@
 const screeningModel = require('../model/screening.model');
-const movieSerice = require('../service/movie.service');
+const movieService = require('../service/movie.service');
 const roomControler = require('../controler/room.controler');
 
 
 const getScreeings = async ( filter ) => {
     try {
 
-        const movies = await movieSerice.getMovies();
+        const movies = await movieService.getMovies();
         const movieMap = new Map()
 
         movies.movie.forEach(movie => {
@@ -25,7 +25,7 @@ const getScreeings = async ( filter ) => {
         });
 
         const screenings = await screeningModel.find( filter );
-        console.log(screenings);    
+        
         const result = screenings.map(screening => {
             const movieId = screening.id_movie.toString();
             const roomId = screening.id_room.toString();
@@ -47,4 +47,16 @@ const getScreeings = async ( filter ) => {
     }
 }
 
-module.exports = { getScreeings }
+const getScreeningFilter = async (filter) => {
+    try {
+
+        const screenings = await screeningModel.find( filter );
+        return screenings
+
+    } catch (error) {
+        console.error(error)
+        throw new Error("Lấy dữ liệu không thành công");
+    }
+}
+
+module.exports = { getScreeings, getScreeningFilter }
