@@ -1,51 +1,44 @@
-const movieModel = require('../model/movies.model');
-const mapGenre = require('../utils/mapGenreMovie');
+const movieServiece = require('../service/movie.service')
 
-const getMovies = async () => {
+const getMovies =async (req,res,next) => {
     try{
-
-        const movies = await movieModel.find();
-        const result = mapGenre.mapGenreMovie(movies)
-        return result;
+        const { status } = req.query;
+        const limit = parseInt(req.query.limit);
+        const page = parseInt(req.query.page);
+        console.log(limit, page);
+        let result
         
+        if(status){
+            result = await movieServiece.getMovieStatus(status, limit, page);
+        }else{
+            result = await movieServiece.getMovies(limit, page);
+        }
+
+        if(result){
+            return res.status(200).json({ data: result ,status: true, message: 'Lấy dữ liệu thành công'})
+        }else{
+            return res.status(404).json({ status: false, message: 'Lấy dữ liệu thất bại' })
+        }
     }catch(error){
-        console.error(error.message)
-        throw new Error('❌ Lỗi lấy dữ liệu của movie')
+        console.error(error);
+        return res.status(500).json({status: false, message: 'Lấy dữ liệu movie thất bại'})
     }
-    
 }
 
-const getMovieStatus = async (status) => {
+const getDetailMovie = async (req,res,next) => {
     try {
-        const validStatus = [ "Đang Chiếu", "Sắp Chiếu" ];
-        if (!status || !validStatus.includes(status)) {
-            throw new Error("❌ Trạng thái phim không hợp lệ");
+        const { id } = req.params;
+        let result = await movieControler.getDetailMovie(id);
+        if(result){
+            return res.status(200).json({ data: result ,status: true, message: 'Lấy dữ liệu thành công'})
+        }else{
+            return res.status(404).json({ status: false, message: 'Lấy dữ liệu thất bại' })
         }
-
-        const movies = await movieModel.find({ status });
-        const result = mapGenre.mapGenreMovie(movies)
-        return result;
     } catch (error) {
-        console.error(error.message);
-        throw new Error('❌ Lỗi lấy dữ liệu của movie');
-    }
-};
-
-const getDetailMovie = async (id) => {
-     try {
-
-        if (!id ) {
-            throw new Error("❌ id phim không hợp lệ");
-        }
-
-        const movies = await movieModel.findById(id);
-        const result = mapGenre.mapGenreMovieOne(movies)
-        return result;
-    } catch (error) {
-        console.error(error.message);
-        throw new Error('❌ Lỗi lấy dữ liệu của movie');
+        console.error(error);
+        return res.status(500).json({status: false, message: 'Lấy dữ liệu movie thất bại'})
     }
 }
 
 
-module.exports = { getMovies, getMovieStatus, getDetailMovie };
+module.exports = { getMovies, getDetailMovie };
