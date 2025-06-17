@@ -5,18 +5,25 @@ import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import OptionTable from "@/admin_components/OptionTable/OptionTable";
 import Table, { Column } from "@/admin_components/Table/Table";
 import { MovieType } from "@/interfaces/movie.interface";
+import * as movieService from "@/services/movie.service";
+import ActionButton from "@/admin_components/Button/ButtonActions";
 
 const MovieManagement = () => {
   const [movies, setMovies] = useState<MovieType[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
     const fetchMovies = async () => {
+      setLoading(true);
+      setError(null);
       try {
-        const res = await fetch("http://localhost:5000/movies?_limit=5");
-        const data = await res.json();
-        setMovies(data);
+        const res = await movieService.getMovieList("?limit=5&page=1");
+        console.log("Dữ liệu từ API:", res?.data.movie);
+        setMovies(res?.data.movie || []);
       } catch (error) {
         console.error("Lỗi khi fetch movies:", error);
+        setError("Không thể tải danh sách phim. Vui lòng thử lại sau.");
       } finally {
         setLoading(false);
       }
@@ -25,30 +32,45 @@ const MovieManagement = () => {
   }, []);
 
   const col: Column<MovieType>[] = [
-    { key: "name", title: "Name" },
-    { key: "date", title: "Date" },
-    { key: "director", title: "Director" },
-    { key: "nation", title: "Nation" },
-    { key: "age", title: "Age" },
-    { key: "category", title: "Category" },
-    { key: "time", title: "Time" },
+    { key: "name", title: "Tên Phim" },
+    {
+      key: "release_date",
+      title: "Ngày Công Chiếu",
+      render: (row: MovieType) => {
+        const date = new Date(row.release_date);
+        return !isNaN(date.getTime()) ? date.toLocaleDateString("vi-VN") : "Chưa Xác Định";
+      },
+    },
+    { key: "director", title: "Đạo Diễn" },
+    { key: "nation", title: "Quốc Gia" },
+    { key: "age", title: "Độ Tuổi" },
+    { title: "Thể Loại",
+      render(){
+        return(
+          <div className="w-full px-4 py-2 text-center">
+            Đang cập nhật
+          </div>
+        )
+      }
+     },
+    { key: "duration", title: "Thời Lượng" },
     {
       title: "Thao tác",
       render(row: MovieType) {
         return (
           <div className="flex gap-2">
-            <button
-              className="px-3 py-1 bg-blue-500 text-white rounded"
-              onClick={() => handleEdit(row.id)}
-            >
-              Edit
-            </button>
-            <button
-              className="px-3 py-1 bg-red-500 text-white rounded"
-              onClick={() => handleDelete(row.id)}
-            >
-              Xóa
-            </button>
+            <ActionButton
+              label="Sửa"
+              onClick={handleEdit}
+              bgColor="bg-yellow-500"
+              id={row._id}
+            />
+            <ActionButton
+              label="Xóa"
+              onClick={handleDelete}
+              bgColor="bg-red-500"
+              id={row._id}
+            />
           </div>
         );
       },
@@ -56,11 +78,11 @@ const MovieManagement = () => {
   ];
 
   const handleEdit = (id: string | number) => {
-    console.log("Edit", id);
+    alert(`Edit ${id}`);
   };
 
   const handleDelete = (id: string | number) => {
-    console.log("Delete", id);
+    alert(`Delete ${id}`);
   };
 
   return (
@@ -70,7 +92,9 @@ const MovieManagement = () => {
       </HeadingCard>
       <OptionTable />
       {loading ? (
-        <p>Đang tải dữ liệu...</p>
+        <p className="text-center">Đang tải dữ liệu...</p>
+      ) : error ? (
+        <p className="text-primary text-center">{error}</p>
       ) : (
         <Table column={col} data={movies} />
       )}
