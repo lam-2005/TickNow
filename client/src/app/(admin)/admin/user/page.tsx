@@ -19,7 +19,7 @@ const UserManagement = () => {
       setError(null);
       try {
         const res = await userService.getUserList("?_limit=5");
-        console.log("Dữ liệu từ API:", res?.data); // Kiểm tra dữ liệu
+        console.log("Dữ liệu từ API:", res?.data);
         setUsers(res?.data || []);
       } catch (error) {
         console.error("Lỗi khi fetch users:", error);
