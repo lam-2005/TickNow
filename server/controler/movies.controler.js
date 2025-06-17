@@ -5,7 +5,7 @@ const dayjs = require('dayjs');
 const getMovies =async (req,res,next) => {
     try{
         // query host
-        const { status, date, genre } = req.query;
+        const { status, date } = req.query;
 
         const limit = parseInt(req.query.limit);
 
