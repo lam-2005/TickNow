@@ -1,45 +1,40 @@
-const screeningModel = require('../model/screening.model');
-const movieControler = require('../controler/movies.controler');
-const roomControler = require('../controler/room.controler');
+const dayjs = require('dayjs');
 
+const screeningService = require('../service/screening.service');
 
-const getScreeings = async () => {
+const getScreeings = async (req, res, next) => {
     try {
+        const { date } = req.query;
+        let filter = {};
 
-        const movies = await movieControler.getMovies();
+        if(date){
+            const parsedDate = dayjs(date, 'MM-DD-YYYY');
 
-        const movieMap = new Map()
+            if(parsedDate.isValid()){
+                const start = parsedDate.startOf('day').toDate();
+                const end = parsedDate.endOf('day').toDate();
 
-        movies.forEach(movie => {
-            movieMap.set(movie._id.toString(), movie.name)
-        });
-
-        const rooms = await roomControler.getRooms();
-        const roomMap = new Map();
-        rooms.forEach(room => {
-            roomMap.set(room._id.toString(), room.code_room)
-        });
-
-        const screenings = await screeningModel.find();
-
-        const result = screenings.map(screening => {
-            const movieId = screening.id_movie.toString();
-            const roomId = screening.id_room.toString();
-
-            const movieName = movieMap.get(movieId);
-            const roomCode = roomMap.get(roomId);
-            return {
-                ...screening.toObject(),
-                movieName: movieName,
-                roomCode: roomCode,
+                filter.date = {
+                    $gte: start,
+                    $lte: end
+                };
+            }else{
+                console.warn('⚠️ Ngày không hợp lệ:', date);
             }
-        })
+        } 
+        console.log(filter.date);
 
-        return result;
+        const screenings  = await screeningService.getScreeings(filter);
+
+        if( screenings ){
+            return res.status(200).json({ data: screenings , status: true, message: 'Lấy dữ liệu thành công'})
+        }else{
+            return res.status(404).json({ status: false, message: 'Lấy dữ liêu không thành công' })
+        }
 
     } catch (error) {
-        console.error(error)
-        throw new Error("Lấy dữ liệu không thành công");
+        console.error(error);
+        return res.status(500).json({status: false, message: 'Lấy dữ liệu không thành công'})
     }
 }
 

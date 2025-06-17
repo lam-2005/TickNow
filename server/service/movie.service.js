@@ -2,12 +2,13 @@ const movieModel = require('../model/movies.model');
 const mapGenre = require('../utils/mapGenreMovie');
 const paginate = require('../utils/pagination');
 
-const getMovies = async (limit,page) => {
+const getMovies = async ( filter, limit, page) => {
     try{
 
-        const {data, pagination} = await paginate.paginateQuery(movieModel, {}, page, limit);
+        const {data, pagination} = await paginate.paginateQuery(movieModel, filter, page, limit);
 
         const movie = await mapGenre.mapGenreMovie(data);
+        
         const result = {
             movie,
             pagination
@@ -21,26 +22,6 @@ const getMovies = async (limit,page) => {
     
 }
 
-const getMovieStatus = async (status, limit, page) => {
-    try {
-        const validStatus = [ "Đang Chiếu", "Sắp Chiếu" ];
-        if (!status || !validStatus.includes(status)) {
-            throw new Error("❌ Trạng thái phim không hợp lệ");
-        }
-
-        const {data, pagination} = await paginate.paginateQuery(movieModel, { status }, page, limit);
-
-        const movie = await mapGenre.mapGenreMovie(data);
-        const result = {
-            movie,
-            pagination
-        }
-        return result;
-    } catch (error) {
-        console.error(error.message);
-        throw new Error('❌ Lỗi lấy dữ liệu của movie');
-    }
-};
 
 const getDetailMovie = async (id) => {
      try {
@@ -59,4 +40,4 @@ const getDetailMovie = async (id) => {
 }
 
 
-module.exports = { getMovies, getMovieStatus, getDetailMovie };
+module.exports = { getMovies, getDetailMovie };
