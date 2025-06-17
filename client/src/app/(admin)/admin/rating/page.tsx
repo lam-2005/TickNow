@@ -1,98 +1,95 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AddBtn from "@/admin_components/Button/AddBtn";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import OptionTable from "@/admin_components/OptionTable/OptionTable";
 import Table, { Column } from "@/admin_components/Table/Table";
 import { ReviewType } from "@/interfaces/rating.interface";
+import * as rateService from "@/services/rate.service";
+import ActionButton from "@/admin_components/Button/ButtonActions";
 
-const UserManagement = () => {
-  const rating: ReviewType[] = [
-    {
-      id: "sdgvzdvsdc",
-      movieName: "Avengers: Endgame",
-      ticketCode: "VE123456",
-      score: 9,
-      date: "2025-05-01",
-      comment: "Một bộ phim kết thúc tuyệt vời cho cả loạt phim!",
-    },
-    {
-      id: "dddvcadcs",
-      movieName: "Dune: Part Two",
-      ticketCode: "VE654321",
-      score: 8,
-      date: "2025-04-15",
-      comment: "Hình ảnh hoành tráng và cốt truyện hấp dẫn.",
-    },
-    {
-      id: "fbgdbdfdvcd",
-      movieName: "Kung Fu Panda 4",
-      ticketCode: "VE246810",
-      score: 7,
-      date: "2025-05-20",
-      comment: "Vui nhộn, thích hợp cho gia đình và trẻ nhỏ.",
-    },
-    {
-      id: "gdbdfb43f",
-      movieName: "The Batman",
-      ticketCode: "VE135791",
-      score: 8.5,
-      date: "2025-03-25",
-      comment: "Phong cách đen tối rất phù hợp với nhân vật Batman.",
-    },
-    {
-      id: "dgnfdgb65f",
-      movieName: "Inside Out 2",
-      ticketCode: "VE999888",
-      score: 9.5,
-      date: "2025-06-01",
-      comment: "Cảm động và truyền cảm hứng về cảm xúc con người.",
-    },
-  ];
+const RatingManagement = () => {
+  const [ratings, setRatings] = useState<ReviewType[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchRatings = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await rateService.getRateList("");
+        console.log("Dữ liệu từ API:", res?.data);
+        setRatings(res?.data || []);
+      } catch (error) {
+        console.error("Lỗi khi fetch ratings:", error);
+        setError("Không thể tải danh sách đánh giá. Vui lòng thử lại sau.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchRatings();
+  }, []);
+
+  const handleEdit = (id: string | number) => {
+    alert(`Edit ${id}`);
+  };
+
+  const handleDelete = (id: string | number) => {
+    alert(`Delete ${id}`);
+  };
+
   const col: Column<ReviewType>[] = [
-    { key: "movieName", title: "Movie Name" },
-    { key: "ticketCode", title: "Ticket Code" },
-    { key: "score", title: "Score" },
-    { key: "date", title: "Date" },
-    { key: "comment", title: "Comment" },
+    { key: "movieName", title: "Tên Phim" },
+    { key: "ticketCode", title: "Mã Vé" },
+    { key: "score", title: "Điểm" },
     {
-      title: "Action",
+      key: "date",
+      title: "Ngày Đánh Giá",
+      render: (row: ReviewType) => {
+        const date = new Date(row.date);
+        return !isNaN(date.getTime()) ? date.toLocaleDateString("vi-VN") : "Chưa Xác Định";
+      },
+    },
+    { key: "comment", title: "Bình Luận" },
+    {
+      title: "Thao Tác",
       render(row: ReviewType) {
         return (
           <div className="flex gap-2">
-            <button
-              className="px-3 py-1 bg-blue-500 text-white rounded"
-              onClick={() => handleEdit(row.id)}
-            >
-              Edit
-            </button>
-            <button
-              className="px-3 py-1 bg-red-500 text-white rounded"
-              onClick={() => handleDelete(row.id)}
-            >
-              Xóa
-            </button>
+            <ActionButton
+              label="Sửa"
+              onClick={handleEdit}
+              bgColor="bg-yellow-500"
+              id={row._id}
+            />
+            <ActionButton
+              label="Xóa"
+              onClick={handleDelete}
+              bgColor="bg-red-500"
+              id={row._id}
+            />
           </div>
         );
       },
     },
   ];
-  const handleEdit = (id: string | number) => {
-    console.log("Edit", id);
-  };
 
-  const handleDelete = (id: string | number) => {
-    console.log("Delete", id);
-  };
   return (
     <div className="card">
-      <HeadingCard title="Quản Lý Đánh Gía">
+      <HeadingCard title="Quản Lý Đánh Giá">
         <AddBtn />
       </HeadingCard>
       <OptionTable />
-      <Table column={col} data={rating} />
+      {loading ? (
+        <p className="text-center">Đang tải dữ liệu...</p>
+      ) : error ? (
+        <p className="text-primary text-center">{error}</p>
+      ) : (
+        <Table column={col} data={ratings} />
+      )}
     </div>
   );
 };
 
-export default UserManagement;
+export default RatingManagement;
