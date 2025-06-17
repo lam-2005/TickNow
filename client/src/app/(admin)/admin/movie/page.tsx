@@ -18,9 +18,9 @@ const MovieManagement = () => {
       setLoading(true);
       setError(null);
       try {
-        const res = await movieService.getMovieList("?_limit=5");
-        console.log("Dữ liệu từ API:", res?.data);
-        setMovies(res?.data || []);
+        const res = await movieService.getMovieList("?limit=5&page=1");
+        console.log("Dữ liệu từ API:", res?.data.movie);
+        setMovies(res?.data.movie || []);
       } catch (error) {
         console.error("Lỗi khi fetch movies:", error);
         setError("Không thể tải danh sách phim. Vui lòng thử lại sau.");

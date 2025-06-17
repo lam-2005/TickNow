@@ -5,8 +5,8 @@ import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import OptionTable from "@/admin_components/OptionTable/OptionTable";
 import Table, { Column } from "@/admin_components/Table/Table";
 import { ReviewType } from "@/interfaces/rating.interface";
-import * as rateService from "@/services/rate.service"; // Import rate service
-import ActionButton from "@/admin_components/Button/ButtonActions"; // Import ActionButton
+import * as rateService from "@/services/rate.service";
+import ActionButton from "@/admin_components/Button/ButtonActions";
 
 const RatingManagement = () => {
   const [ratings, setRatings] = useState<ReviewType[]>([]);
@@ -19,7 +19,7 @@ const RatingManagement = () => {
       setError(null);
       try {
         const res = await rateService.getRateList("");
-        console.log("Dữ liệu từ API:", res?.data); // Kiểm tra dữ liệu
+        console.log("Dữ liệu từ API:", res?.data);
         setRatings(res?.data || []);
       } catch (error) {
         console.error("Lỗi khi fetch ratings:", error);

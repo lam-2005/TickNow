@@ -23,9 +23,9 @@ const MovieSection = () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await movieService.getMovieList(`?_limit=10&status=${status}`);
-      console.log("Dữ liệu phim:", res?.data); // Kiểm tra dữ liệu
-      setMovies(res?.data || []);
+      const res = await movieService.getMovieList(`?status=${status}&limit=10`);
+      console.log("Dữ liệu phim:", res?.data.movie);
+      setMovies(res?.data.movie || []);
     } catch (error) {
       console.error("Lỗi khi tải phim:", error);
       setError("Không thể tải danh sách phim. Vui lòng thử lại sau.");
