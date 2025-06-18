@@ -5,7 +5,7 @@ const dayjs = require('dayjs');
 const getMovies =async (req,res,next) => {
     try{
         // query host
-        const { status, date, genre } = req.query;
+        const { name, status, date } = req.query;
 
         const limit = parseInt(req.query.limit);
 
@@ -33,7 +33,11 @@ const getMovies =async (req,res,next) => {
             }else{
                 console.warn('⚠️ Ngày không hợp lệ:', date);
             }
-        }   
+        }
+
+        if( name ){
+            filter.name = new RegExp(name, 'i');
+        }
 
         // get data
         result = await movieServiece.getMovies(filter, limit, page);
@@ -63,6 +67,17 @@ const getDetailMovie = async (req,res,next) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({status: false, message: 'Lấy dữ liệu movie thất bại'})
+    }
+}
+
+const searchName = async (req, res, next) => {
+    try {
+        
+        const name = req.body;
+
+    }catch (error){
+        console.error(error);
+        return res.status(500).json( {status: false, message: 'Lấy dữ liệu movie thất bại'} );
     }
 }
 
