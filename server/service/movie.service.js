@@ -22,7 +22,6 @@ const getMovies = async ( filter, limit, page) => {
     
 }
 
-
 const getDetailMovie = async (id) => {
      try {
 
@@ -32,6 +31,7 @@ const getDetailMovie = async (id) => {
 
         const movies = await movieModel.findById(id);
         const result = mapGenre.mapGenreMovieOne(movies)
+    
         return result;
     } catch (error) {
         console.error(error.message);

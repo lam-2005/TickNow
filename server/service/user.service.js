@@ -4,7 +4,7 @@ const paginate = require('../utils/pagination');
 const getUsers = async (page = 1, limit = 5) => {
     try {
         const result = await paginate.paginateQuery(userModel, {}, page, limit)
-        console.log(result)
+        
         return result;
     } catch (error) {
         console.error(error)

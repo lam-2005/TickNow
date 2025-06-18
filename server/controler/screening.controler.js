@@ -23,6 +23,7 @@ const getScreeings = async (req, res, next) => {
 const filterScreening = async (req, res, next) => {
     try {
         const { date } = req.query;
+        
         let filter = {};
 
         if(date){
