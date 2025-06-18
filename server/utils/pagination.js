@@ -1,9 +1,11 @@
 const paginateQuery = async (Model, filter = {}, page, limit) => {
     let data;
     let pagination = {};
-    if(!limit && !page){
+
+    if ( !limit && !page ) {
         data = await Model.find(filter)
-    }else if(!page){
+
+    } else if ( !page ){
 
         data = await Model.find(filter).limit(limit);
     
@@ -15,7 +17,7 @@ const paginateQuery = async (Model, filter = {}, page, limit) => {
             totalPages: Math.ceil(totalData / limit),
         }
         
-    }else{
+    } else {
         const skip = ( page - 1)*limit;
     
         data = await Model.find(filter).skip(skip).limit(limit);

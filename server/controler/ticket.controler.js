@@ -1,21 +1,21 @@
 const ticketModel = require('../model/ticket.model');
-const screeningControler = require('./screening.controler');
-const usersControler = require('./users.controler');
+const screeningService = require('../service/screening.service');
+const usersService = require('../service/user.service');
 
 
 const getTickets = async () => {
     try {
-        const screenings = await screeningControler.getScreeings();
+        const screenings = await screeningService.getScreeings();
         const screeningMap = new Map();
 
         screenings.forEach( screening => {
             screeningMap.set(screening._id.toString(), screening.time_start)
         })
 
-        const users = await usersControler.getUsers();
+        const users = await usersService.getUsers();
         const userMap = new Map();
 
-        users.forEach(user => {
+        users.data.forEach(user => {
             userMap.set(user._id.toString(), user.name);
         })
 
