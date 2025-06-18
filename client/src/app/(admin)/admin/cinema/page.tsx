@@ -3,58 +3,20 @@ import AddBtn from "@/admin_components/Button/AddBtn";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import OptionTable from "@/admin_components/OptionTable/OptionTable";
 import Table, { Column } from "@/admin_components/Table/Table";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
-
-interface Cinema {
-  id: number;
-  name: string;
-  image: string;
-  detail_location: string;
-  id_location: number;
-}
-
-const cinemas: Cinema[] = [
-  {
-    id: 1,
-    name: "TickNow Quang Trung",
-    image: "/logo/logo.webp",
-    detail_location: "Gò Vấp, TP.HCM",
-    id_location: 1,
-  },
-  {
-    id: 2,
-    name: "TickNow Quận 1",
-    image: "/logo/logo.webp",
-    detail_location: "116 Nguyễn Du, Quận 1, TP.HCM",
-    id_location: 2,
-  },
-  {
-    id: 3,
-    name: "TickNow Quận 12",
-    image: "/logo/logo.webp",
-    detail_location: "310 Tô Ký, Quận 12, TP.HCM",
-    id_location: 3,
-  },
-  {
-    id: 4,
-    name: "TickNow Quận 3",
-    image: "/logo/logo.webp",
-    detail_location: "75 Trần Quốc Thảo, Quận 3, TP.HCM",
-    id_location: 4,
-  },
-  {
-    id: 5,
-    name: "TickNow Bình Dương",
-    image: "/logo/logo.webp",
-    detail_location: "Q. Thủ Dầu Một, Bình Dương",
-    id_location: 5,
-  },
-];
+import { Cinema } from "@/interfaces/cinema.interface";
+import { getCinemaList } from "@/services/cinema.service";
 
 const col: Column<Cinema>[] = [
   { key: "name", title: "Tên rạp" },
-  { key: "detail_location", title: "Địa chỉ" },
+  {
+    key: "location",
+    title: "Địa chỉ",
+    render(row: Cinema) {
+      return <p>{row.location.deatil_location}</p>;
+    },
+  },
   {
     key: "image",
     title: "Hình ảnh",
@@ -76,13 +38,13 @@ const col: Column<Cinema>[] = [
       return (
         <div className="flex space-x-2">
           <button
-            onClick={() => handleEdit(row.id)}
+            // onClick={() => handleEdit(row._id)}
             className="text-blue-500 hover:underline"
           >
             Sửa
           </button>
           <button
-            onClick={() => handleDelete(row.id)}
+            // onClick={() => handleDelete(row._id)}
             className="text-red-500 hover:underline"
           >
             Xóa
@@ -102,13 +64,30 @@ const handleDelete = (id: number) => {
 };
 
 const AdminCinema = () => {
+  const [loading, setLoading] = useState<boolean>(true);
+  const [data, setData] = useState<Cinema[] | []>([]);
+
+  const getCinema = async () => {
+    try {
+      const res = await getCinemaList();
+      setData(res?.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    getCinema();
+  }, []);
+  if (loading) return <p>Loading...</p>;
   return (
     <div className="card">
       <HeadingCard title="Quản lý rạp chiếu">
         <AddBtn />
       </HeadingCard>
       <OptionTable />
-      <Table column={col} data={cinemas} />
+      <Table column={col} data={data} />
     </div>
   );
 };

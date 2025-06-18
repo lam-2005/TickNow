@@ -1,6 +1,6 @@
 "use client";
 import { useTheme } from "@/hooks/contexts/useTheme";
-import React from "react";
+import React, { useEffect } from "react";
 import { FaChevronDown } from "react-icons/fa6";
 
 export const SelectField = ({
@@ -10,6 +10,7 @@ export const SelectField = ({
   onToggle,
   isOpen,
   id,
+  onClose,
 }: {
   icon: React.ReactNode;
   label: string;
@@ -17,12 +18,32 @@ export const SelectField = ({
   onToggle: (id: string) => void;
   isOpen: boolean;
   id: string;
+  onClose: () => void;
 }) => {
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest(`[data-dropdown="${id}"]`)) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      window.addEventListener("click", handleClickOutside);
+    }
+
+    return () => {
+      window.removeEventListener("click", handleClickOutside);
+    };
+  }, [isOpen, id, onClose]);
   return (
-    <div className="relative select-none">
+    <div className="relative select-none" data-dropdown={id}>
       <div
         className="h-full flex items-center w-[330px] justify-between px-5 gap-5 cursor-pointer"
-        onClick={() => onToggle(id)}
+        onClick={(e) => {
+          e.stopPropagation();
+          onToggle(id);
+        }}
       >
         <span className="text-xl">{icon}</span>
         <span className="line-clamp-1">{label}</span>

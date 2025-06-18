@@ -10,6 +10,15 @@ import { RiMapPin2Fill } from "react-icons/ri";
 
 const Showtimes = () => {
   const [isActived, setIsActived] = useState<string | null>(null);
+  const [checkedItems, setCheckedItems] = useState<(string | number)[]>([]);
+
+  const handleToggleItem = (id: string | number) => {
+    setCheckedItems((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
+
+  const handleReset = () => setCheckedItems([]);
   const handleToggle = (id: string) => {
     setIsActived((prev) => (prev === id ? null : id));
   };
@@ -24,8 +33,14 @@ const Showtimes = () => {
               id="date"
               isOpen={isActived === "date"}
               onToggle={handleToggle}
+              onClose={() => setIsActived(null)}
             >
-              <Option label="Chọn ngày chiếu" />
+              <Option
+                label="Chọn ngày chiếu"
+                checkedItems={checkedItems}
+                onToggleItem={handleToggleItem}
+                onReset={handleReset}
+              />
             </SelectField>
             <SelectField
               icon={<BiSolidMoviePlay />}
@@ -33,6 +48,7 @@ const Showtimes = () => {
               id="movie"
               isOpen={isActived === "movie"}
               onToggle={handleToggle}
+              onClose={() => setIsActived(null)}
             >
               <Option label="Chọn Phim" />
             </SelectField>
@@ -42,6 +58,7 @@ const Showtimes = () => {
               id="cinema"
               isOpen={isActived === "cinema"}
               onToggle={handleToggle}
+              onClose={() => setIsActived(null)}
             >
               <Option label="Chọn rạp chiếu" />
             </SelectField>

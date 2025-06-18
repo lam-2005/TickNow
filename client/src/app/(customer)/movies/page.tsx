@@ -4,7 +4,7 @@ import Movie from "@/components/Movie/Movie";
 import MovieLoading from "@/components/Loading/MovieLoading";
 import BackgroundPage from "@/components/BackgroundPage/BackgroundPage";
 import Select, { SelectField } from "@/components/Select/Select";
-import { FaFilm, FaCalendarAlt,FaSortAlphaDown } from "react-icons/fa";
+import { FaFilm, FaCalendarAlt, FaSortAlphaDown } from "react-icons/fa";
 import { RiMapPin2Fill } from "react-icons/ri";
 import { MovieType } from "@/interfaces/movie.interface";
 import * as movieService from "@/services/movie.service";
@@ -23,7 +23,7 @@ const MovieSection = () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await movieService.getMovieList(`?status=${status}&limit=10`);
+      const res = await movieService.getMovieList(`?status=${status}`);
       console.log("Dữ liệu phim:", res?.data.movie);
       setMovies(res?.data.movie || []);
     } catch (error) {
@@ -38,6 +38,7 @@ const MovieSection = () => {
     const status = activeTab === "now" ? "Đang Chiếu" : "Sắp Chiếu";
     fetchMovies(status);
   }, [activeTab]);
+  if (error) console.log(error);
 
   return (
     <div>
@@ -77,7 +78,7 @@ const MovieSection = () => {
         )}
       </BackgroundPage>
 
-      <div className="bg-background text-foreground container py-10 mt-10 flex items-center justify-between">
+      <div className="text-foreground container py-10 mt-10 flex items-center justify-between">
         <div className="flex gap-6">
           <h1
             onClick={() => setActiveTab("now")}
@@ -102,21 +103,23 @@ const MovieSection = () => {
         </div>
         <button className="flex items-center gap-2 border border-white py-2.5 px-5 rounded">
           <FaSortAlphaDown />
-          <span className="text-foreground">Sắp xếp A–Z</span>
+          <span className="text-foreground">A–Z</span>
         </button>
       </div>
 
       <div className="container">
-        {error ? (
-          <p className="text-red-500 text-center">{error}</p>
-        ) : loading ? (
-          <MovieLoading />
-        ) : (
-          <div className={`grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 ${activeTab === "coming" ? "text-white" : ""}`}>
+        {!loading ? (
+          <div
+            className={`grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6  ${
+              activeTab === "coming" ? "text-white" : ""
+            }`}
+          >
             {movies.map((movie: MovieType) => (
               <Movie key={movie._id} info={movie} />
             ))}
           </div>
+        ) : (
+          <MovieLoading />
         )}
       </div>
     </div>
