@@ -47,11 +47,25 @@ const getScreeings = async ( filter ) => {
     }
 }
 
+let getMovieToScreening = async (id) => {
+    const movie = await movieService.getDetailMovie(id);
+    return movie;
+}
+
 const getScreeningFilter = async (filter) => {
     try {
 
         const screenings = await screeningModel.find( filter );
-        return screenings
+        
+        const result = await Promise.all( screenings.map( async screening => {
+            const movie = await getMovieToScreening(screening.id_movie.toString());
+            return {
+                ...screening.toObject(),
+                movie: movie,
+            }
+        }) )
+        console.log(result);
+        return result
 
     } catch (error) {
         console.error(error)
@@ -59,4 +73,5 @@ const getScreeningFilter = async (filter) => {
     }
 }
 
-module.exports = { getScreeings, getScreeningFilter }
+
+module.exports = { getScreeings, getScreeningFilter}

@@ -13,7 +13,7 @@ const getRate = async () => {
         })
 
         const tickets = await ticketControler.getTickets();
-        console.log(tickets);
+        
         const ticketMap = new Map();
         tickets.forEach(ticket => {
             ticketMap.set(ticket._id, ticket.userName)
