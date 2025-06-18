@@ -1,6 +1,6 @@
 export interface Location {
   id_location: string;
-  deatil_location: string; // ✅ Đúng chính tả
+  deatil_location: string; 
   location: string;
 }
 
