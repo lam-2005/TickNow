@@ -20,8 +20,7 @@ const Header = () => {
   const [openUserFormContainer, setOpenUserFormContainer] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-  const isTransparentHeader =
-    pathname === "/" || pathname.startsWith("/detail");
+  const isTransparentHeader = pathname === "/" || pathname.startsWith("/detail");
 
   const headerClass = isTransparentHeader
     ? "min-[480px]:bg-gradient-to-b from-[rgba(0,0,0,.7)] via-[rgba(0,0,0,.2)] to-transparent absolute z-999 top-0 max-[480px]:sticky max-[480px]:bg-background-card min-[480px]:[&_.color-icon]:text-white"
@@ -62,6 +61,7 @@ const Header = () => {
             priority
           />
         </Link>
+
         <nav className="max-lg:hidden">
           <ul className="flex gap-5">
             {linkNavbar.map((link: LinkNavbarType) => {
@@ -85,6 +85,7 @@ const Header = () => {
             })}
           </ul>
         </nav>
+
         <div className="flex gap-5 max-sm:gap-3 items-center">
           <form action="" className={searchFormClass}>
             <button
@@ -105,44 +106,31 @@ const Header = () => {
             />
 
             {isSearchOpen && (
-<<<<<<< Updated upstream
-              <div className="absolute top-[calc(100%_+_20px)] right-0 mt-2 z-50">
-=======
               <div className="absolute top-full right-0 mt-2 z-50">
->>>>>>> Stashed changes
                 <div className="absolute -top-4 right-4 w-0 h-0 border-l-[16px] border-r-[16px] border-b-[16px] border-l-transparent border-r-transparent border-b-white" />
                 <SearchPopup />
               </div>
             )}
           </form>
+
           <button
             onClick={() => setOpenUserFormContainer(true)}
             className={`hidden lg:flex flex-col items-center gap-[3px] hover:[&_span]:text-primary`}
           >
-<<<<<<< Updated upstream
             <span
               className={`block font-semibold text-2xl transition-colors duration-500 ${textColorClass}`}
             >
-=======
-            <span className={`block font-semibold transition-colors duration-500 ${textColorClass}`}>
->>>>>>> Stashed changes
               <FaUser />
             </span>
           </button>
+
           <ThemeToggle />
+
           <button
             className="lg:hidden relative z-1001"
             onClick={() => setOpenMenuDropDown(!openMenuDropDown)}
           >
-<<<<<<< Updated upstream
-            <span
-              className={`color-icon text-icon text-2xl ${
-                openMenuDropDown ? "text-white" : ""
-              }`}
-            >
-=======
             <span className={`color-icon text-icon text-2xl ${openMenuDropDown ? "text-white" : ""}`}>
->>>>>>> Stashed changes
               {openMenuDropDown ? <IoMdClose /> : <GiHamburgerMenu />}
             </span>
           </button>

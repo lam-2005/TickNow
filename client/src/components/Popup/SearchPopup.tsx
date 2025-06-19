@@ -67,47 +67,29 @@ const movies = [
     image: "/movies/ta-thuat-huyet-ngai.webp",
   },
 ];
+
 const SearchPopup = () => {
   return (
     <div className="relative z-50">
       <div className="w-[420px] bg-white shadow-2xl rounded-xl p-4 text-gray-800">
-<<<<<<< Updated upstream
-<<<<<<< HEAD
         {/* Recently Searched */}
-        <div className="text-xs text-gray-500 font-medium uppercase">Tìm kiếm gần đây</div>
-=======
         <div className="text-xs text-gray-500 font-medium uppercase">
           Tìm kiếm gần đây
         </div>
->>>>>>> main
-=======
-        {/* Recently Searched */}
-        <div className="text-xs text-gray-500 font-medium uppercase">Tìm kiếm gần đây</div>
->>>>>>> Stashed changes
         <div className="text-sm mt-1 mb-2">
           <span className="font-semibold" style={{ color: "#070707" }}>
             → Doraemon Movie 44: Nobita và Cuộc Phiêu...
           </span>
         </div>
-<<<<<<< Updated upstream
-<<<<<<< HEAD
 
         {/* Now Showing */}
-        <div className="text-xs text-gray-500 font-medium uppercase mt-3">Phim đang chiếu</div>
-=======
         <div className="text-xs text-gray-500 font-medium uppercase mt-3">
           Phim đang chiếu
         </div>
->>>>>>> main
-=======
-
-        {/* Now Showing */}
-        <div className="text-xs text-gray-500 font-medium uppercase mt-3">Phim đang chiếu</div>
->>>>>>> Stashed changes
         <div className="mt-2 flex flex-col gap-2 h-[500px] overflow-y-auto overflow-x-hidden max-h-[500px]">
-          {movies.map((movie, index) => (
+          {movies.map((movie) => (
             <div
-              key={index}
+              key={movie.id}
               className="flex gap-3 p-2 border-b border-gray-200 last:border-none hover:bg-gray-50 rounded-md"
             >
               <div className="relative w-16 h-24 flex-shrink-0">
@@ -119,7 +101,6 @@ const SearchPopup = () => {
                 />
               </div>
               <div className="flex flex-col justify-between text-sm">
-<<<<<<< Updated upstream
                 <p
                   className="font-semibold leading-tight line-clamp-2"
                   style={{ color: "#070707" }}
@@ -134,14 +115,6 @@ const SearchPopup = () => {
                     <span className="text-yellow-500 font-medium">
                       ⭐ {movie.rating}
                     </span>
-=======
-                <p className="font-semibold leading-tight line-clamp-2" style={{ color: "#070707" }}>
-                  {movie.title}
-                </p><p className="text-xs text-gray-500 mt-1 line-clamp-1">{movie.genre}</p>
-                <div className="flex items-center gap-2 text-xs mt-1">
-                  {movie.rating && (
-                    <span className="text-yellow-500 font-medium">⭐ {movie.rating}</span>
->>>>>>> Stashed changes
                   )}
                 </div>
               </div>
@@ -153,8 +126,4 @@ const SearchPopup = () => {
   );
 };
 
-<<<<<<< Updated upstream
 export default SearchPopup;
-=======
-export default SearchPopup;
->>>>>>> Stashed changes
