@@ -11,6 +11,9 @@ export interface MovieType {
   trailer: string;
   image: string;
   banner: string;
-  genre: number[] | string[];
+  genre: {
+    id: number | string;
+    name: string;
+  }[];
   status: string;
 }

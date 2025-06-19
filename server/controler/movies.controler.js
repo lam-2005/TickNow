@@ -1,45 +1,74 @@
-const movieModel = require('../model/movies.model');
+const check = require('../utils/checkDateQuery');
 
-const getMovies = async () => {
+const movieServiece = require('../service/movie.service');
+
+const getMovies =async (req,res,next) => {
     try{
-        const movies = await movieModel.find();
-        return movies;
+        // query host
+        const { name, status, date } = req.query;
+
+        const limit = parseInt(req.query.limit);
+
+        const page = parseInt(req.query.page);
+
+        // create variable storage
+        let filter = { };
+
+        let result
+
+        // check variable  
+        if (status) filter.status = status;
+
+        if(date) filter.release_date = check.checkDate(date);
+
+        if( name ){
+            filter.name = new RegExp(name, 'i');
+        }
+
+        // get data
+        result = await movieServiece.getMovies(filter, limit, page);
+
+        // check data
+        if(result){
+            return res.status(200).json({ data: result ,status: true, message: 'Lấy dữ liệu thành công'})
+        }else{
+            return res.status(404).json({ status: false, message: 'Lấy dữ liệu thất bại' })
+        }
+
     }catch(error){
-        console.error(error.message)
-        throw new Error('❌ Lỗi lấy dữ liệu của movie')
+        console.error(error);
+        return res.status(500).json({status: false, message: 'Lấy dữ liệu movie thất bại'})
     }
-    
 }
 
-const getMovieStatus = async (status) => {
+const getDetailMovie = async (req,res,next) => {
     try {
-        const validStatus = [ "Đang Chiếu", "Sắp Chiếu" ];
-        if (!status || !validStatus.includes(status)) {
-            throw new Error("❌ Trạng thái phim không hợp lệ");
+        const { id } = req.params;
+
+        const { date, location } = req.query;
+
+        const filter = { };
+
+        if(date) filter.date = check.checkDate(date);
+
+        if( location ){
+            filter.location = location;
         }
 
-        const movies = await movieModel.find({ status });
-        return movies;
-    } catch (error) {
-        console.error(error.message);
-        throw new Error('❌ Lỗi lấy dữ liệu của movie');
-    }
-};
+        let result = await movieServiece.getDetailMovie(id,filter);
+        if(result){
 
-const getDetailMovie = async (id) => {
-     try {
+            return res.status(200).json({ data: result ,status: true, message: 'Lấy dữ liệu thành công'})
 
-        if (!id ) {
-            throw new Error("❌ id phim không hợp lệ");
+        }else{
+
+            return res.status(404).json({ status: false, message: 'Lấy dữ liệu thất bại' })
+
         }
-
-        const movies = await movieModel.findById(id);
-        return movies;
     } catch (error) {
-        console.error(error.message);
-        throw new Error('❌ Lỗi lấy dữ liệu của movie');
+        console.error(error);
+        return res.status(500).json({status: false, message: 'Lấy dữ liệu movie thất bại'})
     }
 }
 
-
-module.exports = { getMovies, getMovieStatus, getDetailMovie };
+module.exports = { getMovies, getDetailMovie };

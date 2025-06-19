@@ -33,4 +33,20 @@ const getRooms = async () => {
     }
 }
 
-module.exports = { getRooms };
+const roomById = async (id) => {
+    try {
+
+        const result = roomModel.findById(id)
+        return result;
+
+    } catch (error) {
+
+        console.error(error);
+        throw new Error('Lấy dữ liệu không thành công', error.message);
+
+    }
+}
+
+module.exports = { getRooms, roomById };
+
+

@@ -23,10 +23,14 @@ export default function Home() {
 
   const getMovieNow = async () => {
     try {
-      const res = await movieService.getMovieList("?status=Đang Chiếu");
-      setMoviesNow(res?.data);
+
+
+      const res = await movieService.getMovieList(
+        "?status=Đang Chiếu&limit=10"
+      );
       console.log(res);
-      
+      setMoviesNow(res?.data.movie);
+
     } catch (error) {
       console.error("Fetch movie failed:", error);
     } finally {
@@ -36,8 +40,8 @@ export default function Home() {
 
   const getMovieComingSoon = async () => {
     try {
-      const res = await movieService.getMovieList("?status=Sắp Chiếu");
-      setMoviesComingSoon(res?.data);
+      const res = await movieService.getMovieList("?status=Sắp Chiếu&limit=10");
+      setMoviesComingSoon(res?.data.movie);
     } catch (error) {
       console.error("Fetch movie failed:", error);
     } finally {
@@ -50,9 +54,6 @@ export default function Home() {
   useEffect(() => {
     getMovieComingSoon();
   }, []);
-
-    console.log(env.API_URL);
-    
   return (
     <>
       <Slideshow />

@@ -10,7 +10,7 @@ const footerLink: FooterLinkType[] = [
         name: "Về chúng tôi",
       },
       {
-        url: "/#",
+        url: "/contact",
         name: "Liên hệ",
       },
     ],
@@ -56,7 +56,7 @@ const footerLink: FooterLinkType[] = [
         name: "Góp ý",
       },
       {
-        url: "/#",
+        url: "/faqs",
         name: "Hỏi đáp",
       },
     ],
