@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Movie from "@/components/Movie/Movie";
 import MovieLoading from "@/components/Loading/MovieLoading";
 import BackgroundPage from "@/components/BackgroundPage/BackgroundPage";
@@ -16,29 +16,48 @@ const MovieSection = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [isActived, setIsActived] = useState<string | null>(null);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+
   const handleToggle = (id: string) => {
     setIsActived((prev) => (prev === id ? null : id));
   };
-  const fetchMovies = async (status: string) => {
+
+  const sortMovies = (movies: MovieType[], order: "asc" | "desc") => {
+    return [...movies].sort((a, b) => {
+      const nameA = a.name?.toLowerCase() || "";
+      const nameB = b.name?.toLowerCase() || "";
+      return order === "asc"
+        ? nameA.localeCompare(nameB)
+        : nameB.localeCompare(nameA);
+    });
+  };
+
+  const handleToggleSort = () => {
+    const newOrder = sortOrder === "asc" ? "desc" : "asc";
+    setSortOrder(newOrder);
+    setMovies((prevMovies) => sortMovies(prevMovies, newOrder));
+  };
+
+  const fetchMovies = useCallback(async (status: string) => {
     setLoading(true);
     setError(null);
     try {
-      const res = await movieService.getMovieList(`?status=${status}`);
-      console.log("Dữ liệu phim:", res?.data.movie);
-      setMovies(res?.data.movie || []);
+      const res = await movieService.getMovieList(`?status=${status}&limit=10`);
+      const sorted = sortMovies(res?.data.movie || [], sortOrder);
+      setMovies(sorted);
     } catch (error) {
       console.error("Lỗi khi tải phim:", error);
       setError("Không thể tải danh sách phim. Vui lòng thử lại sau.");
     } finally {
       setLoading(false);
     }
-  };
+  }, [sortOrder]);
 
   useEffect(() => {
     const status = activeTab === "now" ? "Đang Chiếu" : "Sắp Chiếu";
     fetchMovies(status);
-  }, [activeTab]);
-  if (error) console.log(error);
+  }, [activeTab, fetchMovies]);
+
 
   return (
     <div>
@@ -101,16 +120,25 @@ const MovieSection = () => {
             PHIM SẮP CHIẾU
           </h1>
         </div>
-        <button className="flex items-center gap-2 border border-white py-2.5 px-5 rounded">
+        <button
+          onClick={handleToggleSort}
+          className="flex items-center gap-2 border border-white py-2.5 px-5 rounded"
+        >
           <FaSortAlphaDown />
-          <span className="text-foreground">A–Z</span>
+          <span className="text-foreground">
+            {sortOrder === "asc" ? "Sắp xếp A–Z" : "Sắp xếp Z–A"}
+          </span>
         </button>
       </div>
 
       <div className="container">
-        {!loading ? (
+        {error ? (
+          <p className="text-red-500 text-center">{error}</p>
+        ) : loading ? (
+          <MovieLoading />
+        ) : (
           <div
-            className={`grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6  ${
+            className={`grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 ${
               activeTab === "coming" ? "text-white" : ""
             }`}
           >

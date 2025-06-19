@@ -26,7 +26,6 @@ export default function Home() {
         "?status=Đang Chiếu&limit=10"
       );
       console.log(res);
-
       setMoviesNow(res?.data.movie);
     } catch (error) {
       console.error("Fetch movie failed:", error);

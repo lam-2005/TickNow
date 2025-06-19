@@ -7,6 +7,7 @@ import Table, { Column } from "@/admin_components/Table/Table";
 import { MovieType } from "@/interfaces/movie.interface";
 import * as movieService from "@/services/movie.service";
 import ActionButton from "@/admin_components/Button/ButtonActions";
+import Pagination from "@/admin_components/Pagination/Pagination";
 
 const MovieManagement = () => {
   const [movies, setMovies] = useState<MovieType[]>([]);
@@ -96,7 +97,10 @@ const MovieManagement = () => {
       ) : error ? (
         <p className="text-primary text-center">{error}</p>
       ) : (
+        <>
         <Table column={col} data={movies} />
+        <Pagination />
+        </>
       )}
     </div>
   );
