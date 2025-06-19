@@ -1,9 +1,11 @@
-import api from "@/utils/http";
-const getCinemaList = async (param: string = "") => {
+
+import api from "@/utils/http"; 
+
+const getCinemaList = async () => {
   try {
-    const res = await api.get(`/cinema${param}`);
-    // console.log("Dữ liệu API:", res.data);
-    return res;
+    const res = await api.get("/cinema");
+    return res.data;
+
   } catch (error) {
     console.error("Lỗi khi lấy danh sách rạp chiếu:", error);
     throw error;

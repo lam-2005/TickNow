@@ -100,20 +100,26 @@ const SearchPopup = ({ searchText }: { searchText: string }) => {
     }
   };
 
+
   return (
     <div className="relative z-50 ">
       <div className="w-[420px] bg-white shadow-2xl rounded-xl p-4 text-gray-800">
-        {/* <div className="text-xs text-gray-500 font-medium uppercase">
+
+        {/* Recently Searched */}
+        <div className="text-xs text-gray-500 font-medium uppercase">
           Tìm kiếm gần đây
         </div>
         <div className="text-sm mt-1 mb-2">
           <span className="font-semibold" style={{ color: "#070707" }}>
             → Doraemon Movie 44: Nobita và Cuộc Phiêu...
           </span>
+
         </div> */}
+
         <div className="text-xs text-gray-500 font-medium uppercase mt-3">
           Kết quả tìm kiếm
         </div>
+
         <div className="mt-2 flex flex-col gap-2 max-h-[500px] overflow-y-auto overflow-x-hidden h-fit">
           {loading ? (
             <p>Đang tìm kiếm...</p>

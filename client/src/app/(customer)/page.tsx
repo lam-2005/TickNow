@@ -22,6 +22,7 @@ export default function Home() {
 
   const getMovieNow = async () => {
     try {
+
       const res = await movieService.getMovieList(
         "?status=Đang Chiếu&limit=10"
       );
