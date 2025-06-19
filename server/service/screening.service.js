@@ -1,7 +1,9 @@
 const screeningModel = require('../model/screening.model');
-const movieService = require('../service/movie.service');
-const roomControler = require('../controler/room.controler');
 
+const movieService = require('../service/movie.service');
+
+const roomControler = require('../controler/room.controler');
+const cinemaControler = require('../controler/cinemas.controler');
 
 const getScreeings = async ( filter ) => {
     try {
@@ -47,11 +49,26 @@ const getScreeings = async ( filter ) => {
     }
 }
 
+let getMovieToScreening = async (id) => {
+    const movie = await movieService.getDetailMovie(id);
+    return movie;
+}
+
 const getScreeningFilter = async (filter) => {
     try {
 
         const screenings = await screeningModel.find( filter );
-        return screenings
+        
+        const result = await Promise.all( screenings.map( async screening => {
+            const movie = await getMovieToScreening(screening.id_movie.toString());
+            return {
+                ...screening.toObject(),
+                movie: movie,
+            }
+        }) )
+
+        console.log(result);
+        return result
 
     } catch (error) {
         console.error(error)
@@ -59,4 +76,47 @@ const getScreeningFilter = async (filter) => {
     }
 }
 
-module.exports = { getScreeings, getScreeningFilter }
+
+const getScreeningById = async (movieId, filter) => {
+
+    const result = {
+        date: "",
+        cinemas: [
+
+        ]
+    };
+
+    const screenings = await screeningModel.find({ id_movie: movieId, date: filter.date });
+
+    if(!screenings || screenings.length === 0) return result;
+    const firtDate = screenings[0].date?.toISOString().split("T")[0];
+    result.date = firtDate || "";
+
+    const cinemaMap = new Map();
+
+    for(const screening of screenings ){
+        const room = await roomControler.roomById(screening.id_room.toString());
+        const cinema = await cinemaControler.getCinemaById(room.id_thear.toString())
+
+        const key = cinema._id.toString;
+        if(!cinemaMap.has(key)){
+            cinemaMap.set(key, {
+                id: key,
+                name: cinema.name,
+                showtimes: [],
+            });
+        }
+
+        cinemaMap.get(key).showtimes.push({
+            time: screening.time_start,
+            showtype: screening.showtype,
+        });
+
+    }
+
+    result.cinemas = Array.from(cinemaMap.values());
+
+    return result;
+};
+
+module.exports = { getScreeings, getScreeningFilter, getScreeningById}

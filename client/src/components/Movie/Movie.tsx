@@ -42,7 +42,7 @@ const Movie = ({
           className="w-full aspect-[2/3] relative z-9 
       "
         >
-          <Link href={"/detail"}>
+          <Link href={`/detail/${info._id}`}>
             <div className="w-full h-full relative rounded-xl overflow-hidden">
               <Image
                 fill
@@ -65,13 +65,16 @@ const Movie = ({
       mt-4 ${textColor}`}
         >
           <Link
-            href={"/detail"}
+            href={`/detail/${info._id}`}
             className="group-hover:text-primary transition-colors duration-500 "
           >
             {info.name}
           </Link>
         </h3>
-        <Button title="Đặt vé ngay" onClick={() => router.push("/detail")} />
+        <Button
+          title="Đặt vé ngay"
+          onClick={() => router.push(`/detail/${info._id}`)}
+        />
       </div>
     </>
   );

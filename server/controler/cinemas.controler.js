@@ -31,7 +31,7 @@ const getCinema = async () => {
         })
 
         return result;
-    }catch(error){
+    } catch(error){
         console.error(error.message)
         throw new Error("❌ Lỗi lấy dữ liệu của cinema")
     }
@@ -59,6 +59,38 @@ const getCinemaLocation = async (locationId) => {
         console.error(error);
         throw new Error("❌ Lỗi lấy dữ liệu theo địa chỉ cinema");
     }
-} 
+}
 
-module.exports = { getCinema, getCinemaLocation }
+const getCinemaById = async (id) => {
+    try{
+
+        const locations = await locationModel.find();
+
+        const locationMap = new Map();
+
+        locations.forEach((loca) => {
+            locationMap.set(loca._id.toString(), loca.name);
+        })
+
+        const cinemas =  await cinemaModel.findById(id);
+
+        
+        const idLoca = cinemas.location.id_location.toString();
+        const nameLoca = locationMap.get(idLoca) || null
+        
+        const result = {
+            ...cinemas.toObject(),
+            location: {
+                ...cinemas.location,
+                location: nameLoca,
+            }
+        }
+
+        return result;
+    }catch(error){
+        console.error(error);
+        throw new Error("❌ Lỗi lấy dữ liệu theo địa chỉ cinema");
+    }
+}
+
+module.exports = { getCinema, getCinemaLocation, getCinemaById }

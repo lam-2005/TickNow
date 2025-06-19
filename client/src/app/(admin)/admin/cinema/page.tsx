@@ -5,6 +5,7 @@ import AddBtn from "@/admin_components/Button/AddBtn";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import OptionTable from "@/admin_components/OptionTable/OptionTable";
 import Table, { Column } from "@/admin_components/Table/Table";
+
 import { getCinemaList } from "@/services/cinema.service";
 import { Cinema } from "@/interfaces/cinema.interface";
 
@@ -102,6 +103,7 @@ const AdminCinema = () => {
       ) : (
         <Table column={columns} data={cinemas} />
       )}
+
     </div>
   );
 };

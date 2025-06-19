@@ -12,11 +12,11 @@ const mapGenreMovie  = async ( movies ) => {
     const result = movies.map( movie => {
         const mappedGenres = movie.genre.map(genre => (
             {
-            id: genre.id,
-            name: genreMap.get(genre.id.toString())
-        }
+                id: genre.id,
+                name: genreMap.get(genre.id.toString())
+            }
         ))
-
+        
         return {
             ...movie.toObject(),
             genre: mappedGenres

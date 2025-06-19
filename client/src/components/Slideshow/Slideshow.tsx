@@ -31,7 +31,9 @@ const Slideshow = () => {
   }, []);
   const getMovieNow = async () => {
     try {
-      const res = await movieService.getMovieList();
+
+      const res = await movieService.getMovieList("?status=Đang Chiếu&limit=5");
+
       setData(res?.data.movie);
     } catch (error) {
       console.error("Fetch movies failed:", error);

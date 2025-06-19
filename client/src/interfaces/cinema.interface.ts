@@ -1,6 +1,8 @@
 export interface Location {
   id_location: string;
+
   deatil_location: string; 
+
   location: string;
 }
 
@@ -9,4 +11,6 @@ export interface Cinema {
   name: string;
   image: string;
   location: Location;
+
 }
+
