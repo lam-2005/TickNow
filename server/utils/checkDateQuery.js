@@ -1,7 +1,7 @@
 const dayjs = require('dayjs');
 
 const checkDate = (date) => {
-    const dates = {  }
+    
     if(date){
         const parsedDate = dayjs(date, 'MM-DD-YYYY');
         if(parsedDate.isValid()){

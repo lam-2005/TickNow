@@ -18,7 +18,7 @@ const getMovies =async (req,res,next) => {
         // check variable  
         if (status) filter.status = status;
 
-        filter.release_date = check.checkDate(date);
+        if(date) filter.release_date = check.checkDate(date);
 
         if( name ){
             filter.name = new RegExp(name, 'i');
