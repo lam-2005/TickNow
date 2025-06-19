@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
+
 import Image from "next/image";
+
 import AddBtn from "@/admin_components/Button/AddBtn";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import OptionTable from "@/admin_components/OptionTable/OptionTable";
@@ -89,12 +91,14 @@ const AdminCinema = () => {
     },
   ];
 
+
   return (
     <div className="card">
       <HeadingCard title="Quản Lý Rạp Chiếu">
         <AddBtn />
       </HeadingCard>
       <OptionTable />
+
 
       {loading ? (
         <p className="text-center">Đang tải dữ liệu...</p>
@@ -103,6 +107,7 @@ const AdminCinema = () => {
       ) : (
         <Table column={columns} data={cinemas} />
       )}
+
 
     </div>
   );

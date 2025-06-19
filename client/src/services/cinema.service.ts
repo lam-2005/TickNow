@@ -1,4 +1,5 @@
 
+
 import api from "@/utils/http"; 
 
 const getCinemaList = async () => {
@@ -12,3 +13,4 @@ const getCinemaList = async () => {
   }
 };
 export { getCinemaList };
+

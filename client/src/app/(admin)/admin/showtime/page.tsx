@@ -1,193 +1,61 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AddBtn from "@/admin_components/Button/AddBtn";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import OptionTable from "@/admin_components/OptionTable/OptionTable";
 import Table, { Column } from "@/admin_components/Table/Table";
+import { Screening } from "@/interfaces/screening.interface";
+import * as ScreeningService from "@/services/screening.service";
 
-interface Screening {
-  id: string | number;
-  name: string;
-  timeStart: string;
-  timeEnd: string;
-  date: string;
-  status: string;
-}
+const AdminScreening = () => {
+  const [screenings, setScreenings] = useState<Screening[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-const screen: Screening[] = [
-  {
-    id: "1",
-    name: "Avengers: Endgame",
-    timeStart: "09:00",
-    timeEnd: "11:00",
-    date: "2025-06-04",
-    status: "Đã chiếu",
-  },
-  {
-    id: "2",
-    name: "Joker",
-    timeStart: "12:00",
-    timeEnd: "14:00",
-    date: "2025-06-04",
-    status: "Đang chiếu",
-  },
-  {
-    id: "3",
-    name: "Parasite",
-    timeStart: "15:00",
-    timeEnd: "17:00",
-    date: "2025-06-04",
-    status: "Chưa chiếu",
-  },
-  {
-    id: "4",
-    name: "Interstellar",
-    timeStart: "10:00",
-    timeEnd: "12:00",
-    date: "2025-06-05",
-    status: "Đã chiếu",
-  },
-  {
-    id: "5",
-    name: "Titanic",
-    timeStart: "13:00",
-    timeEnd: "15:00",
-    date: "2025-06-05",
-    status: "Chưa chiếu",
-  },
-  {
-    id: "6",
-    name: "Dune",
-    timeStart: "11:00",
-    timeEnd: "13:00",
-    date: "2025-06-06",
-    status: "Đang chiếu",
-  },
-  {
-    id: "7",
-    name: "Avatar",
-    timeStart: "14:30",
-    timeEnd: "16:30",
-    date: "2025-06-06",
-    status: "Đã chiếu",
-  },
-  {
-    id: "8",
-    name: "Inception",
-    timeStart: "09:30",
-    timeEnd: "11:30",
-    date: "2025-06-07",
-    status: "Chưa chiếu",
-  },
-  {
-    id: "9",
-    name: "Oppenheimer",
-    timeStart: "12:30",
-    timeEnd: "14:30",
-    date: "2025-06-07",
-    status: "Đang chiếu",
-  },
-  {
-    id: "10",
-    name: "Fast & Furious",
-    timeStart: "10:00",
-    timeEnd: "12:00",
-    date: "2025-06-08",
-    status: "Đã chiếu",
-  },
-  {
-    id: "11",
-    name: "Deadpool",
-    timeStart: "09:00",
-    timeEnd: "11:00",
-    date: "2025-06-04",
-    status: "Chưa chiếu",
-  },
-  {
-    id: "12",
-    name: "Doctor Strange",
-    timeStart: "12:00",
-    timeEnd: "14:00",
-    date: "2025-06-04",
-    status: "Chưa chiếu",
-  },
-  {
-    id: "13",
-    name: "The Batman",
-    timeStart: "15:00",
-    timeEnd: "17:00",
-    date: "2025-06-04",
-    status: "Đã chiếu",
-  },
-  {
-    id: "14",
-    name: "The Matrix",
-    timeStart: "10:00",
-    timeEnd: "12:00",
-    date: "2025-06-05",
-    status: "Chưa chiếu",
-  },
-  {
-    id: "15",
-    name: "Black Panther",
-    timeStart: "13:00",
-    timeEnd: "15:00",
-    date: "2025-06-05",
-    status: "Đã chiếu",
-  },
-  {
-    id: "16",
-    name: "Iron Man",
-    timeStart: "11:00",
-    timeEnd: "13:00",
-    date: "2025-06-06",
-    status: "Chưa chiếu",
-  },
-  {
-    id: "17",
-    name: "Captain Marvel",
-    timeStart: "14:30",
-    timeEnd: "16:30",
-    date: "2025-06-06",
-    status: "Đã chiếu",
-  },
-  {
-    id: "18",
-    name: "The Godfather",
-    timeStart: "09:30",
-    timeEnd: "11:30",
-    date: "2025-06-07",
-    status: "Chưa chiếu",
-  },
-  {
-    id: "19",
-    name: "John Wick 4",
-    timeStart: "12:30",
-    timeEnd: "14:30",
-    date: "2025-06-07",
-    status: "Đã chiếu",
-  },
-  {
-    id: "20",
-    name: "Minions",
-    timeStart: "10:00",
-    timeEnd: "12:00",
-    date: "2025-06-08",
-    status: "Chưa chiếu",
-  },
-];
+  useEffect(() => {
+    const fetchScreenings = async () => {
+      setLoading(true);
+      try {
+        const res = await ScreeningService.getScreeningList("?_limit=5");
+        setScreenings(res?.data || []);
+      } catch (error) {
+        setError("Không thể tải danh sách suất chiếu.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-const col: Column<Screening>[] = [
-  //   { key: "code", title: "Mã" },
-  { key: "name", title: "Tên phim" },
-  { key: "timeStart", title: "Thời gian bắt đầu" },
-  { key: "timeEnd", title: "Thời gian ngừng" },
-  { key: "date", title: "Ngày" },
-  { key: "status", title: "Trạng thái" },
-  {
-    title: "Thao tác",
-    render(row: Screening) {
-      return (
+    fetchScreenings();
+  }, []);
+
+  const handleEdit = (id: string | number) => {
+    alert(`Sửa suất chiếu có ID: ${id}`);
+  };
+
+  const handleDelete = (id: string | number) => {
+    alert(`Xoá suất chiếu có ID: ${id}`);
+  };
+
+  const columns: Column<Screening>[] = [
+    { key: "movieName", title: "Mã phim" },
+    { key: "roomCode", title: "Phòng chiếu" },
+    { key: "time_start", title: "Giờ bắt đầu" },
+    { key: "time_end", title: "Giờ kết thúc" },
+    {
+      key: "date",
+      title: "Ngày chiếu",
+      render: (row) =>
+        new Date(row.date).toLocaleDateString("vi-VN", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        }),
+    },
+    { key: "status", title: "Trạng thái" },
+    { key: "showtype", title: "Loại chiếu" },
+    {
+      title: "Thao tác",
+      render: (row) => (
         <div className="flex space-x-2">
           <button
             className="text-blue-500 hover:underline"
@@ -202,29 +70,24 @@ const col: Column<Screening>[] = [
             Xóa
           </button>
         </div>
-      );
+      ),
     },
-  },
-];
+  ];
 
-const handleEdit = (id: string | number) => {
-  console.log("Edit", id);
-};
-
-const handleDelete = (id: string | number) => {
-  console.log("Delete", id);
-};
-
-const AdminVoucher = () => {
   return (
     <div className="card">
       <HeadingCard title="Quản lý lịch chiếu">
         <AddBtn />
       </HeadingCard>
       <OptionTable />
-      <Table column={col} data={screen} />
+      {error && <p className="text-red-500">{error}</p>}
+      {loading ? (
+        <p>Đang tải dữ liệu...</p>
+      ) : (
+        <Table column={columns} data={screenings} />
+      )}
     </div>
   );
 };
 
-export default AdminVoucher;
+export default AdminScreening;
