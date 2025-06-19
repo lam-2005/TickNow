@@ -7,7 +7,7 @@ export interface Column<T> {
   render?: (row: T) => React.ReactNode;
 }
 
-const Table = <T extends { id: string | number }>({
+const Table = <T extends { _id: string | number }>({
   column,
   data,
 }: {
@@ -33,7 +33,7 @@ const Table = <T extends { id: string | number }>({
         "
         >
           {data.map((row, index) => (
-            <tr key={row.id} className="">
+            <tr key={row._id} className="">
               <td>{index + 1}</td>
               {column.map((col) => (
                 <td key={col.title} className="">

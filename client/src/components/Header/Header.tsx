@@ -19,7 +19,7 @@ const Header = () => {
   const [openMenuDropDown, setOpenMenuDropDown] = useState(false);
   const [openUserFormContainer, setOpenUserFormContainer] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-
+  const [searchText, setSearchText] = useState<string | "">("");
   const isTransparentHeader =
     pathname === "/" || pathname.startsWith("/detail");
 
@@ -104,12 +104,13 @@ const Header = () => {
               type="search"
               placeholder="Tìm kiếm"
               className="w-full h-full outline-0 px-2 text-foreground text-xs"
+              onChange={(e) => setSearchText(e.target.value)}
             />
 
             {isSearchOpen && (
               <div className="absolute top-[calc(100%_+_20px)] right-0 mt-2 z-50">
                 <div className="absolute -top-4 right-4 w-0 h-0 border-l-[16px] border-r-[16px] border-b-[16px] border-l-transparent border-r-transparent border-b-white" />
-                <SearchPopup />
+                <SearchPopup searchText={searchText} />
               </div>
             )}
           </form>
