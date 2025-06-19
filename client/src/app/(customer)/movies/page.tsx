@@ -136,7 +136,7 @@ const MovieSection = () => {
           <p className="text-red-500 text-center">{error}</p>
         ) : loading ? (
           <MovieLoading />
-        ) : (
+        ) : movies.length > 0 ? (
           <div
             className={`grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 ${
               activeTab === "coming" ? "text-white" : ""
