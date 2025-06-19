@@ -3,15 +3,13 @@ const movieModel = require('../model/movies.model');
 const mapGenre = require('../utils/mapGenreMovie');
 const paginate = require('../utils/pagination');
 
-const screeningService = require('../service/screening.service');
-
-const getMovies = async ( filter, limit, page) => {
+const getMovies = async ( filter = {}, limit="", page="") => {
     try{
 
         const {data, pagination} = await paginate.paginateQuery(movieModel, filter, page, limit);
 
         const movie = await mapGenre.mapGenreMovie(data);
-        
+
         const result = {
             movie,
             pagination
@@ -26,6 +24,9 @@ const getMovies = async ( filter, limit, page) => {
 }
 
 const getDetailMovie = async (id, filter) => {
+
+    const screeningService = require('../service/screening.service');
+    
      try {
 
         if (!id ) {

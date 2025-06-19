@@ -1,5 +1,7 @@
 const screeningModel = require('../model/screening.model');
+
 const movieService = require('../service/movie.service');
+
 const roomControler = require('../controler/room.controler');
 const cinemaControler = require('../controler/cinemas.controler');
 

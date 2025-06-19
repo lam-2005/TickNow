@@ -1,4 +1,5 @@
 const check = require('../utils/checkDateQuery');
+
 const movieServiece = require('../service/movie.service');
 
 const getMovies =async (req,res,next) => {
@@ -48,7 +49,7 @@ const getDetailMovie = async (req,res,next) => {
 
         const filter = { };
 
-        filter.date = check.checkDate(date);
+        if(date) filter.date = check.checkDate(date);
 
         if( location ){
             filter.location = location;

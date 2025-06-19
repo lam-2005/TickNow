@@ -1,4 +1,6 @@
-const dayjs = require('dayjs');
+
+const check = require('../utils/checkDateQuery');
+
 
 const screeningService = require('../service/screening.service');
 
@@ -26,21 +28,7 @@ const filterScreening = async (req, res, next) => {
         
         let filter = {};
 
-        if(date){
-            const parsedDate = dayjs(date, 'MM-DD-YYYY');
-
-            if(parsedDate.isValid()){
-                const start = parsedDate.startOf('day').toDate();
-                const end = parsedDate.endOf('day').toDate();
-
-                filter.date = {
-                    $gte: start,
-                    $lte: end
-                };
-            }else{
-                console.warn('⚠️ Ngày không hợp lệ:', date);
-            }
-        }
+        if(date) filter.date = check.checkDate(date);
 
         const screenings  = await screeningService.getScreeningFilter(filter);
 
