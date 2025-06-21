@@ -90,9 +90,9 @@ const AdminBooking = () => {
 
   const columns: Column<Ticket>[] = [
     { key: "userName", title: "Tên khách hàng" },
-    // { key: "screeningTime", title: "Giờ chiếu" },
+    { key: "screeningTime", title: "Giờ chiếu" },
     { key: "price", title: "Giá vé" },
-    { key: "type", title: "Trạng thái thanh toán" },
+    { key: "type", title: "Trạng thái" },
     {
       key: "seat",
       title: "Ghế",

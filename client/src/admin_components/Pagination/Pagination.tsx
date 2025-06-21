@@ -1,69 +1,93 @@
-// Pagination.tsx
 import React from "react";
 
-const Pagination = () => {
+type Props = {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+};
+
+const Pagination: React.FC<Props> = ({ currentPage, totalPages, onPageChange }) => {
+  const renderPageNumbers = () => {
+    const pages = [];
+    const maxPagesToShow = 5;
+    const half = Math.floor(maxPagesToShow / 2);
+    let start = Math.max(1, currentPage - half);
+    let end = Math.min(totalPages, currentPage + half);
+
+    if (currentPage <= half) {
+      end = Math.min(totalPages, maxPagesToShow);
+    }
+
+    if (currentPage + half >= totalPages) {
+      start = Math.max(1, totalPages - maxPagesToShow + 1);
+    }
+
+    if (start > 1) {
+      pages.push(
+        <span key="start-ellipsis" className="px-2 py-2 text-sm text-gray-500">
+          ...
+        </span>
+      );
+    }
+
+    for (let i = start; i <= end; i++) {
+      pages.push(
+        <button
+          key={i}
+          onClick={() => onPageChange(i)}
+          className={`relative inline-flex items-center px-4 py-2 text-sm font-medium border ${
+            currentPage === i
+              ? "z-10 bg-indigo-50 border-indigo-500 text-indigo-600"
+              : "bg-white border-gray-300 text-gray-500 hover:bg-gray-50"
+          }`}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    if (end < totalPages) {
+      pages.push(
+        <span key="end-ellipsis" className="px-2 py-2 text-sm text-gray-500">
+          ...
+        </span>
+      );
+    }
+
+    return pages;
+  };
+
   return (
     <div className="flex items-center justify-end py-4 pr-4">
-      <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+      <nav className="inline-flex shadow-sm rounded-md" aria-label="Pagination">
         <button
-          className="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50"
-          disabled
+          onClick={() => onPageChange(1)}
+          disabled={currentPage === 1}
+          className="px-2 py-2 text-sm font-medium border rounded-l-md bg-white text-gray-500 border-gray-300 hover:bg-gray-50 disabled:opacity-50"
         >
           ««
         </button>
         <button
-          className="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border-t border-b border-l border-gray-300 hover:bg-gray-50"
-          disabled
+          onClick={() => onPageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="px-2 py-2 text-sm font-medium border bg-white text-gray-500 border-gray-300 hover:bg-gray-50 disabled:opacity-50"
         >
           «
         </button>
 
-        <button
-          className="relative inline-flex items-center px-4 py-2 text-sm font-medium bg-white border-gray-300 text-gray-500 hover:bg-gray-50"
-          disabled
-        >
-          1
-        </button>
-        <span className="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700">
-          ...
-        </span>
-        <button
-          className="relative inline-flex items-center px-4 py-2 text-sm font-medium bg-white border-gray-300 text-gray-500 hover:bg-gray-50"
-          disabled
-        >
-          4
-        </button>
-        <button
-          className="relative inline-flex items-center px-4 py-2 text-sm font-medium z-10 bg-indigo-50 border-indigo-500 text-indigo-600"
-          disabled
-        >
-          5
-        </button>
-        <button
-          className="relative inline-flex items-center px-4 py-2 text-sm font-medium bg-white border-gray-300 text-gray-500 hover:bg-gray-50"
-          disabled
-        >
-          6
-        </button>
-        <span className="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700">
-          ...
-        </span>
-        <button
-          className="relative inline-flex items-center px-4 py-2 text-sm font-medium bg-white border-gray-300 text-gray-500 hover:bg-gray-50"
-          disabled
-        >
-          10
-        </button>
+        {renderPageNumbers()}
 
         <button
-          className="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border-t border-b border-r border-gray-300 hover:bg-gray-50"
-          disabled
+          onClick={() => onPageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="px-2 py-2 text-sm font-medium border bg-white text-gray-500 border-gray-300 hover:bg-gray-50 disabled:opacity-50"
         >
           »
         </button>
         <button
-          className="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50"
-          disabled
+          onClick={() => onPageChange(totalPages)}
+          disabled={currentPage === totalPages}
+          className="px-2 py-2 text-sm font-medium border rounded-r-md bg-white text-gray-500 border-gray-300 hover:bg-gray-50 disabled:opacity-50"
         >
           »»
         </button>
