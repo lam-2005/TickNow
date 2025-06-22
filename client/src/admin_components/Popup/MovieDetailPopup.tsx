@@ -45,7 +45,7 @@ const MovieDetailPopup: React.FC<Props> = ({ movie, onClose }) => {
             <p><strong>Độ tuổi:</strong> {movie.age}+</p>
             <p><strong>Thời lượng:</strong> {movie.duration} phút</p>
             <p><strong>Ngôn ngữ:</strong> {movie.language}</p>
-            <p><strong>Đánh giá:</strong> {movie.start}</p>
+            <p><strong>Đánh giá:</strong> {movie.star}</p>
             <p><strong>Trạng thái:</strong> {Number(movie.status) === 1? "Đang Chiếu": Number(movie.status) === 2? "Sắp Chiếu": "Ngưng Chiếu"}</p>
             <p>
               <strong>Thể Loại:</strong>{" "}
