@@ -7,7 +7,7 @@ interface Props {
 
 const ChangePasswordPopup: React.FC<Props> = ({ onClose }) => {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+    <div  onClick={onClose} className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
       <div className="relative w-full max-w-md bg-[#070707] text-white rounded-2xl px-8 py-10 shadow-xl border border-white/10">
         {/* Nút đóng */}
         <button
