@@ -17,20 +17,22 @@ const MovieManagement = () => {
   const [selectedMovie, setSelectedMovie] = useState<MovieType | null>(null);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const limit = 5;
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [totalItems, setTotalItems] = useState(0);
 
   useEffect(() => {
     const fetchMovies = async () => {
       setLoading(true);
       setError(null);
       try {
-        const res = await movieService.getMovieList(`?limit=${limit}&page=${currentPage}`);
+        const res = await movieService.getMovieList(
+          `?limit=${rowsPerPage}&page=${currentPage}`
+        );
         const data = res?.data;
         console.log("Dữ liệu từ API:", data);
         setMovies(data.movie || []);
-        setTotalPages(data.pagination?.totalPages || 1);
         setCurrentPage(data.pagination?.page || 1);
+        setTotalItems(data.pagination?.totalItems || 0);
       } catch (error) {
         console.error("Lỗi khi fetch movies:", error);
         setError("Không thể tải danh sách phim. Vui lòng thử lại sau.");
@@ -40,8 +42,7 @@ const MovieManagement = () => {
     };
 
     fetchMovies();
-  }, [currentPage]);
-
+  }, [currentPage, rowsPerPage]);
 
   const handleEdit = (id: string | number) => {
     alert(`Edit ${id}`);
@@ -114,6 +115,7 @@ const MovieManagement = () => {
       <HeadingCard title="Quản lý Phim Chiếu">
         <AddBtn />
       </HeadingCard>
+
       {selectedMovie && (
         <MovieDetailPopup movie={selectedMovie} onClose={() => setSelectedMovie(null)} />
       )}
@@ -127,10 +129,16 @@ const MovieManagement = () => {
       ) : (
         <>
           <Table column={col} data={movies} />
+
           <Pagination
             currentPage={currentPage}
-            totalPages={totalPages}
+            totalItems={totalItems}
+            rowsPerPage={rowsPerPage}
             onPageChange={(page) => setCurrentPage(page)}
+            onRowsPerPageChange={(rows) => {
+              setRowsPerPage(rows);
+              setCurrentPage(1);
+            }}
           />
         </>
       )}
