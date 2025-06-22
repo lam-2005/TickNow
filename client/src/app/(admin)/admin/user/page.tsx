@@ -16,7 +16,8 @@ const UserManagement = () => {
   const [error, setError] = useState<string | null>(null);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [totalItems, setTotalItems] = useState(0);
   const [showAddPopup, setShowAddPopup] = useState(false);
   const limit = 5;
 
@@ -28,8 +29,8 @@ const UserManagement = () => {
       const data = res?.data;
 
       console.log("Dữ liệu từ API:", data);
-      setUsers(data.users || []);
-      setTotalPages(data.pagination?.totalPages || 1);
+      setUsers(data.user || []);
+      setTotalItems(data.pagination?.total || 0);
       setCurrentPage(data.pagination?.page || 1);
     } catch (error) {
       console.error("Lỗi khi fetch users:", error);
@@ -107,8 +108,13 @@ const UserManagement = () => {
           <Table column={col} data={users} />
           <Pagination
             currentPage={currentPage}
-            totalPages={totalPages}
+            total={totalItems}
+            rowsPerPage={rowsPerPage}
             onPageChange={(page) => setCurrentPage(page)}
+            onRowsPerPageChange={(rows) => {
+              setRowsPerPage(rows);
+              setCurrentPage(1);
+            }}
           />
         </>
       )}
