@@ -2,7 +2,7 @@ import React from "react";
 
 type Props = {
   currentPage: number;
-  totalItems: number;
+  total: number;
   rowsPerPage: number;
   onPageChange: (page: number) => void;
   onRowsPerPageChange: (rows: number) => void;
@@ -10,14 +10,14 @@ type Props = {
 
 const Pagination: React.FC<Props> = ({
   currentPage,
-  totalItems,
+  total,
   rowsPerPage,
   onPageChange,
   onRowsPerPageChange,
 }) => {
-  const totalPages = Math.ceil(totalItems / rowsPerPage);
+  const totalPages = Math.ceil(total / rowsPerPage);
   const startItem = (currentPage - 1) * rowsPerPage + 1;
-  const endItem = Math.min(startItem + rowsPerPage - 1, totalItems);
+  const endItem = Math.min(startItem + rowsPerPage - 1, total);
 
   return (
     <div className="flex items-center justify-end space-x-4 p-4">
@@ -28,7 +28,7 @@ const Pagination: React.FC<Props> = ({
           value={rowsPerPage}
           onChange={(e) => onRowsPerPageChange(Number(e.target.value))}
         >
-          {[5, 10, 20, 50].map((rows) => (
+          {[5, 10, 20].map((rows) => (
             <option key={rows} value={rows}>
               {rows}
             </option>
@@ -37,7 +37,7 @@ const Pagination: React.FC<Props> = ({
       </div>
 
       <div className="text-sm text-gray-700">
-        {startItem}–{endItem} of {totalItems}
+        {startItem}–{endItem} of {total}
       </div>
 
       <div className="flex items-center space-x-2">

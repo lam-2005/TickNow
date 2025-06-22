@@ -32,7 +32,7 @@ const MovieManagement = () => {
         console.log("Dữ liệu từ API:", data);
         setMovies(data.movie || []);
         setCurrentPage(data.pagination?.page || 1);
-        setTotalItems(data.pagination?.totalItems || 0);
+        setTotalItems(data.pagination?.total || 0);
       } catch (error) {
         console.error("Lỗi khi fetch movies:", error);
         setError("Không thể tải danh sách phim. Vui lòng thử lại sau.");
@@ -132,7 +132,7 @@ const MovieManagement = () => {
 
           <Pagination
             currentPage={currentPage}
-            totalItems={totalItems}
+            total={totalItems}
             rowsPerPage={rowsPerPage}
             onPageChange={(page) => setCurrentPage(page)}
             onRowsPerPageChange={(rows) => {
