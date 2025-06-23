@@ -5,6 +5,7 @@ import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import React, { useState } from "react";
 import useTouched from "@/hooks/useTouched";
 import validateForm from "@/utils/validate";
+import { loginAPI } from "@/services/user.service";
 const LoginForm = ({
   setOpenForm,
   setOpenReset,
@@ -14,9 +15,24 @@ const LoginForm = ({
 }) => {
   const { touched, touchedEmail, touchedPassword } = useTouched();
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const errors = validateForm({ email, password });
+  const [formData, setFormData] = useState<{ email: string; password: string }>(
+    {
+      email: "",
+      password: "",
+    }
+  );
+  const errors = validateForm({
+    email: formData.email,
+    password: formData.password,
+  });
+  const handleLogin = async () => {
+    try {
+      const res = await loginAPI(formData);
+      console.log("Login successful:", res);
+    } catch (error) {
+      console.error("Đăng nhập thất bại", error);
+    }
+  };
   return (
     <>
       <h2 className="text-2xl font-semibold">Đăng nhập vào TichNow</h2>
@@ -25,14 +41,17 @@ const LoginForm = ({
         className="w-full space-y-5 mt-6"
         onSubmit={(e) => {
           e.preventDefault();
+          handleLogin();
         }}
       >
         <div className="space-y-5">
           <Input
             key={"email"}
             label="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={formData.email}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
             onBlur={touchedEmail}
             error={touched.email ? errors.email : undefined}
           />
@@ -40,15 +59,17 @@ const LoginForm = ({
             key={"password"}
             label="Mật khẩu"
             type={showPassword ? "text" : "password"}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={formData.password}
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
             onBlur={touchedPassword}
             error={touched.password ? errors.password : undefined}
           >
             {
               <span
                 className={`absolute peer-focus/input:block  right-0 top-1/2 -translate-y-1/2 p-1 cursor-pointer -translate-x-2.5 text-xl ${
-                  password ? "block" : "hidden"
+                  formData.password ? "block" : "hidden"
                 }`}
                 onClick={() => setShowPassword(!showPassword)}
               >
