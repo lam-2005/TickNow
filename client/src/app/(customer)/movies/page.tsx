@@ -17,7 +17,15 @@ const MovieSection = () => {
   const [error, setError] = useState<string | null>(null);
   const [isActived, setIsActived] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [checkedItems, setCheckedItems] = useState<(string | number)[]>([]);
+  
+  const handleToggleItem = (id: string | number) => {
+    setCheckedItems((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
 
+  const handleReset = () => setCheckedItems([]);
   const handleToggle = (id: string) => {
     setIsActived((prev) => (prev === id ? null : id));
   };
@@ -38,7 +46,7 @@ const MovieSection = () => {
     setMovies((prevMovies) => sortMovies(prevMovies, newOrder));
   };
 
-  const fetchMovies = useCallback(async (status: string) => {
+  const fetchMovies = useCallback(async (status: number) => {
     setLoading(true);
     setError(null);
     try {
@@ -54,7 +62,7 @@ const MovieSection = () => {
   }, [sortOrder]);
 
   useEffect(() => {
-    const status = activeTab === "now" ? "Đang Chiếu" : "Sắp Chiếu";
+    const status = activeTab === "now" ? 1 : 2;
     fetchMovies(status);
   }, [activeTab, fetchMovies]);
 
@@ -63,37 +71,45 @@ const MovieSection = () => {
     <div>
       <BackgroundPage image="background_movie.jpg" title="Phim chiếu rạp">
         {activeTab === "now" && (
-          <div className="absolute z-20 bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2">
-            <Select>
-              <SelectField
-                icon={<FaCalendarAlt />}
-                label="Hôm nay (27/05)"
-                id="date"
-                isOpen={isActived === "date"}
-                onToggle={handleToggle}
-              >
-                <Option label="Chọn ngày chiếu" />
-              </SelectField>
-              <SelectField
-                icon={<FaFilm />}
-                label="Chọn thể loại"
-                id="genre"
-                isOpen={isActived === "genre"}
-                onToggle={handleToggle}
-              >
-                <Option label="Chọn thể loại" />
-              </SelectField>
-              <SelectField
-                icon={<RiMapPin2Fill />}
-                label="Chọn rạp"
-                id="cinema"
-                isOpen={isActived === "cinema"}
-                onToggle={handleToggle}
-              >
-                <Option label="Chọn rạp chiếu" />
-              </SelectField>
-            </Select>
-          </div>
+          <div className=" absolute z-20 bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2">
+          <Select>
+            <SelectField
+              icon={<FaCalendarAlt />}
+              label="Hôm nay (27/05)"
+              id="date"
+              isOpen={isActived === "date"}
+              onToggle={handleToggle}
+              onClose={() => setIsActived(null)}
+            >
+              <Option
+                label="Chọn ngày chiếu"
+                checkedItems={checkedItems}
+                onToggleItem={handleToggleItem}
+                onReset={handleReset}
+              />
+            </SelectField>
+            <SelectField
+              icon={<FaFilm />}
+              label="Chọn thể loại"
+              id="gerne"
+              isOpen={isActived === "gerne"}
+              onToggle={handleToggle}
+              onClose={() => setIsActived(null)}
+            >
+              <Option label="Chọn thể loại" />
+            </SelectField>
+            <SelectField
+              icon={<RiMapPin2Fill />}
+              label="Chọn rạp"
+              id="cinema"
+              isOpen={isActived === "cinema"}
+              onToggle={handleToggle}
+              onClose={() => setIsActived(null)}
+            >
+              <Option label="Chọn rạp chiếu" />
+            </SelectField>
+          </Select>
+        </div>
         )}
       </BackgroundPage>
 
