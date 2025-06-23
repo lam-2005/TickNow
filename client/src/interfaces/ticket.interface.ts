@@ -9,3 +9,8 @@ export interface Ticket {
   screeningTime: string;     // Thời gian chiếu
 }
 
+export interface TicketDetail extends Ticket {
+  cinema: { id: string; name: string };
+  room: { id: string; code: string };
+  movie: { id: string; name: string; img: string };
+}

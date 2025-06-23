@@ -16,4 +16,6 @@ export interface MovieType {
     name: string;
   }[];
   status: string;
+  language: string;
+  star:number;
 }

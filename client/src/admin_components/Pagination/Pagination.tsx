@@ -1,73 +1,61 @@
-// Pagination.tsx
 import React from "react";
 
-const Pagination = () => {
+type Props = {
+  currentPage: number;
+  total: number;
+  rowsPerPage: number;
+  onPageChange: (page: number) => void;
+  onRowsPerPageChange: (rows: number) => void;
+};
+
+const Pagination: React.FC<Props> = ({
+  currentPage,
+  total,
+  rowsPerPage,
+  onPageChange,
+  onRowsPerPageChange,
+}) => {
+  const totalPages = Math.ceil(total / rowsPerPage);
+  const startItem = (currentPage - 1) * rowsPerPage + 1;
+  const endItem = Math.min(startItem + rowsPerPage - 1, total);
+
   return (
-    <div className="flex items-center justify-end py-4 pr-4">
-      <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-        <button
-          className="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50"
-          disabled
+    <div className="flex items-center justify-end space-x-4 p-4">
+      <div className="flex items-center space-x-2 text-sm text-gray-700">
+        <span>Rows per page:</span>
+        <select
+          className="border border-gray-300 rounded px-2 py-1"
+          value={rowsPerPage}
+          onChange={(e) => onRowsPerPageChange(Number(e.target.value))}
         >
-          ««
-        </button>
-        <button
-          className="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border-t border-b border-l border-gray-300 hover:bg-gray-50"
-          disabled
-        >
-          «
-        </button>
+          {[5, 10, 20].map((rows) => (
+            <option key={rows} value={rows}>
+              {rows}
+            </option>
+          ))}
+        </select>
+      </div>
 
-        <button
-          className="relative inline-flex items-center px-4 py-2 text-sm font-medium bg-white border-gray-300 text-gray-500 hover:bg-gray-50"
-          disabled
-        >
-          1
-        </button>
-        <span className="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700">
-          ...
-        </span>
-        <button
-          className="relative inline-flex items-center px-4 py-2 text-sm font-medium bg-white border-gray-300 text-gray-500 hover:bg-gray-50"
-          disabled
-        >
-          4
-        </button>
-        <button
-          className="relative inline-flex items-center px-4 py-2 text-sm font-medium z-10 bg-indigo-50 border-indigo-500 text-indigo-600"
-          disabled
-        >
-          5
-        </button>
-        <button
-          className="relative inline-flex items-center px-4 py-2 text-sm font-medium bg-white border-gray-300 text-gray-500 hover:bg-gray-50"
-          disabled
-        >
-          6
-        </button>
-        <span className="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700">
-          ...
-        </span>
-        <button
-          className="relative inline-flex items-center px-4 py-2 text-sm font-medium bg-white border-gray-300 text-gray-500 hover:bg-gray-50"
-          disabled
-        >
-          10
-        </button>
+      <div className="text-sm text-gray-700">
+        {startItem}–{endItem} of {total}
+      </div>
 
+      <div className="flex items-center space-x-2">
         <button
-          className="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border-t border-b border-r border-gray-300 hover:bg-gray-50"
-          disabled
+          onClick={() => onPageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="px-2 py-1 text-gray-700 border border-gray-300 rounded hover:bg-gray-100 disabled:opacity-50"
         >
-          »
+          &lt;
         </button>
         <button
-          className="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50"
-          disabled
+          onClick={() => onPageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="px-2 py-1 text-gray-700 border border-gray-300 rounded hover:bg-gray-100 disabled:opacity-50"
         >
-          »»
+          &gt;
         </button>
-      </nav>
+      </div>
     </div>
   );
 };
