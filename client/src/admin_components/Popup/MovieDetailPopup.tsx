@@ -25,7 +25,7 @@ const MovieDetailPopup: React.FC<Props> = ({ movie, onClose }) => {
         >
           ✕
         </button>
-        <div className="p-6 grid md:grid-cols-3 gap-6">
+        <div className="p-6 grid md:grid-cols-3 gap-6 max-h-[70vh] overflow-y-auto">
           <Image
             src={`${env.IMG_API_URL}/movie/${movie.image}`}
             alt="Poster"
