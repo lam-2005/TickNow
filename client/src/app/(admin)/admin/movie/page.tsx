@@ -26,7 +26,7 @@ const MovieManagement = () => {
       setError(null);
       try {
         const res = await movieService.getMovieList(
-          `?limit=${rowsPerPage}&page=${currentPage}`
+          `?page=${currentPage}&limit=${rowsPerPage}`
         );
         const data = res?.data;
         console.log("Dữ liệu từ API:", data);

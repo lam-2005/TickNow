@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import AddBtn from "@/admin_components/Button/AddBtn";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import OptionTable from "@/admin_components/OptionTable/OptionTable";
@@ -19,13 +19,12 @@ const UserManagement = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [totalItems, setTotalItems] = useState(0);
   const [showAddPopup, setShowAddPopup] = useState(false);
-  const limit = 5;
 
-  const fetchUsers = async (page = 1) => {
+  const fetchUsers = useCallback(async (page = 1) => {
     setLoading(true);
     setError(null);
     try {
-      const res = await userService.getUserList(`?limit=${limit}&page=${page}`);
+      const res = await userService.getUserList(`?limit=${rowsPerPage}&page=${page}`);
       const data = res?.data;
 
       console.log("Dữ liệu từ API:", data);
@@ -38,12 +37,12 @@ const UserManagement = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [rowsPerPage]);
 
   useEffect(() => {
     fetchUsers(currentPage);
-  }, [currentPage]);
-
+  }, [fetchUsers, currentPage]);
+  
   const handleEdit = (id: string | number) => {
     alert(`Edit ${id}`);
   };
@@ -105,7 +104,7 @@ const UserManagement = () => {
         <p className="text-primary text-center">{error}</p>
       ) : (
         <>
-          <Table column={col} data={users} />
+          <Table column={col} data={users.map(u => ({ ...u, id: u._id }))} />
           <Pagination
             currentPage={currentPage}
             total={totalItems}
@@ -128,8 +127,9 @@ const UserManagement = () => {
             <input type="text" placeholder="Tên người dùng" className="w-full p-2 border rounded mb-2" />
             <input type="email" placeholder="Email" className="w-full p-2 border rounded mb-2" />
             <input type="text" placeholder="Số điện thoại" className="w-full p-2 border rounded mb-2" />
-            <input type="date" placeholder="Ngày tháng năm sinh" className="w-full p-2 border rounded mb-2" />
+            <input type="date" placeholder="Ngày sinh" className="w-full p-2 border rounded mb-2" />
             <input type="password" placeholder="Mật khẩu" className="w-full p-2 border rounded mb-2" />
+            <input type="password" placeholder="Xác nhận mật khẩu" className="w-full p-2 border rounded mb-2" />
             <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Lưu</button>
           </form>
         </AddPopup>

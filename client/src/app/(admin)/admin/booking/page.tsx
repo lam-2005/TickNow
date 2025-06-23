@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import AddBtn from "@/admin_components/Button/AddBtn";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import OptionTable from "@/admin_components/OptionTable/OptionTable";
@@ -19,15 +19,15 @@ const AdminBooking = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [totalItems, setTotalItems] = useState(0);
+
   const [showAddPopup, setShowAddPopup] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
-  const limit = 5;
 
-  const fetchTickets = async (page = 1) => {
+  const fetchTickets = useCallback(async (page = 1) => {
     setLoading(true);
     setError(null);
     try {
-      const res = await TicketService.getTicketList(`?limit=${limit}&page=${page}`);
+      const res = await TicketService.getTicketList(`?limit=${rowsPerPage}&page=${page}`);
       const data = res?.data;
       setTickets(data.ticket || []);
       setTotalItems(data.pagination?.total || 0);
@@ -38,11 +38,11 @@ const AdminBooking = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [rowsPerPage]);
 
   useEffect(() => {
     fetchTickets(currentPage);
-  }, [currentPage]);
+  }, [fetchTickets, currentPage]);
 
   const handleDelete = (id: string | number) => {
     alert(`Hủy vé có ID: ${id}`);
@@ -108,7 +108,7 @@ const AdminBooking = () => {
             onPageChange={(page) => setCurrentPage(page)}
             onRowsPerPageChange={(rows) => {
               setRowsPerPage(rows);
-              setCurrentPage(1);
+              setCurrentPage(1); // reset lại trang khi thay đổi số dòng
             }}
           />
         </>
