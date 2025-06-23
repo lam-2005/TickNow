@@ -19,11 +19,11 @@ export const ShowType = ({ type }: { type: "Phụ đề" | "Lồng tiếng" }) =
   </div>
 );
 
-const ShowtimeItem = ({
+export const ShowtimeItem = ({
   nameCinema,
   children,
 }: {
-  nameCinema: string;
+  nameCinema?: string;
   children: React.ReactNode;
 }) => {
   return (
@@ -34,9 +34,15 @@ const ShowtimeItem = ({
   );
 };
 
-const ShowtimeCard = () => {
+const ShowtimeCard = ({
+  title,
+  children,
+}: {
+  title?: string;
+  children: React.ReactNode;
+}) => {
   return (
-    <div className="flex gap-7.5 min-h-[430px] bg-background-card p-5 container w-[80%] rounded-xl">
+    <div className="flex gap-7.5 h-fit bg-background-card p-5 container w-[80%] rounded-xl">
       <div className="max-w-[227px] w-full aspect-[2/3] max-h-[340px] bg-amber-500"></div>
       <div className="space-y-[10px] flex-1">
         <h1>Phim chiếu rạp</h1>
@@ -55,21 +61,8 @@ const ShowtimeCard = () => {
           </div>
         </div>
         <div className="space-y-1.25 ">
-          <p className=" ">Rạp đang chiếu</p>
-          <div className="space-y-7.5 relative ">
-            <ShowtimeItem nameCinema="TickNow Quận 12 (Thành phố Hồ Chí Minh)">
-              <ShowType type="Phụ đề" />
-              <ShowType type="Lồng tiếng" />
-            </ShowtimeItem>
-            <ShowtimeItem nameCinema="TickNow Quận 12 (Thành phố Hồ Chí Minh)">
-              <ShowType type="Phụ đề" />
-              <ShowType type="Lồng tiếng" />
-            </ShowtimeItem>
-            <ShowtimeItem nameCinema="TickNow Quận 12 (Thành phố Hồ Chí Minh)">
-              <ShowType type="Phụ đề" />
-              <ShowType type="Lồng tiếng" />
-            </ShowtimeItem>
-          </div>
+          <p className=" ">{title || ""}</p>
+          <div className="space-y-7.5 relative ">{children}</div>
         </div>
       </div>
     </div>
