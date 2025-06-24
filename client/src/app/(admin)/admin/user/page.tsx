@@ -8,7 +8,8 @@ import { UserType } from "@/interfaces/user.interface";
 import * as userService from "@/services/user.service";
 import ActionButton from "@/admin_components/Button/ButtonActions";
 import Pagination from "@/admin_components/Pagination/Pagination";
-import AddPopup from "@/admin_components/Popup/AddPopup";
+import PopupUpdateForm from "@/admin_components/Popup/UpdateForm";
+import AddForm from "@/admin_components/Popup/AddPopup";
 
 const UserManagement = () => {
   const [users, setUsers] = useState<UserType[]>([]);
@@ -19,16 +20,16 @@ const UserManagement = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [totalItems, setTotalItems] = useState(0);
   const [showAddPopup, setShowAddPopup] = useState(false);
-  const limit = 5;
+
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
 
   const fetchUsers = async (page = 1) => {
     setLoading(true);
     setError(null);
     try {
-      const res = await userService.getUserList(`?limit=${limit}&page=${page}`);
+      const res = await userService.getUserList(`?limit=5&page=${page}`);
       const data = res?.data;
-
-      console.log("Dữ liệu từ API:", data);
       setUsers(data.user || []);
       setTotalItems(data.pagination?.total || 0);
       setCurrentPage(data.pagination?.page || 1);
@@ -45,11 +46,11 @@ const UserManagement = () => {
   }, [currentPage]);
 
   const handleEdit = (id: string | number) => {
-    alert(`Edit ${id}`);
-  };
-
-  const handleDelete = (id: string | number) => {
-    alert(`Delete ${id}`);
+    const user = users.find((u) => u._id === id);
+    if (user) {
+      setSelectedUser(user);
+      setIsEditOpen(true);
+    }
   };
 
   const col: Column<UserType>[] = [
@@ -77,12 +78,6 @@ const UserManagement = () => {
               label="Sửa"
               onClick={handleEdit}
               bgColor="bg-yellow-500"
-              id={row._id}
-            />
-            <ActionButton
-              label="Xóa"
-              onClick={handleDelete}
-              bgColor="bg-red-500"
               id={row._id}
             />
           </div>
@@ -119,21 +114,87 @@ const UserManagement = () => {
         </>
       )}
 
-      {showAddPopup && (
-        <AddPopup
-          title="Thêm Người Dùng"
-          onClose={() => setShowAddPopup(false)}
-        >
-          <form>
-            <input type="text" placeholder="Tên người dùng" className="w-full p-2 border rounded mb-2" />
-            <input type="email" placeholder="Email" className="w-full p-2 border rounded mb-2" />
-            <input type="text" placeholder="Số điện thoại" className="w-full p-2 border rounded mb-2" />
-            <input type="date" placeholder="Ngày tháng năm sinh" className="w-full p-2 border rounded mb-2" />
-            <input type="password" placeholder="Mật khẩu" className="w-full p-2 border rounded mb-2" />
-            <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Lưu</button>
-          </form>
-        </AddPopup>
-      )}
+      <AddForm<Record<string, unknown>>
+        isOpen={showAddPopup}
+        onClose={() => setShowAddPopup(false)}
+        fields={[
+          { label: "Tên người dùng", key: "name", required: true },
+          { label: "Email", key: "email", required: true },
+          { label: "Số điện thoại", key: "phone", required: true },
+          { label: "Năm sinh", key: "year", type: "number", required: true },
+          { label: "Mật khẩu", key: "password", type: "password", required: true },
+          { label: "Xác nhận mật khẩu", key: "confirmPassword", type: "password", required: true },
+          {
+            label: "Trạng thái",
+            key: "status",
+            type: "select",
+            required: true,
+            options: [
+              { label: "Hoạt Động", value: "1" },
+              { label: "Ngừng Hoạt Động", value: "0" },
+            ],
+          },
+          {
+            label: "Vai trò",
+            key: "role",
+            type: "select",
+            required: true,
+            options: [
+              { label: "Quản Trị", value: "true" },
+              { label: "Người Dùng", value: "false" },
+            ],
+          },
+        ]}
+        onSubmit={async () => {
+          try {
+            // await userService.createUser(data);
+            alert("Thêm người dùng thành công!");
+            setShowAddPopup(false);
+            fetchUsers(currentPage);
+          } catch (err) {
+            alert("Thêm thất bại!");
+            console.error(err);
+          }
+        }}
+      />
+
+      <PopupUpdateForm
+        isOpen={isEditOpen}
+        onClose={() => setIsEditOpen(false)}
+        initialData={selectedUser as unknown as Record<string, unknown>}
+        fields={[
+          {
+            label: "Trạng thái",
+            key: "status",
+            type: "select",
+            options: [
+              { label: "Hoạt Động", value: "1" },
+              { label: "Ngừng Hoạt Động", value: "0" },
+            ],
+          },
+          {
+            label: "Quyền",
+            key: "role",
+            type: "select",
+            options: [
+              { label: "Quản Trị", value: "true" },
+              { label: "Người Dùng", value: "false" },
+            ],
+          },
+        ]}
+        onSubmit={async () => {
+          try {
+            if (!selectedUser?._id) return;
+            // await userService.updateUser(selectedUser._id, data);
+            alert("Cập nhật thành công!");
+            setIsEditOpen(false);
+            fetchUsers(currentPage);
+          } catch (error) {
+            console.error("Lỗi cập nhật user:", error);
+            alert("Cập nhật thất bại!");
+          }
+        }}
+      />
     </div>
   );
 };

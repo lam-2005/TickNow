@@ -8,6 +8,7 @@ import * as voucherService from "@/services/vouchers.service";
 import { Voucher } from "@/interfaces/vouchers.interface";
 import ActionButton from "@/admin_components/Button/ButtonActions";
 import Pagination from "@/admin_components/Pagination/Pagination";
+import PopupUpdateForm from "@/admin_components/Popup/UpdateForm";
 
 const Vouchers = () => {
   const [vouchers, setVouchers] = useState<Voucher[]>([]);
@@ -17,6 +18,9 @@ const Vouchers = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [totalItems, setTotalItems] = useState(0);
+
+  const [isEditOpen, setIsEditOpen] = useState(false); // ⬅️ thêm mới
+  const [selectedVoucher, setSelectedVoucher] = useState<Voucher | null>(null); // ⬅️ thêm mới
 
   const fetchVoucher = useCallback(async (page = 1) => {
     setLoading(true);
@@ -40,7 +44,11 @@ const Vouchers = () => {
   }, [fetchVoucher, currentPage]);
 
   const handleEdit = (id: string | number) => {
-    alert(`Sửa voucher ID: ${id}`);
+    const voucher = vouchers.find((v) => v._id === id);
+    if (voucher) {
+      setSelectedVoucher(voucher);
+      setIsEditOpen(true);
+    }
   };
 
   const handleDelete = (id: string | number) => {
@@ -68,13 +76,13 @@ const Vouchers = () => {
           <ActionButton
             label="Sửa"
             onClick={handleEdit}
-            id={row.id}
+            id={row._id}
             bgColor="bg-yellow-500"
           />
           <ActionButton
             label="Xóa"
             onClick={handleDelete}
-            id={row.id}
+            id={row._id}
             bgColor="bg-red-500"
           />
         </div>
@@ -107,6 +115,29 @@ const Vouchers = () => {
           />
         </>
       )}
+
+      <PopupUpdateForm
+        isOpen={isEditOpen}
+        onClose={() => setIsEditOpen(false)}
+        initialData={selectedVoucher as unknown as Record<string, unknown>}
+        fields={[
+          { label: "Mã code", key: "code" },
+          { label: "Mức giảm (%)", key: "discount_type", type: "number" },
+          { label: "Đã dùng", key: "user_count", type: "number" },
+          { label: "Tối đa", key: "max_users", type: "number" },
+          { label: "Ngày bắt đầu", key: "start_date", type: "date" },
+          { label: "Ngày kết thúc", key: "end_date", type: "date" },
+          {
+            label: "Trạng thái",
+            key: "is_active",
+            type: "select",
+            options: [
+              { label: "Hoạt Động", value: "Hoạt Động" },
+              { label: "Ngừng Hoạt Động", value: "Ngừng Hoạt Động" },
+            ],
+          },
+        ]}
+      />
     </div>
   );
 };
