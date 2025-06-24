@@ -40,10 +40,6 @@ const RatingManagement = () => {
     fetchRatings(currentPage);
   }, [currentPage, rowsPerPage]);
 
-  const handleEdit = (id: string | number) => {
-    alert(`Sửa ${id}`);
-  };
-
   const handleDelete = (id: string | number) => {
     alert(`Xóa ${id}`);
   };
@@ -72,12 +68,6 @@ const RatingManagement = () => {
       render(row: ReviewType) {
         return (
           <div className="flex gap-2">
-            <ActionButton
-              label="Sửa"
-              onClick={handleEdit}
-              bgColor="bg-yellow-500"
-              id={row._id}
-            />
             <ActionButton
               label="Xóa"
               onClick={handleDelete}

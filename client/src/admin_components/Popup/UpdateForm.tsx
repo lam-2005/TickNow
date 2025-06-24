@@ -1,84 +1,64 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-type FieldType = "text" | "number" | "date" | "select" | "password";
+type FieldType = "text" | "number" | "date" | "select";
 
 type Field<T> = {
   label: string;
   key: keyof T;
   type?: FieldType;
   options?: { label: string; value: string }[];
-  required?: boolean;
 };
 
-type AddFormProps<T> = {
+type PopupUpdateFormProps<T> = {
   isOpen: boolean;
   onClose: () => void;
+  initialData: T | null;
   fields: Field<T>[];
-  onSubmit: (data: Partial<T>) => void;
+  onSubmit?: (data: T) => void;
 };
 
-const AddForm = <T extends Record<string, unknown>>({
+const PopupUpdateForm = <T extends Record<string, unknown>>({
   isOpen,
   onClose,
+  initialData,
   fields,
   onSubmit,
-}: AddFormProps<T>) => {
-  const [formData, setFormData] = useState<Partial<T>>({});
-  const [errors, setErrors] = useState<Record<string, string>>({});
+}: PopupUpdateFormProps<T>) => {
+  const [formData, setFormData] = useState<T | null>(null);
+
+  useEffect(() => {
+    if (isOpen && initialData) {
+      setFormData(initialData);
+    }
+  }, [isOpen, initialData]);
 
   const handleChange = (key: keyof T, value: string) => {
+    if (!formData) return;
     setFormData({ ...formData, [key]: value });
-    setErrors((prev) => ({ ...prev, [key]: "" }));
-  };
-
-  const validate = (): boolean => {
-    const newErrors: Record<string, string> = {};
-
-    fields.forEach((field) => {
-      const value = formData[field.key];
-      const strVal = String(value ?? "").trim();
-
-      if (field.required && !strVal) {
-        newErrors[field.key as string] = `${field.label} là bắt buộc.`;
-      } else if (field.type === "number" && isNaN(Number(strVal))) {
-        newErrors[field.key as string] = `${field.label} phải là số.`;
-      } else if (field.type === "date" && isNaN(Date.parse(strVal))) {
-        newErrors[field.key as string] = `${field.label} không hợp lệ.`;
-      } else if (
-        field.type === "text" &&
-        /email/i.test(String(field.key)) &&
-        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(strVal)
-      ) {
-        newErrors[field.key as string] = `${field.label} không đúng định dạng email.`;
-      }
-    });
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validate()) return;
-    onSubmit(formData);
+    if (formData && onSubmit) {
+      onSubmit(formData);
+    }
+    console.log("Submit:", formData);
     onClose();
-    setFormData({});
-    setErrors({});
   };
 
-  if (!isOpen) return null;
+  if (!isOpen || !formData) return null;
 
   return (
     <div
       className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 overflow-y-auto p-4"
-      id="add-popup-overlay"
+      id="popup-overlay"
       onClick={(e) => {
-        if ((e.target as HTMLElement).id === "add-popup-overlay") onClose();
+        if ((e.target as HTMLElement).id === "popup-overlay") onClose();
       }}
     >
       <div
-        className="bg-white rounded-xl w-full max-w-2xl shadow-2xl relative"
+        className="bg-white rounded-xl w-full max-w-3xl shadow-2xl relative animate-fade-in"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -89,29 +69,25 @@ const AddForm = <T extends Record<string, unknown>>({
         </button>
         <div className="p-6 max-h-[80vh] overflow-y-auto">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">
-            ➕ Thêm Mới
+            ✏️ Cập nhật thông tin
           </h2>
           <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             {fields.map((field) => {
+              const value = formData[field.key];
               const inputType = field.type || "text";
-              const error = errors[field.key as string];
 
               return (
                 <div key={String(field.key)}>
                   <label className="block text-gray-700 font-medium mb-1">
                     {field.label}
-                    {field.required && <span className="text-red-500 ml-1">*</span>}
                   </label>
 
                   {inputType === "select" && field.options ? (
                     <select
-                      className={`w-full border rounded-md px-3 py-2 ${
-                        error ? "border-red-500" : "border-gray-300"
-                      }`}
+                      className="w-full border border-gray-300 rounded-md px-3 py-2"
+                      value={String(value || "")}
                       onChange={(e) => handleChange(field.key, e.target.value)}
-                      defaultValue=""
                     >
-                      <option value="">-- Chọn --</option>
                       {field.options.map((opt) => (
                         <option key={opt.value} value={opt.value}>
                           {opt.label}
@@ -121,14 +97,17 @@ const AddForm = <T extends Record<string, unknown>>({
                   ) : (
                     <input
                       type={inputType}
-                      className={`w-full border rounded-md px-3 py-2 ${
-                        error ? "border-red-500" : "border-gray-300"
-                      }`}
+                      className="w-full border border-gray-300 rounded-md px-3 py-2"
+                      value={
+                        inputType === "date" && typeof value === "string"
+                          ? value.slice(0, 10)
+                          : typeof value === "string" || typeof value === "number"
+                          ? String(value)
+                          : ""
+                      }
                       onChange={(e) => handleChange(field.key, e.target.value)}
                     />
                   )}
-
-                  {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
                 </div>
               );
             })}
@@ -143,7 +122,7 @@ const AddForm = <T extends Record<string, unknown>>({
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 rounded bg-green-600 text-white hover:bg-green-700"
+                className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
               >
                 Lưu
               </button>
@@ -155,4 +134,4 @@ const AddForm = <T extends Record<string, unknown>>({
   );
 };
 
-export default AddForm;
+export default PopupUpdateForm;
