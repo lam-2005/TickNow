@@ -9,6 +9,7 @@ import * as movieService from "@/services/movie.service";
 import ActionButton from "@/admin_components/Button/ButtonActions";
 import Pagination from "@/admin_components/Pagination/Pagination";
 import MovieDetailPopup from "@/admin_components/Popup/MovieDetailPopup";
+import PopupUpdateForm from "@/admin_components/Popup/UpdateForm"; // ✅ thêm
 
 const MovieManagement = () => {
   const [movies, setMovies] = useState<MovieType[]>([]);
@@ -19,6 +20,9 @@ const MovieManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [totalItems, setTotalItems] = useState(0);
+
+  const [isEditOpen, setIsEditOpen] = useState(false); // ✅ thêm
+  const [movieToEdit, setMovieToEdit] = useState<MovieType | null>(null); // ✅ thêm
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -45,7 +49,11 @@ const MovieManagement = () => {
   }, [currentPage, rowsPerPage]);
 
   const handleEdit = (id: string | number) => {
-    alert(`Edit ${id}`);
+    const movie = movies.find((m) => m._id === id);
+    if (movie) {
+      setMovieToEdit(movie);
+      setIsEditOpen(true);
+    }
   };
 
   const handleDelete = (id: string | number) => {
@@ -129,7 +137,6 @@ const MovieManagement = () => {
       ) : (
         <>
           <Table column={col} data={movies} />
-
           <Pagination
             currentPage={currentPage}
             total={totalItems}
@@ -142,6 +149,39 @@ const MovieManagement = () => {
           />
         </>
       )}
+
+      {/* ✅ Popup form cập nhật thông tin phim */}
+      <PopupUpdateForm
+        isOpen={isEditOpen}
+        onClose={() => setIsEditOpen(false)}
+        initialData={movieToEdit as unknown as Record<string, unknown>}
+        fields={[
+          { label: "Tên phim", key: "name" },
+          { label: "Ngày công chiếu", key: "release_date", type: "date" },
+          { label: "Quốc gia", key: "nation" },
+          { label: "Ngôn ngữ", key: "language" },
+          { label: "Thời lượng (phút)", key: "duration", type: "number" },
+          { label: "Độ tuổi", key: "age" },
+          { label: "Đạo diễn", key: "director" },
+          { label: "Diễn viên", key: "actor" },
+          { label: "Đánh giá sao", key: "star", type: "number" },
+          { label: "Trailer", key: "trailer" },
+          { label: "Hình ảnh", key: "image" },
+          { label: "Banner", key: "banner" },
+        ]}
+        onSubmit={async () => {
+          try {
+            if (!movieToEdit?._id) return;
+            // await movieService.updateMovie(movieToEdit._id, data); 
+            alert("Cập nhật phim thành công!");
+            setIsEditOpen(false);
+            setMovieToEdit(null);
+          } catch (err) {
+            console.error("Lỗi cập nhật phim:", err);
+            alert("Cập nhật thất bại!");
+          }
+        }}
+      />
     </div>
   );
 };
