@@ -12,7 +12,6 @@ import MovieLoading from "@/components/Loading/MovieLoading";
 import MovieContainer from "@/components/Movie/MovieContainer";
 import OfferLoading from "@/components/Loading/OfferLoading";
 import * as movieService from "@/services/movie.service";
-import env from "@/configs/environment";
 export default function Home() {
   const [loadingNow, setLoadingNow] = useState<boolean>(true);
   const [loadingComingSoon, setLoadingComingSoon] = useState<boolean>(true);
@@ -23,14 +22,9 @@ export default function Home() {
 
   const getMovieNow = async () => {
     try {
-
-
-      const res = await movieService.getMovieList(
-        "?status=Đang Chiếu&limit=10"
-      );
+      const res = await movieService.getMovieList("?status=1&limit=10");
       console.log(res);
       setMoviesNow(res?.data.movie);
-
     } catch (error) {
       console.error("Fetch movie failed:", error);
     } finally {
@@ -40,7 +34,7 @@ export default function Home() {
 
   const getMovieComingSoon = async () => {
     try {
-      const res = await movieService.getMovieList("?status=Sắp Chiếu&limit=10");
+      const res = await movieService.getMovieList("?status=2&limit=10");
       setMoviesComingSoon(res?.data.movie);
     } catch (error) {
       console.error("Fetch movie failed:", error);

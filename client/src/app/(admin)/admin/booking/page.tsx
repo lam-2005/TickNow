@@ -1,113 +1,86 @@
-// "use client";
-// import React from "react";
-// import AddBtn from "@/admin_components/Button/AddBtn";
-// import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
-// import OptionTable from "@/admin_components/OptionTable/OptionTable";
-// import Table from "@/admin_components/Table/Table";
-
-// interface Booking {
-//   name: string;
-//   phone: string;
-//   day: string;
-//   detail: string;
-// }
-
-// const col = [
-//   //   { key: "code", title: "Mã" },
-//   { key: "name", title: "Tên khách hàng" },
-//   { key: "phone", title: "Sđt" },
-//   { key: "day", title: "Ngày đặt" },
-//   { key: "detail", title: "Chi tiết" },
-//   {
-//     key: "actions", // cần thiết nếu Table dùng key để định danh
-//     title: "Thao tác",
-//     render(row: Booking) {
-//       return (
-//         <div className="flex space-x-2">
-//           <button
-//             className="text-red-500 hover:underline"
-//             onClick={() => handleDelete(row.id)}
-//           >
-//             Hủy vé
-//           </button>
-//         </div>
-//       );
-//     },
-//   },
-// ];
-
-// const handleDelete = (id: string) => {
-//   console.log("Delete", id);
-// };
-
-// const AdminBooking = () => {
-//   return (
-//     <div className="card">
-//       <HeadingCard title="Quản lý đặt vé">
-//         <AddBtn />
-//       </HeadingCard>
-//       <OptionTable />
-//       <Table column={col} data={bookings} />
-//     </div>
-//   );
-// };
-
-// export default AdminBooking;
-
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import AddBtn from "@/admin_components/Button/AddBtn";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import OptionTable from "@/admin_components/OptionTable/OptionTable";
 import Table, { Column } from "@/admin_components/Table/Table";
 import { Ticket } from "@/interfaces/ticket.interface";
 import * as TicketService from "@/services/ticket.service";
+import ActionButton from "@/admin_components/Button/ButtonActions";
+import Pagination from "@/admin_components/Pagination/Pagination";
+import AddPopup from "@/admin_components/Popup/AddPopup";
+import TicketDetailPopup from "@/admin_components/Popup/TicketDetailPopup";
 
 const AdminBooking = () => {
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchTickets = async () => {
-      setLoading(true);
-      try {
-        const res = await TicketService.getTicketList("?_limit=10");
-        setTickets(res?.data || []);
-      } catch (error) {
-        setError("Không thể tải danh sách đặt vé.");
-      } finally {
-        setLoading(false);
-      }
-    };
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [totalItems, setTotalItems] = useState(0);
 
-    fetchTickets();
-  }, []);
+  const [showAddPopup, setShowAddPopup] = useState(false);
+  const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
+
+  const fetchTickets = useCallback(async (page = 1) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await TicketService.getTicketList(`?limit=${rowsPerPage}&page=${page}`);
+      const data = res?.data;
+      setTickets(data.ticket || []);
+      setTotalItems(data.pagination?.total || 0);
+      setCurrentPage(data.pagination?.page || 1);
+    } catch (error) {
+      console.error("Lỗi khi gọi API:", error);
+      setError("Không thể tải danh sách đặt vé.");
+    } finally {
+      setLoading(false);
+    }
+  }, [rowsPerPage]);
+
+  useEffect(() => {
+    fetchTickets(currentPage);
+  }, [fetchTickets, currentPage]);
 
   const handleDelete = (id: string | number) => {
-    alert(`Hủy vé với ID: ${id}`);
+    alert(`Hủy vé có ID: ${id}`);
   };
 
   const columns: Column<Ticket>[] = [
     { key: "userName", title: "Tên khách hàng" },
-    // { key: "screeningTime", title: "Giờ chiếu" },
+    { key: "screeningTime", title: "Giờ chiếu" },
     { key: "price", title: "Giá vé" },
-    { key: "type", title: "Trạng thái thanh toán" },
+    { key: "type", title: "Trạng thái" },
     {
       key: "seat",
       title: "Ghế",
-      render: (row) => row.seat.join(", "),
+      render: (row) => row.seat?.join(", "),
     },
     {
       title: "Thao tác",
       render: (row) => (
-        <div className="flex space-x-2">
-          <button
-            className="text-red-500 hover:underline"
-            onClick={() => handleDelete(row._id)}
-          >
-            Hủy vé
-          </button>
+        <div className="flex gap-2">
+          <ActionButton
+            label="Hủy"
+            onClick={handleDelete}
+            bgColor="bg-red-500"
+            id={row._id}
+          />
+        </div>
+      ),
+    },
+    {
+      title: "Chi tiết",
+      render: (row) => (
+        <div className="flex gap-2">
+          <ActionButton
+            label="Xem"
+            onClick={() => setSelectedTicket(row)}
+            bgColor="bg-blue-500"
+            id={row._id}
+          />
         </div>
       ),
     },
@@ -115,16 +88,50 @@ const AdminBooking = () => {
 
   return (
     <div className="card">
-      <HeadingCard title="Quản lý đặt vé">
-        <AddBtn />
+      <HeadingCard title="Quản Lý Đặt Vé">
+        <AddBtn onClick={() => setShowAddPopup(true)} />
       </HeadingCard>
+
       <OptionTable />
-      {error && <p className="text-red-500">{error}</p>}
+
       {loading ? (
-        <p>Đang tải dữ liệu...</p>
+        <p className="text-center">Đang tải dữ liệu...</p>
+      ) : error ? (
+        <p className="text-red-500 text-center">{error}</p>
       ) : (
-        // <Table column={columns} data={tickets} />
-        <Table column={columns} data={tickets.map(t => ({ ...t, id: t._id }))} />
+        <>
+          <Table column={columns} data={tickets.map(t => ({ ...t, id: t._id }))} />
+          <Pagination
+            currentPage={currentPage}
+            total={totalItems}
+            rowsPerPage={rowsPerPage}
+            onPageChange={(page) => setCurrentPage(page)}
+            onRowsPerPageChange={(rows) => {
+              setRowsPerPage(rows);
+              setCurrentPage(1); // reset lại trang khi thay đổi số dòng
+            }}
+          />
+        </>
+      )}
+
+      {showAddPopup && (
+        <AddPopup title="Thêm Vé Mới" onClose={() => setShowAddPopup(false)}>
+          <form>
+            <input type="text" placeholder="Tên khách hàng" className="w-full p-2 border rounded mb-2" />
+            <input type="text" placeholder="Giờ chiếu" className="w-full p-2 border rounded mb-2" />
+            <input type="number" placeholder="Giá vé" className="w-full p-2 border rounded mb-2" />
+            <input type="text" placeholder="Trạng thái" className="w-full p-2 border rounded mb-2" />
+            <input type="text" placeholder="Ghế (ngăn cách bằng dấu phẩy)" className="w-full p-2 border rounded mb-2" />
+            <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Lưu</button>
+          </form>
+        </AddPopup>
+      )}
+
+      {selectedTicket && (
+        <TicketDetailPopup
+          ticket={selectedTicket}
+          onClose={() => setSelectedTicket(null)}
+        />
       )}
     </div>
   );

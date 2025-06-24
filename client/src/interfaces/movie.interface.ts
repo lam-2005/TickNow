@@ -11,9 +11,16 @@ export interface MovieType {
   trailer: string;
   image: string;
   banner: string;
+  language: string;
   genre: {
     id: number | string;
     name: string;
   }[];
   status: string;
+<<<<<<< Updated upstream
+  language: string;
+  star:number;
+=======
+  star: number;
+>>>>>>> Stashed changes
 }

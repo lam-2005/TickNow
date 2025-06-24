@@ -1,72 +1,90 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import AddBtn from "@/admin_components/Button/AddBtn";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import OptionTable from "@/admin_components/OptionTable/OptionTable";
 import Table, { Column } from "@/admin_components/Table/Table";
-// import { UserType } from "@/interfaces/user.interface";
 import * as voucherService from "@/services/vouchers.service";
-// import ActionButton from "@/admin_components/Button/ButtonActions";
-// import Pagination from "@/admin_components/Pagination/Pagination";
 import { Voucher } from "@/interfaces/vouchers.interface";
+import ActionButton from "@/admin_components/Button/ButtonActions";
+import Pagination from "@/admin_components/Pagination/Pagination";
+import PopupUpdateForm from "@/admin_components/Popup/UpdateForm";
+
 const Vouchers = () => {
   const [vouchers, setVouchers] = useState<Voucher[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [totalItems, setTotalItems] = useState(0);
+
+  const [isEditOpen, setIsEditOpen] = useState(false); // ⬅️ thêm mới
+  const [selectedVoucher, setSelectedVoucher] = useState<Voucher | null>(null); // ⬅️ thêm mới
+
+  const fetchVoucher = useCallback(async (page = 1) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await voucherService.getVoucher(`?limit=${rowsPerPage}&page=${page}`);
+      console.log("Dữ liệu từ API:", res?.data.voucher);
+      setVouchers(res?.data.voucher || []);
+      setTotalItems(res?.data.pagination?.total || 0);
+      setCurrentPage(res?.data.pagination?.page || 1);
+    } catch (error) {
+      console.error("Lỗi khi fetch voucher: ", error);
+      setError("Không thể tải danh sách vouchers. Vui lòng thử lại sau.");
+    } finally {
+      setLoading(false);
+    }
+  }, [rowsPerPage]);
+
   useEffect(() => {
-    const fetchVoucher = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const res = await voucherService.getVoucher("?_limit=5");
-        console.log("Dữ liệu từ API:", res?.data);
-        setVouchers(res?.data);
-      } catch (error) {
-        console.error("Lỗi khi fetch voucher: ", error);
-        setError("Không thể tải danh sách vouchers. Vui lòng thử lại sau.");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchVoucher();
-  }, []);
+    fetchVoucher(currentPage);
+  }, [fetchVoucher, currentPage]);
 
   const handleEdit = (id: string | number) => {
-    alert(`Edit ${id}`);
+    const voucher = vouchers.find((v) => v._id === id);
+    if (voucher) {
+      setSelectedVoucher(voucher);
+      setIsEditOpen(true);
+    }
   };
 
   const handleDelete = (id: string | number) => {
-    alert(`Delete ${id}`);
+    alert(`Xóa voucher ID: ${id}`);
   };
 
   const col: Column<Voucher>[] = [
     { key: "code", title: "Mã code" },
-    { key: "discount_type", title: "Mức giảm giá(%)" },
+    { key: "discount_type", title: "Mức giảm giá (%)" },
     { key: "max_users", title: "Số lượng đã dùng" },
     { key: "start_date", title: "Ngày bắt đầu" },
     { key: "end_date", title: "Ngày kết thúc" },
     {
       key: "is_active",
       title: "Trạng Thái",
-      render: (row: Voucher) => (row.is_active === 1 || row.is_active === "1" ? "Hoạt Động" : "Ngừng Hoạt Động"),
+      render: (row: Voucher) =>
+        row.is_active === 1 || row.is_active === "1"
+          ? "Hoạt Động"
+          : "Ngừng Hoạt Động",
     },
     {
       title: "Thao tác",
       render: (row) => (
         <div className="flex space-x-2">
-          <button
-            className="text-blue-500 hover:underline"
-            onClick={() => handleEdit(row.id)}
-          >
-            Sửa
-          </button>
-          <button
-            className="text-red-500 hover:underline"
-            onClick={() => handleDelete(row.id)}
-          >
-            Xóa
-          </button>
+          <ActionButton
+            label="Sửa"
+            onClick={handleEdit}
+            id={row._id}
+            bgColor="bg-yellow-500"
+          />
+          <ActionButton
+            label="Xóa"
+            onClick={handleDelete}
+            id={row._id}
+            bgColor="bg-red-500"
+          />
         </div>
       ),
     },
@@ -84,11 +102,43 @@ const Vouchers = () => {
         <p className="text-primary text-center">{error}</p>
       ) : (
         <>
-        <Table column={col} data={vouchers} />        
-        {/* <Pagination /> */}
+          <Table column={col} data={vouchers.map(v => ({ ...v, id: v.id }))} />
+          <Pagination
+            currentPage={currentPage}
+            total={totalItems}
+            rowsPerPage={rowsPerPage}
+            onPageChange={(page) => setCurrentPage(page)}
+            onRowsPerPageChange={(rows) => {
+              setRowsPerPage(rows);
+              setCurrentPage(1);
+            }}
+          />
         </>
       )}
-</div>
+
+      <PopupUpdateForm
+        isOpen={isEditOpen}
+        onClose={() => setIsEditOpen(false)}
+        initialData={selectedVoucher as unknown as Record<string, unknown>}
+        fields={[
+          { label: "Mã code", key: "code" },
+          { label: "Mức giảm (%)", key: "discount_type", type: "number" },
+          { label: "Đã dùng", key: "user_count", type: "number" },
+          { label: "Tối đa", key: "max_users", type: "number" },
+          { label: "Ngày bắt đầu", key: "start_date", type: "date" },
+          { label: "Ngày kết thúc", key: "end_date", type: "date" },
+          {
+            label: "Trạng thái",
+            key: "is_active",
+            type: "select",
+            options: [
+              { label: "Hoạt Động", value: "Hoạt Động" },
+              { label: "Ngừng Hoạt Động", value: "Ngừng Hoạt Động" },
+            ],
+          },
+        ]}
+      />
+    </div>
   );
 };
 

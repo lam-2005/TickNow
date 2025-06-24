@@ -31,8 +31,8 @@ const Slideshow = () => {
   }, []);
   const getMovieNow = async () => {
     try {
-
-      const res = await movieService.getMovieList("?status=Đang Chiếu&limit=5");
+      const res = await movieService.getMovieList("?status=1&limit=5");
+      console.log(res);
 
       setData(res?.data.movie);
     } catch (error) {
