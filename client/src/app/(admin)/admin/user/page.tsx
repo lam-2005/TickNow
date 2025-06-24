@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import AddBtn from "@/admin_components/Button/AddBtn";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import OptionTable from "@/admin_components/OptionTable/OptionTable";
@@ -24,11 +24,11 @@ const UserManagement = () => {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
 
-  const fetchUsers = async (page = 1) => {
+  const fetchUsers = useCallback(async (page = 1) => {
     setLoading(true);
     setError(null);
     try {
-      const res = await userService.getUserList(`?limit=5&page=${page}`);
+      const res = await userService.getUserList(`?limit=${rowsPerPage}&page=${page}`);
       const data = res?.data;
       setUsers(data.user || []);
       setTotalItems(data.pagination?.total || 0);
@@ -39,12 +39,12 @@ const UserManagement = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [rowsPerPage]);
 
   useEffect(() => {
     fetchUsers(currentPage);
-  }, [currentPage]);
-
+  }, [fetchUsers, currentPage]);
+  
   const handleEdit = (id: string | number) => {
     const user = users.find((u) => u._id === id);
     if (user) {
@@ -100,7 +100,7 @@ const UserManagement = () => {
         <p className="text-primary text-center">{error}</p>
       ) : (
         <>
-          <Table column={col} data={users} />
+          <Table column={col} data={users.map(u => ({ ...u, id: u._id }))} />
           <Pagination
             currentPage={currentPage}
             total={totalItems}

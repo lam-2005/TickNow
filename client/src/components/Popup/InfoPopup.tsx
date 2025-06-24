@@ -3,6 +3,7 @@ import React from "react";
 import Button from "../Button/Button";
 import Image from "next/image";
 import PopupContainer from "./PopupContainer";
+import env from "@/configs/environment";
 
 export const ItemInfo = ({
   title,
@@ -35,7 +36,7 @@ const InfoPopup = ({
           <div className="relative max-w-[220px] w-full h-full aspect-[2/3] bg-amber-500 overflow-hidden rounded-[10px]">
             <Image
               fill
-              src={`/movies/${info.image as string}`}
+              src={`${env.IMG_API_URL}/movie/${info.image}`}
               alt="Phim"
               sizes="300px"
               loading="lazy"
@@ -50,9 +51,12 @@ const InfoPopup = ({
                   {info.age}+
                 </span>
               </div>
-              <ItemInfo title="Công chiếu:" content={info.date} />
-              <ItemInfo title="Thể loại:" content={info.category} />
-              <ItemInfo title="Thời lượng:" content={`${info.time} phút`} />
+              <ItemInfo title="Công chiếu:" content={info.release_date} />
+              <ItemInfo
+                title="Thể loại:"
+                content={info.genre.map((g) => g.name).join(", ")}
+              />
+              <ItemInfo title="Thời lượng:" content={`${info.duration} phút`} />
               <ItemInfo
                 title="Đạo diễn:"
                 content={info.director || "Đang cập nhật"}
@@ -69,8 +73,11 @@ const InfoPopup = ({
             <Button title="Đặt vé ngay" />
           </div>
         </div>
-        <p className="line-clamp-5 text-justify" title={info.text_summary}>
-          {info.text_summary}
+        <p
+          className="line-clamp-5 text-justify"
+          title={info.description || "Đang cập nhật"}
+        >
+          {info.description || "Đang cập nhật"}
         </p>
       </div>
     </PopupContainer>
@@ -78,4 +85,3 @@ const InfoPopup = ({
 };
 
 export default InfoPopup;
-
