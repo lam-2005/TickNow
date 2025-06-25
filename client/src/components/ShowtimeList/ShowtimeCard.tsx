@@ -1,20 +1,26 @@
 import Link from "next/link";
 import React from "react";
-const TimeScreening = () => (
+const TimeScreening = ({ value }: { value: string }) => (
   <Link
     href={"/booking"}
     className="flex-center py-2 px-4 border-2 border-primary w-fit rounded-[5px] text-sm cursor-pointer hover:bg-primary hover:text-white transition-all"
   >
-    21:00 - 23:00
+    {value}
   </Link>
 );
-export const ShowType = ({ type }: { type: "Phụ đề" | "Lồng tiếng" }) => (
+export const ShowType = ({
+  type,
+  data,
+}: {
+  type: "Phụ đề" | "Lồng tiếng";
+  data: any;
+}) => (
   <div className="flex gap-7.5 items-center">
     <p className="w-25">{type}</p>
     <div className="flex gap-2.5 flex-wrap">
-      <TimeScreening />
-      <TimeScreening />
-      <TimeScreening />
+      {data.showtimes.map((item: any, index: number) => (
+        <TimeScreening key={item.time} value={item.time} />
+      ))}
     </div>
   </div>
 );

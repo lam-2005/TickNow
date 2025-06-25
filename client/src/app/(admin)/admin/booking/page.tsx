@@ -10,6 +10,7 @@ import ActionButton from "@/admin_components/Button/ButtonActions";
 import Pagination from "@/admin_components/Pagination/Pagination";
 import AddPopup from "@/admin_components/Popup/AddPopup";
 import TicketDetailPopup from "@/admin_components/Popup/TicketDetailPopup";
+import AddForm from "@/admin_components/Popup/AddPopup";
 
 const AdminBooking = () => {
   const [tickets, setTickets] = useState<Ticket[]>([]);
@@ -111,10 +112,43 @@ const AdminBooking = () => {
               setCurrentPage(1); // reset lại trang khi thay đổi số dòng
             }}
           />
+
         </>
       )}
 
       {showAddPopup && (
+      <AddForm <Record<string,unknown>>
+        isOpen={showAddPopup}
+        onClose={() => setShowAddPopup(false)}
+        fields={[
+          {label:"Tên khách hàng", key: "movieName", required: true },
+          {label:"Giá vé", key: "price", required: true },
+          {label:"Ghế", key: "seat", required: true },
+          {
+            label: "Trạng thái",
+            key: "status",
+            type: "select",
+            required: true,
+            options: [
+              { label: "Đã thanh toán", value: "1" },
+              { label: "Chưa thanh toán", value: "0" },
+            ],
+          },
+        ]}
+        onSubmit={async () => {
+          try {
+            // await userService.createUser(data);
+            alert("Thêm vé thành công!");
+            setShowAddPopup(false);
+            // fetchUsers(currentPage);
+          } catch (err) {
+            alert("Thêm thất bại!");
+            console.error(err);
+          }
+        }}
+      />
+
+      {/* {showAddPopup && (
         <AddPopup title="Thêm Vé Mới" onClose={() => setShowAddPopup(false)}>
           <form>
             <input type="text" placeholder="Tên khách hàng" className="w-full p-2 border rounded mb-2" />
@@ -126,6 +160,7 @@ const AdminBooking = () => {
           </form>
         </AddPopup>
       )}
+      )} */}
 
       {selectedTicket && (
         <TicketDetailPopup

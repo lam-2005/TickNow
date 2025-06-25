@@ -1,38 +1,48 @@
-import React, { useState } from "react";
-interface ItemOptionType {
-  id: string | number;
-  label: string | number;
-}
+import React from "react";
+import { OptionType } from "./Select";
 
-const ItemOption = ({ id, label }: ItemOptionType) => {
-  const [checked, setChecked] = useState<boolean>(false);
-  const handleChecked = () => setChecked(!checked);
+export const ItemOption = ({ label, id, onClick }: OptionType) => {
   return (
     <div
-      id={id as string}
-      className="flex gap-2.5 items-center  cursor-pointer px-5 py-2.5 hover:bg-foreground hover:text-background"
-      onClick={handleChecked}
+      data-id={id}
+      onClick={onClick}
+      className="flex gap-2.5 items-center cursor-pointer px-5 py-2.5 hover:bg-foreground hover:text-background transition"
     >
       {label}
     </div>
   );
 };
-const Option = ({ label }: { label: string }) => {
+
+interface OptionProps<T> {
+  data: T[];
+  onSelect: (item: T) => void;
+  getOptionLabel: (item: T) => string;
+  getOptionValue: (item: T) => string | number;
+}
+
+function Option<T>({
+  data,
+  onSelect,
+  getOptionLabel,
+  getOptionValue,
+}: OptionProps<T>) {
   return (
     <div
-      className="absolute top-[calc(100%_+_20px)] right-0 bg-background-card w-100 max-h-100 rounded-[10px] shadow-lg shadow-foreground z-1000  text-center
-    after:absolute after:size-5 after:rotate-45 after:bg-background-card after:top-0 after:right-5 after:-translate-y-1/2 select-none
-    "
+      className="absolute top-[calc(100%_+_20px)] right-0 bg-background-card w-[330px] rounded-[10px] shadow-lg shadow-foreground z-50 text-center
+    after:absolute after:size-1 after:border-transparent after:border-b-background-card after:top-0 after:right-5 after:border-[15px]  select-none after:-translate-y-full"
     >
-      <h2 className="p-5">{label}</h2>
-      <hr />
-      <div className="flex flex-col max-h-[300px] h-fit overflow-y-auto">
-        {Array.from({ length: 10 }).map((_, index) => (
-          <ItemOption key={index} id={index} label={`Option ${index}`} />
+      <div className="flex flex-col max-h-[300px] overflow-y-auto">
+        {data.map((item) => (
+          <ItemOption
+            key={getOptionValue(item)}
+            id={getOptionValue(item)}
+            label={getOptionLabel(item)}
+            onClick={() => onSelect(item)}
+          />
         ))}
       </div>
     </div>
   );
-};
+}
 
 export default Option;

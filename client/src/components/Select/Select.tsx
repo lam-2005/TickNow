@@ -1,60 +1,79 @@
 "use client";
 import { useTheme } from "@/hooks/contexts/useTheme";
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { FaChevronDown } from "react-icons/fa6";
+import { RiMapPin2Fill } from "react-icons/ri";
+import Option from "./Option";
 
-export const SelectField = ({
-  icon,
-  label,
-  children,
-  onToggle,
-  isOpen,
-  id,
-  onClose,
-}: {
-  icon: React.ReactNode;
+export interface OptionType {
+  id: string | number;
   label: string;
-  children: React.ReactNode;
-  onToggle: (id: string) => void;
-  isOpen: boolean;
+  onClick?: () => void;
+}
+
+interface SelectFieldProps<T> {
   id: string;
-  onClose: () => void;
-}) => {
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (!target.closest(`[data-dropdown="${id}"]`)) {
-        onClose();
-      }
-    };
+  openId: string | null;
+  setOpenId: (id: string | null) => void;
+  data: T[];
+  getOptionLabel: (item: T) => string;
+  getOptionValue: (item: T) => string | number;
+  defaultSelected?: T | null;
+  placeholder?: string;
+  valueSelect?: (data: any) => void;
+}
 
-    if (isOpen) {
-      window.addEventListener("click", handleClickOutside);
-    }
+export function SelectField<T>({
+  id,
+  openId,
+  setOpenId,
+  data,
+  getOptionLabel,
+  getOptionValue,
+  defaultSelected = null,
+  placeholder = "Chọn một mục",
+  valueSelect,
+}: SelectFieldProps<T>) {
+  const [selected, setSelected] = useState<T | null>(defaultSelected);
+  const isOpen = openId === id;
 
-    return () => {
-      window.removeEventListener("click", handleClickOutside);
-    };
-  }, [isOpen, id, onClose]);
+  const handleSelect = (option: T) => {
+    setSelected(option);
+    setOpenId(null);
+    valueSelect(option);
+  };
+
   return (
-    <div className="relative select-none" data-dropdown={id}>
+    <div className="relative select-none">
       <div
-        className="h-full flex items-center w-[330px] justify-between px-5 gap-5 cursor-pointer"
-        onClick={(e) => {
-          e.stopPropagation();
-          onToggle(id);
-        }}
+        onClick={() => setOpenId(isOpen ? null : id)}
+        className="h-full flex items-center w-[330px] justify-between px-5 gap-5 cursor-pointer rounded-lg py-3"
       >
-        <span className="text-xl">{icon}</span>
-        <span className="line-clamp-1">{label}</span>
+        <span className="text-xl">
+          <RiMapPin2Fill />
+        </span>
+        <span className="line-clamp-1">
+          {selected ? getOptionLabel(selected) : placeholder}
+        </span>
         <span>
-          <FaChevronDown />
+          <FaChevronDown
+            className={`transition-transform ${isOpen ? "rotate-180" : ""}`}
+          />
         </span>
       </div>
-      {isOpen && children}
+
+      {isOpen && (
+        <Option<T>
+          data={data}
+          onSelect={handleSelect}
+          getOptionLabel={getOptionLabel}
+          getOptionValue={getOptionValue}
+        />
+      )}
     </div>
   );
-};
+}
+
 const Select = ({ children }: { children: React.ReactNode }) => {
   const { theme } = useTheme();
 
