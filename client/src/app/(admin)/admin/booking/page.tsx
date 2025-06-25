@@ -5,15 +5,15 @@ import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import OptionTable from "@/admin_components/OptionTable/OptionTable";
 import Table, { Column } from "@/admin_components/Table/Table";
 import { Ticket } from "@/interfaces/ticket.interface";
+import { Ticket, TicketDetail } from "@/interfaces/ticket.interface";
 import * as TicketService from "@/services/ticket.service";
 import ActionButton from "@/admin_components/Button/ButtonActions";
 import Pagination from "@/admin_components/Pagination/Pagination";
-import AddPopup from "@/admin_components/Popup/AddPopup";
 import TicketDetailPopup from "@/admin_components/Popup/TicketDetailPopup";
 import AddForm from "@/admin_components/Popup/AddPopup";
 
 const AdminBooking = () => {
-  const [tickets, setTickets] = useState<Ticket[]>([]);
+  const [tickets, setTickets] = useState<TicketDetail[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -22,7 +22,7 @@ const AdminBooking = () => {
   const [totalItems, setTotalItems] = useState(0);
 
   const [showAddPopup, setShowAddPopup] = useState(false);
-  const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
+  const [selectedTicket, setSelectedTicket] = useState<TicketDetail| null>(null);
 
   const fetchTickets = useCallback(async (page = 1) => {
     setLoading(true);
@@ -49,9 +49,8 @@ const AdminBooking = () => {
     alert(`Hủy vé có ID: ${id}`);
   };
 
-  const columns: Column<Ticket>[] = [
+  const columns: Column<TicketDetail>[] = [
     { key: "userName", title: "Tên khách hàng" },
-    { key: "screeningTime", title: "Giờ chiếu" },
     { key: "price", title: "Giá vé" },
     { key: "type", title: "Trạng thái" },
     {
@@ -116,7 +115,6 @@ const AdminBooking = () => {
         </>
       )}
 
-      {showAddPopup && (
       <AddForm <Record<string,unknown>>
         isOpen={showAddPopup}
         onClose={() => setShowAddPopup(false)}
@@ -159,7 +157,6 @@ const AdminBooking = () => {
             <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Lưu</button>
           </form>
         </AddPopup>
-      )}
       )} */}
 
       {selectedTicket && (
