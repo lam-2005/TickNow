@@ -6,12 +6,18 @@ import OptionTable from "@/admin_components/OptionTable/OptionTable";
 import Table, { Column } from "@/admin_components/Table/Table";
 import { Screening } from "@/interfaces/screening.interface";
 import * as ScreeningService from "@/services/screening.service";
+import AddForm from "@/admin_components/Popup/AddPopup";
+import PopupUpdateForm from "@/admin_components/Popup/UpdateForm";
+import ActionButton from "@/admin_components/Button/ButtonActions";
 
 const AdminScreening = () => {
   const [screenings, setScreenings] = useState<Screening[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const [showAddPopup, setShowAddPopup] = useState(false)
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [selectedScreen, setSelectedScreen] = useState<Screening | null>(null);
   useEffect(() => {
     const fetchScreenings = async () => {
       setLoading(true);
@@ -30,6 +36,12 @@ const AdminScreening = () => {
 
   const handleEdit = (id: string | number) => {
     alert(`Sửa suất chiếu có ID: ${id}`);
+    // alert(`Sửa suất chiếu có ID: ${id}`);
+    const screen = screenings.find((u) => u._id === id);
+    if (screen) {
+      setSelectedScreen(screen);
+      setIsEditOpen(true);
+    }
   };
 
   const handleDelete = (id: string | number) => {
@@ -69,6 +81,19 @@ const AdminScreening = () => {
           >
             Xóa
           </button>
+        <div className="flex gap-2">
+          <ActionButton
+            label="Sửa"
+            onClick={handleEdit}
+            bgColor="bg-yellow-500"
+            id={row._id}
+          />
+            <ActionButton
+            label="Xóa"
+            onClick={handleDelete}
+            bgColor="bg-red-500"
+            id={row._id}
+          />
         </div>
       ),
     },
@@ -78,6 +103,7 @@ const AdminScreening = () => {
     <div className="card">
       <HeadingCard title="Quản lý lịch chiếu">
         <AddBtn />
+        <AddBtn onClick={() => setShowAddPopup(true)} />
       </HeadingCard>
       <OptionTable />
       {error && <p className="text-red-500">{error}</p>}
@@ -86,6 +112,95 @@ const AdminScreening = () => {
       ) : (
         <Table column={columns} data={screenings} />
       )}
+
+      <AddForm <Record<string,unknown>>
+        isOpen={showAddPopup}
+        onClose={() => setShowAddPopup(false)}
+        fields={[
+          {label:"Tên phim", key: "movieName", required: true },
+          {label:"Phòng chiếu", key: "roomCode", required: true },
+          {label:"Giờ bắt đầu", key: "time_start", type:"date",  required: true },
+          {label:"Giờ kết thúc", key: "time_end", type:"date",  required: true },
+          {
+            label: "Trạng thái",
+            key: "status",
+            type: "select",
+            required: true,
+            options: [
+              { label: "Hoạt Động", value: "1" },
+              { label: "Ngừng Hoạt Động", value: "0" },
+            ],
+          },
+          {
+            label: "Loại chiếu",
+            key: "showtype",
+            type: "select",
+            required: true,
+            options: [
+              { label: "Phụ đề", value: "2" },
+              { label: "Thuyết minh", value: "1" },
+              { label: "Lồng tiếng", value: "0" },
+            ],
+          },
+        ]}
+        onSubmit={async () => {
+          try {
+            // await userService.createUser(data);
+            alert("Thêm người dùng thành công!");
+            setShowAddPopup(false);
+            // fetchUsers(currentPage);
+          } catch (err) {
+            alert("Thêm thất bại!");
+            console.error(err);
+          }
+        }}
+      />
+
+      <PopupUpdateForm
+      isOpen={isEditOpen}
+        onClose={() => setIsEditOpen(false)}
+        initialData={selectedScreen as unknown as Record<string, unknown>}
+        fields={[
+          {label:"Tên phim", key: "movieName", },
+          {label:"Phòng chiếu", key: "roomCode", },
+          {label:"Giờ bắt đầu", key: "time_start", type:"date",  },
+          {label:"Giờ kết thúc", key: "time_end", type:"date",  },
+          {
+            label: "Trạng thái",
+            key: "status",
+            type: "select",
+            
+            options: [
+              { label: "Hoạt Động", value: "1" },
+              { label: "Ngừng Hoạt Động", value: "0" },
+            ],
+          },
+          {
+            label: "Loại chiếu",
+            key: "showtype",
+            type: "select",
+            
+            options: [
+              { label: "Phụ đề", value: "2" },
+              { label: "Thuyết minh", value: "1" },
+              { label: "Lồng tiếng", value: "0" },
+            ],
+          },
+        ]}
+
+              onSubmit={async () => {
+          try {
+            // await userService.createUser(data);
+            alert("Thêm người dùng thành công!");
+            setIsEditOpen(false);
+            // fetchUsers(currentPage);
+          } catch (err) {
+            alert("Thêm thất bại!");
+            console.error(err);
+          }
+        }}
+      />
+
     </div>
   );
 };
