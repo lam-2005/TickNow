@@ -4,7 +4,6 @@ import AddBtn from "@/admin_components/Button/AddBtn";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import OptionTable from "@/admin_components/OptionTable/OptionTable";
 import Table, { Column } from "@/admin_components/Table/Table";
-import { Ticket } from "@/interfaces/ticket.interface";
 import { Ticket, TicketDetail } from "@/interfaces/ticket.interface";
 import * as TicketService from "@/services/ticket.service";
 import ActionButton from "@/admin_components/Button/ButtonActions";

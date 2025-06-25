@@ -81,6 +81,7 @@ const AdminScreening = () => {
           >
             Xóa
           </button>
+        /</div>>
         <div className="flex gap-2">
           <ActionButton
             label="Sửa"
