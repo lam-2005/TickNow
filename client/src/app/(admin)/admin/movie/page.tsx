@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import AddBtn from "@/admin_components/Button/AddBtn";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import OptionTable from "@/admin_components/OptionTable/OptionTable";
@@ -9,7 +9,8 @@ import * as movieService from "@/services/movie.service";
 import ActionButton from "@/admin_components/Button/ButtonActions";
 import Pagination from "@/admin_components/Pagination/Pagination";
 import MovieDetailPopup from "@/admin_components/Popup/MovieDetailPopup";
-import PopupUpdateForm from "@/admin_components/Popup/UpdateForm"; // ✅ thêm
+import PopupUpdateForm from "@/admin_components/Popup/UpdateForm";
+import AddForm from "@/admin_components/Popup/AddPopup";
 
 const MovieManagement = () => {
   const [movies, setMovies] = useState<MovieType[]>([]);
@@ -21,32 +22,30 @@ const MovieManagement = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [totalItems, setTotalItems] = useState(0);
 
-  const [isEditOpen, setIsEditOpen] = useState(false); // ✅ thêm
-  const [movieToEdit, setMovieToEdit] = useState<MovieType | null>(null); // ✅ thêm
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [movieToEdit, setMovieToEdit] = useState<MovieType | null>(null);
+  const [showAddPopup, setShowAddPopup] = useState(false);
+
+  const fetchMovies = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await movieService.getMovieList(`?page=${currentPage}&limit=${rowsPerPage}`);
+      const data = res?.data;
+      setMovies(data.movie || []);
+      setCurrentPage(data.pagination?.page || 1);
+      setTotalItems(data.pagination?.total || 0);
+    } catch (error) {
+      console.error("Lỗi khi fetch movies:", error);
+      setError("Không thể tải danh sách phim. Vui lòng thử lại sau.");
+    } finally {
+      setLoading(false);
+    }
+  }, [currentPage, rowsPerPage]);
 
   useEffect(() => {
-    const fetchMovies = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const res = await movieService.getMovieList(
-          `?page=${currentPage}&limit=${rowsPerPage}`
-        );
-        const data = res?.data;
-        console.log("Dữ liệu từ API:", data);
-        setMovies(data.movie || []);
-        setCurrentPage(data.pagination?.page || 1);
-        setTotalItems(data.pagination?.total || 0);
-      } catch (error) {
-        console.error("Lỗi khi fetch movies:", error);
-        setError("Không thể tải danh sách phim. Vui lòng thử lại sau.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchMovies();
-  }, [currentPage, rowsPerPage]);
+  }, [fetchMovies]);
 
   const handleEdit = (id: string | number) => {
     const movie = movies.find((m) => m._id === id);
@@ -85,18 +84,8 @@ const MovieManagement = () => {
       render(row: MovieType) {
         return (
           <div className="flex gap-2">
-            <ActionButton
-              label="Sửa"
-              onClick={handleEdit}
-              bgColor="bg-yellow-500"
-              id={row._id}
-            />
-            <ActionButton
-              label="Xóa"
-              onClick={handleDelete}
-              bgColor="bg-red-500"
-              id={row._id}
-            />
+            <ActionButton label="Sửa" onClick={handleEdit} bgColor="bg-yellow-500" id={row._id} />
+            <ActionButton label="Xóa" onClick={handleDelete} bgColor="bg-red-500" id={row._id} />
           </div>
         );
       },
@@ -121,7 +110,7 @@ const MovieManagement = () => {
   return (
     <div className="card">
       <HeadingCard title="Quản lý Phim Chiếu">
-        <AddBtn />
+        <AddBtn onClick={() => setShowAddPopup(true)} />
       </HeadingCard>
 
       {selectedMovie && (
@@ -150,10 +139,54 @@ const MovieManagement = () => {
         </>
       )}
 
-      {/* ✅ Popup form cập nhật thông tin phim */}
+      <AddForm<Record<string, unknown>>
+        isOpen={showAddPopup}
+        onClose={() => setShowAddPopup(false)}
+        fields={[
+          { label: "Tên phim", key: "name", required: true },
+          { label: "Ngày công chiếu", key: "release_date", type: "date", required: true },
+          { label: "Quốc gia", key: "nation", required: true },
+          { label: "Ngôn ngữ", key: "language", required: true },
+          { label: "Thời lượng (phút)", key: "duration", type: "number", required: true },
+          { label: "Độ tuổi", key: "age", required: true },
+          { label: "Đạo diễn", key: "director", required: true },
+          { label: "Diễn viên", key: "actor", required: true },
+          { label: "Trailer", key: "trailer" },
+          { label: "Hình ảnh", key: "image" },
+          { label: "Banner", key: "banner" },
+          {
+            label: "Trạng thái",
+            key: "status",
+            type: "select",
+            required: true,
+            options: [
+              { label: "Đang Chiếu", value: "1" },
+              { label: "Sắp Chiếu", value: "2" },
+              { label: "Ngừng Chiếu", value: "3" },
+            ],
+          },
+          { label: "Mô tả", key: "description",type:"textarea", rows: 4  },
+        ]}
+        onSubmit={async () => {
+          try {
+            // await movieService.createMovie(data);
+            alert("Thêm phim thành công!");
+            setShowAddPopup(false);
+            setCurrentPage(1);
+            fetchMovies();
+          } catch (error) {
+            console.error("Lỗi thêm phim:", error);
+            alert("Thêm phim thất bại!");
+          }
+        }}
+      />
+
       <PopupUpdateForm
         isOpen={isEditOpen}
-        onClose={() => setIsEditOpen(false)}
+        onClose={() => {
+          setIsEditOpen(false);
+          setMovieToEdit(null);
+        }}
         initialData={movieToEdit as unknown as Record<string, unknown>}
         fields={[
           { label: "Tên phim", key: "name" },
@@ -164,6 +197,7 @@ const MovieManagement = () => {
           { label: "Độ tuổi", key: "age" },
           { label: "Đạo diễn", key: "director" },
           { label: "Diễn viên", key: "actor" },
+          { label: "Trạng thái", key: "status", type: "number" },
           { label: "Đánh giá sao", key: "star", type: "number" },
           { label: "Trailer", key: "trailer" },
           { label: "Hình ảnh", key: "image" },
@@ -172,10 +206,11 @@ const MovieManagement = () => {
         onSubmit={async () => {
           try {
             if (!movieToEdit?._id) return;
-            // await movieService.updateMovie(movieToEdit._id, data); 
+            // await movieService.updateMovie(movieToEdit._id, data);
             alert("Cập nhật phim thành công!");
             setIsEditOpen(false);
             setMovieToEdit(null);
+            fetchMovies();
           } catch (err) {
             console.error("Lỗi cập nhật phim:", err);
             alert("Cập nhật thất bại!");
