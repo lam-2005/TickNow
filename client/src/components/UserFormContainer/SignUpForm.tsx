@@ -2,9 +2,14 @@
 import React, { useState } from "react";
 import Input from "./Input";
 import Button from "../Button/Button";
-import validateSignup, { FieldsType } from "@/utils/validate";
+import validateSignup, {
+  FieldsType,
+  RegisterRequestType,
+} from "@/utils/validate";
 import useTouched from "@/hooks/useTouched";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
+import { signupAPI } from "@/services/user.service";
+import { toast, ToastContainer } from "react-toastify";
 
 const SignUpForm = ({ setOpenForm }: { setOpenForm: () => void }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -21,23 +26,45 @@ const SignUpForm = ({ setOpenForm }: { setOpenForm: () => void }) => {
   } = useTouched();
   const [formData, setFormData] = useState<FieldsType>({
     email: "",
-    fullName: "",
-    dateOfBirth: "",
+    name: "",
+    year: "",
     password: "",
     confirmPassword: "",
     phone: "",
   });
+  const requestBody: RegisterRequestType = {
+    email: formData.email,
+    name: formData.name,
+    year: formData.year,
+    password: formData.password,
+    phone: formData.phone,
+  };
+
   const errors = validateSignup(formData);
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const req = await signupAPI(requestBody);
+      toast.success(`Đăng ký thành công, vui lòng đăng nhập để tiếp tục!`);
+      setFormData({
+        email: "",
+        name: "",
+        year: "",
+        password: "",
+        confirmPassword: "",
+        phone: "",
+      });
+    } catch (error: any) {
+      toast.error(
+        `Đăng ký thất bại: ${error.response?.data?.message || error.message}`
+      );
+    }
+  };
   return (
     <>
+      <ToastContainer theme="colored" />
       <h2 className="text-2xl font-semibold">Đăng ký tài khoản</h2>
-      <form
-        action=""
-        className="w-full space-y-5 mt-6"
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
-      >
+      <form action="" className="w-full space-y-5 mt-6" onSubmit={handleSignup}>
         <div className="space-y-5">
           <Input
             label="Email"
@@ -50,23 +77,21 @@ const SignUpForm = ({ setOpenForm }: { setOpenForm: () => void }) => {
           />
           <Input
             label="Họ và tên"
-            value={formData.fullName}
-            onChange={(e) =>
-              setFormData({ ...formData, fullName: e.target.value })
-            }
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             onBlur={touchedFullName}
-            error={touched.fullName ? errors.fullName : undefined}
+            error={touched.name ? errors.name : undefined}
           />
           <div className="flex gap-5 flex-wrap">
             <Input
               label="Ngày sinh"
               type="date"
-              value={formData.dateOfBirth}
+              value={formData.year}
               onChange={(e) =>
-                setFormData({ ...formData, dateOfBirth: e.target.value })
+                setFormData({ ...formData, year: e.target.value })
               }
               onBlur={touchedDateOfBirth}
-              error={touched.dateOfBirth ? errors.dateOfBirth : undefined}
+              error={touched.year ? errors.year : undefined}
             />
             <Input
               label="Số điện thoại"
@@ -126,7 +151,7 @@ const SignUpForm = ({ setOpenForm }: { setOpenForm: () => void }) => {
           disabled={
             errors.email ||
             errors.password ||
-            errors.fullName ||
+            errors.name ||
             errors.confirmPassword ||
             errors.phone ||
             errors.dateOfBirth

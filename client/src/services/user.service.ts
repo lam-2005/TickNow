@@ -1,5 +1,6 @@
 import { LoginType } from "@/interfaces/user.interface";
 import api from "@/utils/http";
+import { FieldsType } from "@/utils/validate";
 const getUserList = async (param: string = "") => {
   try {
     const res = api.get(`/user${param}`);
@@ -16,4 +17,14 @@ const loginAPI = async (data: LoginType) => {
     throw error || "Đăng nhập không thành công";
   }
 };
-export { getUserList, loginAPI };
+const signupAPI = async (data: FieldsType) => {
+  try {
+    const res = await api.post("/user/register", data);
+    console.log(res);
+
+    return res;
+  } catch (error) {
+    throw error || "Đăng ký không thành công";
+  }
+};
+export { getUserList, loginAPI, signupAPI };

@@ -5,7 +5,10 @@ import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import React, { useState } from "react";
 import useTouched from "@/hooks/useTouched";
 import validateForm from "@/utils/validate";
-import { loginAPI } from "@/services/user.service";
+import { loginUser } from "./authSlice";
+import { useAppDispatch } from "@/hooks/useApp";
+import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
 const LoginForm = ({
   setOpenForm,
   setOpenReset,
@@ -15,6 +18,7 @@ const LoginForm = ({
 }) => {
   const { touched, touchedEmail, touchedPassword } = useTouched();
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [formData, setFormData] = useState<{ email: string; password: string }>(
     {
       email: "",
@@ -25,25 +29,29 @@ const LoginForm = ({
     email: formData.email,
     password: formData.password,
   });
-  const handleLogin = async () => {
+  const dispatch = useAppDispatch();
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+
     try {
-      const res = await loginAPI(formData);
-      console.log("Login successful:", res);
-    } catch (error) {
-      console.error("Đăng nhập thất bại", error);
+      const result = await dispatch(loginUser(formData)).unwrap();
+      toast.success(`Đăng nhập thành công`);
+
+      window.location.reload();
+    } catch (error: any) {
+      toast.error(
+        `Đăng nhập thất bại: ${error.response?.data?.message || error.message}`
+      );
     }
   };
+  if (errorMessage) {
+    console.log("Error:", errorMessage);
+  }
   return (
     <>
+      <ToastContainer theme="colored" />
       <h2 className="text-2xl font-semibold">Đăng nhập vào TichNow</h2>
-      <form
-        action=""
-        className="w-full space-y-5 mt-6"
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleLogin();
-        }}
-      >
+      <form action="" className="w-full space-y-5 mt-6" onSubmit={handleLogin}>
         <div className="space-y-5">
           <Input
             key={"email"}

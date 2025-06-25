@@ -1,12 +1,12 @@
 export type FieldsType = {
   email?: string;
-  fullName?: string;
-  dateOfBirth?: string;
+  name?: string;
+  year?: string;
   phone?: string;
   password?: string;
   confirmPassword?: string;
 };
-
+export type RegisterRequestType = Omit<FieldsType, "confirmPassword">;
 type ErrorsType = {
   [key: string]: string;
 };
@@ -23,12 +23,12 @@ const validateForm = (values: FieldsType): ErrorsType => {
     errors.email = "Email không hợp lệ";
   }
 
-  if (!values.fullName || values.fullName.trim() === "") {
-    errors.fullName = "Họ và tên là bắt buộc";
+  if (!values.name || values.name.trim() === "") {
+    errors.name = "Họ và tên là bắt buộc";
   }
 
-  if (!values.dateOfBirth || values.dateOfBirth.trim() === "") {
-    errors.dateOfBirth = "Ngày sinh là bắt buộc";
+  if (!values.year || values.year.trim() === "") {
+    errors.year = "Ngày sinh là bắt buộc";
   }
 
   if (!values.phone || values.phone.trim() === "") {

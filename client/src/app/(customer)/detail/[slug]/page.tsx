@@ -13,16 +13,15 @@ import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 // import { FaCalendarAlt } from "react-icons/fa";
 // import { RiMapPin2Fill } from "react-icons/ri";
-const CinemaShowtime = () => {
+const CinemaShowtime = ({ data }: { data: any }) => {
   return (
     <div className="space-y-5 bg-background-card rounded-[10px] p-5 w-full">
       <div className="w-full">
-        <h2>TickNow Quận 12 (Thành Phố Hồ Chí Minh)</h2>
+        <h2>{data.name}</h2>
       </div>
       <div className="space-y-5">
-        <p>123 Tô Ký, Phường Trung Mỹ Tây, Quận 12, Thành phố Hồ Chí Minh</p>
-        <ShowType type="Phụ đề" />
-        <ShowType type="Lồng tiếng" />
+        <p>{data.id_location}</p>
+        <ShowType type="Phụ đề" data={data} />
       </div>
     </div>
   );
@@ -32,20 +31,22 @@ const Movie = () => {
   const { trailerPopup, openTrailer, closeTrailer } = usePopup();
   const { theme } = useTheme();
   const [movie, setMovie] = useState<MovieType | null>(null);
+  const [showtime, setShowtime] = useState<any>([]);
 
   const { slug } = useParams();
 
   useEffect(() => {
     const getData = async () => {
-      const res = await getMovieList(`/${slug}`);
-      // console.log(res);
+      const res = await getMovieList(`/${slug}?date=2025-06-15`);
+      console.log(res);
 
-      setMovie(res?.data);
+      setMovie(res?.data.movie);
+      setShowtime(res?.data);
     };
     getData();
   }, [slug]);
   if (!movie) return <p>Loading...</p>;
-  // console.log(movie);
+  console.log(showtime);
   const date = new Date(movie.release_date);
   const formatDate = !isNaN(date.getTime())
     ? date.toLocaleDateString("vi-VN")
@@ -156,8 +157,13 @@ const Movie = () => {
         <div className="flex-column items-center gap-7.5">
           <h1>Danh sách rạp</h1>
           <div className="flex-column gap-10 max-w-[1000px] w-full">
-            <CinemaShowtime />
-            <CinemaShowtime />
+            {!showtime ? (
+              <p>Loading...</p>
+            ) : (
+              showtime.cinemas.map((cinema: any) => (
+                <CinemaShowtime key={cinema.id} data={cinema} />
+              ))
+            )}
           </div>
         </div>
       </div>
