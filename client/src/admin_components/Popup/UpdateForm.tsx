@@ -51,7 +51,7 @@ const PopupUpdateForm = <T extends Record<string, unknown>>({
 
   return (
     <div
-      className="fixed inset-0 bg-black/40 flex justify-center z-50 overflow-y-auto pt-24 px-4"
+      className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 overflow-y-auto p-4"
       id="popup-overlay"
       onClick={(e) => {
         if ((e.target as HTMLElement).id === "popup-overlay") onClose();
