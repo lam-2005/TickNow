@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
-type FieldType = "text" | "number" | "date" | "select" | "password";
+type FieldType = "text" | "number" | "date" | "select" | "password" | "textarea";
 
 type Field<T> = {
   label: string;
@@ -9,6 +9,7 @@ type Field<T> = {
   type?: FieldType;
   options?: { label: string; value: string }[];
   required?: boolean;
+  rows?: number;
 };
 
 type AddFormProps<T> = {
@@ -71,7 +72,7 @@ const AddForm = <T extends Record<string, unknown>>({
 
   return (
     <div
-      className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 overflow-y-auto p-4"
+      className="fixed inset-0 bg-black/40 flex justify-center z-50 overflow-y-auto pt-24 px-4"
       id="add-popup-overlay"
       onClick={(e) => {
         if ((e.target as HTMLElement).id === "add-popup-overlay") onClose();
@@ -87,17 +88,18 @@ const AddForm = <T extends Record<string, unknown>>({
         >
           ✕
         </button>
-        <div className="p-6 max-h-[80vh] overflow-y-auto">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">
-            ➕ Thêm Mới
-          </h2>
+        <div className="p-6 max-h-[85vh] overflow-y-auto">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">➕ Thêm Mới</h2>
           <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             {fields.map((field) => {
               const inputType = field.type || "text";
               const error = errors[field.key as string];
 
               return (
-                <div key={String(field.key)}>
+                <div
+                  key={String(field.key)}
+                  className={inputType === "textarea" ? "md:col-span-2" : ""}
+                >
                   <label className="block text-gray-700 font-medium mb-1">
                     {field.label}
                     {field.required && <span className="text-red-500 ml-1">*</span>}
@@ -118,6 +120,14 @@ const AddForm = <T extends Record<string, unknown>>({
                         </option>
                       ))}
                     </select>
+                  ) : inputType === "textarea" ? (
+                    <textarea
+                      rows={field.rows || 4}
+                      className={`w-full border rounded-md px-3 py-2 resize-none ${
+                        error ? "border-red-500" : "border-gray-300"
+                      }`}
+                      onChange={(e) => handleChange(field.key, e.target.value)}
+                    />
                   ) : (
                     <input
                       type={inputType}
