@@ -13,14 +13,16 @@ export const ShowType = ({
   data,
 }: {
   type: "Phụ đề" | "Lồng tiếng";
-  data: any;
+  data?: any;
 }) => (
   <div className="flex gap-7.5 items-center">
     <p className="w-25">{type}</p>
     <div className="flex gap-2.5 flex-wrap">
-      {data.showtimes.map((item: any, index: number) => (
+      {/* {data.showtimes.map((item: any, index: number) => (
         <TimeScreening key={item.time} value={item.time} />
-      ))}
+      ))} */}
+      <TimeScreening value="10:00" />
+      <TimeScreening value="12:00" />
     </div>
   </div>
 );

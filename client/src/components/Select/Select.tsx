@@ -13,6 +13,7 @@ export interface OptionType {
 
 interface SelectFieldProps<T> {
   id: string;
+  icon?: React.ReactNode;
   openId: string | null;
   setOpenId: (id: string | null) => void;
   data: T[];
@@ -25,6 +26,7 @@ interface SelectFieldProps<T> {
 
 export function SelectField<T>({
   id,
+  icon,
   openId,
   setOpenId,
   data,
@@ -49,9 +51,7 @@ export function SelectField<T>({
         onClick={() => setOpenId(isOpen ? null : id)}
         className="h-full flex items-center w-[330px] justify-between px-5 gap-5 cursor-pointer rounded-lg py-3"
       >
-        <span className="text-xl">
-          <RiMapPin2Fill />
-        </span>
+        <span className="text-xl">{icon}</span>
         <span className="line-clamp-1">
           {selected ? getOptionLabel(selected) : placeholder}
         </span>

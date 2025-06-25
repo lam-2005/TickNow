@@ -4,7 +4,7 @@ import Movie from "@/components/Movie/Movie";
 import MovieLoading from "@/components/Loading/MovieLoading";
 import BackgroundPage from "@/components/BackgroundPage/BackgroundPage";
 import Select, { SelectField } from "@/components/Select/Select";
-import { FaSortAlphaDown } from "react-icons/fa";
+import { FaCalendarAlt, FaSortAlphaDown } from "react-icons/fa";
 import { MovieType } from "@/interfaces/movie.interface";
 import * as movieService from "@/services/movie.service";
 import { Screening } from "@/interfaces/screening.interface";
@@ -13,7 +13,8 @@ import { getScreeningList } from "@/services/screening.service";
 import { getCinemaList } from "@/services/cinema.service";
 import { getGenreList } from "@/services/genre.service";
 import Genre from "@/interfaces/genre.interface";
-import { log } from "console";
+import { BiCategoryAlt } from "react-icons/bi";
+import { IoMdPin } from "react-icons/io";
 const MovieSection = () => {
   const [activeTab, setActiveTab] = useState<"now" | "coming">("now");
   const [movies, setMovies] = useState<MovieType[]>([]);
@@ -159,6 +160,7 @@ const MovieSection = () => {
           <div className=" absolute z-20 bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2">
             <Select>
               <SelectField
+                icon={<FaCalendarAlt />}
                 id="date"
                 openId={openId}
                 setOpenId={setOpenId}
@@ -170,6 +172,7 @@ const MovieSection = () => {
                 valueSelect={handleGetDate}
               />
               <SelectField
+                icon={<BiCategoryAlt />}
                 id="genres"
                 openId={openId}
                 setOpenId={setOpenId}
@@ -181,6 +184,7 @@ const MovieSection = () => {
                 valueSelect={handleGetGenre}
               />
               <SelectField
+                icon={<IoMdPin />}
                 id="cinema"
                 openId={openId}
                 setOpenId={setOpenId}

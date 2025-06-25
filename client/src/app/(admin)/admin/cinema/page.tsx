@@ -40,7 +40,9 @@ const AdminCinema = () => {
     const fetchCinemas = async () => {
       try {
         const res = await getCinemaList();
-        setCinemas(res || []);
+        console.log(res);
+
+        setCinemas(res.cinema || []);
       } catch (err) {
         console.error("Lỗi khi fetch cinema:", err);
         setError("Không thể tải danh sách rạp.");
@@ -108,7 +110,8 @@ const AdminCinema = () => {
     {
       key: "location",
       title: "Địa chỉ",
-      render: (row: Cinema) => row.location?.deatil_location || "Chưa có địa chỉ",
+      render: (row: Cinema) =>
+        row.location?.deatil_location || "Chưa có địa chỉ",
     },
     {
       key: "image",
@@ -130,10 +133,16 @@ const AdminCinema = () => {
       title: "Thao tác",
       render: (row: Cinema) => (
         <div className="flex gap-3">
-          <button className="text-blue-500 hover:underline" onClick={() => handleEdit(row._id)}>
+          <button
+            className="text-blue-500 hover:underline"
+            onClick={() => handleEdit(row._id)}
+          >
             Sửa
           </button>
-          <button className="text-red-500 hover:underline" onClick={() => handleDelete(row._id)}>
+          <button
+            className="text-red-500 hover:underline"
+            onClick={() => handleDelete(row._id)}
+          >
             Xóa
           </button>
         </div>

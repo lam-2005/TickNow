@@ -12,6 +12,7 @@ import MovieLoading from "@/components/Loading/MovieLoading";
 import MovieContainer from "@/components/Movie/MovieContainer";
 import OfferLoading from "@/components/Loading/OfferLoading";
 import * as movieService from "@/services/movie.service";
+import RatePopup from "@/components/Popup/RatePopup";
 export default function Home() {
   const [loadingNow, setLoadingNow] = useState<boolean>(true);
   const [loadingComingSoon, setLoadingComingSoon] = useState<boolean>(true);
