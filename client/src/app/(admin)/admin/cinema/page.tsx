@@ -6,41 +6,36 @@ import AddBtn from "@/admin_components/Button/AddBtn";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import OptionTable from "@/admin_components/OptionTable/OptionTable";
 import Table, { Column } from "@/admin_components/Table/Table";
-import CinemaPopup from "@/admin_components/Popup/CinemaPopup";
-
 import { getCinemaList } from "@/services/cinema.service";
 import { Cinema } from "@/interfaces/cinema.interface";
 
-// ✅ Hàm giả lập upload ảnh lên Firebase (bạn cần thay thế bằng Firebase thật)
+import PopupUpdateForm from "@/admin_components/Popup/UpdateForm";
+import AddForm from "@/admin_components/Popup/AddPopup";
+import ActionButton from "@/admin_components/Button/ButtonActions";
+
 const uploadToFirebase = async (file: File): Promise<string> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      const mockUrl = URL.createObjectURL(file); // chỉ demo, không dùng khi deploy thật
+      const mockUrl = URL.createObjectURL(file);
       resolve(mockUrl);
-    }, 1000); // giả lập thời gian upload
+    }, 1000);
   });
 };
-
-interface CinemaForm {
-  name: string;
-  location: string;
-  image: string | File;
-}
 
 const AdminCinema = () => {
   const [cinemas, setCinemas] = useState<Cinema[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const [isPopupOpen, setPopupOpen] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
-  const [editData, setEditData] = useState<CinemaForm | null>(null);
+  const [showAddPopup, setShowAddPopup] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [selectedCinema, setSelectedCinema] = useState<Record<string, unknown> | null>(null);
 
   useEffect(() => {
     const fetchCinemas = async () => {
       try {
         const res = await getCinemaList();
-        setCinemas(res || []);
+        setCinemas(res.cinema || []);
       } catch (err) {
         console.error("Lỗi khi fetch cinema:", err);
         setError("Không thể tải danh sách rạp.");
@@ -48,25 +43,19 @@ const AdminCinema = () => {
         setLoading(false);
       }
     };
+
     fetchCinemas();
   }, []);
-
-  const handleOpenAdd = () => {
-    setIsEdit(false);
-    setEditData(null);
-    setPopupOpen(true);
-  };
 
   const handleEdit = (id: string | number) => {
     const data = cinemas.find((c) => c._id === id);
     if (data) {
-      setEditData({
+      setSelectedCinema({
         name: data.name,
         location: data.location?.deatil_location || "",
         image: data.image || "",
       });
-      setIsEdit(true);
-      setPopupOpen(true);
+      setIsEditOpen(true);
     }
   };
 
@@ -74,50 +63,21 @@ const AdminCinema = () => {
     alert(`Xóa rạp ID: ${id}`);
   };
 
-  const handleSubmit = async (formData: CinemaForm) => {
-    try {
-      let imageUrl = formData.image;
-
-      // Nếu người dùng chọn ảnh mới (dạng File), upload trước
-      if (formData.image instanceof File) {
-        imageUrl = await uploadToFirebase(formData.image);
-      }
-
-      const payload = {
-        name: formData.name,
-        location: formData.location,
-        image: imageUrl,
-      };
-
-      if (isEdit) {
-        console.log("Cập nhật rạp:", payload);
-        // gọi API cập nhật tại đây
-      } else {
-        console.log("Thêm rạp mới:", payload);
-        // gọi API thêm mới tại đây
-      }
-
-      setPopupOpen(false);
-    } catch (err) {
-      console.error("Lỗi khi xử lý submit:", err);
-    }
-  };
-
   const columns: Column<Cinema>[] = [
     { key: "name", title: "Tên rạp" },
     {
       key: "location",
       title: "Địa chỉ",
-      render: (row: Cinema) => row.location?.deatil_location || "Chưa có địa chỉ",
+      render: (row) => row.location?.deatil_location || "Chưa có địa chỉ",
     },
     {
       key: "image",
       title: "Hình ảnh",
-      render: (row: Cinema) =>
+      render: (row) =>
         row.image ? (
           <Image
             src={row.image}
-            alt={`Logo ${row.name}`}
+            alt={`Ảnh ${row.name}`}
             width={80}
             height={50}
             className="rounded border object-cover"
@@ -128,14 +88,10 @@ const AdminCinema = () => {
     },
     {
       title: "Thao tác",
-      render: (row: Cinema) => (
-        <div className="flex gap-3">
-          <button className="text-blue-500 hover:underline" onClick={() => handleEdit(row._id)}>
-            Sửa
-          </button>
-          <button className="text-red-500 hover:underline" onClick={() => handleDelete(row._id)}>
-            Xóa
-          </button>
+      render: (row) => (
+        <div className="flex gap-2">
+          <ActionButton label="Sửa" onClick={handleEdit} bgColor="bg-yellow-500" id={row._id} />
+          <ActionButton label="Xoá" onClick={handleDelete} bgColor="bg-red-500" id={row._id} />
         </div>
       ),
     },
@@ -144,25 +100,77 @@ const AdminCinema = () => {
   return (
     <div className="card">
       <HeadingCard title="Quản Lý Rạp Chiếu">
-        <AddBtn onClick={handleOpenAdd} />
+        <AddBtn onClick={() => setShowAddPopup(true)} />
       </HeadingCard>
 
       <OptionTable />
 
+      {error && <p className="text-red-500">{error}</p>}
       {loading ? (
         <p className="text-center">Đang tải dữ liệu...</p>
-      ) : error ? (
-        <p className="text-center text-red-500">{error}</p>
       ) : (
         <Table column={columns} data={cinemas} />
       )}
-
-      <CinemaPopup
-        isOpen={isPopupOpen}
-        onClose={() => setPopupOpen(false)}
-        onSubmit={handleSubmit}
-        title={isEdit ? "Sửa Rạp Chiếu" : "Thêm Rạp Chiếu Mới"}
-        defaultValues={editData || undefined}
+      <AddForm<Record<string, unknown>>
+        isOpen={showAddPopup}
+        onClose={() => setShowAddPopup(false)}
+        fields={[
+          { label: "Tên rạp", key: "name", required: true },
+          { label: "Hình ảnh", key: "image", required: true },
+          { label: "Địa chỉ chi tiết", key: "location", required: true },
+        ]}
+        onSubmit={async (data) => {
+          try {
+            let imageUrl = data.image;
+            if (data.image instanceof File) {
+              imageUrl = await uploadToFirebase(data.image);
+            }
+            const payload = {
+              name: data.name,
+              image: imageUrl,
+              location: {
+                deatil_location: data.location,
+              },
+            };
+            console.log("Thêm rạp mới:", payload);
+            alert("Thêm thành công!");
+            setShowAddPopup(false);
+          } catch (err) {
+            console.error("Thêm thất bại:", err);
+            alert("Thêm thất bại!");
+          }
+        }}
+      />
+      <PopupUpdateForm
+        isOpen={isEditOpen}
+        onClose={() => setIsEditOpen(false)}
+        initialData={selectedCinema as Record<string, unknown>}
+        fields={[
+          { label: "Tên rạp", key: "name" },
+          { label: "Hình ảnh", key: "image" },
+          { label: "Địa chỉ chi tiết", key: "location" },
+        ]}
+        onSubmit={async (data) => {
+          try {
+            let imageUrl = data.image;
+            if (data.image instanceof File) {
+              imageUrl = await uploadToFirebase(data.image);
+            }
+            const payload = {
+              name: data.name,
+              image: imageUrl,
+              location: {
+                deatil_location: data.location,
+              },
+            };
+            console.log("Cập nhật rạp:", payload);
+            alert("Cập nhật thành công!");
+            setIsEditOpen(false);
+          } catch (err) {
+            console.error("Lỗi cập nhật:", err);
+            alert("Cập nhật thất bại!");
+          }
+        }}
       />
     </div>
   );
