@@ -1,11 +1,11 @@
+import CommentContainer from "@/components/DetailPageComponents/CommentComponent/CommentContainer";
+import MovieInfo from "@/components/DetailPageComponents/MovieInfo";
+import ShowtimeSelect from "@/components/DetailPageComponents/ShowtimeUI/ShowtimeSelect";
 import { Screening } from "@/interfaces/screening.interface";
 import { getLocationList } from "@/services/cinema.service";
 import { getMovieList } from "@/services/movie.service";
 import { getScreeningList } from "@/services/screening.service";
 import React from "react";
-import CommentContainer from "./CommentComponent/CommentContainer";
-import MovieInfo from "./MovieInfo";
-import ShowtimeSelect from "./ShowtimeUI/ShowtimeSelect";
 
 const Movie = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;

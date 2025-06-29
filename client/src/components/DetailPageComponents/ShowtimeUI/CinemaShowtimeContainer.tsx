@@ -1,7 +1,6 @@
-import React from "react";
-
 import { CinemaShowtimeType } from "@/interfaces/screening.interface";
 import CinemaShowtime from "./CinemaShowtime";
+
 type Props = {
   data: CinemaShowtimeType[];
   loading: boolean;

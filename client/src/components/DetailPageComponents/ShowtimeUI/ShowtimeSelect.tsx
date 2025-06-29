@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import { RiMapPin2Fill } from "react-icons/ri";
 import CinemaShowtimeContainer from "./CinemaShowtimeContainer";
+
 type ListDataSelect = {
   showtimes: { value: string; label: string }[];
   locations: Location[];
