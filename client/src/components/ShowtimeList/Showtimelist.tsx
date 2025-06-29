@@ -1,5 +1,7 @@
 import React from "react";
-import ShowtimeCard, { ShowtimeItem, ShowType } from "./ShowtimeCard";
+import ShowtimeCard from "./ShowtimeCard";
+import ShowtimeItem from "./ShowtimeItem";
+import ShowType from "./ShowType";
 
 const Showtimelist = () => {
   return (

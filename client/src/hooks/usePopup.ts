@@ -25,7 +25,7 @@ const usePopup = () => {
     closeTicket,
     openRating,
     closeRating,
-    ratingPopup
+    ratingPopup,
   };
 };
 

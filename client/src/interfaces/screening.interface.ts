@@ -23,3 +23,19 @@ export interface Screening {
   // Tuỳ chọn nếu có thể mở rộng
   movieName?: string; // Sử dụng khi bạn join từ collection movie
 }
+export type CinemaShowtimeType = {
+  id: string;
+  location: {
+    id_location: string;
+    deatil_location: string;
+    location: string;
+  };
+  name: string;
+  showtimes: [
+    {
+      id_room: string;
+      time: string;
+      showtype: string;
+    }
+  ];
+};

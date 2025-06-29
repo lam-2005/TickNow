@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import Movie from "@/components/Movie/Movie";
 import MovieLoading from "@/components/Loading/MovieLoading";
 import BackgroundPage from "@/components/BackgroundPage/BackgroundPage";
-import Select, { SelectField } from "@/components/Select/Select";
+// import Select, { SelectField } from "@/components/Select/Select";
 import { FaCalendarAlt, FaSortAlphaDown } from "react-icons/fa";
 import { MovieType } from "@/interfaces/movie.interface";
 import * as movieService from "@/services/movie.service";
@@ -158,7 +158,7 @@ const MovieSection = () => {
       <BackgroundPage image="background_movie.jpg" title="Phim chiếu rạp">
         {activeTab === "now" && (
           <div className=" absolute z-20 bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2">
-            <Select>
+            {/* <Select>
               <SelectField
                 icon={<FaCalendarAlt />}
                 id="date"
@@ -195,7 +195,7 @@ const MovieSection = () => {
                 placeholder="Chọn rạp chiếu"
                 valueSelect={handleGetCinema}
               />
-            </Select>
+            </Select> */}
           </div>
         )}
       </BackgroundPage>

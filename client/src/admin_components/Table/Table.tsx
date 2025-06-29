@@ -10,9 +10,13 @@ export interface Column<T> {
 const Table = <T extends { _id: string | number }>({
   column,
   data,
+  currentPage,
+  rowsPerPage,
 }: {
   column: Column<T>[];
   data: T[];
+  currentPage?: number;
+  rowsPerPage?: number;
 }) => {
   return (
     <>
@@ -34,7 +38,11 @@ const Table = <T extends { _id: string | number }>({
         >
           {data.map((row, index) => (
             <tr key={row._id} className="">
-              <td>{index + 1}</td>
+              <td>
+                {currentPage && rowsPerPage
+                  ? (currentPage - 1) * rowsPerPage + index + 1
+                  : index + 1}
+              </td>
               {column.map((col) => (
                 <td key={col.title} className="">
                   {col.render
@@ -48,6 +56,7 @@ const Table = <T extends { _id: string | number }>({
           ))}
         </tbody>
       </table>
+      <div className="w-full h-px bg-border-container"></div>
     </>
   );
 };

@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "@/components/UserFormContainer/authSlice";
-
+import roomSlice from "./slices/roomSlice";
 const store = configureStore({
   reducer: {
     auth: authReducer,
+    roomManagement: roomSlice,
   },
 });
 
