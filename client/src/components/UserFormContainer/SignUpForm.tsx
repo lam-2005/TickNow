@@ -9,9 +9,10 @@ import validateSignup, {
 import useTouched from "@/hooks/useTouched";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { signupAPI } from "@/services/user.service";
-import { toast, ToastContainer } from "react-toastify";
+import { useToast } from "@/hooks/contexts/useToast";
 
 const SignUpForm = ({ setOpenForm }: { setOpenForm: () => void }) => {
+  const toast = useToast();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] =
     useState<boolean>(false);
@@ -44,25 +45,17 @@ const SignUpForm = ({ setOpenForm }: { setOpenForm: () => void }) => {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const req = await signupAPI(requestBody);
-      toast.success(`Đăng ký thành công, vui lòng đăng nhập để tiếp tục!`);
-      setFormData({
-        email: "",
-        name: "",
-        year: "",
-        password: "",
-        confirmPassword: "",
-        phone: "",
-      });
-    } catch (error: any) {
-      toast.error(
-        `Đăng ký thất bại: ${error.response?.data?.message || error.message}`
+      await signupAPI(requestBody);
+      toast.createToastSuccess(
+        "Đăng ký thành công, vui lòng đăng nhập để tiếp tục!"
       );
+      setOpenForm();
+    } catch (error) {
+      toast.createToastError(`Đăng ký thất bại: ${error}`);
     }
   };
   return (
     <>
-      <ToastContainer theme="colored" />
       <h2 className="text-2xl font-semibold">Đăng ký tài khoản</h2>
       <form action="" className="w-full space-y-5 mt-6" onSubmit={handleSignup}>
         <div className="space-y-5">

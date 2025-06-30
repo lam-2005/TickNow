@@ -10,7 +10,6 @@
 // }
 
 export interface Screening {
-  id: string; // MongoDB ObjectId dạng string
   _id: string; // MongoDB ObjectId dạng string
   id_room: string;
   id_movie: string;
@@ -33,7 +32,7 @@ export type CinemaShowtimeType = {
   name: string;
   showtimes: [
     {
-      id_room: string;
+      id: string;
       time: string;
       showtype: string;
     }

@@ -6,6 +6,7 @@ import Footer from "@/components/Footer/Footer";
 import ThemeLayout from "@/components/ThemeLayout/ThemeLayout";
 import AppProvider from "@/hooks/contexts/AppProvider";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
+import { ToastContainer } from "react-toastify";
 const beVietNamPro = Be_Vietnam_Pro({
   weight: ["300", "700"],
   variable: "--font-be-vietnam-pro-sans",
@@ -36,7 +37,10 @@ export default function RootLayout({
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <AppProvider>
             <ThemeLayout>
+              <ToastContainer theme="colored" />
+
               <Header />
+
               <main className="">{children}</main>
               <Footer />
             </ThemeLayout>

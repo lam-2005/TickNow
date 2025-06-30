@@ -8,8 +8,8 @@ import { BiChevronDown } from "react-icons/bi";
 type SelectProps<T> = {
   leftIcon: React.ReactNode;
   data: T[];
-  valueKey: keyof T;
-  labelKey: keyof T;
+  getValue: (item: T) => string;
+  getLabel: (item: T) => string;
   placeholder?: string;
   defaultValue?: string;
   onChange?: (value: string) => void;
@@ -18,8 +18,8 @@ type SelectProps<T> = {
 export const SelectComponent = <T,>({
   leftIcon,
   data,
-  valueKey,
-  labelKey,
+  getValue,
+  getLabel,
   placeholder,
   defaultValue,
   onChange,
@@ -70,8 +70,8 @@ export const SelectComponent = <T,>({
         >
           {placeholder && <MenuItem value="">{placeholder}</MenuItem>}
           {data.map((item, idx) => (
-            <MenuItem key={idx} value={item[valueKey] as string}>
-              {item[labelKey] as string}
+            <MenuItem key={idx} value={getValue(item)}>
+              {getLabel(item)}
             </MenuItem>
           ))}
         </Select>
