@@ -15,7 +15,7 @@ const AdminScreening = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const [showAddPopup, setShowAddPopup] = useState(false)
+  const [showAddPopup, setShowAddPopup] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [selectedScreen, setSelectedScreen] = useState<Screening | null>(null);
   useEffect(() => {
@@ -89,7 +89,7 @@ const AdminScreening = () => {
             bgColor="bg-yellow-500"
             id={row._id}
           />
-            <ActionButton
+          <ActionButton
             label="Xóa"
             onClick={handleDelete}
             bgColor="bg-red-500"
@@ -114,14 +114,24 @@ const AdminScreening = () => {
         <Table column={columns} data={screenings} />
       )}
 
-      <AddForm <Record<string,unknown>>
+      <AddForm<Record<string, unknown>>
         isOpen={showAddPopup}
         onClose={() => setShowAddPopup(false)}
         fields={[
-          {label:"Tên phim", key: "movieName", required: true },
-          {label:"Phòng chiếu", key: "roomCode", required: true },
-          {label:"Giờ bắt đầu", key: "time_start", type:"date",  required: true },
-          {label:"Giờ kết thúc", key: "time_end", type:"date",  required: true },
+          { label: "Tên phim", key: "movieName", required: true },
+          { label: "Phòng chiếu", key: "roomCode", required: true },
+          {
+            label: "Giờ bắt đầu",
+            key: "time_start",
+            type: "date",
+            required: true,
+          },
+          {
+            label: "Giờ kết thúc",
+            key: "time_end",
+            type: "date",
+            required: true,
+          },
           {
             label: "Trạng thái",
             key: "status",
@@ -158,19 +168,19 @@ const AdminScreening = () => {
       />
 
       <PopupUpdateForm
-      isOpen={isEditOpen}
+        isOpen={isEditOpen}
         onClose={() => setIsEditOpen(false)}
         initialData={selectedScreen as unknown as Record<string, unknown>}
         fields={[
-          {label:"Tên phim", key: "movieName", },
-          {label:"Phòng chiếu", key: "roomCode", },
-          {label:"Giờ bắt đầu", key: "time_start", type:"date",  },
-          {label:"Giờ kết thúc", key: "time_end", type:"date",  },
+          { label: "Tên phim", key: "movieName" },
+          { label: "Phòng chiếu", key: "roomCode" },
+          { label: "Giờ bắt đầu", key: "time_start", type: "date" },
+          { label: "Giờ kết thúc", key: "time_end", type: "date" },
           {
             label: "Trạng thái",
             key: "status",
             type: "select",
-            
+
             options: [
               { label: "Hoạt Động", value: "1" },
               { label: "Ngừng Hoạt Động", value: "0" },
@@ -180,7 +190,7 @@ const AdminScreening = () => {
             label: "Loại chiếu",
             key: "showtype",
             type: "select",
-            
+
             options: [
               { label: "Phụ đề", value: "2" },
               { label: "Thuyết minh", value: "1" },
@@ -188,8 +198,7 @@ const AdminScreening = () => {
             ],
           },
         ]}
-
-              onSubmit={async () => {
+        onSubmit={async () => {
           try {
             // await userService.createUser(data);
             alert("Thêm người dùng thành công!");
@@ -201,7 +210,6 @@ const AdminScreening = () => {
           }
         }}
       />
-
     </div>
   );
 };

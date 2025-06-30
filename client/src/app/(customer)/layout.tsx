@@ -3,11 +3,9 @@ import { Be_Vietnam_Pro, Oswald } from "next/font/google";
 import "@/globals.css";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
-import AOSConfig from "@/configs/aos.config";
 import ThemeLayout from "@/components/ThemeLayout/ThemeLayout";
 import AppProvider from "@/hooks/contexts/AppProvider";
-// import { usePathname } from "next/navigation";
-
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 const beVietNamPro = Be_Vietnam_Pro({
   weight: ["300", "700"],
   variable: "--font-be-vietnam-pro-sans",
@@ -35,14 +33,15 @@ export default function RootLayout({
       <body
         className={`${beVietNamPro.variable} ${oswald.variable} antialiased`}
       >
-        <AppProvider>
-          <ThemeLayout>
-            <AOSConfig />
-            <Header />
-            <main className="">{children}</main>
-            <Footer />
-          </ThemeLayout>
-        </AppProvider>
+        <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+          <AppProvider>
+            <ThemeLayout>
+              <Header />
+              <main className="">{children}</main>
+              <Footer />
+            </ThemeLayout>
+          </AppProvider>
+        </AppRouterCacheProvider>
       </body>
     </html>
   );

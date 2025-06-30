@@ -9,6 +9,7 @@ import { Voucher } from "@/interfaces/vouchers.interface";
 import ActionButton from "@/admin_components/Button/ButtonActions";
 import Pagination from "@/admin_components/Pagination/Pagination";
 import PopupUpdateForm from "@/admin_components/Popup/UpdateForm";
+import AddForm from "@/admin_components/Popup/AddPopup";
 
 const Vouchers = () => {
   const [vouchers, setVouchers] = useState<Voucher[]>([]);
@@ -19,21 +20,21 @@ const Vouchers = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [totalItems, setTotalItems] = useState(0);
 
-  const [isEditOpen, setIsEditOpen] = useState(false); // ⬅️ thêm mới
-  const [selectedVoucher, setSelectedVoucher] = useState<Voucher | null>(null); // ⬅️ thêm mới
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isAddOpen, setIsAddOpen] = useState(false);
+  const [selectedVoucher, setSelectedVoucher] = useState<Voucher | null>(null);
 
   const fetchVoucher = useCallback(async (page = 1) => {
     setLoading(true);
     setError(null);
     try {
       const res = await voucherService.getVoucher(`?limit=${rowsPerPage}&page=${page}`);
-      console.log("Dữ liệu từ API:", res?.data.voucher);
       setVouchers(res?.data.voucher || []);
       setTotalItems(res?.data.pagination?.total || 0);
       setCurrentPage(res?.data.pagination?.page || 1);
-    } catch (error) {
-      console.error("Lỗi khi fetch voucher: ", error);
-      setError("Không thể tải danh sách vouchers. Vui lòng thử lại sau.");
+    } catch (error: unknown) {
+      console.error("Lỗi khi fetch voucher:", error);
+      setError("Không thể tải danh sách vouchers.");
     } finally {
       setLoading(false);
     }
@@ -55,24 +56,22 @@ const Vouchers = () => {
     alert(`Xóa voucher ID: ${id}`);
   };
 
-  const col: Column<Voucher>[] = [
+  const columns: Column<Voucher>[] = [
     { key: "code", title: "Mã code" },
-    { key: "discount_type", title: "Mức giảm giá (%)" },
-    { key: "max_users", title: "Số lượng đã dùng" },
+    { key: "discount_type", title: "Mức giảm (%)" },
+    { key: "max_users", title: "Số lượng tối đa" },
     { key: "start_date", title: "Ngày bắt đầu" },
     { key: "end_date", title: "Ngày kết thúc" },
     {
       key: "is_active",
       title: "Trạng Thái",
-      render: (row: Voucher) =>
-        row.is_active === 1 || row.is_active === "1"
-          ? "Hoạt Động"
-          : "Ngừng Hoạt Động",
+      render: (row) =>
+        row.is_active === 1 || row.is_active === "1" ? "Hoạt Động" : "Ngừng Hoạt Động",
     },
     {
       title: "Thao tác",
       render: (row) => (
-        <div className="flex space-x-2">
+        <div className="flex gap-2">
           <ActionButton
             label="Sửa"
             onClick={handleEdit}
@@ -93,16 +92,17 @@ const Vouchers = () => {
   return (
     <div className="card">
       <HeadingCard title="Quản Lý Voucher">
-        <AddBtn />
+        <AddBtn onClick={() => setIsAddOpen(true)} />
       </HeadingCard>
       <OptionTable />
+
       {loading ? (
         <p className="text-center">Đang tải dữ liệu...</p>
       ) : error ? (
         <p className="text-primary text-center">{error}</p>
       ) : (
         <>
-          <Table column={col} data={vouchers.map(v => ({ ...v, id: v.id }))} />
+          <Table column={columns} data={vouchers} />
           <Pagination
             currentPage={currentPage}
             total={totalItems}
@@ -116,6 +116,45 @@ const Vouchers = () => {
         </>
       )}
 
+      {/* Popup Thêm */}
+      <AddForm<Record<string, unknown>>
+        isOpen={isAddOpen}
+        onClose={() => setIsAddOpen(false)}
+        fields={[
+          { label: "Mã code", key: "code", required: true },
+          { label: "Mức giảm (%)", key: "discount_type", type: "number", required: true },
+          { label: "Số lượng tối đa", key: "max_users", type: "number", required: true },
+          { label: "Ngày bắt đầu", key: "start_date", type: "date", required: true },
+          { label: "Ngày kết thúc", key: "end_date", type: "date", required: true },
+          {
+            label: "Trạng thái",
+            key: "is_active",
+            type: "select",
+            required: true,
+            options: [
+              { label: "Hoạt Động", value: "1" },
+              { label: "Ngừng Hoạt Động", value: "0" },
+            ],
+          },
+        ]}
+        onSubmit={async () => {
+          try {
+            alert("Thêm voucher thành công!");
+            setIsAddOpen(false);
+            fetchVoucher(currentPage);
+          } catch (error: unknown) {
+            if (error instanceof Error) {
+              alert("Thêm thất bại: " + error.message);
+              console.error(error);
+            } else {
+              alert("Thêm thất bại!");
+              console.error("Lỗi không xác định:", error);
+            }
+          }
+        }}
+      />
+
+      {/* Popup Sửa */}
       <PopupUpdateForm
         isOpen={isEditOpen}
         onClose={() => setIsEditOpen(false)}
@@ -132,11 +171,26 @@ const Vouchers = () => {
             key: "is_active",
             type: "select",
             options: [
-              { label: "Hoạt Động", value: "Hoạt Động" },
-              { label: "Ngừng Hoạt Động", value: "Ngừng Hoạt Động" },
+              { label: "Hoạt Động", value: "1" },
+              { label: "Ngừng Hoạt Động", value: "0" },
             ],
           },
         ]}
+        onSubmit={async () => {
+          try {
+            alert("Cập nhật voucher thành công!");
+            setIsEditOpen(false);
+            fetchVoucher(currentPage);
+          } catch (error: unknown) {
+            if (error instanceof Error) {
+              alert("Cập nhật thất bại: " + error.message);
+              console.error(error);
+            } else {
+              alert("Cập nhật thất bại!");
+              console.error("Lỗi không xác định:", error);
+            }
+          }
+        }}
       />
     </div>
   );

@@ -8,21 +8,32 @@ import { LinkNavbarType } from "@/interfaces/navigation.interface";
 import { FiSearch } from "react-icons/fi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdClose } from "react-icons/io";
-import { FaUser } from "react-icons/fa";
+import { FaUser, FaUserCircle } from "react-icons/fa";
 import MenuDropDown from "./MenuDropDown";
 import UserFormContainer from "../UserFormContainer/UserFormContainer";
-import ThemeToggle from "../Button/ThemeToggle";
 import SearchPopup from "../Popup/SearchPopup";
+import { useRouter } from "next/navigation";
+import { logout } from "../UserFormContainer/authSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {
   const pathname = usePathname();
   const [openMenuDropDown, setOpenMenuDropDown] = useState(false);
   const [openUserFormContainer, setOpenUserFormContainer] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { user, token } = useSelector((state: any) => state.auth);
+  console.log({ user, token });
 
-  const isTransparentHeader = pathname === "/" || pathname.startsWith("/detail");
+  const handleLogout = () => {
+    dispatch(logout());
+    router.push("/");
+  };
+
+  const isTransparentHeader =
+    pathname === "/" || pathname.startsWith("/detail");
   const [searchText, setSearchText] = useState<string | "">("");
-
 
   const headerClass = isTransparentHeader
     ? "min-[480px]:bg-gradient-to-b from-[rgba(0,0,0,.7)] via-[rgba(0,0,0,.2)] to-transparent absolute z-999 top-0 max-[480px]:sticky max-[480px]:bg-background-card min-[480px]:[&_.color-icon]:text-white"
@@ -41,7 +52,9 @@ const Header = () => {
   return (
     <header className={`${headerClass} w-full transition-colors duration-300`}>
       {openUserFormContainer && (
-        <UserFormContainer setOpenUserFormContainer={() => setOpenUserFormContainer(false)} />
+        <UserFormContainer
+          setOpenUserFormContainer={() => setOpenUserFormContainer(false)}
+        />
       )}
 
       <MenuDropDown openMenuDropDown={openMenuDropDown} />
@@ -115,25 +128,62 @@ const Header = () => {
               </div>
             )}
           </form>
-
-          <button
-            onClick={() => setOpenUserFormContainer(true)}
-            className={`hidden lg:flex flex-col items-center gap-[3px] hover:[&_span]:text-primary`}
-          >
-            <span
-              className={`block font-semibold text-2xl transition-colors duration-500 ${textColorClass}`}
+          {token ? (
+            <div className="relative group">
+              <div className="flex-column items-center gap-1">
+                <div className="flex-center">
+                  <FaUserCircle className="text-3xl" />
+                </div>
+                <div
+                  className={`${
+                    isTransparentHeader ? "text-white " : "text-foreground"
+                  } text-nowrap line-clamp-1 font-bold text-sm`}
+                >
+                  {user}
+                </div>
+              </div>
+              <div
+                className="bg-background-card absolute top-[calc(100%_+_15px)] right-0 after:absolute after:size-1 after:border-[10px] after:border-transparent after:border-b-background-card after:top-0 after:-translate-y-full after:right-5 before:absolute
+              before:w-full before:h-5 before:bg-transparent rounded-[10px] shadow-lg before:top-0 before:right-0 before:-translate-y-full hidden group-hover:block "
+              >
+                <div
+                  className="px-5 py-2.5 text-nowrap hover:bg-background hover:text-primary rounded-t-[10px] cursor-pointer"
+                  onClick={() => router.push("/profile")}
+                >
+                  Xem thông tin
+                </div>
+                <div
+                  className="px-5 py-2.5 text-nowrap hover:bg-background hover:text-primary rounded-b-[10px] cursor-pointer"
+                  onClick={handleLogout}
+                >
+                  Đăng xuất
+                </div>
+              </div>
+            </div>
+          ) : (
+            <button
+              onClick={() => setOpenUserFormContainer(true)}
+              className={`hidden lg:flex flex-col items-center gap-[3px] hover:[&_span]:text-primary`}
             >
-              <FaUser />
-            </span>
-          </button>
+              <span
+                className={`block font-semibold text-2xl transition-colors duration-500 ${textColorClass}`}
+              >
+                <FaUser />
+              </span>
+            </button>
+          )}
 
-          <ThemeToggle />
+          {/* <ThemeToggle /> */}
 
           <button
             className="lg:hidden relative z-1001"
             onClick={() => setOpenMenuDropDown(!openMenuDropDown)}
           >
-            <span className={`color-icon text-icon text-2xl ${openMenuDropDown ? "text-white" : ""}`}>
+            <span
+              className={`color-icon text-icon text-2xl ${
+                openMenuDropDown ? "text-white" : ""
+              }`}
+            >
               {openMenuDropDown ? <IoMdClose /> : <GiHamburgerMenu />}
             </span>
           </button>

@@ -1,8 +1,8 @@
 import { useState } from "react";
 interface TouchedType {
   email?: boolean;
-  fullName?: boolean;
-  dateOfBirth?: boolean;
+  name?: boolean;
+  year?: boolean;
   password?: boolean;
   confirmPassword?: boolean;
   phone?: boolean;
@@ -10,16 +10,15 @@ interface TouchedType {
 const useTouched = () => {
   const [touched, setTouched] = useState<TouchedType>({
     email: false,
-    fullName: false,
-    dateOfBirth: false,
+    name: false,
+    year: false,
     password: false,
     confirmPassword: false,
     phone: false,
   });
   const touchedEmail = () => setTouched({ ...touched, email: true });
-  const touchedFullName = () => setTouched({ ...touched, fullName: true });
-  const touchedDateOfBirth = () =>
-    setTouched({ ...touched, dateOfBirth: true });
+  const touchedFullName = () => setTouched({ ...touched, name: true });
+  const touchedDateOfBirth = () => setTouched({ ...touched, year: true });
   const touchedPassword = () => setTouched({ ...touched, password: true });
   const touchedConfirmPassword = () =>
     setTouched({ ...touched, confirmPassword: true });

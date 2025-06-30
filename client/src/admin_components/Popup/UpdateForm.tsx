@@ -67,7 +67,7 @@ const PopupUpdateForm = <T extends Record<string, unknown>>({
         >
           ✕
         </button>
-        <div className="p-6 max-h-[80vh] overflow-y-auto">
+        <div className="p-6 max-h-[85vh] overflow-y-auto">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">
             ✏️ Cập nhật thông tin
           </h2>

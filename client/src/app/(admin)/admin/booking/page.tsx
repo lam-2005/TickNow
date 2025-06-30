@@ -23,22 +23,27 @@ const AdminBooking = () => {
   const [showAddPopup, setShowAddPopup] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState<TicketDetail| null>(null);
 
-  const fetchTickets = useCallback(async (page = 1) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await TicketService.getTicketList(`?limit=${rowsPerPage}&page=${page}`);
-      const data = res?.data;
-      setTickets(data.ticket || []);
-      setTotalItems(data.pagination?.total || 0);
-      setCurrentPage(data.pagination?.page || 1);
-    } catch (error) {
-      console.error("Lỗi khi gọi API:", error);
-      setError("Không thể tải danh sách đặt vé.");
-    } finally {
-      setLoading(false);
-    }
-  }, [rowsPerPage]);
+  const fetchTickets = useCallback(
+    async (page = 1) => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await TicketService.getTicketList(
+          `?limit=${rowsPerPage}&page=${page}`
+        );
+        const data = res?.data;
+        setTickets(data.ticket || []);
+        setTotalItems(data.pagination?.total || 0);
+        setCurrentPage(data.pagination?.page || 1);
+      } catch (error) {
+        console.error("Lỗi khi gọi API:", error);
+        setError("Không thể tải danh sách đặt vé.");
+      } finally {
+        setLoading(false);
+      }
+    },
+    [rowsPerPage]
+  );
 
   useEffect(() => {
     fetchTickets(currentPage);
@@ -99,7 +104,10 @@ const AdminBooking = () => {
         <p className="text-red-500 text-center">{error}</p>
       ) : (
         <>
-          <Table column={columns} data={tickets.map(t => ({ ...t, id: t._id }))} />
+          <Table
+            column={columns}
+            data={tickets.map((t) => ({ ...t, id: t._id }))}
+          />
           <Pagination
             currentPage={currentPage}
             total={totalItems}
@@ -110,7 +118,6 @@ const AdminBooking = () => {
               setCurrentPage(1); // reset lại trang khi thay đổi số dòng
             }}
           />
-
         </>
       )}
 
