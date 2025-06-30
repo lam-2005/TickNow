@@ -5,8 +5,6 @@ import SliderList from "./Slider";
 const getMovieNow = async () => {
   try {
     const res = await movieService.getMovieList("?status=1&limit=5");
-    console.log(res);
-
     return res?.data.movie;
   } catch (error) {
     console.error("Fetch movies failed:", error);

@@ -11,7 +11,6 @@ import * as movieService from "@/services/movie.service";
 const getMovieNow = async () => {
   try {
     const res = await movieService.getMovieList("?status=1&limit=10");
-    console.log(res);
     return res?.data.movie;
   } catch (error) {
     console.error("Fetch movie failed:", error);

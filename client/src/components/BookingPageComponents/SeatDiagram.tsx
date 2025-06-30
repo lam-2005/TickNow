@@ -1,6 +1,7 @@
-import handleBooking, { RoomType } from "@/utils/handleBooking";
 import React from "react";
 import Seat from "./Seat";
+import { RoomType } from "@/interfaces/room.interface";
+import handleBooking from "@/utils/handleBooking";
 
 const SeatDiagram = ({ roomLayout }: { roomLayout: RoomType }) => {
   const { layout, selectedSeat } = handleBooking(roomLayout);

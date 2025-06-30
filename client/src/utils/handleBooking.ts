@@ -1,17 +1,4 @@
-type Diagram = {
-  row: number;
-  colunm: number;
-  element_remove: { [key: string]: number[] };
-  double_Chair: { [key: string]: number[] };
-  element_selected: { [key: string]: number[] };
-  element_selecting: { [key: string]: number[] };
-};
-export type RoomType = {
-  id: number | string | undefined;
-  code_room: number;
-  id_thear: number;
-  diagram: Diagram;
-};
+import { RoomType } from "@/interfaces/room.interface";
 
 export default function handleBooking(roomLayout: RoomType) {
   const room = roomLayout.diagram;

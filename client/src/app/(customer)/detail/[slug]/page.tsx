@@ -1,7 +1,6 @@
 import CommentContainer from "@/components/DetailPageComponents/CommentComponent/CommentContainer";
 import MovieInfo from "@/components/DetailPageComponents/MovieInfo";
 import ShowtimeSelect from "@/components/DetailPageComponents/ShowtimeUI/ShowtimeSelect";
-import { Screening } from "@/interfaces/screening.interface";
 import { getLocationList } from "@/services/cinema.service";
 import { getMovieList } from "@/services/movie.service";
 import { getScreeningList } from "@/services/screening.service";
@@ -21,21 +20,6 @@ const Movie = async ({ params }: { params: Promise<{ slug: string }> }) => {
     }
   };
   const showtimes = await fetchShowtimes();
-  const getDate = [
-    ...new Set(showtimes.map((item: Screening) => item.date)),
-  ].map((date) => {
-    const d = new Date(date as string);
-    const weekday = d.toLocaleDateString("vi-VN", { weekday: "long" });
-    const day = d.getDate().toString().padStart(2, "0");
-    const month = (d.getMonth() + 1).toString().padStart(2, "0");
-    const year = d.getFullYear();
-
-    const label = `${weekday}, ${day}/${month}/${year}`;
-    return {
-      value: d.toISOString().split("T")[0],
-      label: label,
-    };
-  });
 
   // dữ liệu rạp
 
@@ -48,13 +32,14 @@ const Movie = async ({ params }: { params: Promise<{ slug: string }> }) => {
     }
   };
   const locations = await fetchLocation();
+  console.log(locations);
 
   return (
     <div>
       <MovieInfo movie={movie} />
       <div className="container mt-10 space-y-10">
         <ShowtimeSelect
-          listData={{ showtimes: getDate, locations: locations }}
+          listData={{ showtimes: showtimes, locations: locations }}
           slug={slug}
         />
         <CommentContainer />

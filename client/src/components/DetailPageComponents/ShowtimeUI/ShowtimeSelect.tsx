@@ -1,7 +1,10 @@
 "use client";
 import SelectContainer, { SelectComponent } from "@/components/Select/Select";
 import { Location } from "@/interfaces/cinema.interface";
-import { CinemaShowtimeType } from "@/interfaces/screening.interface";
+import {
+  CinemaShowtimeType,
+  Screening,
+} from "@/interfaces/screening.interface";
 import { getMovieList } from "@/services/movie.service";
 import React, { useEffect, useState } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
@@ -9,7 +12,7 @@ import { RiMapPin2Fill } from "react-icons/ri";
 import CinemaShowtimeContainer from "./CinemaShowtimeContainer";
 
 type ListDataSelect = {
-  showtimes: { value: string; label: string }[];
+  showtimes: Screening[];
   locations: Location[];
 };
 
@@ -19,7 +22,24 @@ type ShowtimeSelectTypes = {
 };
 const ShowtimeSelect = ({ listData, slug }: ShowtimeSelectTypes) => {
   const { showtimes, locations } = listData;
-  const [selectedDate, setSelectedDate] = useState(showtimes[0].value);
+
+  const getDate: { value: string; label: string }[] = [
+    ...new Set(showtimes.map((item) => item.date)),
+  ].map((date) => {
+    const d = new Date(date as string);
+    const weekday = d.toLocaleDateString("vi-VN", { weekday: "long" });
+    const day = d.getDate().toString().padStart(2, "0");
+    const month = (d.getMonth() + 1).toString().padStart(2, "0");
+    const year = d.getFullYear();
+
+    const label = `${weekday}, ${day}/${month}/${year}`;
+    return {
+      value: d.toISOString().split("T")[0],
+      label: label,
+    };
+  });
+
+  const [selectedDate, setSelectedDate] = useState(getDate[0].value);
   const [selectedLocation, setSelectedLocation] = useState(locations[0]._id);
   const [dataCinemaShowtimes, setDataCinemaShowtimes] = useState<
     CinemaShowtimeType[]
@@ -48,18 +68,18 @@ const ShowtimeSelect = ({ listData, slug }: ShowtimeSelectTypes) => {
         <SelectContainer>
           <SelectComponent
             leftIcon={<FaCalendarAlt className="text-foreground" size={20} />}
-            labelKey={"label"}
-            data={showtimes}
-            defaultValue={showtimes[0].value}
-            valueKey={"value"}
+            getLabel={(item) => item.label}
+            data={getDate}
+            defaultValue={getDate[0].value}
+            getValue={(item) => item.value}
             onChange={(date) => setSelectedDate(date)}
           />
           <SelectComponent
             leftIcon={<RiMapPin2Fill className="text-foreground" size={20} />}
-            labelKey={"name"}
+            getLabel={(item) => item.name}
             data={locations}
             defaultValue={locations[0]._id}
-            valueKey={"_id"}
+            getValue={(item) => item._id}
             onChange={(location) => setSelectedLocation(location)}
           />
         </SelectContainer>

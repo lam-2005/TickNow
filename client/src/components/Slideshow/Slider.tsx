@@ -93,7 +93,8 @@ const SliderList = ({ data }: { data: Promise<MovieType[]> }) => {
               fill
               sizes="100vw"
               className="object-cover"
-              loading="lazy"
+              loading={i !== 0 ? "lazy" : undefined}
+              priority={i === 0}
             />
           </div>
           <div className="w-full h-full absolute top-0 left-0 brightness-40 backdrop-blur-[0px] z-1"></div>

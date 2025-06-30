@@ -43,7 +43,11 @@ const UserFormContainer = ({
           />
         </div>
         {form === "login" && (
-          <LoginForm setOpenForm={openSignUp} setOpenReset={openReset} />
+          <LoginForm
+            setOpenForm={openSignUp}
+            setOpenReset={openReset}
+            closeForm={setOpenUserFormContainer}
+          />
         )}
         {form === "signup" && <SignUpForm setOpenForm={openLogin} />}
         {form === "reset" && <ResetPasswordForm setOpenForm={openSignUp} />}

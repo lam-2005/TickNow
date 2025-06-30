@@ -1,55 +1,52 @@
-"use client";
 import Button from "../Button/Button";
 import Input from "./Input";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import React, { useState } from "react";
 import useTouched from "@/hooks/useTouched";
 import validateForm from "@/utils/validate";
-import { loginUser } from "./authSlice";
-import { useAppDispatch } from "@/hooks/useApp";
-import { useRouter } from "next/navigation";
-import { ToastContainer, toast } from "react-toastify";
+import { loginUser } from "@/utils/redux/slices/authSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/utils/redux/store";
+import { useToast } from "@/hooks/contexts/useToast";
 const LoginForm = ({
+  closeForm,
   setOpenForm,
   setOpenReset,
 }: {
   setOpenForm: () => void;
   setOpenReset: () => void;
+  closeForm: () => void;
 }) => {
+  const { createToastError, createToastSuccess } = useToast();
   const { touched, touchedEmail, touchedPassword } = useTouched();
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [formData, setFormData] = useState<{ email: string; password: string }>(
     {
       email: "",
       password: "",
     }
   );
+
+  const dispatch = useDispatch<AppDispatch>();
   const errors = validateForm({
     email: formData.email,
     password: formData.password,
   });
-  const dispatch = useAppDispatch();
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const result = await dispatch(loginUser(formData)).unwrap();
-      toast.success(`Đăng nhập thành công`);
-
-      window.location.reload();
-    } catch (error: any) {
-      toast.error(
-        `Đăng nhập thất bại: ${error.response?.data?.message || error.message}`
-      );
+      await dispatch(loginUser(formData)).unwrap();
+      createToastSuccess("Đăng nhập thành công");
+      closeForm();
+    } catch (err) {
+      createToastError(`Đăng nhập thất bại: ${err}`);
+      console.error(err);
     }
   };
-  if (errorMessage) {
-    console.log("Error:", errorMessage);
-  }
+
   return (
     <>
-      <ToastContainer theme="colored" />
       <h2 className="text-2xl font-semibold">Đăng nhập vào TichNow</h2>
       <form action="" className="w-full space-y-5 mt-6" onSubmit={handleLogin}>
         <div className="space-y-5">

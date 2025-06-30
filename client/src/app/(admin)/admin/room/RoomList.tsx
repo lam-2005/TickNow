@@ -4,24 +4,37 @@ import Table, { Column } from "@/admin_components/Table/Table";
 import usePanigation from "@/hooks/usePanigation";
 import { RoomType } from "@/interfaces/room.interface";
 import dataRoom from "@/utils/redux/selectors/roomSelector";
-import { fetchRooms } from "@/utils/redux/slices/roomSlice";
+import { fetchRooms, setInitialRooms } from "@/utils/redux/slices/roomSlice";
 import { AppDispatch } from "@/utils/redux/store";
-import React, { useEffect } from "react";
+import React, { use, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-const RoomList = () => {
+type InitDataType = {
+  rooms: RoomType[];
+  total: number;
+  currentPage: number;
+  totalPages: number;
+};
+const RoomList = ({ initData }: { initData: Promise<InitDataType> }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const initialData = use(initData);
+  const isFirstLoad = useRef(true);
 
   // lay selector
-  const { currentPage, status, data, error, total, totalPages } =
+  const { currentPage, loading, data, error, total, totalPages } =
     useSelector(dataRoom);
-
   // hook phan trang
-  const { page, changePage, changeRowPerPage, rowsPerPage } =
-    usePanigation(currentPage);
-
+  const { page, changePage, changeRowPerPage, rowsPerPage } = usePanigation(
+    initialData.currentPage
+  );
+  useEffect(() => {
+    dispatch(setInitialRooms(initialData));
+  }, [dispatch, initialData]);
   // render
   useEffect(() => {
+    if (isFirstLoad.current) {
+      isFirstLoad.current = false;
+      return;
+    }
     dispatch(fetchRooms({ limit: rowsPerPage, page: page }));
   }, [dispatch, rowsPerPage, page]);
 
@@ -49,24 +62,21 @@ const RoomList = () => {
       },
     },
   ];
+
+  if (loading) return <p className="text-center">Đang tải dữ liệu...</p>;
+
+  if (error) return <p className="text-center text-red-500">{error}</p>;
+
   return (
     <>
-      {status === "loading" && (
-        <p className="text-center">Đang tải dữ liệu...</p>
-      )}
-      {status === "failed" && (
-        <p className="text-center text-red-500">{error}</p>
-      )}
-      {status === "succeeded" && (
-        <>
-          <Table
-            column={col}
-            data={data}
-            currentPage={currentPage}
-            rowsPerPage={rowsPerPage}
-          />
-        </>
-      )}
+      {
+        <Table
+          column={col}
+          data={data}
+          currentPage={currentPage}
+          rowsPerPage={rowsPerPage}
+        />
+      }
       {total >= rowsPerPage && (
         <Pagination
           currentPage={currentPage}

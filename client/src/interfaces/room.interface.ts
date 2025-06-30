@@ -2,7 +2,7 @@ export type RoomType = {
   _id: string;
   cinema: string;
   code_room: string;
-  id_thear: string;
+  id_cinema: string;
   diagram: {
     row: number;
     colunm: number;

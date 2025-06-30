@@ -1,14 +1,14 @@
 "use client";
+import reduxInitStateDefault from "@/configs/reduxInitStateDefault";
 import { loginAPI } from "@/services/user.service";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (data: { email: string; password: string }, thunkAPI) => {
     try {
       const response = await loginAPI(data);
       return response;
-    } catch (error: any) {
+    } catch (error: unknown) {
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -25,8 +25,7 @@ const authSlice = createSlice({
   initialState: {
     user: user,
     token: token,
-    loading: false,
-    error: null as string | null,
+    ...reduxInitStateDefault,
   },
   reducers: {
     logout: (state) => {
@@ -44,14 +43,19 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.data.user;
-        state.token = action.payload.data.token;
-        localStorage.setItem("token", action.payload.data.token);
-        localStorage.setItem("user", JSON.stringify(action.payload.data.user));
+        if (action.payload && action.payload.data) {
+          state.user = action.payload.data.user;
+          state.token = action.payload.data.token;
+          localStorage.setItem("token", action.payload.data.token);
+          localStorage.setItem(
+            "user",
+            JSON.stringify(action.payload.data.user)
+          );
+        }
       })
-      .addCase(loginUser.rejected, (state, action: any) => {
+      .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload?.message || "Login failed";
+        state.error = action.payload as string;
       });
   },
 });

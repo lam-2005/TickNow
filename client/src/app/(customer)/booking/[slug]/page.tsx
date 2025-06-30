@@ -1,31 +1,29 @@
-"use client";
-import StageBooking from "@/components/BookingPageComponents/StageBooking";
-import Booking from "@/components/BookingPageComponents/Stages/Booking";
-import Payment from "@/components/BookingPageComponents/Stages/Payment";
-import { useStage } from "@/hooks/contexts/useStage";
-import { getRooom } from "@/services/room.service";
-import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import BookingPageContainer from "@/components/BookingPageComponents/BookingPageContainer";
+import { getScreeningList } from "@/services/screening.service";
+import React from "react";
 
-const BookingPage = () => {
-  const { stage } = useStage();
-  const [movie, setMovie] = useState<MovieType | null>(null);
-  const [showtime, setShowtime] = useState<any>([]);
+const BookingPage = async ({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) => {
+  const { slug } = await params;
+  const res = await getScreeningList(`/${slug}`);
 
-  const { slug } = useParams();
+  const data = res.data;
+  const fetchShowtimes = async () => {
+    try {
+      const res = await getScreeningList();
+      return res.data;
+    } catch (error) {
+      console.error("Lỗi khi tải suất chiếu:", error);
+    }
+  };
+  const showtimes = await fetchShowtimes();
 
-  useEffect(() => {
-    const getData = async () => {
-      const res = await getRooom(`/${slug}`);
-      console.log(res);
-    };
-    getData();
-  }, [slug]);
   return (
-    <div className="container space-y-[50px] mt-10">
-      <StageBooking currentStage={stage} />
-      {stage === 1 && <Booking />}
-      {stage === 2 && <Payment />}
+    <div className="container flex-column gap-[50px] mt-10">
+      <BookingPageContainer data={data} showtimes={showtimes} />
     </div>
   );
 };
