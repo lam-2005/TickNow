@@ -71,13 +71,13 @@ const AdminScreening = () => {
         <div className="flex space-x-2">
           <button
             className="text-blue-500 hover:underline"
-            onClick={() => handleEdit(row.id)}
+            onClick={() => handleEdit(row._id)}
           >
             Sửa
           </button>
           <button
             className="text-red-500 hover:underline"
-            onClick={() => handleDelete(row.id)}
+            onClick={() => handleDelete(row._id)}
           >
             Xóa
           </button>
