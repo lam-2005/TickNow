@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro, Oswald } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/admin_components/Navbar/Navbar";
-import Header from "@/admin_components/Header/Header";
+import ClientLayout from "@/components/ClientLayout";
 
 const beVietNamPro = Be_Vietnam_Pro({
   weight: ["300", "700"],
@@ -26,17 +25,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
+  return(
     <html lang="vi">
       <body
         className={`${beVietNamPro.variable} ${oswald.variable} antialiased `}
       >
-        <Navbar />
-        <main className="w-full">
-          <Header />
-          {children}
-        </main>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
-  );
+  ) 
 }

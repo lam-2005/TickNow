@@ -9,6 +9,7 @@ export interface Cinema {
   name: string;
   image: string;
   location: Location;
+  status: string;
 }
 
 

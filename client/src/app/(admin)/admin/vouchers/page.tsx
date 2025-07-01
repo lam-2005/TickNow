@@ -1,59 +1,88 @@
 "use client";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import AddBtn from "@/admin_components/Button/AddBtn";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import OptionTable from "@/admin_components/OptionTable/OptionTable";
 import Table, { Column } from "@/admin_components/Table/Table";
-import * as voucherService from "@/services/vouchers.service";
 import { Voucher } from "@/interfaces/vouchers.interface";
 import ActionButton from "@/admin_components/Button/ButtonActions";
 import Pagination from "@/admin_components/Pagination/Pagination";
 import PopupUpdateForm from "@/admin_components/Popup/UpdateForm";
 import AddForm from "@/admin_components/Popup/AddPopup";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchVouchers, addVoucher, updateVoucher } from "@/utils/redux/slices/voucherSlice";
+import { voucherDataSelector, voucherStatusSelector, voucherErrorSelector, voucherTotalSelector } from "@/utils/redux/selectors/selectorVoucher";
 
 const Vouchers = () => {
-  const [vouchers, setVouchers] = useState<Voucher[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const dispatch = useDispatch();
+  const voucherData = useSelector(voucherDataSelector);
+  const voucherStatusApi = useSelector(voucherStatusSelector);
+  const voucherError = useSelector(voucherErrorSelector);
+  const voucherTotal = useSelector(voucherTotalSelector);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [totalItems, setTotalItems] = useState(0);
 
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [selectedVoucher, setSelectedVoucher] = useState<Voucher | null>(null);
 
-  const fetchVoucher = useCallback(async (page = 1) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await voucherService.getVoucher(`?limit=${rowsPerPage}&page=${page}`);
-      setVouchers(res?.data.voucher || []);
-      setTotalItems(res?.data.pagination?.total || 0);
-      setCurrentPage(res?.data.pagination?.page || 1);
-    } catch (error: unknown) {
-      console.error("Lỗi khi fetch voucher:", error);
-      setError("Không thể tải danh sách vouchers.");
-    } finally {
-      setLoading(false);
-    }
-  }, [rowsPerPage]);
-
   useEffect(() => {
-    fetchVoucher(currentPage);
-  }, [fetchVoucher, currentPage]);
+    dispatch(fetchVouchers({rowsPerPage, currentPage}));
+  }, [rowsPerPage, currentPage, dispatch]);
 
-  const handleEdit = (id: string | number) => {
-    const voucher = vouchers.find((v) => v._id === id);
-    if (voucher) {
-      setSelectedVoucher(voucher);
-      setIsEditOpen(true);
+  const handleAdd = async (data: Record<string, unknown>) => {
+    const parseData = {
+      ...data,
+      start_date: parseDate(data.start_date as string),
+      end_date: parseDate(data.end_date as string),
+    }
+
+    try {
+      await dispatch(addVoucher({ formData: parseData })).unwrap();
+      dispatch(fetchVouchers({rowsPerPage, currentPage}));
+    } catch (error: any) {
+      alert(`❌ Thất bại: ${error.message}`);
+    }
+  }
+
+  const onOpenEdit = (id: string | number) => {
+    const voucher = voucherData.find((v: Voucher) => v._id === id);
+    if (!voucher) {
+      alert("Voucher không tìm thấy");
+      return;
+    }
+
+    setSelectedVoucher(voucher);
+    setIsEditOpen(true);
+  };
+
+  const parseDate = (dateString: string): string => {
+     const date = new Date(dateString);
+    const yyyy = date.getUTCFullYear();
+    const mm = String(date.getUTCMonth() + 1).padStart(2, "0");
+    const dd = String(date.getUTCDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  const handleEdit = async (data: Record<string, unknown>) => {
+    const parseData = {
+      ...data,
+      start_date: parseDate(data.start_date as string),
+      end_date: parseDate(data.end_date as string),
+      id: data._id,
+    }
+
+    try {
+      await dispatch(updateVoucher({ formData: parseData })).unwrap();
+      dispatch(fetchVouchers({rowsPerPage, currentPage}));
+    } catch (error: any) {
+      alert(`❌ Thất bại: ${error.message}`);
     }
   };
 
-  const handleDelete = (id: string | number) => {
-    alert(`Xóa voucher ID: ${id}`);
+  const handleDelete = (data: Record<string, unknown>) => {
+    console.log(data)
   };
 
   const columns: Column<Voucher>[] = [
@@ -74,7 +103,7 @@ const Vouchers = () => {
         <div className="flex gap-2">
           <ActionButton
             label="Sửa"
-            onClick={handleEdit}
+            onClick={onOpenEdit}
             id={row._id}
             bgColor="bg-yellow-500"
           />
@@ -96,16 +125,15 @@ const Vouchers = () => {
       </HeadingCard>
       <OptionTable />
 
-      {loading ? (
-        <p className="text-center">Đang tải dữ liệu...</p>
-      ) : error ? (
-        <p className="text-primary text-center">{error}</p>
-      ) : (
+      {voucherStatusApi == 'loading' && <p className="text-center">Đang tải dữ liệu...</p>}
+      {!voucherStatusApi && <p className="text-primary text-center">{voucherError}</p> }
+
+      {voucherData && 
         <>
-          <Table column={columns} data={vouchers} />
+          <Table column={columns} data={voucherData} />
           <Pagination
             currentPage={currentPage}
-            total={totalItems}
+            total={voucherTotal}
             rowsPerPage={rowsPerPage}
             onPageChange={(page) => setCurrentPage(page)}
             onRowsPerPageChange={(rows) => {
@@ -114,7 +142,7 @@ const Vouchers = () => {
             }}
           />
         </>
-      )}
+      }
 
       {/* Popup Thêm */}
       <AddForm<Record<string, unknown>>
@@ -137,21 +165,7 @@ const Vouchers = () => {
             ],
           },
         ]}
-        onSubmit={async () => {
-          try {
-            alert("Thêm voucher thành công!");
-            setIsAddOpen(false);
-            fetchVoucher(currentPage);
-          } catch (error: unknown) {
-            if (error instanceof Error) {
-              alert("Thêm thất bại: " + error.message);
-              console.error(error);
-            } else {
-              alert("Thêm thất bại!");
-              console.error("Lỗi không xác định:", error);
-            }
-          }
-        }}
+        onSubmit={handleAdd}
       />
 
       {/* Popup Sửa */}
@@ -176,21 +190,7 @@ const Vouchers = () => {
             ],
           },
         ]}
-        onSubmit={async () => {
-          try {
-            alert("Cập nhật voucher thành công!");
-            setIsEditOpen(false);
-            fetchVoucher(currentPage);
-          } catch (error: unknown) {
-            if (error instanceof Error) {
-              alert("Cập nhật thất bại: " + error.message);
-              console.error(error);
-            } else {
-              alert("Cập nhật thất bại!");
-              console.error("Lỗi không xác định:", error);
-            }
-          }
-        }}
+        onSubmit={handleEdit}
       />
     </div>
   );
