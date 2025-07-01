@@ -1,4 +1,5 @@
 "use client";
+import RatePopup from "@/components/Popup/RatePopup";
 import TicketPopup from "@/components/Popup/TicketPopup";
 import usePopup from "@/hooks/usePopup";
 import { MovieType } from "@/interfaces/movie.interface";
@@ -7,12 +8,20 @@ import { useRouter } from "next/navigation";
 const Profile = () => {
   const router = useRouter();
 
-  const { ticketPopup, openTicket, closeTicket } = usePopup();
+  const {
+    ticketPopup,
+    openTicket,
+    closeTicket,
+    closeRating,
+    openRating,
+    ratingPopup,
+  } = usePopup();
   return (
     <div className="container flex-column items-center mt-10 gap-10">
       {ticketPopup && (
         <TicketPopup info={{} as MovieType} onClose={closeTicket} />
       )}
+      {ratingPopup && <RatePopup onClose={closeRating} />}
       <h2>Thông tin cá nhân</h2>
       <div className="space-x-10">
         <button
@@ -50,7 +59,10 @@ const Profile = () => {
                 </button>
               </td>
               <td className="py-2">
-                <button className="text-primary hover:underline">
+                <button
+                  className="text-primary hover:underline"
+                  onClick={openRating}
+                >
                   Đánh giá phim
                 </button>
               </td>

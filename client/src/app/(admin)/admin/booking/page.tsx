@@ -24,22 +24,27 @@ const AdminBooking = () => {
   const [showAddPopup, setShowAddPopup] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
 
-  const fetchTickets = useCallback(async (page = 1) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await TicketService.getTicketList(`?limit=${rowsPerPage}&page=${page}`);
-      const data = res?.data;
-      setTickets(data.ticket || []);
-      setTotalItems(data.pagination?.total || 0);
-      setCurrentPage(data.pagination?.page || 1);
-    } catch (error) {
-      console.error("Lỗi khi gọi API:", error);
-      setError("Không thể tải danh sách đặt vé.");
-    } finally {
-      setLoading(false);
-    }
-  }, [rowsPerPage]);
+  const fetchTickets = useCallback(
+    async (page = 1) => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await TicketService.getTicketList(
+          `?limit=${rowsPerPage}&page=${page}`
+        );
+        const data = res?.data;
+        setTickets(data.ticket || []);
+        setTotalItems(data.pagination?.total || 0);
+        setCurrentPage(data.pagination?.page || 1);
+      } catch (error) {
+        console.error("Lỗi khi gọi API:", error);
+        setError("Không thể tải danh sách đặt vé.");
+      } finally {
+        setLoading(false);
+      }
+    },
+    [rowsPerPage]
+  );
 
   useEffect(() => {
     fetchTickets(currentPage);
@@ -101,7 +106,10 @@ const AdminBooking = () => {
         <p className="text-red-500 text-center">{error}</p>
       ) : (
         <>
-          <Table column={columns} data={tickets.map(t => ({ ...t, id: t._id }))} />
+          <Table
+            column={columns}
+            data={tickets.map((t) => ({ ...t, id: t._id }))}
+          />
           <Pagination
             currentPage={currentPage}
             total={totalItems}
@@ -112,41 +120,41 @@ const AdminBooking = () => {
               setCurrentPage(1); // reset lại trang khi thay đổi số dòng
             }}
           />
-
         </>
       )}
 
       {showAddPopup && (
-      <AddForm <Record<string,unknown>>
-        isOpen={showAddPopup}
-        onClose={() => setShowAddPopup(false)}
-        fields={[
-          {label:"Tên khách hàng", key: "movieName", required: true },
-          {label:"Giá vé", key: "price", required: true },
-          {label:"Ghế", key: "seat", required: true },
-          {
-            label: "Trạng thái",
-            key: "status",
-            type: "select",
-            required: true,
-            options: [
-              { label: "Đã thanh toán", value: "1" },
-              { label: "Chưa thanh toán", value: "0" },
-            ],
-          },
-        ]}
-        onSubmit={async () => {
-          try {
-            // await userService.createUser(data);
-            alert("Thêm vé thành công!");
-            setShowAddPopup(false);
-            // fetchUsers(currentPage);
-          } catch (err) {
-            alert("Thêm thất bại!");
-            console.error(err);
-          }
-        }}
-      />
+        <AddForm<Record<string, unknown>>
+          isOpen={showAddPopup}
+          onClose={() => setShowAddPopup(false)}
+          fields={[
+            { label: "Tên khách hàng", key: "movieName", required: true },
+            { label: "Giá vé", key: "price", required: true },
+            { label: "Ghế", key: "seat", required: true },
+            {
+              label: "Trạng thái",
+              key: "status",
+              type: "select",
+              required: true,
+              options: [
+                { label: "Đã thanh toán", value: "1" },
+                { label: "Chưa thanh toán", value: "0" },
+              ],
+            },
+          ]}
+          onSubmit={async () => {
+            try {
+              // await userService.createUser(data);
+              alert("Thêm vé thành công!");
+              setShowAddPopup(false);
+              // fetchUsers(currentPage);
+            } catch (err) {
+              alert("Thêm thất bại!");
+              console.error(err);
+            }
+          }}
+        />
+      )}
 
       {/* {showAddPopup && (
         <AddPopup title="Thêm Vé Mới" onClose={() => setShowAddPopup(false)}>

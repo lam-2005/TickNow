@@ -1,44 +1,4 @@
-import Link from "next/link";
 import React from "react";
-const TimeScreening = ({ value }: { value: string }) => (
-  <Link
-    href={"/booking"}
-    className="flex-center py-2 px-4 border-2 border-primary w-fit rounded-[5px] text-sm cursor-pointer hover:bg-primary hover:text-white transition-all"
-  >
-    {value}
-  </Link>
-);
-export const ShowType = ({
-  type,
-  data,
-}: {
-  type: "Phụ đề" | "Lồng tiếng";
-  data: any;
-}) => (
-  <div className="flex gap-7.5 items-center">
-    <p className="w-25">{type}</p>
-    <div className="flex gap-2.5 flex-wrap">
-      {data.showtimes.map((item: any, index: number) => (
-        <TimeScreening key={item.time} value={item.time} />
-      ))}
-    </div>
-  </div>
-);
-
-export const ShowtimeItem = ({
-  nameCinema,
-  children,
-}: {
-  nameCinema?: string;
-  children: React.ReactNode;
-}) => {
-  return (
-    <div className="space-y-2.5 not-first:before:w-full not-first:before:h-px before:bg-white before:absolute before:-translate-y-[15px]">
-      <h3 className="font-semibold">{nameCinema}</h3>
-      <div className="space-y-2.5">{children}</div>
-    </div>
-  );
-};
 
 const ShowtimeCard = ({
   title,

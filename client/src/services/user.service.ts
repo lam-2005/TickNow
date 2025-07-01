@@ -1,4 +1,5 @@
 import { LoginType } from "@/interfaces/user.interface";
+import catchingError from "@/utils/catchingError";
 import api from "@/utils/http";
 import { FieldsType } from "@/utils/validate";
 const getUserList = async (param: string = "") => {
@@ -14,7 +15,7 @@ const loginAPI = async (data: LoginType) => {
     const res = await api.post("/user/login", data);
     return res;
   } catch (error) {
-    throw error || "Đăng nhập không thành công";
+    catchingError(error, "Đăng nhập thất bại!");
   }
 };
 const signupAPI = async (data: FieldsType) => {
@@ -24,7 +25,7 @@ const signupAPI = async (data: FieldsType) => {
 
     return res;
   } catch (error) {
-    throw error || "Đăng ký không thành công";
+    catchingError(error, "Đăng ký thất bại!");
   }
 };
 export { getUserList, loginAPI, signupAPI };

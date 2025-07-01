@@ -10,7 +10,6 @@
 // }
 
 export interface Screening {
-  id: string; // MongoDB ObjectId dạng string
   _id: string; // MongoDB ObjectId dạng string
   id_room: string;
   id_movie: string;
@@ -23,3 +22,19 @@ export interface Screening {
   // Tuỳ chọn nếu có thể mở rộng
   movieName?: string; // Sử dụng khi bạn join từ collection movie
 }
+export type CinemaShowtimeType = {
+  id: string;
+  location: {
+    id_location: string;
+    deatil_location: string;
+    location: string;
+  };
+  name: string;
+  showtimes: [
+    {
+      id: string;
+      time: string;
+      showtype: string;
+    }
+  ];
+};

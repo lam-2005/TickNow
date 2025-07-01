@@ -1,91 +1,95 @@
 "use client";
-import { useTheme } from "@/hooks/contexts/useTheme";
-import React, { useState } from "react";
-import { FaChevronDown } from "react-icons/fa6";
-import { RiMapPin2Fill } from "react-icons/ri";
-import Option from "./Option";
 
-export interface OptionType {
-  id: string | number;
-  label: string;
-  onClick?: () => void;
-}
-
-interface SelectFieldProps<T> {
-  id: string;
-  openId: string | null;
-  setOpenId: (id: string | null) => void;
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import React from "react";
+import { BiChevronDown } from "react-icons/bi";
+type SelectProps<T> = {
+  leftIcon: React.ReactNode;
   data: T[];
-  getOptionLabel: (item: T) => string;
-  getOptionValue: (item: T) => string | number;
-  defaultSelected?: T | null;
+  getValue: (item: T) => string;
+  getLabel: (item: T) => string;
   placeholder?: string;
-  valueSelect?: (data: any) => void;
-}
+  defaultValue?: string;
+  onChange?: (value: string) => void;
+};
 
-export function SelectField<T>({
-  id,
-  openId,
-  setOpenId,
+export const SelectComponent = <T,>({
+  leftIcon,
   data,
-  getOptionLabel,
-  getOptionValue,
-  defaultSelected = null,
-  placeholder = "Chọn một mục",
-  valueSelect,
-}: SelectFieldProps<T>) {
-  const [selected, setSelected] = useState<T | null>(defaultSelected);
-  const isOpen = openId === id;
+  getValue,
+  getLabel,
+  placeholder,
+  defaultValue,
+  onChange,
+}: SelectProps<T>) => {
+  const [selected, setSelected] = React.useState(defaultValue || "");
 
-  const handleSelect = (option: T) => {
-    setSelected(option);
-    setOpenId(null);
-    valueSelect(option);
+  const handleChange = (event: SelectChangeEvent) => {
+    setSelected(event.target.value);
+    onChange?.(event.target.value);
   };
 
   return (
-    <div className="relative select-none">
-      <div
-        onClick={() => setOpenId(isOpen ? null : id)}
-        className="h-full flex items-center w-[330px] justify-between px-5 gap-5 cursor-pointer rounded-lg py-3"
-      >
-        <span className="text-xl">
-          <RiMapPin2Fill />
-        </span>
-        <span className="line-clamp-1">
-          {selected ? getOptionLabel(selected) : placeholder}
-        </span>
-        <span>
-          <FaChevronDown
-            className={`transition-transform ${isOpen ? "rotate-180" : ""}`}
-          />
-        </span>
+    <FormControl className="w-[330px] h-full justify-center">
+      <div className="flex items-center px-5">
+        {leftIcon}
+
+        <Select
+          value={selected}
+          onChange={handleChange}
+          displayEmpty
+          IconComponent={(props) => (
+            <BiChevronDown
+              {...props}
+              style={{
+                fontSize: "36px",
+                color: "white",
+              }}
+            />
+          )}
+          className="text-white rounded-full bg-background-card text-center w-full"
+          MenuProps={{
+            PaperProps: {
+              className: "bg-background-card text-white rounded-xl ",
+            },
+          }}
+          sx={{
+            "& .MuiOutlinedInput-notchedOutline": {
+              border: "none",
+            },
+            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              border: "none",
+            },
+            "&:focus": {
+              border: "none",
+              boxShadow: "none",
+            },
+          }}
+        >
+          {placeholder && <MenuItem value="">{placeholder}</MenuItem>}
+          {data.map((item, idx) => (
+            <MenuItem key={idx} value={getValue(item)}>
+              {getLabel(item)}
+            </MenuItem>
+          ))}
+        </Select>
       </div>
-
-      {isOpen && (
-        <Option<T>
-          data={data}
-          onSelect={handleSelect}
-          getOptionLabel={getOptionLabel}
-          getOptionValue={getOptionValue}
-        />
-      )}
-    </div>
+    </FormControl>
   );
-}
+};
 
-const Select = ({ children }: { children: React.ReactNode }) => {
-  const { theme } = useTheme();
-
+export const SelectContainer = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   return (
-    <div
-      className={`h-[80px] bg-background-card rounded-[100px] w-fit flex [&>div]:not-first:border-l-1 [&>div]:not-first:border-foreground shadow-foreground  ${
-        theme === "light" && "shadow-lg"
-      }`}
-    >
+    <div className="h-[80px] bg-background-card rounded-[100px] w-fit flex shadow-foreground items-center [&>div]:not-first:border-l-1 [&>div]:not-first:border-foreground ">
       {children}
     </div>
   );
 };
 
-export default Select;
+export default SelectContainer;

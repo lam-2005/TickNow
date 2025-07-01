@@ -9,4 +9,13 @@ const getCinemaList = async (param: string = "") => {
     throw error;
   }
 };
-export { getCinemaList };
+const getLocationList = async (param: string = "") => {
+  try {
+    const res = await api.get(`/location${param}`);
+    return res.data;
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách địa chỉ:", error);
+    throw error;
+  }
+};
+export { getCinemaList, getLocationList };

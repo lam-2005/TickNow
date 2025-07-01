@@ -3,8 +3,6 @@ import React from "react";
 const Button = ({
   title,
   className,
-  dataAosDelay,
-  dataAos,
   disabled,
   type,
   onClick,
@@ -12,8 +10,7 @@ const Button = ({
 }: {
   title: string;
   className?: string;
-  dataAosDelay?: number;
-  dataAos?: string;
+
   disabled?: boolean;
   type?: "submit" | "button" | "reset";
   onClick?: () => void;
@@ -22,8 +19,6 @@ const Button = ({
   return (
     <button
       className={`btn-primary ${btnSecondary && "btn-secondary"} ${className}`}
-      data-aos-delay={dataAosDelay}
-      data-aos={dataAos}
       disabled={disabled}
       type={type}
       onClick={onClick}

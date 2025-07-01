@@ -13,8 +13,9 @@ import MenuDropDown from "./MenuDropDown";
 import UserFormContainer from "../UserFormContainer/UserFormContainer";
 import SearchPopup from "../Popup/SearchPopup";
 import { useRouter } from "next/navigation";
-import { logout } from "../UserFormContainer/authSlice";
+import { logout } from "@/utils/redux/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
+import authSelector from "@/utils/redux/selectors/selectorAuth";
 
 const Header = () => {
   const pathname = usePathname();
@@ -23,12 +24,9 @@ const Header = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
-  const { user, token } = useSelector((state: any) => state.auth);
-  console.log({ user, token });
-
+  const { user, token } = useSelector(authSelector);
   const handleLogout = () => {
     dispatch(logout());
-    router.push("/");
   };
 
   const isTransparentHeader =
