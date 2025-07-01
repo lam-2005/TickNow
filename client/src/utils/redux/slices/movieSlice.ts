@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { UserType } from "@/interfaces/user.interface";
-import * as userService from "@/services/user.service";
+import { MovieType } from "@/interfaces/movie.interface";
+import * as movieService from "@/services/movie.service";
 
-type UserState = {
-  users: UserType[];
+type MovieState = {
+  movies: MovieType[];
   total: number;
   currentPage: number;
   totalPages: number;
@@ -11,8 +11,8 @@ type UserState = {
   error: string | null;
 };
 
-const initialState: UserState = {
-  users: [],
+const initialState: MovieState = {
+  movies: [],
   total: 0,
   currentPage: 1,
   totalPages: 1,
@@ -20,51 +20,50 @@ const initialState: UserState = {
   error: null,
 };
 
-export const fetchUsers = createAsyncThunk(
-  "user/fetchUsers",
+export const fetchMovies = createAsyncThunk(
+  "movie/fetchMovies",
   async ({ page, limit }: { page: number; limit: number }, thunkAPI) => {
     try {
-      const res = await userService.getUserList(`?page=${page}&limit=${limit}`);
+      const res = await movieService.getMovieList(`?page=${page}&limit=${limit}`);
       return {
-        users: res?.data.user,
+        movies: res?.data.movie,
         total: res?.data.pagination.total,
         currentPage: res?.data.pagination.page,
         totalPages: res?.data.pagination.totalPages,
       };
     } catch {
-      return thunkAPI.rejectWithValue("Không thể tải danh sách người dùng.");
+      return thunkAPI.rejectWithValue("Không thể tải danh sách phim.");
     }
   }
 );
 
-const userSlice = createSlice({
-  name: "user",
+const movieSlice = createSlice({
+  name: "movie",
   initialState,
   reducers: {
-    setInitialUsers(state, action: PayloadAction<UserState>) {
+    setInitialMovies(state, action: PayloadAction<MovieState>) {
       return { ...state, ...action.payload };
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUsers.pending, (state) => {
+      .addCase(fetchMovies.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchUsers.fulfilled, (state, action) => {
-        state.users = action.payload.users;
+      .addCase(fetchMovies.fulfilled, (state, action) => {
+        state.movies = action.payload.movies;
         state.total = action.payload.total;
         state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.totalPages;
         state.loading = false;
-        state.error = null;
       })
-      .addCase(fetchUsers.rejected, (state, action) => {
+      .addCase(fetchMovies.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });
   },
 });
 
-export const { setInitialUsers } = userSlice.actions;
-export default userSlice.reducer;
+export const { setInitialMovies } = movieSlice.actions;
+export default movieSlice.reducer;
