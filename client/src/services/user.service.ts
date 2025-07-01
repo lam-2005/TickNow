@@ -8,6 +8,7 @@ const getUserList = async (param: string = "") => {
     return await res;
   } catch (error) {
     console.log("Error fetching data:", error);
+    catchingError(error, "Lấy dữ liệu thất bại");
   }
 };
 const loginAPI = async (data: LoginType) => {
