@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
+import * as movieService from "@/services/movie.service";
 import Table, { Column } from "@/admin_components/Table/Table";
 import Pagination from "@/admin_components/Table/Pagination";
 import { MovieType } from "@/interfaces/movie.interface";
@@ -51,16 +52,16 @@ const MovieList = ({ initData }: { initData: InitDataType }) => {
       setIsEditOpen(true);
     }
   };
-  const handleDelete = (id: string | number) => {
-    if (confirm("Bạn có chắc muốn xóa phim này?")) {
-        try {
-            // await movieService.deleteMovie(id);
-            alert("Đã xoá phim!");
-            dispatch(fetchMovies({ page, limit: rowsPerPage }));
-        }catch (err) {
-            console.error("Lỗi xoá phim:", err);
-            alert("Xoá phim thất bại!");
-        }
+  const handleDelete = async (id: string | number) => {
+  if (confirm("Bạn có chắc muốn xóa phim này?")) {
+    try {
+      await movieService.deleteMovie(id);
+      alert("Đã xoá phim!");
+      dispatch(fetchMovies({ page, limit: rowsPerPage }));
+    } catch (err) {
+      console.error("Lỗi xoá phim:", err);
+      alert("Xoá phim thất bại!");
+    }
     }
   };
   
@@ -159,10 +160,16 @@ const MovieList = ({ initData }: { initData: InitDataType }) => {
           },
           { label: "Mô tả", key: "description", type: "textarea", rows: 4 },
         ]}
-        onSubmit={async () => {
-          alert("Thêm phim thành công!");
-          setShowAddPopup(false);
-          dispatch(fetchMovies({ page, limit: rowsPerPage }));
+        onSubmit={async (data) => {
+          try {
+            await movieService.createMovie(data);
+            alert("Thêm phim thành công!");
+            setShowAddPopup(false);
+            dispatch(fetchMovies({ page, limit: rowsPerPage }));
+          } catch (err) {
+            console.error("Lỗi thêm phim:", err);
+            alert("Thêm phim thất bại!");
+          }
         }}
       />
 
@@ -187,10 +194,18 @@ const MovieList = ({ initData }: { initData: InitDataType }) => {
           { label: "Hình ảnh", key: "image" },
           { label: "Banner", key: "banner" },
         ]}
-        onSubmit={async () => {
-          alert("Cập nhật thành công!");
-          setIsEditOpen(false);
-          dispatch(fetchMovies({ page, limit: rowsPerPage }));
+        onSubmit={async (data) => {
+          try {
+            if (!selectedMovie?._id) return;
+              await movieService.updateMovie(selectedMovie._id, data);
+              alert("Cập nhật phim thành công!");
+              setIsEditOpen(false);
+              setSelectedMovie(null);
+              dispatch(fetchMovies({ page, limit: rowsPerPage }));
+            } catch (err) {
+              console.error("Lỗi cập nhật phim:", err);
+              alert("Cập nhật thất bại!");
+            }
         }}
       />
     </>
