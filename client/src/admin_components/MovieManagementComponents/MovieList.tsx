@@ -7,8 +7,6 @@ import { AppDispatch } from "@/utils/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import usePanigation from "@/hooks/usePanigation";
 import { MovieType } from "@/interfaces/movie.interface";
-import MovieDetailPopup from "@/admin_components/Popup/MovieDetailPopup";
-import PopupUpdateForm from "@/admin_components/Popup/UpdateForm";
 import {
   fetchMovies,
   setInitialMovies,
@@ -17,6 +15,8 @@ import {
 } from "@/utils/redux/slices/movieSlice";
 import dataMovie from "@/utils/redux/selectors/movieSlector";
 import { toast } from "react-toastify";
+import MovieDetail from "./DetailMovie/DetailMovie";
+import UpdateFormContainer from "./UpdateForm/UpdateFormContainer";
 
 type InitDataType = {
   movies: MovieType[];
@@ -127,7 +127,27 @@ const MovieList = ({ initData }: { initData: InitDataType }) => {
     { key: "director", title: "Đạo Diễn" },
     { key: "nation", title: "Quốc Gia" },
     { key: "age", title: "Độ Tuổi" },
-    { key: "duration", title: "Thời Lượng (phút)" },
+    {
+      title: "Thể Loại",
+      render: (row: MovieType) => {
+        return (
+          <div className="flex flex-wrap gap-1">
+            {row.genre && row.genre.length > 0 ? (
+              row.genre.map((g) => (
+                <span
+                  key={g.id}
+                  className="bg-blue-100 text-black-800 text-xs font-semibold px-2.5 py-0.5 rounded"
+                >
+                  {g.name}
+                </span>
+              ))
+            ) : (
+              <span className="text-gray-500 text-sm italic">Chưa xác định</span>
+            )}
+          </div>
+        );
+      },
+    },
     {
       title: "Thao Tác",
       render: (row) => (
@@ -159,36 +179,18 @@ const MovieList = ({ initData }: { initData: InitDataType }) => {
   return (
     <>
       {showInfo && selectedMovie && (
-        <MovieDetailPopup
-          movie={selectedMovie}
-          onClose={() => {
-            setShowInfo(false);
-            setSelectedMovie(null);
-          }}
-        />
+        <MovieDetail movie={selectedMovie} onClose={() => {
+          setShowInfo(false);
+          setSelectedMovie(null);
+        }} />
       )}
       {isEditOpen && selectedMovie && (
-        <PopupUpdateForm
-          isOpen={isEditOpen}
-          onClose={() => {
+        <UpdateFormContainer
+          info={selectedMovie}
+          closeForm={() => {
             setIsEditOpen(false);
             setSelectedMovie(null);
           }}
-          initialData={selectedMovie as unknown as Record<string, unknown>}
-          fields={[
-            { label: "Tên phim", key: "name" },
-            { label: "Ngày công chiếu", key: "release_date", type: "date" },
-            { label: "Quốc gia", key: "nation" },
-            { label: "Ngôn ngữ", key: "language" },
-            { label: "Thời lượng (phút)", key: "duration", type: "number" },
-            { label: "Độ tuổi", key: "age" },
-            { label: "Đạo diễn", key: "director" },
-            { label: "Diễn viên", key: "actor" },
-            { label: "Trạng thái", key: "status", type: "number" },
-            { label: "Trailer", key: "trailer" },
-            { label: "Hình ảnh", key: "image" },
-            { label: "Banner", key: "banner" },
-          ]}
           onSubmit={(data) => {
             if (!selectedMovie?._id) return;
             handleUpdate(selectedMovie._id, data);
