@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/admin_components/Navbar/Navbar";
 import Header from "@/admin_components/Header/Header";
 import AdminProvider from "@/hooks/contexts/AdminProvider";
+import { ToastContainer } from "react-toastify";
 
 const beVietNamPro = Be_Vietnam_Pro({
   weight: ["300", "700"],
@@ -33,7 +34,9 @@ export default function RootLayout({
         className={`${beVietNamPro.variable} ${oswald.variable} antialiased `}
       >
         <AdminProvider>
+          <ToastContainer theme="colored" />
           <Navbar />
+
           <main className="w-full">
             <Header />
             {children}
