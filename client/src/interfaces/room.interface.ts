@@ -11,6 +11,8 @@ export type RoomType = {
     element_selecting: { [key: string]: number[] };
   };
   status: number;
+  createAt?: string;
+  updateAt?: string;
 };
 
 export type DataRoomReq = {

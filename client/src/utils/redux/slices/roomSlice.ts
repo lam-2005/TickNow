@@ -87,7 +87,6 @@ export const fetchRooms = createAsyncThunk(
   async ({ page, limit }: { page: number; limit: number }, thunkAPI) => {
     try {
       const data = await getRoomData(page, limit);
-      console.log(data);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

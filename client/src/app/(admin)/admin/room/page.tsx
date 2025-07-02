@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
-import OptionTable from "@/admin_components/OptionTable/OptionTable";
+// import OptionTable from "@/admin_components/OptionTable/OptionTable";
 import RoomList from "../../../../admin_components/RoomManagementComponents/RoomList";
 import { getRoom } from "@/services/room.service";
 import { getCinemaList } from "@/services/cinema.service";
@@ -28,7 +28,7 @@ const RoomManagement = () => {
       <HeadingCard title="Quản Lý Phòng">
         <AddRoomBtn cinemas={cinemas} />
       </HeadingCard>
-      <OptionTable />
+      {/* <OptionTable /> */}
       <Suspense fallback={<p className="text-center">Đang tải dữ liệu...</p>}>
         <RoomList initData={rooms} cinemaOptions={cinemas} />
       </Suspense>
