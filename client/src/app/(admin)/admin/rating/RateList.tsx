@@ -2,7 +2,6 @@
 import React, { useEffect, useRef } from "react";
 import Table, { Column } from "@/admin_components/Table/Table";
 import Pagination from "@/admin_components/Table/Pagination";
-import ActionButton from "@/admin_components/Button/ButtonActions";
 import { ReviewType } from "@/interfaces/rating.interface";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/utils/redux/store";
@@ -39,10 +38,6 @@ const RatingList = ({ initData }: { initData: InitDataType }) => {
     dispatch(fetchRatings({ page, limit: rowsPerPage }));
   }, [dispatch, page, rowsPerPage]);
 
-  const handleDelete = (id: string | number) => {
-    alert(`Xóa ${id}`);
-  };
-
   const columns: Column<ReviewType>[] = [
     { key: "movieName", title: "Tên Phim" },
     { key: "userName", title: "Tên Người Dùng" },
@@ -61,21 +56,6 @@ const RatingList = ({ initData }: { initData: InitDataType }) => {
       render: (row: ReviewType) => (
         <span className="line-clamp-2 block max-w-xs">{row.comment}</span>
       ),
-    },
-    {
-      title: "Thao Tác",
-      render(row: ReviewType) {
-        return (
-          <div className="flex gap-2">
-            <ActionButton
-              label="Xóa"
-              onClick={handleDelete}
-              bgColor="bg-red-500"
-              id={row._id}
-            />
-          </div>
-        );
-      },
     },
   ];
 
