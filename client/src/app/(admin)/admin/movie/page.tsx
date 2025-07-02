@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import * as movieService from "@/services/movie.service";
 import MovieList from "./MovieList";
 
-const getMovieData = async (page: number, limit: number) => {
+export const getMovieData = async (page: number, limit: number) => {
   const res = await movieService.getMovieList(`?page=${page}&limit=${limit}`);
   return {
     movies: res?.data.movie,

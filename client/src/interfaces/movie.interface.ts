@@ -16,11 +16,6 @@ export interface MovieType {
     id: number | string;
     name: string;
   }[];
-  status: string;
-<<<<<<< Updated upstream
-  language: string;
+  status: string | number;
   star:number;
-=======
-  star: number;
->>>>>>> Stashed changes
 }
