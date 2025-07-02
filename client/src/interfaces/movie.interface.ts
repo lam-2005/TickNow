@@ -1,5 +1,5 @@
 export interface MovieType {
-  _id: number | string;
+  _id: string;
   name: string;
   release_date: string;
   nation: string;

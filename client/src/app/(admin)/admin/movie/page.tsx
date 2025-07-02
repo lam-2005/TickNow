@@ -1,6 +1,8 @@
 import React, { Suspense } from "react";
+import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
+import MovieList from "@/admin_components/MovieManagementComponents/MovieList";
+import AddMovieBtn from "@/admin_components/MovieManagementComponents/AddForm/ButtonOpenForm";
 import * as movieService from "@/services/movie.service";
-import MovieList from "./MovieList";
 
 export const getMovieData = async (page: number, limit: number) => {
   const res = await movieService.getMovieList(`?page=${page}&limit=${limit}`);
@@ -13,12 +15,15 @@ export const getMovieData = async (page: number, limit: number) => {
 };
 
 const MovieManagement = async () => {
-  const res = await getMovieData(1, 5);
+  const movieData = await getMovieData(1, 5);
 
   return (
     <div className="card">
+      <HeadingCard title="Quản Lý Phim">
+        <AddMovieBtn />
+      </HeadingCard>
       <Suspense fallback={<p className="text-center">Đang tải dữ liệu...</p>}>
-        <MovieList initData={res} />
+        <MovieList initData={movieData} />
       </Suspense>
     </div>
   );

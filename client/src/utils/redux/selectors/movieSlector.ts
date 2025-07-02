@@ -1,12 +1,4 @@
-import { RootState } from "@/utils/redux/store";
+import { RootState } from "../store";
 
-const dataMovie = (state: RootState) => ({
-  movies: state.movie.movies,
-  total: state.movie.total,
-  currentPage: state.movie.currentPage,
-  totalPages: state.movie.totalPages,
-  loading: state.movie.loading,
-  error: state.movie.error,
-});
-
+const dataMovie = (state: RootState) => state.movieManagement;
 export default dataMovie;

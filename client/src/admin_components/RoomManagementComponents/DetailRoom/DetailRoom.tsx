@@ -1,5 +1,5 @@
 import React from "react";
-import PopupContainer from "../PopupContainer";
+import PopupContainer from "../../PopupContainer";
 import handleBooking from "@/utils/handleBooking";
 import { RoomType } from "@/interfaces/room.interface";
 import Seat from "@/components/BookingPageComponents/Seat";
