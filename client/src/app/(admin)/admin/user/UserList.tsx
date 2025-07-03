@@ -75,8 +75,8 @@ const UserList = ({ initData }: { initData: InitDataType }) => {
           <div className="flex gap-2">
             <ActionButton
               label="Sửa"
-              onClick={handleEdit}
-              bgColor="bg-yellow-500"
+              bgColor="warning"
+              onClick={() => handleEdit(row._id)}
               id={row._id}
             />
           </div>

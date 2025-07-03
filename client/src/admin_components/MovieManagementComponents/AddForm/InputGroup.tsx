@@ -1,17 +1,45 @@
 "use client";
 import React from "react";
 import { MovieType } from "@/interfaces/movie.interface";
+import Button from "@mui/material/Button";
+import { FaCloudUploadAlt } from "react-icons/fa";
+import { styled } from "@mui/material/styles";
+import { GenreType } from "./AddForm";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
+import Checkbox from "@mui/material/Checkbox";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 
-type Props = {
-  formData: Partial<MovieType>;
-  setFormData: React.Dispatch<React.SetStateAction<Partial<MovieType>>>;
+
+type InputGroupProps = {
+  formData: MovieType;
+  setFormData: (data: MovieType) => void;
+  listOptionGenre: GenreType[];
 };
-
-const InputGroupMovie = ({ formData, setFormData }: Props) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+const InputGroupMovie = ({ formData, setFormData, listOptionGenre }: InputGroupProps) => {
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prev) => ({ ...prev, [name]: value }));
+  // };
+  const checkedIcon = <CheckBoxIcon fontSize="small" />;
+  const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+  const handleGenreChange = ( values : GenreType[]) => {
+  const ids = values.map(item => item.id);
+    setFormData({ ...formData, genre: ids });
+    console.log('Genre:', ids);
   };
+  const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 0.8,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 0.8,
+  });
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 w-3xl gap-4">
@@ -21,7 +49,7 @@ const InputGroupMovie = ({ formData, setFormData }: Props) => {
           type="text"
           name="name"
           value={formData.name || ""}
-          onChange={handleChange}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
         />
       </div>
@@ -32,7 +60,7 @@ const InputGroupMovie = ({ formData, setFormData }: Props) => {
           type="date"
           name="release_date"
           value={formData.release_date || ""}
-          onChange={handleChange}
+          onChange={(e) => setFormData({ ...formData, release_date: e.target.value })}
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
         />
       </div>
@@ -43,7 +71,7 @@ const InputGroupMovie = ({ formData, setFormData }: Props) => {
           type="text"
           name="nation"
           value={formData.nation || ""}
-          onChange={handleChange}
+          onChange={(e) => setFormData({ ...formData, nation: e.target.value })}
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
         />
       </div>
@@ -54,7 +82,7 @@ const InputGroupMovie = ({ formData, setFormData }: Props) => {
           type="text"
           name="language"
           value={formData.language || ""}
-          onChange={handleChange}
+          onChange={(e) => setFormData({ ...formData, language: e.target.value })}
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
         />
       </div>
@@ -74,7 +102,7 @@ const InputGroupMovie = ({ formData, setFormData }: Props) => {
           type="number"
           name="duration"
           value={formData.duration || ""}
-          onChange={handleChange}
+          onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
         />
       </div>
@@ -85,7 +113,7 @@ const InputGroupMovie = ({ formData, setFormData }: Props) => {
           type="text"
           name="age"
           value={formData.age || ""}
-          onChange={handleChange}
+          onChange={(e) => setFormData({ ...formData, age: e.target.value })}
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
         />
       </div>
@@ -96,7 +124,7 @@ const InputGroupMovie = ({ formData, setFormData }: Props) => {
           type="text"
           name="director"
           value={formData.director || ""}
-          onChange={handleChange}
+          onChange={(e) => setFormData({ ...formData, director: e.target.value })}
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
         />
       </div>
@@ -107,42 +135,76 @@ const InputGroupMovie = ({ formData, setFormData }: Props) => {
           type="text"
           name="actor"
           value={formData.actor || ""}
-          onChange={handleChange}
+          onChange={(e) => setFormData({ ...formData, actor: e.target.value })}
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
         />
       </div>
-
       <div>
-        <label className="block mb-1 text-sm font-medium">Link trailer</label>
-        <input
-          type="text"
-          name="trailer"
-          value={formData.trailer || ""}
-          onChange={handleChange}
-          className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
-        />
+        <label className="block mb-1 text-sm font-medium">Thể loại</label>
+        <Autocomplete
+        multiple
+        id="checkboxes-tags-demo"
+        className="w-full  "
+        options={listOptionGenre}
+        disableCloseOnSelect
+        getOptionLabel={(option) => option.label}
+        onChange={(event, values) => handleGenreChange(event, values)}
+        renderOption={(props, option, { selected }) => {
+          const { key, ...optionProps } = props;
+          return (
+            <li key={key} {...optionProps}>
+              <Checkbox
+                icon={icon}
+                checkedIcon={checkedIcon}
+                style={{ marginRight: 8 }}
+                checked={selected}
+              />
+              {option.label}
+            </li>
+          );
+        }}
+        renderInput={(params) => (
+          <TextField {...params} label="Chọn Thể Loại" placeholder="Thể Loại" />
+        )}
+      />
       </div>
 
       <div>
         <label className="block mb-1 text-sm font-medium">Link hình ảnh</label>
-        <input
-          type="text"
-          name="image"
-          value={formData.image || ""}
-          onChange={handleChange}
-          className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
+        <Button
+        component="label"
+        variant="contained"
+        style={{ width: "fit-content", marginTop: "1rem",height: "50px" }}
+        tabIndex={-1}
+        startIcon={<FaCloudUploadAlt />}
+      >
+        Tải lên hình ảnh
+        <VisuallyHiddenInput
+          accept="image/*"
+          type="file"
+          onChange={(event) => console.log(event.target.files)}
+          multiple
         />
+      </Button>
       </div>
 
       <div>
         <label className="block mb-1 text-sm font-medium">Link banner</label>
-        <input
-          type="text"
-          name="banner"
-          value={formData.banner || ""}
-          onChange={handleChange}
-          className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
+        <Button
+        component="label"
+        variant="contained"
+        style={{ width: "fit-content", marginTop: "1rem",height: "50px" }}
+        tabIndex={-1}
+        startIcon={<FaCloudUploadAlt />}
+      >
+        Tải lên hình ảnh
+        <VisuallyHiddenInput
+          accept="image/*"
+          type="file"
+          onChange={(event) => console.log(event.target.files)}
+          multiple
         />
+      </Button>
       </div>
 
       <div className="md:col-span-2">
@@ -150,7 +212,7 @@ const InputGroupMovie = ({ formData, setFormData }: Props) => {
         <textarea
           name="description"
           value={formData.description || ""}
-          onChange={handleChange}
+          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base min-h-[100px]"
         />
       </div>

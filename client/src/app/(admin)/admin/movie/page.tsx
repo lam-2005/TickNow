@@ -3,6 +3,7 @@ import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import MovieList from "@/admin_components/MovieManagementComponents/MovieList";
 import AddMovieBtn from "@/admin_components/MovieManagementComponents/AddForm/ButtonOpenForm";
 import * as movieService from "@/services/movie.service";
+import { getGenreList } from "@/services/genre.service";
 
 export const getMovieData = async (page: number, limit: number) => {
   const res = await movieService.getMovieList(`?page=${page}&limit=${limit}`);
@@ -14,13 +15,18 @@ export const getMovieData = async (page: number, limit: number) => {
   };
 };
 
+const getGerne = async () => {
+  const res = await getGenreList();
+  return res.genres;
+};
 const MovieManagement = async () => {
   const movieData = await getMovieData(1, 5);
-
+  const genres = getGerne();
+  console.log("Genres:", genres);
   return (
     <div className="card">
       <HeadingCard title="Quản Lý Phim">
-        <AddMovieBtn />
+        <AddMovieBtn genre={genres}/>
       </HeadingCard>
       <Suspense fallback={<p className="text-center">Đang tải dữ liệu...</p>}>
         <MovieList initData={movieData} />

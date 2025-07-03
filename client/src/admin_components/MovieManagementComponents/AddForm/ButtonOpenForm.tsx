@@ -1,14 +1,13 @@
-// admin_components/MovieManagementComponents/AddForm/ButtonOpenForm.tsx
-
 "use client";
 import AddBtn from "@/admin_components/Button/AddBtn";
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import AddForm from "./AddForm";
 import PopupContainer from "../../PopupContainer";
+import Genre from "@/interfaces/genre.interface";
 
-const AddMovieBtn = () => {
+const AddMovieBtn = ({ genre }: { genre: Promise<Genre[]> }) => {
   const [openForm, setOpenForm] = useState(false);
-
+  const listGernes = use(genre);  
   return (
     <>
       <AddBtn onClick={() => setOpenForm(true)} />
@@ -17,7 +16,7 @@ const AddMovieBtn = () => {
           title="Thêm phim mới"
           closeForm={() => setOpenForm(false)}
         >
-          <AddForm />
+          <AddForm genre={listGernes}/>
         </PopupContainer>
       )}
     </>

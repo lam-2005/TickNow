@@ -6,8 +6,16 @@ import { addMovie, fetchMovies } from "@/utils/redux/slices/movieSlice";
 import { MovieType } from "@/interfaces/movie.interface";
 import { toast } from "react-toastify";
 import InputGroup from "./InputGroup";
+import Genre from "@/interfaces/genre.interface";
 
-const AddForm = () => {
+type AddFormProps = {
+  genre: Genre[];
+};
+export type GenreType = {
+  label: string;
+  id: string;
+}
+const AddForm = ({ genre }: AddFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const [formData, setFormData] = useState<Partial<MovieType>>({
@@ -15,17 +23,24 @@ const AddForm = () => {
     release_date: "",
     nation: "",
     language: "",
-    duration: 0,
+    duration: "",
     age: "",
     director: "",
     actor: "",
     status: 1,
+    genre:[],
     trailer: "",
     image: "",
     banner: "",
     description: "",
   });
 
+  const listOptionGenre: GenreType[] = genre.map((item) => {
+      return {
+        label: item.name,
+        id: String(item._id),
+      };
+    });
   const handleAddMovie = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -34,14 +49,15 @@ const AddForm = () => {
       toast.warning("Vui lòng nhập đầy đủ thông tin bắt buộc!");
       return;
     }
-
+    console.log("Thêm phim với dữ liệu:", formData);
+    
     const confirmAdd = confirm("Bạn có muốn thêm phim này?");
     if (!confirmAdd) return;
 
     try {
       await dispatch(addMovie(formData)).unwrap();
       await dispatch(fetchMovies({ page: 1, limit: 5 }));
-      toast.success("🎉 Thêm phim thành công!");
+      toast.success("Thêm phim thành công!");
 
       // Reset form
       setFormData({
@@ -49,11 +65,12 @@ const AddForm = () => {
         release_date: "",
         nation: "",
         language: "",
-        duration: 0,
+        duration: "",
         age: "",
         director: "",
         actor: "",
         status: 1,
+        genre: [],
         trailer: "",
         image: "",
         banner: "",
@@ -68,7 +85,7 @@ const AddForm = () => {
   return (
     <>
       <div className="space-y-5 px-5 flex-1 overflow-x-hidden overflow-y-auto">
-        <InputGroup formData={formData} setFormData={setFormData} />
+        <InputGroup formData={formData} setFormData={setFormData} listOptionGenre={listOptionGenre} />
       </div>
       <div className="flex justify-end p-5 w-full bg-background-card rounded-2xl">
         <button className="btn" onClick={handleAddMovie}>

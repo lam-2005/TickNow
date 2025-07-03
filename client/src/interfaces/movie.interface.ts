@@ -4,7 +4,7 @@ export interface MovieType {
   release_date: string;
   nation: string;
   age: string | number;
-  duration: number;
+  duration: string;
   description: string;
   director: string;
   actor: string;
@@ -14,7 +14,7 @@ export interface MovieType {
   language: string;
   genre: {
     id: number | string;
-    name: string;
+    name?: string;
   }[];
   status: string | number;
   star:number;
