@@ -14,7 +14,7 @@ const DetailCinema = () => {
     <div>
       <BackgroundPage image="background_cinema.webp" title="Ticknow Quận 1">
         <div className=" absolute z-20 bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2">
-          <Select>
+          {/* <Select>
             <SelectField
               icon={<FaCalendarAlt />}
               id="date"
@@ -24,7 +24,7 @@ const DetailCinema = () => {
               defaultSelected={null}
               placeholder="Chọn ngày chiếu"
             />
-          </Select>
+          </Select> */}
         </div>
       </BackgroundPage>
       <div className="flex-column gap-7.5 mt-20">

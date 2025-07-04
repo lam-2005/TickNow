@@ -7,6 +7,8 @@ export interface Cinema {
   _id: string;
   name: string;
   image: string;
-  location: Location;
-  status: string;
+  location: {
+    id_location: string;
+    deatil_location: string;
+  };
 }

@@ -1,11 +1,13 @@
 import { CinemaShowtimeType } from "@/interfaces/screening.interface";
 import CinemaShowtime from "./CinemaShowtime";
-
+import { v4 as uuidv4 } from "uuid";
 type Props = {
   data: CinemaShowtimeType[];
   loading: boolean;
 };
 const CinemaShowtimeContainer = ({ data, loading }: Props) => {
+  console.log(data);
+
   if (loading)
     return (
       <p className=" text-center p-5 rounded-[10px]">
@@ -23,7 +25,7 @@ const CinemaShowtimeContainer = ({ data, loading }: Props) => {
       <h1>Danh sách rạp</h1>
       <div className="flex-column gap-10 max-w-[1000px] w-full">
         {data.map((cinema) => (
-          <CinemaShowtime key={cinema.id} data={cinema} />
+          <CinemaShowtime key={uuidv4()} data={cinema} />
         ))}
       </div>
     </div>

@@ -3,7 +3,7 @@ import { RoomType } from "@/interfaces/room.interface";
 export default function handleBooking(roomLayout: RoomType) {
   const room = roomLayout.diagram;
   const rows = room.row;
-  const columns = room.colunm;
+  const columns = room.column;
   const removedSeat: { [key: string]: number[] } = room.element_remove;
   const selectedSeat: { [key: string]: number[] } = room.element_selected;
   // console.log(rows, columns, removedSeat);
