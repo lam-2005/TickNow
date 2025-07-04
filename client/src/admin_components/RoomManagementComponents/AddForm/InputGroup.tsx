@@ -1,10 +1,15 @@
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import React from "react";
-import { CinemaType, RoomData } from "./AddForm";
+import { CinemaType } from "./AddForm";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import { DataRoomReq } from "@/interfaces/room.interface";
 type InputGroupProps = {
-  formData: RoomData;
-  setFormData: (data: RoomData) => void;
+  formData: DataRoomReq;
+  setFormData: (data: DataRoomReq) => void;
   listOptionCinemas: CinemaType[];
 };
 const InputGroup = ({
@@ -34,6 +39,20 @@ const InputGroup = ({
           }}
           renderInput={(params) => <TextField {...params} label="Chọn rạp" />}
         />
+        <FormControl className="w-[120px]" size="small">
+          <InputLabel>Trạng thái</InputLabel>
+          <Select
+            label="Trạng thái"
+            value={formData.status}
+            onChange={(e) => {
+              setFormData({ ...formData, status: e.target.value });
+            }}
+          >
+            <MenuItem value={2}>Hoạt động</MenuItem>
+            <MenuItem value={1}>Không hoạt động</MenuItem>
+            <MenuItem value={3}>Bảo trì</MenuItem>
+          </Select>
+        </FormControl>
 
         <input
           type="number"
@@ -41,8 +60,8 @@ const InputGroup = ({
           id=""
           placeholder="Số cột"
           className="py-[7px] px-[14px] outline-none border-[rgba(0,_0,_0,_0.23)] border-1 focus:border-primary rounded-[4px] w-[120px] hover:border-[rgba(0,_0,_0,_0.87)] placeholder:text-[rgba(0,_0,_0,_0.87)]"
-          value={formData.colunm}
-          onChange={(e) => setFormData({ ...formData, colunm: e.target.value })}
+          value={formData.column}
+          onChange={(e) => setFormData({ ...formData, column: e.target.value })}
         />
         <input
           type="number"

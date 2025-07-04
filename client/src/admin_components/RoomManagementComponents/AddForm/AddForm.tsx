@@ -14,19 +14,14 @@ export type CinemaType = {
 type AddFormProps = {
   cinemas: Cinema[];
 };
-export type RoomData = {
-  id_cinema: string;
-  colunm: string;
-  row: string;
-  seatRemoved: { [key: string]: number[] };
-};
 const AddForm = ({ cinemas }: AddFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
-  const [formData, setFormData] = useState<RoomData>({
+  const [formData, setFormData] = useState<DataRoomReq>({
     id_cinema: "",
-    colunm: "",
+    column: "",
     row: "",
     seatRemoved: {},
+    status: 2,
   });
   const listOptionCinemas: CinemaType[] = cinemas.map((item) => {
     return {
@@ -39,16 +34,17 @@ const AddForm = ({ cinemas }: AddFormProps) => {
       ...prev,
       seatRemoved: {},
     }));
-  }, [formData.row, formData.colunm]);
+  }, [formData.row, formData.column]);
   const dataRequest: DataRoomReq = {
     id_cinema: formData.id_cinema,
-    column: Number(formData.colunm),
+    column: Number(formData.column),
     row: Number(formData.row),
     seatRemoved: formData.seatRemoved,
+    status: formData.status,
   };
   const handleAddRoom = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.colunm || !formData.id_cinema || !formData.row) {
+    if (!formData.column || !formData.id_cinema || !formData.row) {
       toast.warning("Vui lòng nhập đầy đủ thông tin!");
       return;
     }
@@ -59,9 +55,10 @@ const AddForm = ({ cinemas }: AddFormProps) => {
         await dispatch(fetchRooms({ page: 1, limit: 5 }));
         setFormData({
           id_cinema: "",
-          colunm: "",
+          column: "",
           row: "",
           seatRemoved: {},
+          status: 2,
         });
         toast.success("Thêm phòng thành công!");
       } else {
@@ -72,6 +69,8 @@ const AddForm = ({ cinemas }: AddFormProps) => {
       console.error(err);
     }
   };
+  console.log(formData.status);
+
   return (
     <>
       <div className="space-y-5 px-5 flex-1 overflow-x-hidden overflow-y-auto">

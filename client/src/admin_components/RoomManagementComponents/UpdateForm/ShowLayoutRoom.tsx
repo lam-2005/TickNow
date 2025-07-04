@@ -1,21 +1,23 @@
 import Seat from "@/components/BookingPageComponents/Seat";
 import React from "react";
 import handleShowLayoutRoom from "../handleShowLayoutRoom";
-import { RoomData } from "./UpdateForm";
+import { DataRoomReq } from "@/interfaces/room.interface";
 
 const ShowLayoutRoom = ({
   formData,
   setFormData,
 }: {
-  formData: RoomData;
-  setFormData: (data: RoomData | ((prev: RoomData) => RoomData)) => void;
+  formData: DataRoomReq;
+  setFormData: (
+    data: DataRoomReq | ((prev: DataRoomReq) => DataRoomReq)
+  ) => void;
 }) => {
   const { layout } = handleShowLayoutRoom(formData);
   const handleToggleSeat = (seatId: string) => {
     const rowLetter = seatId[0];
     const colNumber = Number(seatId.slice(1));
-    setFormData((prev: RoomData) => {
-      const currentSeats = prev.seatRemoved[rowLetter] || [];
+    setFormData((prev: DataRoomReq) => {
+      const currentSeats = prev.seatRemoved?.[rowLetter] || [];
 
       const updatedSeats = currentSeats.includes(colNumber)
         ? currentSeats.filter((seat) => seat !== colNumber)
@@ -34,13 +36,13 @@ const ShowLayoutRoom = ({
     <div className="space-y-7.5">
       <div className="flex gap-5 items-end">
         <h2 className="text-xl ">Sơ đồ phòng (chọn ghế muốn xóa):</h2>
-        {!formData.colunm || !formData.id_cinema || !formData.row ? (
+        {!formData.column || !formData.id_cinema || !formData.row ? (
           <p>Vui lòng nhập đầy đủ thông tin ở phía trên!</p>
         ) : (
           ""
         )}
       </div>
-      {!formData.colunm || !formData.id_cinema || !formData.row ? (
+      {!formData.column || !formData.id_cinema || !formData.row ? (
         ""
       ) : (
         <div className="flex-column items-center">

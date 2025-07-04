@@ -10,6 +10,7 @@ import InfoPopup from "../Popup/InfoPopup";
 
 import usePopup from "@/hooks/usePopup";
 import env from "@/configs/environment";
+import convertSlug from "@/utils/convertSlug";
 
 const Movie = ({
   info,
@@ -27,6 +28,8 @@ const Movie = ({
     closeInfo,
     closeTrailer,
   } = usePopup();
+  const slugName = convertSlug(info.name);
+
   return (
     <>
       {trailerPopup && (
@@ -42,7 +45,7 @@ const Movie = ({
           className="w-full aspect-[2/3] relative z-9 
       "
         >
-          <Link href={`/detail/${info._id}`}>
+          <Link href={`/detail/${slugName}-${info._id}`}>
             <div className="w-full h-full relative rounded-xl overflow-hidden">
               <Image
                 fill
@@ -65,7 +68,7 @@ const Movie = ({
       mt-4 ${textColor}`}
         >
           <Link
-            href={`/detail/${info._id}`}
+            href={`/detail/${slugName}-${info._id}`}
             className="group-hover:text-primary transition-colors duration-500 "
           >
             {info.name}
@@ -73,7 +76,7 @@ const Movie = ({
         </h3>
         <Button
           title="Đặt vé ngay"
-          onClick={() => router.push(`/detail/${info._id}`)}
+          onClick={() => router.push(`/detail/${slugName}-${info._id}`)}
         />
       </div>
     </>
