@@ -1,9 +1,18 @@
-"use client";
 import BackgroundPage from "@/components/BackgroundPage/BackgroundPage";
 import Showtimelist from "@/components/ShowtimeList/Showtimelist";
-import React, { useState } from "react";
-
+import { getMovieList } from "@/services/movie.service";
+import React, { use } from "react";
+const getListShowtime = async () => {
+  try {
+    const res = await getMovieList("/schedue");
+    return res?.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
 const Showtimes = () => {
+  const showtimeList = getListShowtime();
+
   return (
     <div>
       <BackgroundPage image="background_movie.webp" title="Lịch chiếu phim">

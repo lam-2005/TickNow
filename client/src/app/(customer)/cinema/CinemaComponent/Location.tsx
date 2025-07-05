@@ -31,7 +31,6 @@
 
 // export default Location;
 
-
 // components/Location.tsx
 
 // import React from "react";
@@ -80,25 +79,24 @@ interface Props {
   data: Cinema;
 }
 
-const Location = ({ data }: Props) => {
+const LocationItem = ({ data }: Props) => {
   return (
     <div className="w-full bg-background-card rounded-md shadow-md overflow-hidden">
       {/* Phần ảnh nền */}
       <div className="relative w-full h-40">
-      <Image
-        src="/images.jpg"
-        alt={`Ảnh rạp ${data.name}`}
-        fill
-        priority
-        className="object-cover"
-      />
+        <Image
+          src="/images.jpg"
+          alt={`Ảnh rạp ${data.name}`}
+          fill
+          priority
+          className="object-cover"
+          sizes="400px"
+        />
       </div>
 
       {/* Phần thông tin */}
       <div className="p-3">
-        <h1 className="text-foreground font-bold text-base">
-          {data.name}
-        </h1>
+        <h1 className="text-foreground font-bold text-base">{data.name}</h1>
         <p className="text-foreground text-sm leading-relaxed mt-2.5">
           {data.location.deatil_location}
         </p>
@@ -108,4 +106,4 @@ const Location = ({ data }: Props) => {
   );
 };
 
-export default Location;
+export default LocationItem;

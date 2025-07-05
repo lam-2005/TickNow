@@ -20,6 +20,8 @@ const SeatDiagram = ({ roomLayout }: { roomLayout: RoomType }) => {
                   key={`${Object.keys(item)[0]}${index}`}
                   seatName={i === "" ? "" : `${Object.keys(item)[0]}${i}`}
                   seatSelected={seatSelected}
+                  seatRemoveStyle="!bg-transparent !invisible !pointer-events-none"
+                  onClick={() => null}
                 />
               );
             })}

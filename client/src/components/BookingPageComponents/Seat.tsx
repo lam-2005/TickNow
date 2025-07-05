@@ -2,20 +2,26 @@ import React from "react";
 
 const Seat = ({
   seatName,
+  className,
   seatSelected,
+  seatRemoveStyle,
+  onClick,
 }: {
   seatName: string;
-  seatSelected: boolean;
+  seatSelected?: boolean;
+  className?: string;
+  seatRemoveStyle: string;
+  onClick: (seat: string) => void;
 }) => {
   return (
     <button
+      onClick={() => onClick(seatName)}
       disabled={seatSelected}
-      className={`size-7.5   text-black flex-center cursor-pointer hover:bg-primary  rounded-[5px] text-sm font-bold transition-all duration-200 ${
-        seatName === ""
-          ? "bg-transparent! invisible! pointer-events-none!"
-          : "bg-white hover:text-white"
-      } select-none
-      disabled:bg-[#aeaeae] disabled:cursor-not-allowed disabled:hover:text-black`}
+      className={`size-7.5 text-foreground flex-center cursor-pointer rounded-[5px] text-sm font-bold transition-all duration-200 ${
+        seatName === "" ? seatRemoveStyle : ""
+      } 
+      select-none bg-white hover:text-background hover:bg-primary
+      disabled:bg-[#aeaeae] disabled:cursor-not-allowed disabled:hover:text-foreground ${className}`}
     >
       {seatName}
     </button>

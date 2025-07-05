@@ -4,16 +4,13 @@ import { ThemeProvider } from "./useTheme";
 import { StageProvider } from "./useStage";
 import { Provider } from "react-redux";
 import store from "@/utils/redux/store";
-import { ToastProvider } from "./useToast";
 
 const AppProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <Provider store={store}>
-      <ToastProvider>
-        <ThemeProvider>
-          <StageProvider>{children}</StageProvider>
-        </ThemeProvider>
-      </ToastProvider>
+      <ThemeProvider>
+        <StageProvider>{children}</StageProvider>
+      </ThemeProvider>
     </Provider>
   );
 };

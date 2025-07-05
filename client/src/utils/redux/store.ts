@@ -1,10 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slices/authSlice";
 import roomSlice from "./slices/roomSlice";
+import voucherSlide from "@/utils/redux/slices/voucherSlice";
+import cinemaSlice from "@/utils/redux/slices/cinemaSlice";
+
 const store = configureStore({
   reducer: {
-    auth: authReducer,
+     auth: authReducer,
     roomManagement: roomSlice,
+    voucherManagement: voucherSlide,
+    cinemaManagement: cinemaSlice,
   },
 });
 

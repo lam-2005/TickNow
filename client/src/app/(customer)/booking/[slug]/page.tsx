@@ -14,7 +14,7 @@ const BookingPage = async ({
   const fetchShowtimes = async () => {
     try {
       const res = await getScreeningList();
-      return res.data;
+      return res.data.result;
     } catch (error) {
       console.error("Lỗi khi tải suất chiếu:", error);
     }

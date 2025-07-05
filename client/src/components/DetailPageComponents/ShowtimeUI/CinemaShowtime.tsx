@@ -4,7 +4,7 @@ import React from "react";
 export type ShowtimeType = {
   type: string;
   data: {
-    id_room: string;
+    id: string;
     time: string;
     showtype: string;
   }[];
@@ -22,6 +22,7 @@ const CinemaShowtime = ({ data }: { data: CinemaShowtimeType }) => {
     }
     return acc;
   }, [] as ShowtimeType[]);
+  console.log(listShowtimes);
 
   return (
     <div className="space-y-5 bg-background-card rounded-[10px] p-5 w-full">

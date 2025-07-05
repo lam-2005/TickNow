@@ -23,7 +23,7 @@ export interface Screening {
   movieName?: string; // Sử dụng khi bạn join từ collection movie
 }
 export type CinemaShowtimeType = {
-  id: string;
+  _id: string;
   location: {
     id_location: string;
     deatil_location: string;

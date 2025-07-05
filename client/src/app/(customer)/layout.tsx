@@ -38,9 +38,7 @@ export default function RootLayout({
           <AppProvider>
             <ThemeLayout>
               <ToastContainer theme="colored" />
-
               <Header />
-
               <main className="">{children}</main>
               <Footer />
             </ThemeLayout>

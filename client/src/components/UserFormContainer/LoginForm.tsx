@@ -7,7 +7,7 @@ import validateForm from "@/utils/validate";
 import { loginUser } from "@/utils/redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/utils/redux/store";
-import { useToast } from "@/hooks/contexts/useToast";
+import { toast } from "react-toastify";
 const LoginForm = ({
   closeForm,
   setOpenForm,
@@ -17,7 +17,6 @@ const LoginForm = ({
   setOpenReset: () => void;
   closeForm: () => void;
 }) => {
-  const { createToastError, createToastSuccess } = useToast();
   const { touched, touchedEmail, touchedPassword } = useTouched();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [formData, setFormData] = useState<{ email: string; password: string }>(
@@ -34,13 +33,16 @@ const LoginForm = ({
   });
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    if (!formData.email || !formData.password) {
+      toast.warning("Vui lòng nhập đầu đủ thông tin!");
+      return;
+    }
     try {
       await dispatch(loginUser(formData)).unwrap();
-      createToastSuccess("Đăng nhập thành công");
+      toast.success("Đăng nhập thành công");
       closeForm();
     } catch (err) {
-      createToastError(`Đăng nhập thất bại: ${err}`);
+      toast.error(`Đăng nhập thất bại: ${err}`);
       console.error(err);
     }
   };
