@@ -54,12 +54,7 @@ const VoucherList = ({
     { key: "max_users", title: "Số lượng tối đa" },
     { key: "start_date", title: "Ngày bắt đầu" },
     { key: "end_date", title: "Ngày kết thúc" },
-    {
-      key: "is_active",
-      title: "Trạng Thái",
-      render: (row) =>
-        row.is_active === 1 || row.is_active === "1" ? "Hoạt Động" : "Ngừng Hoạt Động",
-    },
+    { key: "is_active", title: "Trạng Thái" },
     {
       title: "Thao tác",
       render: (row) => (
