@@ -4,7 +4,7 @@ import React from "react";
 interface ActionButtonProps {
   label: string;
   onClick: (id?: string | number) => void;
-  bgColor?: "warning" | "success" | "error";
+  bgColor?: "warning" | "success" | "error" | "bg-yellow-500";
   id?: string | number;
   className?: string;
 }
