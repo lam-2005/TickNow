@@ -67,12 +67,12 @@ const UserList = ({ initData }: { initData: InitDataType }) => {
       render: (row: UserType) => (
         <ActionButton
           label={
-            row.status === 1 || row.status === "1"
+            row.status
               ? "Hoạt Động"
               : "Ngừng Hoạt Động"
           }
           bgColor={
-            row.status === 1 || row.status === "1"
+            row.status
               ? "success"
               : "warning"
           }

@@ -4,7 +4,7 @@ export interface UserType {
   phone: string;
   email: string;
   year: number;
-  status: number | string; // 1: active, 0: inactive
+  status: boolean; // 1: active, 0: inactive
   role: boolean;
 }
 export type LoginType = {
@@ -18,7 +18,7 @@ export type UserReq={
   email: string;
   year: number | string;
   password: string;
-  confirmPassword: string; // Optional for registration
-  status?: number | string; // Optional for update
+  confirmPassword: string;
+  status?: boolean; // Optional for update
   role?: boolean; // Optional for update
 }

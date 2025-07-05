@@ -17,7 +17,7 @@ const AddForm = () => {
     year: "",
     password: "",
     confirmPassword: "",
-    status: "1", // Mặc định là active
+    status: true, // Mặc định là active
     role: false, // Mặc định là user
   });
 
@@ -48,7 +48,7 @@ const AddForm = () => {
         await dispatch(
           addUser({
             ...formData,
-            status: Number(formData.status),
+            status: Boolean(formData.status),
             role: Boolean(formData.role),
           })
         ).unwrap();
@@ -64,7 +64,7 @@ const AddForm = () => {
           year: "",
           password: "",
           confirmPassword: "",
-          status: "1",
+          status: true,
           role: false,
         });
       } catch (err) {

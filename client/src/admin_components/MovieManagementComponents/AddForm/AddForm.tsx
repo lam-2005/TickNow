@@ -22,7 +22,7 @@ const AddForm = ({ genre }: AddFormProps) => {
     name: "",
     release_date: "",
     nation: "",
-    language: "",
+    language: 1, // 1: Phụ Đề, 2: Lồng Tiếng
     duration: "",
     age: "",
     director: "",
@@ -65,7 +65,7 @@ const listOptionGenre: GenreType[] = genre.map((item) => {
         name: "",
         release_date: "",
         nation: "",
-        language: "",
+        language: 1,
         duration: "",
         age: "",
         director: "",

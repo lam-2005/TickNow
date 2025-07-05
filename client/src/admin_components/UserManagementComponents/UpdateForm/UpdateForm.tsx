@@ -25,7 +25,7 @@ const UpdateForm = ({ data, onSubmit, onCancel, onlyEditStatusAndRole }: Props) 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const payload: Partial<UserReq> = {
-      status: Number(formData.status),
+      status: formData.status,
       role: formData.role,
     };
     onSubmit(payload as UserReq);

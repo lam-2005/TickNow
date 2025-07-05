@@ -74,12 +74,12 @@ const InputGroupMovie = ({ formData, setFormData, listOptionGenre }: InputGroupP
 
       <div>
         <label className="block mb-1 text-sm font-medium">Ngôn ngữ</label>
-        <input
-          type="text"
-          value={formData.language}
-          onChange={(e) => setFormData({ ...formData, language: e.target.value })}
-          className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
-        />
+        <select name="language" value={formData.language} 
+        className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
+        onChange={(e) => setFormData({ ...formData, language: Number(e.target.value) })}>
+          <option value={1}>Phụ Đề</option>
+          <option value={2}>Lồng Tiếng</option>
+        </select>
       </div>
 
       <div>

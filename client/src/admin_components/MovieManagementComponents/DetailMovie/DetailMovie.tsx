@@ -28,7 +28,7 @@ const MovieDetail = ({ movie, onClose }: Props) => {
             <p><strong>Ngày công chiếu:</strong> {new Date(movie.release_date).toLocaleDateString("vi-VN")}</p>
             <p><strong>Đạo diễn:</strong> {movie.director}</p>
             <p><strong>Diễn viên:</strong> {movie.actor}</p>
-            <p><strong>Ngôn ngữ:</strong> {movie.language}</p>
+            <p><strong>Ngôn ngữ:</strong> {Number(movie.language) === 1 ? "Phụ Đề" : Number(movie.language) === 2 ? "Lồng Tiếng" : "Chưa Xác Định"}</p>
             <p><strong>Thời lượng:</strong> {movie.duration} phút</p>
             <p><strong>Độ tuổi:</strong> {movie.age}+</p>
             <p><strong>Trạng thái:</strong> {Number(movie.status) === 1 ? "Đang Chiếu" : Number(movie.status) === 2 ? "Sắp Chiếu" : "Ngừng Chiếu"}</p>

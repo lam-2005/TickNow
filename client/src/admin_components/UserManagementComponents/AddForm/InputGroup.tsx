@@ -109,17 +109,13 @@ const InputGroup = ({ formData, setFormData }: InputGroupProps) => {
         </label>
         <select
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
-          value={
-            formData.status === 1 || formData.status === "1"
-              ? "1"
-              : formData.status === 0 || formData.status === "0"
-              ? "0"
-              : ""
+          value={formData.status ? "true" : "false"}
+          onChange={(e) =>
+            setFormData({ ...formData, status: e.target.value === "true" })
           }
-          onChange={(e) => setFormData({ ...formData, status: e.target.value })}
         >
-          <option value="1">Đang hoạt động</option>
-          <option value="0">Ngừng hoạt động</option>
+          <option value="true">Đang hoạt động</option>
+          <option value="false">Ngừng hoạt động</option>
         </select>
       </div>
     </div>
