@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { MovieType } from "@/interfaces/movie.interface";
+import { MovieReq } from "@/interfaces/movie.interface";
 import Button from "@mui/material/Button";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { styled } from "@mui/material/styles";
@@ -13,8 +13,8 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 
 
 type InputGroupProps = {
-  formData: MovieType;
-  setFormData: (data: MovieType) => void;
+  formData: MovieReq;
+  setFormData: (data: MovieReq) => void;
   listOptionGenre: GenreType[];
 };
 const InputGroupMovie = ({ formData, setFormData, listOptionGenre }: InputGroupProps) => {
@@ -27,7 +27,6 @@ const InputGroupMovie = ({ formData, setFormData, listOptionGenre }: InputGroupP
   const handleGenreChange = ( values : GenreType[]) => {
   const ids = values.map(item => item.id);
     setFormData({ ...formData, genre: ids });
-    console.log('Genre:', ids);
   };
   const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -47,8 +46,7 @@ const InputGroupMovie = ({ formData, setFormData, listOptionGenre }: InputGroupP
         <label className="block mb-1 text-sm font-medium">Tên phim</label>
         <input
           type="text"
-          name="name"
-          value={formData.name || ""}
+          value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
         />
@@ -58,8 +56,7 @@ const InputGroupMovie = ({ formData, setFormData, listOptionGenre }: InputGroupP
         <label className="block mb-1 text-sm font-medium">Ngày công chiếu</label>
         <input
           type="date"
-          name="release_date"
-          value={formData.release_date || ""}
+          value={formData.release_date}
           onChange={(e) => setFormData({ ...formData, release_date: e.target.value })}
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
         />
@@ -69,8 +66,7 @@ const InputGroupMovie = ({ formData, setFormData, listOptionGenre }: InputGroupP
         <label className="block mb-1 text-sm font-medium">Quốc gia</label>
         <input
           type="text"
-          name="nation"
-          value={formData.nation || ""}
+          value={formData.nation}
           onChange={(e) => setFormData({ ...formData, nation: e.target.value })}
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
         />
@@ -80,8 +76,7 @@ const InputGroupMovie = ({ formData, setFormData, listOptionGenre }: InputGroupP
         <label className="block mb-1 text-sm font-medium">Ngôn ngữ</label>
         <input
           type="text"
-          name="language"
-          value={formData.language || ""}
+          value={formData.language}
           onChange={(e) => setFormData({ ...formData, language: e.target.value })}
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
         />
@@ -89,10 +84,11 @@ const InputGroupMovie = ({ formData, setFormData, listOptionGenre }: InputGroupP
 
       <div>
         <label className="block mb-1 font-medium">Trạng thái</label>
-        <select name="status" value={formData.status || 1} className="w-full border border-gray-300 rounded-md px-4 py-3 text-base">
+        <select name="status" value={formData.status} 
+        className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
+        onChange={(e) => setFormData({ ...formData, status: Number(e.target.value) })}>
           <option value={1}>Đang chiếu</option>
           <option value={2}>Sắp chiếu</option>
-          <option value={3}>Ngừng chiếu</option>
         </select>
       </div>
 
@@ -100,8 +96,7 @@ const InputGroupMovie = ({ formData, setFormData, listOptionGenre }: InputGroupP
         <label className="block mb-1 text-sm font-medium">Thời lượng (phút)</label>
         <input
           type="number"
-          name="duration"
-          value={formData.duration || ""}
+          value={formData.duration}
           onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
         />
@@ -111,8 +106,7 @@ const InputGroupMovie = ({ formData, setFormData, listOptionGenre }: InputGroupP
         <label className="block mb-1 text-sm font-medium">Độ tuổi</label>
         <input
           type="text"
-          name="age"
-          value={formData.age || ""}
+          value={formData.age}
           onChange={(e) => setFormData({ ...formData, age: e.target.value })}
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
         />
@@ -122,8 +116,7 @@ const InputGroupMovie = ({ formData, setFormData, listOptionGenre }: InputGroupP
         <label className="block mb-1 text-sm font-medium">Đạo diễn</label>
         <input
           type="text"
-          name="director"
-          value={formData.director || ""}
+          value={formData.director}
           onChange={(e) => setFormData({ ...formData, director: e.target.value })}
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
         />
@@ -133,26 +126,36 @@ const InputGroupMovie = ({ formData, setFormData, listOptionGenre }: InputGroupP
         <label className="block mb-1 text-sm font-medium">Diễn viên</label>
         <input
           type="text"
-          name="actor"
-          value={formData.actor || ""}
+          value={formData.actor}
           onChange={(e) => setFormData({ ...formData, actor: e.target.value })}
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
         />
       </div>
+
+      <div>
+        <label className="block mb-1 text-sm font-medium">Trailer</label>
+        <input
+          type="text"
+          value={formData.trailer}
+          onChange={(e) => setFormData({ ...formData, trailer: e.target.value })}
+          className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
+        />
+      </div>
+
       <div>
         <label className="block mb-1 text-sm font-medium">Thể loại</label>
         <Autocomplete
-        multiple
-        id="checkboxes-tags-demo"
-        className="w-full  "
-        options={listOptionGenre}
-        disableCloseOnSelect
-        getOptionLabel={(option) => option.label}
-        onChange={(event, values) => handleGenreChange(event, values)}
-        renderOption={(props, option, { selected }) => {
-          const { key, ...optionProps } = props;
-          return (
-            <li key={key} {...optionProps}>
+          multiple
+          id="checkboxes-tags-demo"
+          className="w-full"
+          options={listOptionGenre}
+          disableCloseOnSelect
+          getOptionLabel={(option) => option.label}
+          value={listOptionGenre.filter(option => formData.genre?.includes(option.id))}
+          onChange={(_, values) => handleGenreChange(values)}
+          renderOption={(props, option, { selected }) => {
+            const {key,...optionProps} = props;
+            return <li key={key} {...optionProps}>
               <Checkbox
                 icon={icon}
                 checkedIcon={checkedIcon}
@@ -161,12 +164,12 @@ const InputGroupMovie = ({ formData, setFormData, listOptionGenre }: InputGroupP
               />
               {option.label}
             </li>
-          );
-        }}
-        renderInput={(params) => (
-          <TextField {...params} label="Chọn Thể Loại" placeholder="Thể Loại" />
-        )}
-      />
+          }}
+          renderInput={(params) => (
+            <TextField {...params} label="Chọn Thể Loại" placeholder="Thể Loại" />
+          )}
+        />
+
       </div>
 
       <div>
@@ -182,7 +185,7 @@ const InputGroupMovie = ({ formData, setFormData, listOptionGenre }: InputGroupP
         <VisuallyHiddenInput
           accept="image/*"
           type="file"
-          onChange={(event) => console.log(event.target.files)}
+          onChange={(e) => setFormData({ ...formData, image: e.target.files ? e.target.files[0] : null })}
           multiple
         />
       </Button>
@@ -201,7 +204,7 @@ const InputGroupMovie = ({ formData, setFormData, listOptionGenre }: InputGroupP
         <VisuallyHiddenInput
           accept="image/*"
           type="file"
-          onChange={(event) => console.log(event.target.files)}
+          onChange={(e) => setFormData({ ...formData, banner: e.target.files ? e.target.files[0] : null })}
           multiple
         />
       </Button>
@@ -210,8 +213,7 @@ const InputGroupMovie = ({ formData, setFormData, listOptionGenre }: InputGroupP
       <div className="md:col-span-2">
         <label className="block mb-1 text-sm font-medium">Mô tả</label>
         <textarea
-          name="description"
-          value={formData.description || ""}
+          value={formData.description}
           onChange={(e) => setFormData({ ...formData, description: e.target.value })}
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base min-h-[100px]"
         />

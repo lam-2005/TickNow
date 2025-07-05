@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/utils/redux/store";
 import { addMovie, fetchMovies } from "@/utils/redux/slices/movieSlice";
-import { MovieType } from "@/interfaces/movie.interface";
+import { MovieReq } from "@/interfaces/movie.interface";
 import { toast } from "react-toastify";
 import InputGroup from "./InputGroup";
 import Genre from "@/interfaces/genre.interface";
@@ -18,7 +18,7 @@ export type GenreType = {
 const AddForm = ({ genre }: AddFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const [formData, setFormData] = useState<Partial<MovieType>>({
+  const [formData, setFormData] = useState<MovieReq>({
     name: "",
     release_date: "",
     nation: "",
@@ -30,12 +30,12 @@ const AddForm = ({ genre }: AddFormProps) => {
     status: 1,
     genre:[],
     trailer: "",
-    image: "",
-    banner: "",
+    image: null,
+    banner: null,
     description: "",
   });
 
-  const listOptionGenre: GenreType[] = genre.map((item) => {
+const listOptionGenre: GenreType[] = genre.map((item) => {
       return {
         label: item.name,
         id: String(item._id),
@@ -55,7 +55,8 @@ const AddForm = ({ genre }: AddFormProps) => {
     if (!confirmAdd) return;
 
     try {
-      await dispatch(addMovie(formData)).unwrap();
+      const res = await dispatch(addMovie({...formData,duration: Number(formData.duration)})).unwrap();
+      console.log("Thêm phim thành công:", res);
       await dispatch(fetchMovies({ page: 1, limit: 5 }));
       toast.success("Thêm phim thành công!");
 
@@ -72,8 +73,8 @@ const AddForm = ({ genre }: AddFormProps) => {
         status: 1,
         genre: [],
         trailer: "",
-        image: "",
-        banner: "",
+        image: null,
+        banner: null,
         description: "",
       });
     } catch (err) {
@@ -81,7 +82,7 @@ const AddForm = ({ genre }: AddFormProps) => {
       toast.error("Thêm phim thất bại!");
     }
   };
-
+  console.log(formData);
   return (
     <>
       <div className="space-y-5 px-5 flex-1 overflow-x-hidden overflow-y-auto">

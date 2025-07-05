@@ -11,6 +11,7 @@ type Props = {
 };
 
 const MovieDetail = ({ movie, onClose }: Props) => {
+  console.log(`${env.IMG_API_URL}/movie/${movie.image}`)
   return (
     <PopupContainer title="Chi Tiết Phim" closeForm={onClose}>
       <div className="space-y-5 px-6 flex-1 overflow-y-auto pb-5 max-h-[75vh]">

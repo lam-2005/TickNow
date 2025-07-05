@@ -1,9 +1,9 @@
 import React, { Suspense } from "react";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import OptionTable from "@/admin_components/OptionTable/OptionTable";
-import AddBtn from "@/admin_components/Button/AddBtn";
 import * as userService from "@/services/user.service";
-import UserList from "./UserList";
+import UserList from "../../../../admin_components/UserManagementComponents/UserList";
+import AddUserBtn from "@/admin_components/UserManagementComponents/AddForm/ButtonOpenForm";
 
 const getUserData = async (page: number, limit: number) => {
   const res = await userService.getUserList(`?page=${page}&limit=${limit}`);
@@ -20,7 +20,7 @@ const UserManagement = async () => {
   return (
     <div className="card">
       <HeadingCard title="Quản Lý Người Dùng">
-        <AddBtn />
+        <AddUserBtn />
       </HeadingCard>
       <OptionTable />
       <Suspense fallback={<p className="text-center">Đang tải dữ liệu...</p>}>

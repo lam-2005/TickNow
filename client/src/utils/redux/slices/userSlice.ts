@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { UserType } from "@/interfaces/user.interface";
+import { UserReq, UserType } from "@/interfaces/user.interface";
 import * as userService from "@/services/user.service";
 
 type UserState = {
@@ -9,6 +9,8 @@ type UserState = {
   totalPages: number;
   loading: boolean;
   error: string | null;
+  errorAddData: string | null;
+  errorUpdateData: string | null;
 };
 
 const initialState: UserState = {
@@ -18,6 +20,8 @@ const initialState: UserState = {
   totalPages: 1,
   loading: false,
   error: null,
+  errorAddData: null,
+  errorUpdateData : null,
 };
 
 export const fetchUsers = createAsyncThunk(
@@ -37,6 +41,29 @@ export const fetchUsers = createAsyncThunk(
   }
 );
 
+export const updateUser = createAsyncThunk(
+  "roomManagement/updateRoom",
+  async ({ id, data }: { id: string; data: UserReq }, thunkAPI) => {
+    try {
+      const res = await userService.updateUserAPI(id, data);
+      return res;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const addUser = createAsyncThunk(
+  "roomManagement/addUser",
+  async (data: UserReq, thunkAPI) => {
+    try {
+      const res = await userService.addUser(data);
+      return res;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -62,7 +89,31 @@ const userSlice = createSlice({
       .addCase(fetchUsers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      });
+      })
+      // thêm
+      .addCase(addUser.pending, (state) => {
+        state.loading = true;
+        state.errorAddData = null;
+        })
+      .addCase(addUser.fulfilled, (state) => {
+        state.loading = false;
+        })
+      .addCase(addUser.rejected, (state, action) => {
+        state.loading = false;
+        state.errorAddData = action.payload as string;
+        })
+      // sửa
+      .addCase(updateUser.pending, (state) => {
+        state.loading = true;
+        state.errorUpdateData = null;
+        })
+      .addCase(updateUser.fulfilled, (state) => {
+        state.loading = false;
+        })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.loading = false;
+        state.errorUpdateData = action.payload as string;
+        });
   },
 });
 

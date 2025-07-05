@@ -29,7 +29,7 @@ const MovieManagement = async () => {
         <AddMovieBtn genre={genres}/>
       </HeadingCard>
       <Suspense fallback={<p className="text-center">Đang tải dữ liệu...</p>}>
-        <MovieList initData={movieData} />
+        <MovieList initData={movieData} genre={genres} />
       </Suspense>
     </div>
   );

@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import reduxInitStateDefault, {
   ReduxInitStateDefaultType,
 } from "@/configs/reduxInitStateDefault";
-import { MovieType } from "@/interfaces/movie.interface";
+import { MovieReq, MovieType } from "@/interfaces/movie.interface";
 import * as movieService from "@/services/movie.service";
 
 type MovieState = ReduxInitStateDefaultType & {
@@ -44,7 +44,7 @@ export const fetchMovies = createAsyncThunk(
 
 export const addMovie = createAsyncThunk(
   "movieManagement/addMovie",
-  async (data: Partial<MovieType>, thunkAPI) => {
+  async (data: MovieReq, thunkAPI) => {
     try {
       const res = await movieService.createMovie(data);
       return res;
@@ -57,25 +57,13 @@ export const addMovie = createAsyncThunk(
 
 export const updateMovie = createAsyncThunk(
   "movieManagement/updateMovie",
-  async ({ id, data }: { id: string; data: Partial<MovieType> }, thunkAPI) => {
+  async ({ id, data }: { id: string; data: MovieReq }, thunkAPI) => {
     try {
       const res = await movieService.updateMovie(id, data);
       return res;
     } catch (error) {
       console.log("Error updating movie:", error);
       return thunkAPI.rejectWithValue("Cập nhật phim thất bại.");
-    }
-  }
-);
-export const deleteMovie = createAsyncThunk(
-  "movieManagement/deleteMovie",
-  async (id: string, thunkAPI) => {
-    try {
-      await movieService.deleteMovie(id);
-      return id;
-    } catch (error) {
-      console.log("Error deleting movie:", error);
-      return thunkAPI.rejectWithValue("Xoá phim thất bại.");
     }
   }
 );
@@ -138,19 +126,6 @@ const movieSlice = createSlice({
         state.loading = false;
         state.errorUpdateData = action.payload as string;
       })
-      // Delete
-      .addCase(deleteMovie.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(deleteMovie.fulfilled, (state, action) => {
-        state.loading = false;
-        state.data = state.data.filter((movie) => movie._id !== action.payload);
-      })
-      .addCase(deleteMovie.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-      });
   },
 });
 

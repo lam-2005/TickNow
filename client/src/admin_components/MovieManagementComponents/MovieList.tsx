@@ -1,22 +1,22 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import Table, { Column } from "@/admin_components/Table/Table";
 import Pagination from "@/admin_components/Table/Pagination";
 import ActionButton from "@/admin_components/Button/ButtonActions";
 import { AppDispatch } from "@/utils/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import usePanigation from "@/hooks/usePanigation";
-import { MovieType } from "@/interfaces/movie.interface";
+import { MovieReq, MovieType } from "@/interfaces/movie.interface";
 import {
   fetchMovies,
   setInitialMovies,
   updateMovie,
-  deleteMovie,
 } from "@/utils/redux/slices/movieSlice";
 import dataMovie from "@/utils/redux/selectors/movieSlector";
 import { toast } from "react-toastify";
 import MovieDetail from "./DetailMovie/DetailMovie";
 import UpdateFormContainer from "./UpdateForm/UpdateFormContainer";
+import Genre from "@/interfaces/genre.interface";
 
 type InitDataType = {
   movies: MovieType[];
@@ -25,7 +25,7 @@ type InitDataType = {
   totalPages: number;
 };
 
-const MovieList = ({ initData }: { initData: InitDataType }) => {
+const MovieList = ({ initData , genre}: { initData: InitDataType, genre:Promise<Genre[]> }) => {
   const dispatch = useDispatch<AppDispatch>();
   const isFirstLoad = useRef(true);
 
@@ -85,7 +85,7 @@ const MovieList = ({ initData }: { initData: InitDataType }) => {
     setIsEditOpen(true);
   };
 
-  const handleUpdate = async (id: string, data: Partial<MovieType>) => {
+  const handleUpdate = async (id: string, data: MovieReq) => {
     try {
       const sure = confirm("Bạn có muốn cập nhật phim này?");
       if (!sure) return;
@@ -95,20 +95,6 @@ const MovieList = ({ initData }: { initData: InitDataType }) => {
     } catch (err) {
       console.log("Cập nhật phim thất bại:", err);
       toast.error("Cập nhật phim thất bại!");
-    }
-  };
-
-  const handleDelete = async (id: string) => {
-    const sure = confirm("Bạn có chắc muốn xóa phim này?");
-    if (!sure) return;
-
-    try {
-      await dispatch(deleteMovie(id)).unwrap();
-      toast.success("Xoá phim thành công!");
-      dispatch(fetchMovies({ page, limit: rowsPerPage }));
-    } catch (err) {
-      console.log("Xoá phim thất bại:", err);
-      toast.error("Xoá phim thất bại!");
     }
   };
 
@@ -124,9 +110,28 @@ const MovieList = ({ initData }: { initData: InitDataType }) => {
           : "Chưa xác định";
       },
     },
-    { key: "director", title: "Đạo Diễn" },
-    { key: "nation", title: "Quốc Gia" },
-    { key: "age", title: "Độ Tuổi" },
+    {
+      title: "Trạng thái",
+      render: (row) => (
+        <ActionButton
+          label={
+            row.status === 1
+              ? "Đang Chiếu"
+              : row.status === 2
+              ? "Sắp Chiếu"
+              : "Ngưng Chiếu"
+          }
+          bgColor={
+            row.status === 1
+              ? "success"
+              : row.status === 2
+              ? "warning"
+              : "error"
+          }
+          onClick={()=>null}
+        />
+      ),
+    },
     {
       title: "Thể Loại",
       render: (row: MovieType) => {
@@ -157,11 +162,6 @@ const MovieList = ({ initData }: { initData: InitDataType }) => {
             bgColor="warning"
             onClick={() => handleOpenUpdate(row)}
           />
-          <ActionButton
-            label="Xoá"
-            bgColor="error"
-            onClick={() => handleDelete(row._id)}
-          />
         </div>
       ),
     },
@@ -186,6 +186,7 @@ const MovieList = ({ initData }: { initData: InitDataType }) => {
       )}
       {isEditOpen && selectedMovie && (
         <UpdateFormContainer
+          genre={use(genre)}
           info={selectedMovie}
           closeForm={() => {
             setIsEditOpen(false);

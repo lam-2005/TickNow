@@ -1,4 +1,4 @@
-import { LoginType } from "@/interfaces/user.interface";
+import { LoginType, UserReq } from "@/interfaces/user.interface";
 import catchingError from "@/utils/catchingError";
 import api from "@/utils/http";
 import { FieldsType } from "@/utils/validate";
@@ -29,4 +29,21 @@ const signupAPI = async (data: FieldsType) => {
     catchingError(error, "Đăng ký thất bại!");
   }
 };
-export { getUserList, loginAPI, signupAPI };
+const addUser = async (data: UserReq) => {
+  try {
+    const res = await api.post("/user/register", data);
+    return res;
+  } catch (error) {
+    catchingError(error, "Đăng ký thất bại!");
+  }
+};
+
+const updateUserAPI = async (id: string, req: UserReq) => {
+  try {
+    const res = await api.patch(`/user/update/${id}`, req);
+    return res;
+  } catch (error) {
+    catchingError(error, "Cập nhật người dùng thất bại!");
+  }
+};
+export { getUserList, loginAPI, signupAPI ,addUser, updateUserAPI};

@@ -1,6 +1,6 @@
 import api from "@/utils/http";
 import catchingError from "@/utils/catchingError";
-import { MovieType } from "@/interfaces/movie.interface";
+import { MovieReq } from "@/interfaces/movie.interface";
 
 export const getMovieList = async (param: string = "") => {
   try {
@@ -13,32 +13,78 @@ export const getMovieList = async (param: string = "") => {
   }
 };
 
-export const createMovie = async (data: MovieType) => {
+export const createMovie = async (data: MovieReq) => {
   try {
-    const res = await api.post("/movie/add", data); // POST /add
-    return res;
+    const form = new FormData();
+
+    form.append("name", data.name);
+    form.append("release_date", data.release_date);
+    form.append("nation", data.nation);
+    form.append("language", data.language);
+    form.append("duration",data.duration.toString());
+    form.append("age", data.age);
+    form.append("director", data.director);
+    form.append("actor", data.actor);
+    form.append("status", data.status.toString());
+    form.append("trailer", data.trailer);
+    form.append("description", data.description);
+
+    // genre: string[]
+    data.genre.forEach((id) => form.append("genre[]", id));
+
+    if (data.image) form.append("image", data.image);
+    if (data.banner) form.append("banner", data.banner);
+
+    const res = await api.post("/movie/add", form, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return res; // Vì interceptor đã .data sẵn rồi
   } catch (error) {
     catchingError(error, "Thêm phim thất bại");
     throw error;
   }
 };
 
-export const updateMovie = async (id: string | number, data: MovieType) => {
+
+export const updateMovie = async (id: string | number, data: MovieReq) => {
   try {
-    const res = await api.patch(`/movie/update/${id}`, data); //  PATCH /update/:id
+    const form = new FormData();
+
+    form.append("name", data.name);
+    form.append("release_date", data.release_date);
+    form.append("nation", data.nation);
+    form.append("language", data.language);
+    form.append("duration", data.duration.toString());
+    form.append("age", data.age);
+    form.append("director", data.director);
+    form.append("actor", data.actor);
+    form.append("status", data.status.toString());
+    form.append("trailer", data.trailer);
+    form.append("description", data.description);
+
+    data.genre.forEach((id) => form.append("genre[]", id));
+
+    // Chỉ append nếu là file mới, tránh gửi file cũ dạng string
+    if (data.image instanceof File) {
+      form.append("image", data.image);
+    }
+
+    if (data.banner instanceof File) {
+      form.append("banner", data.banner);
+    }
+
+    const res = await api.patch(`/movie/update/${id}`, form, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
     return res;
   } catch (error) {
     catchingError(error, "Cập nhật phim thất bại");
-    throw error;
-  }
-};
-
-export const deleteMovie = async (id: string | number) => {
-  try {
-    const res = await api.delete(`/movie/delete/${id}`); // DELETE /delete/:id
-    return res;
-  } catch (error) {
-    catchingError(error, "Xóa phim thất bại");
     throw error;
   }
 };
