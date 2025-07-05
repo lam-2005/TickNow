@@ -42,7 +42,7 @@ export const fetchUsers = createAsyncThunk(
 );
 
 export const updateUser = createAsyncThunk(
-  "roomManagement/updateRoom",
+  "userManagement/updateUser",
   async ({ id, data }: { id: string; data: UserReq }, thunkAPI) => {
     try {
       const res = await userService.updateUserAPI(id, data);
@@ -54,7 +54,7 @@ export const updateUser = createAsyncThunk(
 );
 
 export const addUser = createAsyncThunk(
-  "roomManagement/addUser",
+  "userManagement/addUser",
   async (data: UserReq, thunkAPI) => {
     try {
       const res = await userService.addUser(data);
