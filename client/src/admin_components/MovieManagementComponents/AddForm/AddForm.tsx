@@ -45,7 +45,15 @@ const listOptionGenre: GenreType[] = genre.map((item) => {
     e.preventDefault();
 
     // Kiểm tra các trường bắt buộc
-    if (!formData.name || !formData.release_date || !formData.nation) {
+    if (  !formData.name 
+          || !formData.release_date 
+          || !formData.status 
+          || !formData.duration 
+          || !formData.age 
+          || !formData.banner 
+          || !formData.genre
+          || !formData.trailer
+          || !formData.image) {
       toast.warning("Vui lòng nhập đầy đủ thông tin bắt buộc!");
       return;
     }

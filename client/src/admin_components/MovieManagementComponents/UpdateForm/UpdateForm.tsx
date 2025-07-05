@@ -50,7 +50,15 @@ const UpdateForm = ({ data, onCancel,genre }: Props) => {
 
   const handleSubmit = async (id: string,e: React.FormEvent) => {
     e.preventDefault();
-        if (!formData.name || !formData.release_date || !formData.nation) {
+        if (!formData.name 
+          || !formData.release_date 
+          || !formData.status 
+          || !formData.duration 
+          || !formData.age 
+          || !formData.banner 
+          || !formData.genre
+          || !formData.trailer
+          || !formData.image) {
           toast.warning("Vui lòng nhập đầy đủ thông tin bắt buộc!");
           return;
         }
