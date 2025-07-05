@@ -28,7 +28,7 @@ import React, { useState } from "react";
 import AddForm from "./AddForm";
 import PopupContainer from "@/components/Popup/PopupContainer";
 
-const AddUserBtn = () => {
+const AddScreenBtn = () => {
   const [openForm, setOpenForm] = useState(false);
 
   return (
@@ -43,4 +43,4 @@ const AddUserBtn = () => {
   );
 };
 
-export default AddUserBtn;
+export default AddScreenBtn;
