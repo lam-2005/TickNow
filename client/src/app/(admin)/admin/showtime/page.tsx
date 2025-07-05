@@ -103,7 +103,7 @@ const AdminScreening = () => {
   return (
     <div className="card">
       <HeadingCard title="Quản lý lịch chiếu">
-        <AddBtn />
+        {/* <AddBtn /> */}
         <AddBtn onClick={() => setShowAddPopup(true)} />
       </HeadingCard>
       <OptionTable />
@@ -113,103 +113,6 @@ const AdminScreening = () => {
       ) : (
         <Table column={columns} data={screenings} />
       )}
-
-      <AddForm<Record<string, unknown>>
-        isOpen={showAddPopup}
-        onClose={() => setShowAddPopup(false)}
-        fields={[
-          { label: "Tên phim", key: "movieName", required: true },
-          { label: "Phòng chiếu", key: "roomCode", required: true },
-          {
-            label: "Giờ bắt đầu",
-            key: "time_start",
-            type: "date",
-            required: true,
-          },
-          {
-            label: "Giờ kết thúc",
-            key: "time_end",
-            type: "date",
-            required: true,
-          },
-          {
-            label: "Trạng thái",
-            key: "status",
-            type: "select",
-            required: true,
-            options: [
-              { label: "Hoạt Động", value: "1" },
-              { label: "Ngừng Hoạt Động", value: "0" },
-            ],
-          },
-          {
-            label: "Loại chiếu",
-            key: "showtype",
-            type: "select",
-            required: true,
-            options: [
-              { label: "Phụ đề", value: "2" },
-              { label: "Thuyết minh", value: "1" },
-              { label: "Lồng tiếng", value: "0" },
-            ],
-          },
-        ]}
-        onSubmit={async () => {
-          try {
-            // await userService.createUser(data);
-            alert("Thêm người dùng thành công!");
-            setShowAddPopup(false);
-            // fetchUsers(currentPage);
-          } catch (err) {
-            alert("Thêm thất bại!");
-            console.error(err);
-          }
-        }}
-      />
-
-      <PopupUpdateForm
-        isOpen={isEditOpen}
-        onClose={() => setIsEditOpen(false)}
-        initialData={selectedScreen as unknown as Record<string, unknown>}
-        fields={[
-          { label: "Tên phim", key: "movieName" },
-          { label: "Phòng chiếu", key: "roomCode" },
-          { label: "Giờ bắt đầu", key: "time_start", type: "date" },
-          { label: "Giờ kết thúc", key: "time_end", type: "date" },
-          {
-            label: "Trạng thái",
-            key: "status",
-            type: "select",
-
-            options: [
-              { label: "Hoạt Động", value: "1" },
-              { label: "Ngừng Hoạt Động", value: "0" },
-            ],
-          },
-          {
-            label: "Loại chiếu",
-            key: "showtype",
-            type: "select",
-
-            options: [
-              { label: "Phụ đề", value: "2" },
-              { label: "Thuyết minh", value: "1" },
-              { label: "Lồng tiếng", value: "0" },
-            ],
-          },
-        ]}
-        onSubmit={async () => {
-          try {
-            // await userService.createUser(data);
-            alert("Thêm người dùng thành công!");
-            setIsEditOpen(false);
-            // fetchUsers(currentPage);
-          } catch (err) {
-            alert("Thêm thất bại!");
-            console.error(err);
-          }
-        }}
-      />
     </div>
   );
 };

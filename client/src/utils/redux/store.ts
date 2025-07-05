@@ -1,10 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slices/authSlice";
 import roomSlice from "./slices/roomSlice";
+import screenSlice from "./slices/screenSlice";
+
 const store = configureStore({
   reducer: {
     auth: authReducer,
     roomManagement: roomSlice,
+    screenManagement: screenSlice,
   },
 });
 

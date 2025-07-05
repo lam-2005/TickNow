@@ -1,16 +1,8 @@
-// import api from "@/utils/http";
-// const getScreeningList = async (param: string = "") => {
-//   try {
-//     const res = api.get(`/sreenings${param}`);
-//     return await res;
-//   } catch (error) {
-//     console.log("Error fetching data:", error);
-//   }
-// };
-// export { getScreeningList };
-
-
 import api from "@/utils/http";
+import catchingError from "@/utils/catchingError";
+import { FieldsType } from "@/utils/validate";
+import { ScreenReq } from "@/interfaces/screening.interface";
+
 const getScreeningList = async (param: string = "") => {
   try {
     const res = await api.get(`/screening${param}`); // ✅ đảm bảo route đúng chính tả
@@ -21,7 +13,25 @@ const getScreeningList = async (param: string = "") => {
   }
 };
 
-export { getScreeningList };
+const addScreen = async (data: ScreenReq) => {
+  try {
+    const res = await api.post("/screenings/add", data);
+    return res;
+  } catch (error) {
+    catchingError(error, "Thêm thất bại!");
+  }
+};
+
+const updateScreen = async (id: string, req: ScreenReq) => {
+  try {
+    const res = await api.patch(`/screenings/update/${id}`, req);
+    return res;
+  } catch (error) {
+    catchingError(error, "Cập nhật thất bại!");
+  }
+};
+
+export { getScreeningList, addScreen, updateScreen };
 
 
 
