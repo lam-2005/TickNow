@@ -9,10 +9,9 @@ import validateSignup, {
 import useTouched from "@/hooks/useTouched";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { signupAPI } from "@/services/user.service";
-import { useToast } from "@/hooks/contexts/useToast";
+import { toast } from "react-toastify";
 
 const SignUpForm = ({ setOpenForm }: { setOpenForm: () => void }) => {
-  const toast = useToast();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] =
     useState<boolean>(false);
@@ -44,14 +43,23 @@ const SignUpForm = ({ setOpenForm }: { setOpenForm: () => void }) => {
   const errors = validateSignup(formData);
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (
+      !formData.email ||
+      !formData.password ||
+      !formData.name ||
+      !formData.confirmPassword ||
+      !formData.phone ||
+      !formData.year
+    ) {
+      toast.warning("Vui lòng nhập đầy đủ thông tin!");
+      return;
+    }
     try {
       await signupAPI(requestBody);
-      toast.createToastSuccess(
-        "Đăng ký thành công, vui lòng đăng nhập để tiếp tục!"
-      );
+      toast.success("Đăng ký thành công, vui lòng đăng nhập để tiếp tục!");
       setOpenForm();
     } catch (error) {
-      toast.createToastError(`Đăng ký thất bại: ${error}`);
+      toast.error(`Đăng ký thất bại: ${error}`);
     }
   };
   return (

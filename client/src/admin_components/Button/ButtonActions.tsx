@@ -3,10 +3,10 @@ import React from "react";
 
 interface ActionButtonProps {
   label: string;
-  onClick: (id: string | number) => void;
-  bgColor: string; 
-  id?: string | number; 
-  className?: string; 
+  onClick: (id?: string | number) => void;
+  bgColor?: "warning" | "success" | "error";
+  id?: string | number;
+  className?: string;
 }
 const ActionButton: React.FC<ActionButtonProps> = ({
   label,
@@ -16,13 +16,19 @@ const ActionButton: React.FC<ActionButtonProps> = ({
   className = "",
 }) => {
   const handleClick = () => {
-    if (id !== undefined) {
-      onClick(id);
-    }
+    onClick(id);
   };
+  let colorBtn = "bg-primary";
+  if (bgColor === "warning") {
+    colorBtn = "bg-warning";
+  } else if (bgColor === "success") {
+    colorBtn = "bg-success";
+  } else if (bgColor === "error") {
+    colorBtn = "bg-error";
+  }
   return (
     <button
-      className={`px-3 py-1 ${bgColor} text-white rounded hover:brightness-70 transition-all duration-200 ${className}`}
+      className={`px-3 py-1 ${colorBtn} text-white rounded hover:brightness-70 transition-all duration-200 cursor-pointer ${className}`}
       onClick={handleClick}
     >
       {label}
