@@ -7,7 +7,11 @@ import ActionButton from "@/admin_components/Button/ButtonActions";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/utils/redux/store";
 import dataScreen from "@/utils/redux/selectors/screenSelector";
-import { fetchScreen, setInitialScreen, updateScreen } from "@/utils/redux/slices/screenSlice";
+import {
+  fetchScreen,
+  setInitialScreen,
+  updateScreen,
+} from "@/utils/redux/slices/screenSlice";
 import usePanigation from "@/hooks/usePanigation";
 import UpdateFormContainer from "./UpdateForm/UpdateFormContainer";
 import { toast } from "react-toastify";
@@ -25,14 +29,30 @@ const ScreenList = ({ initData }: { initData: InitDataType }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<Screening | null>(null);
 
-  const { Screen, total, currentPage, totalPages, loading, error } =
-    useSelector(dataScreen);
+  // ✅ Thêm fallback an toàn nếu state chưa có dữ liệu
+  const {
+    Screen = [],
+    total = 0,
+    currentPage = 1,
+    totalPages = 1,
+    loading = false,
+    error = null,
+  } = useSelector(dataScreen) || {};
+
   const { page, changePage, changeRowPerPage, rowsPerPage } = usePanigation(
     initData.currentPage
   );
 
   useEffect(() => {
-    dispatch(setInitialScreen({ ...initData, loading: false, errorAddData: null, errorUpdateData: null, error: null }));
+    dispatch(
+      setInitialScreen({
+        ...initData,
+        loading: false,
+        errorAddData: null,
+        errorUpdateData: null,
+        error: null,
+      })
+    );
   }, [dispatch, initData]);
 
   useEffect(() => {
@@ -67,25 +87,12 @@ const ScreenList = ({ initData }: { initData: InitDataType }) => {
       title: "Trạng Thái",
       render: (row: Screening) => (
         <ActionButton
-          label={
-            row.status
-              ? "Hoạt Động"
-              : "Ngừng Hoạt Động"
-          }
-          bgColor={
-            row.status
-              ? "success"
-              : "warning"
-          }
+          label={row.status ? "Hoạt Động" : "Ngừng Hoạt Động"}
+          bgColor={row.status ? "success" : "warning"}
           onClick={() => null}
         />
       ),
     },
-    // {
-    //   key: "role",
-    //   title: "Vai Trò",
-    //   render: (row: Screening) => (row.role ? "Quản Trị" : "Người Dùng"),
-    // },
     {
       title: "Thao Tác",
       render(row: Screening) {
@@ -108,10 +115,23 @@ const ScreenList = ({ initData }: { initData: InitDataType }) => {
 
   if (loading) return <p className="text-center">Đang tải dữ liệu...</p>;
   if (error) return <p className="text-red-500 text-center">{error}</p>;
+  console.log("ScreenList render", {
+    Screen,
+    total,
+    currentPage,
+    totalPages,
+    rowsPerPage,
+  });
+  console.log("Init data screen:", initData);
 
   return (
     <>
-      <Table column={col} data={Screen.map((u) => ({ ...u, id: u._id }))} currentPage={currentPage} rowsPerPage={rowsPerPage} />
+      <Table
+        column={col}
+        data={(Screen ?? []).map((u) => ({ ...u, id: u._id }))}
+        currentPage={currentPage}
+        rowsPerPage={rowsPerPage}
+      />
       {total >= rowsPerPage && (
         <Pagination
           currentPage={currentPage}

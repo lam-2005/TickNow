@@ -10,7 +10,7 @@ import AddScreenBtn from "@/admin_components/ScreenManagementComponents/AddForm/
 const getScreenData = async (page: number, limit: number) => {
   const res = await screenService.getScreeningList(`?page=${page}&limit=${limit}`);
   return {
-    Screen: res?.data.screen,
+    Screen: res?.data.result,
     total: res?.data.pagination.total,
     currentPage: res?.data.pagination.page,
     totalPages: res?.data.pagination.totalPages,
