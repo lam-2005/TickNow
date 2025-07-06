@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
-import { UserReq } from "@/interfaces/user.interface";
+import { ScreenReq } from "@/interfaces/screening.interface";
 
 type InputGroupProps = {
-  formData: UserReq;
-  setFormData: (data: UserReq) => void;
+  formData: ScreenReq;
+  setFormData: (data: ScreenReq) => void;
   onlyEditStatusAndRole?: boolean;
 };
 
@@ -15,101 +15,89 @@ const InputGroup = ({ formData, setFormData, onlyEditStatusAndRole }: InputGroup
         <>
           <div>
             <label className="block mb-1 text-sm font-medium">
-              Tên người dùng <span className="text-red-500">*</span>
+              Tên phim <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
-              placeholder="Tên người dùng"
+              placeholder="Tên phim"
               className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              value={formData.movieName}
+              onChange={(e) => setFormData({ ...formData, movieName: e.target.value })}
             />
           </div>
 
           <div>
             <label className="block mb-1 text-sm font-medium">
-              Email <span className="text-red-500">*</span>
+              Phòng chiếu <span className="text-red-500">*</span>
             </label>
             <input
-              type="email"
-              placeholder="Email"
+              type="text"
+              placeholder="Phòng chiếu"
               className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              value={formData.id_room}
+              onChange={(e) => setFormData({ ...formData, id_room: e.target.value })}
             />
           </div>
 
           <div>
             <label className="block mb-1 text-sm font-medium">
-              Số điện thoại <span className="text-red-500">*</span>
+              Thời gian chiếu <span className="text-red-500">*</span>
             </label>
             <input
-              type="number"
-              placeholder="Số điện thoại"
+              type="time"
+              placeholder="Thời gian chiếu"
               className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
-              value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              value={formData.time_start}
+              onChange={(e) => setFormData({ ...formData, time_start: e.target.value })}
             />
           </div>
 
           <div>
             <label className="block mb-1 text-sm font-medium">
-              Năm sinh <span className="text-red-500">*</span>
+              Thời gian ngừng <span className="text-red-500">*</span>
             </label>
             <input
-              type="number"
-              placeholder="Năm sinh"
+              type="time"
+              placeholder="Thời than ngừng"
               className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
-              value={formData.year}
-              onChange={(e) => setFormData({ ...formData, year: e.target.value })}
+              value={formData.time_end}
+              onChange={(e) => setFormData({ ...formData, time_end: e.target.value })}
             />
           </div>
 
           <div>
             <label className="block mb-1 text-sm font-medium">
-              Mật khẩu <span className="text-red-500">*</span>
+              Ngày chiếu <span className="text-red-500">*</span>
             </label>
             <input
-              type="password"
-              placeholder="Nhập mật khẩu"
+              type="date"
+              placeholder="Ngày chiếu"
               className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
-              value={formData.password}
-              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              value={formData.date}
+              onChange={(e) => setFormData({ ...formData, date: e.target.value })}
             />
           </div>
 
           <div>
             <label className="block mb-1 text-sm font-medium">
-              Xác nhận mật khẩu <span className="text-red-500">*</span>
+              Thể loại âm thanh <span className="text-red-500">*</span>
             </label>
-            <input
-              type="password"
-              placeholder="Nhập lại mật khẩu"
+            <select
               className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
-              value={formData.confirmPassword}
-              onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-            />
+              value={formData.status ? "true" : "false"}
+              onChange={(e) =>
+                setFormData({ ...formData, status: e.target.value === "true" })
+              }
+            >
+              <option >Lòng tiếng</option>
+              <option >Thuyết minh</option>
+              <option >Vietsub</option>
+            </select>
           </div>
+
+
         </>
       )}
-
-      <div>
-        <label className="block mb-1 text-sm font-medium">
-          Vai trò <span className="text-red-500">*</span>
-        </label>
-        <select
-          disabled={formData.role === true}
-          className="w-full border border-gray-300 rounded-md px-4 py-3 text-base bg-white disabled:bg-gray-100"
-          value={formData.role === true ? "admin" : formData.role === false ? "user" : ""}
-          onChange={(e) =>
-            setFormData({ ...formData, role: e.target.value === "admin" ? true : false })
-          }
-        >
-          <option value="user">Người dùng</option>
-          <option value="admin">Quản trị viên</option>
-        </select>
-      </div>
-
       <div>
         <label className="block mb-1 text-sm font-medium">
           Trạng thái <span className="text-red-500">*</span>

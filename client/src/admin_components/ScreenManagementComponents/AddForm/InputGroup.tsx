@@ -15,7 +15,7 @@ const InputGroup = ({ formData, setFormData }: InputGroupProps) => {
         </label>
         <input
           type="text"
-          placeholder="Tên suất chiếu"
+          placeholder="Tên phim"
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
           value={formData.movieName}
           onChange={(e) => setFormData({ ...formData, movieName: e.target.value })}
@@ -40,7 +40,7 @@ const InputGroup = ({ formData, setFormData }: InputGroupProps) => {
           Thời gian bắt đầu <span className="text-red-500">*</span>
         </label>
         <input
-          type="date"
+          type="time"
           placeholder="Thời gian bắt đầu"
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
           value={formData.time_start}
@@ -53,11 +53,24 @@ const InputGroup = ({ formData, setFormData }: InputGroupProps) => {
           Thời gian kết thúc <span className="text-red-500">*</span>
         </label>
         <input
-          type="date"
+          type="time"
           placeholder="Thời gian kết thúc"
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
           value={formData.time_end}
           onChange={(e) => setFormData({ ...formData, time_end: e.target.value })}
+        />
+      </div>
+
+      <div>
+        <label className="block mb-1 text-sm font-medium">
+          Ngày chiếu<span className="text-red-500">*</span>
+        </label>
+        <input
+          type="date"
+          placeholder="Ngày chiếu"
+          className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
+          value={formData.date}
+          onChange={(e) => setFormData({ ...formData, date: e.target.value })}
         />
       </div>
 
