@@ -23,7 +23,7 @@ const initialState: RatingState = {
 
 // Async fetch đánh giá từ server
 export const fetchRatings = createAsyncThunk(
-  "rating/fetchRatings",
+  "ratingManagement/fetchRatings",
   async ({ page, limit }: { page: number; limit: number }, thunkAPI) => {
     try {
       const res = await rateService.getRateList(`?page=${page}&limit=${limit}`);
@@ -41,7 +41,7 @@ export const fetchRatings = createAsyncThunk(
 
 // Slice
 const ratingSlice = createSlice({
-  name: "rating",
+  name: "ratingManagement",
   initialState,
   reducers: {
     setInitialRatings(state, action: PayloadAction<RatingState>) {
