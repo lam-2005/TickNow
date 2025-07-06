@@ -82,7 +82,7 @@ export const addScreen = createAsyncThunk(
   }
 );
 const screenSlice = createSlice({
-  name: "screen",
+  name: "screenManagement",
   initialState,
   reducers: {
     setInitialScreen(state, action: PayloadAction<ScreenState>) {
