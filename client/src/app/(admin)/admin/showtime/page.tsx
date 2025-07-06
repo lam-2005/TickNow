@@ -21,7 +21,7 @@ const ScreenManagement = async () => {
   const res = await getScreenData(1, 5);
   return (
     <div className="card">
-      <HeadingCard title="Quản Lý Suất Chi">
+      <HeadingCard title="Quản Lý Suất Chiếu">
         <AddScreenBtn />
       </HeadingCard>
       <OptionTable />

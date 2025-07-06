@@ -27,19 +27,19 @@ const AddForm = () => {
   const handleAddUser = async (e: React.FormEvent) => {
   e.preventDefault();
 
-  if (
-    !formData.id_room ||
-    !formData.id_movie ||
-    !formData.time_start ||
-    !formData.time_end ||
-    !formData.date ||
-    !formData.showtype||
-    !formData.roomCode ||
-    !formData.movieName
-  ) {
-    toast.warning("Vui lòng nhập đầy đủ thông tin bắt buộc!");
-    return;
-  }
+  // if (
+  //   // !formData.id_room ||
+  //   // !formData.id_movie ||
+  //   !formData.time_start ||
+  //   !formData.time_end ||
+  //   !formData.date ||
+  //   !formData.showtype||
+  //   !formData.roomCode ||
+  //   !formData.movieName
+  // ) {
+  //   toast.warning("Vui lòng nhập đầy đủ thông tin bắt buộc!!");
+  //   return;
+  // }
 
   const confirmAdd = confirm("Bạn có muốn thêm Suất chiếu mới?");
       if (!confirmAdd) return;

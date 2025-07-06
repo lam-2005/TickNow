@@ -3,7 +3,7 @@ export interface Ticket {
   id_user: string;           // ID người dùng đặt vé
   id_screening: string;      // ID suất chiếu
   price: number;             // Giá vé
-  type: "Đã Thanh Toán" | "Chưa Thanh Toán"; // Trạng thái vé
+  type: number; // Trạng thái vé
   seat: string[];            // Danh sách ghế, ví dụ ["A1", "A2"]
   userName: string;          // Tên người dùng
   screeningTime: string;     // Thời gian chiếu
@@ -13,4 +13,13 @@ export interface TicketDetail extends Ticket {
   cinema: { id: string; name: string };
   room: { id: string; code: string };
   movie: { id: string; name: string; img: string };
+}
+
+export type TicketReq={
+  id_user: string;
+  id_screening: string;
+  id_voucher: string;
+  price: number;
+  type: number;
+  seat: number;
 }

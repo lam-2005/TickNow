@@ -5,7 +5,7 @@ import screenSlice from "./slices/screenSlice"
 import ratingReducer from "./slices/ratingSlice";
 import userSlice from "./slices/userSlice";
 import movieSlice from "./slices/movieSlice";
-
+import ticketSlice from "./slices/ticketSlice"
 const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -14,6 +14,7 @@ const store = configureStore({
     userManagement: userSlice,
     movieManagement: movieSlice,
     screenManagement: screenSlice,
+    ticketManagement: ticketSlice,
   },
 });
 
