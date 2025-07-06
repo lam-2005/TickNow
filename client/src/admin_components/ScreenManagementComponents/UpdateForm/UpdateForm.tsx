@@ -32,7 +32,10 @@ const UpdateForm = ({ data, onSubmit, onCancel, onlyEditStatusAndRole }: Props) 
     };
     onSubmit(payload as ScreenReq);
   };
-
+// const handleSubmit = (e: React.FormEvent) => {
+//   e.preventDefault();
+//   onSubmit(formData); // ✅ Gửi toàn bộ thông tin đã nhập
+// };
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-5 px-5">
       <InputGroup

@@ -25,6 +25,7 @@ const updateScreen = async (id: string, req: ScreenReq) => {
   try {
     const res = await api.patch(`/screening/update/${id}`, req);
     return res;
+    
   } catch (error) {
     catchingError(error, "Cập nhật thất bại!");
   }

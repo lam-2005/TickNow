@@ -126,12 +126,10 @@ const ScreenList = ({ initData }: { initData: InitDataType }) => {
 
   return (
     <>
-      <Table
-        column={col}
-        data={(Screen ?? []).map((u) => ({ ...u, id: u._id }))}
-        currentPage={currentPage}
-        rowsPerPage={rowsPerPage}
-      />
+
+      {/* <Table column={col} data={Screen.map((u) => ({ ...u, id: u._id }))} currentPage={currentPage} rowsPerPage={rowsPerPage} />
+       */}
+       <Table column={col} data={Screen.map((u: Screening) => ({ ...u, id: u._id }))} />
       {total >= rowsPerPage && (
         <Pagination
           currentPage={currentPage}

@@ -24,19 +24,36 @@ const initialState: ScreenState = {
   errorUpdateData : null,
 };
 
+// export const fetchScreen = createAsyncThunk(
+//   "screen/fetchScreen",
+//   async ({ page, limit }: { page: number; limit: number }, thunkAPI) => {
+//     try {
+//       const res = await screenService.getScreeningList(`?page=${page}&limit=${limit}`);
+//       return {
+//         Screen: res?.data.user,
+//         total: res?.data.pagination.total,
+//         currentPage: res?.data.pagination.page,
+//         totalPages: res?.data.pagination.totalPages,
+//       };
+//     } catch {
+//       return thunkAPI.rejectWithValue("Không thể tải danh sách người dùng.");
+//     }
+//   }
+// );
+
 export const fetchScreen = createAsyncThunk(
   "screen/fetchScreen",
   async ({ page, limit }: { page: number; limit: number }, thunkAPI) => {
     try {
       const res = await screenService.getScreeningList(`?page=${page}&limit=${limit}`);
       return {
-        Screen: res?.data.user,
+        Screen: res?.data.result, // ✅ đúng field từ API
         total: res?.data.pagination.total,
         currentPage: res?.data.pagination.page,
         totalPages: res?.data.pagination.totalPages,
       };
     } catch {
-      return thunkAPI.rejectWithValue("Không thể tải danh sách người dùng.");
+      return thunkAPI.rejectWithValue("Không thể tải danh sách suất chiếu.");
     }
   }
 );
