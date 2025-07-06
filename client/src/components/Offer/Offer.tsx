@@ -1,27 +1,32 @@
 import Image from "next/image";
-import React from "react";
-const Offer = () => {
+
+type OfferProps = {
+  data: {
+    title: string;
+    image: string;
+    date: string;
+  };
+};
+
+const Offer = ({ data }: OfferProps) => {
   return (
     <div className="w-full group rounded-2xl dark:bg-transparent dark:shadow-none">
       <div className="relative w-full aspect-[7/4] overflow-hidden rounded-2xl">
         <Image
-          src={"/offers/offer.webp"}
+          src={data.image || "/offers/offer.webp"}
           fill
-          alt=""
-          priority
+          alt={data.title}
           sizes="350px"
-          className="group-hover:scale-110 transition-transform duration-300"
+          priority
+          className="group-hover:scale-110 transition-transform duration-300 object-cover"
         />
       </div>
       <div className="px-4 mt-2 group-hover:text-primary">
         <time className="line-clamp-2 text-[clamp(0.75rem,2vw,0.875rem)] text-foreground mb-1">
-          01/01/2025
+          {data.date}
         </time>
         <h3 className="font-text font-bold capitalize line-clamp-2">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo fugiat
-          sapiente sed, perferendis repellendus quasi nisi blanditiis nam
-          veritatis! Accusantium ab enim voluptatem assumenda, ea rem. Incidunt
-          quis in quos.
+          {data.title}
         </h3>
       </div>
     </div>
