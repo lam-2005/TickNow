@@ -16,9 +16,10 @@ const BackgroundPage = ({
         <Image
           src={`/${image}`}
           alt={title}
-          layout="fill"
-          objectFit="cover"
-          className="brightness-30"
+          fill
+          sizes="2000px"
+          className="brightness-30 object-cover"
+          priority
         />
       </div>
       <h1 className="absolute-center text-white z-11 text-4xl font-medium text-nowrap">

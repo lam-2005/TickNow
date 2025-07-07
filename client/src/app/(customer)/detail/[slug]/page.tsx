@@ -4,17 +4,20 @@ import ShowtimeSelect from "@/components/DetailPageComponents/ShowtimeUI/Showtim
 import { getLocationList } from "@/services/cinema.service";
 import { getMovieList } from "@/services/movie.service";
 import { getScreeningList } from "@/services/screening.service";
+import { getIdFromSlug } from "@/utils/convertSlug";
 import React from "react";
 
 const Movie = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
-  const res = await getMovieList(`/${slug}`);
+  const id = getIdFromSlug(slug);
+
+  const res = await getMovieList(`/${id}`);
   const movie = res?.data.movie;
   // dữ liệu suất
   const fetchShowtimes = async () => {
     try {
       const res = await getScreeningList();
-      return res.data;
+      return res.data.result;
     } catch (error) {
       console.error("Lỗi khi tải suất chiếu:", error);
     }
@@ -32,15 +35,13 @@ const Movie = async ({ params }: { params: Promise<{ slug: string }> }) => {
     }
   };
   const locations = await fetchLocation();
-  console.log(locations);
-
   return (
-    <div>
+    <div className="transition-all">
       <MovieInfo movie={movie} />
       <div className="container mt-10 space-y-10">
         <ShowtimeSelect
           listData={{ showtimes: showtimes, locations: locations }}
-          slug={slug}
+          slug={id}
         />
         <CommentContainer />
       </div>

@@ -13,6 +13,10 @@ export type RoomManagementState = ReduxInitStateDefaultType & {
   totalPages: number;
   errorAddData: string | null;
   errorUpdateData: string | null;
+  filter: {
+    cinemas: string;
+    status: string;
+  };
 };
 const initialState: RoomManagementState = {
   data: [],
@@ -21,6 +25,10 @@ const initialState: RoomManagementState = {
   totalPages: 1,
   errorAddData: null,
   errorUpdateData: null,
+  filter: {
+    cinemas: "",
+    status: "",
+  },
   ...reduxInitStateDefault,
 };
 const roomSlice = createSlice({
@@ -37,6 +45,9 @@ const roomSlice = createSlice({
       state.errorAddData = null;
       state.errorUpdateData = null;
     },
+    setFilter: (state, action) => {
+      state.filter = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -49,6 +60,8 @@ const roomSlice = createSlice({
         state.total = action.payload.total;
         state.totalPages = action.payload.totalPages;
         state.currentPage = action.payload.currentPage;
+        state.filter.cinemas = action.payload.cinema;
+        state.filter.status = action.payload.status;
       })
       .addCase(fetchRooms.rejected, (state, action) => {
         state.loading = false;
@@ -81,13 +94,20 @@ const roomSlice = createSlice({
   },
 });
 export default roomSlice.reducer;
-export const { setInitialRooms } = roomSlice.actions;
+export const { setInitialRooms, setFilter } = roomSlice.actions;
 export const fetchRooms = createAsyncThunk(
   "roomManagement/fetchRooms",
-  async ({ page, limit }: { page: number; limit: number }, thunkAPI) => {
+  async (
+    {
+      page,
+      limit,
+      cinemas = "",
+      status = "",
+    }: { page: number; limit: number; cinemas?: string; status?: string },
+    thunkAPI
+  ) => {
     try {
-      const data = await getRoomData(page, limit);
-      console.log(data);
+      const data = await getRoomData(page, limit, cinemas, status);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
