@@ -62,8 +62,13 @@ export const { setInitialVouchers } = voucherSlice.actions;
 
 export const fetchVouchers = createAsyncThunk(
   "voucherManagement/fetchVouchers",
-  async ({ page, limit }: { page: number; limit: number }, thunkAPI) => {
+  async ({ page, limit, params = null }: { page: number; limit: number, params: string|null }, thunkAPI) => {
     try {
+      if (params) {
+        const data = await getVouchers(page, limit, params);
+        return data;
+      }
+
       const data = await getVouchers(page, limit);
       return data;
     } catch (error) {

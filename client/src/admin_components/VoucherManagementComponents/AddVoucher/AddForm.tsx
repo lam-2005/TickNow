@@ -39,7 +39,7 @@ const AddForm = () => {
 
         await dispatch(createVoucher({ data: formData })).unwrap();
         toast.success("Thêm voucher thành công!");
-        dispatch(fetchVouchers({ limit: 5, page: 1 }));
+        dispatch(fetchVouchers({ limit: 5, page: 1, params: null }));
     } catch (err) {
       toast.error(`Thêm voucher thất bại: ${err}`);
       console.error(err);

@@ -1,11 +1,13 @@
 import HeadingCard from '@/admin_components/HeadingCard/HeadingCard';
 import AddVoucherBtn from '@/admin_components/VoucherManagementComponents/AddVoucher/ButtonOpenCinema';
+import VoucherFilter from '@/admin_components/VoucherManagementComponents/VoucherFilter';
 import VoucherList from '@/admin_components/VoucherManagementComponents/VoucherList';
 import { getVoucherList } from '@/services/vouchers.service';
 import React, { Suspense } from 'react'
 
-export const getVouchers = async (page: number, limit: number) => {
-  const res = await getVoucherList(`?page=${page}&limit=${limit}`);
+export const getVouchers = async (page: number, limit: number, params: string|null = null) => {
+  const queries = params ? `?${params}` : `?page=${page}&limit=${limit}`;
+  const res = await getVoucherList(queries);
   return {
     vouchers: res?.voucher,
     total: res?.pagination.total,
@@ -22,6 +24,8 @@ const VoucherManagement = () => {
       <HeadingCard title="Quản Lý Voucher">
         <AddVoucherBtn/>
       </HeadingCard>
+
+      <VoucherFilter />
       {/* <OptionTable /> */}
       <Suspense fallback={<p className="text-center">Đang tải dữ liệu...</p>}>
         <VoucherList initData={vouchers} />
