@@ -12,27 +12,37 @@ import usePanigation from "@/hooks/usePanigation";
 import UpdateFormContainer from "./UpdateForm/UpdateFormContainer";
 import { toast } from "react-toastify";
 
-type InitDataType = {
+const UserList = ({ initData }: { initData: {
   users: UserType[];
   total: number;
   currentPage: number;
   totalPages: number;
-};
-
-const UserList = ({ initData }: { initData: InitDataType }) => {
+} }) => {
   const dispatch = useDispatch<AppDispatch>();
   const isFirstLoad = useRef(true);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
 
-  const { users, total, currentPage, totalPages, loading, error } =
+  const { users, total, currentPage, totalPages, loading, error, filter } =
     useSelector(dataUser);
   const { page, changePage, changeRowPerPage, rowsPerPage } = usePanigation(
     initData.currentPage
   );
 
   useEffect(() => {
-    dispatch(setInitialUsers({ ...initData, loading: false, errorAddData: null, errorUpdateData: null, error: null }));
+    dispatch(
+      setInitialUsers({
+        ...initData,
+        loading: false,
+        errorAddData: null,
+        errorUpdateData: null,
+        error: null,
+        filter: {
+          status: "",
+          role: "",
+        },
+      })
+    );
   }, [dispatch, initData]);
 
   useEffect(() => {
@@ -40,8 +50,15 @@ const UserList = ({ initData }: { initData: InitDataType }) => {
       isFirstLoad.current = false;
       return;
     }
-    dispatch(fetchUsers({ page, limit: rowsPerPage }));
-  }, [dispatch, page, rowsPerPage]);
+    dispatch(
+      fetchUsers({
+        page: page <= totalPages ? page : totalPages,
+        limit: rowsPerPage,
+        status: filter.status,
+        role: filter.role,
+      })
+    );
+  }, [dispatch, page, rowsPerPage, filter, totalPages]);
 
   const handleUpdate = async (id: string, data: UserReq) => {
     try {
@@ -49,7 +66,14 @@ const UserList = ({ initData }: { initData: InitDataType }) => {
       if (!sure) return;
       await dispatch(updateUser({ id, data })).unwrap();
       toast.success("Cập nhật người dùng thành công!");
-      dispatch(fetchUsers({ page: currentPage, limit: rowsPerPage }));
+      dispatch(
+        fetchUsers({
+          page: currentPage,
+          limit: rowsPerPage,
+          status: filter.status,
+          role: filter.role,
+        })
+      );
     } catch (err) {
       console.log("Cập nhật người dùng thất bại:", err);
       toast.error("Cập nhật người dùng thất bại!");
@@ -66,16 +90,8 @@ const UserList = ({ initData }: { initData: InitDataType }) => {
       title: "Trạng Thái",
       render: (row: UserType) => (
         <ActionButton
-          label={
-            row.status
-              ? "Hoạt Động"
-              : "Ngừng Hoạt Động"
-          }
-          bgColor={
-            row.status
-              ? "success"
-              : "warning"
-          }
+          label={row.status ? "Hoạt Động" : "Ngừng Hoạt Động"}
+          bgColor={row.status ? "success" : "warning"}
           onClick={() => null}
         />
       ),
@@ -110,7 +126,12 @@ const UserList = ({ initData }: { initData: InitDataType }) => {
 
   return (
     <>
-      <Table column={col} data={users.map((u) => ({ ...u, id: u._id }))} currentPage={currentPage} rowsPerPage={rowsPerPage} />
+      <Table
+        column={col}
+        data={users.map((u) => ({ ...u, id: u._id }))}
+        currentPage={currentPage}
+        rowsPerPage={rowsPerPage}
+      />
       {total >= rowsPerPage && (
         <Pagination
           currentPage={currentPage}

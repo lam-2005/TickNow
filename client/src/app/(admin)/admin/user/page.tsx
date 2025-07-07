@@ -4,6 +4,7 @@ import OptionTable from "@/admin_components/OptionTable/OptionTable";
 import * as userService from "@/services/user.service";
 import UserList from "../../../../admin_components/UserManagementComponents/UserList";
 import AddUserBtn from "@/admin_components/UserManagementComponents/AddForm/ButtonOpenForm";
+import FilterUser from "@/admin_components/UserManagementComponents/FilterUser/FilterUser";
 
 const getUserData = async (page: number, limit: number) => {
   const res = await userService.getUserList(`?page=${page}&limit=${limit}`);
@@ -22,6 +23,7 @@ const UserManagement = async () => {
       <HeadingCard title="Quản Lý Người Dùng">
         <AddUserBtn />
       </HeadingCard>
+      <FilterUser />
       <OptionTable />
       <Suspense fallback={<p className="text-center">Đang tải dữ liệu...</p>}>
         <UserList initData={res} />

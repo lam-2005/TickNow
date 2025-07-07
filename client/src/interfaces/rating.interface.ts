@@ -1,5 +1,6 @@
 export interface ReviewType {
-  _id: number | string;         
+  _id: number | string; 
+  id_movie: string;        
   movieName: string;
   userName:string;    
   score: number;        

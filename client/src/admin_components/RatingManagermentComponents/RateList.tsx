@@ -42,6 +42,11 @@ const RatingList = ({ initData }: { initData: InitDataType }) => {
         ...initData,
         loading: false,
         error: null,
+        filter: {
+          movie: "",
+          score: "",
+          date: "",
+        },
       })
     );
   }, [dispatch, initData]);

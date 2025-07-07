@@ -1,4 +1,4 @@
-// utils/redux/slices/ratingSlice.ts
+// ratingSlice.ts
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ReviewType } from "@/interfaces/rating.interface";
 import * as rateService from "@/services/rate.service";
@@ -10,6 +10,11 @@ type RatingState = {
   totalPages: number;
   loading: boolean;
   error: string | null;
+  filter: {
+    movie: string;
+    score: string;
+    date: string;
+  };
 };
 
 const initialState: RatingState = {
@@ -19,14 +24,45 @@ const initialState: RatingState = {
   totalPages: 1,
   loading: false,
   error: null,
+  filter: {
+    movie: "",
+    score: "",
+    date: "",
+  },
 };
 
-// Async fetch đánh giá từ server
 export const fetchRatings = createAsyncThunk(
   "ratingManagement/fetchRatings",
-  async ({ page, limit }: { page: number; limit: number }, thunkAPI) => {
+  async (
+    {
+      page,
+      limit,
+      movie,
+      score,
+      date,
+    }: {
+      page: number;
+      limit: number;
+      movie?: string;
+      score?: string;
+      date?: string;
+    },
+    thunkAPI
+  ) => {
     try {
-      const res = await rateService.getRateList(`?page=${page}&limit=${limit}`);
+      const params = new URLSearchParams({
+        page: String(page),
+        limit: String(limit),
+      });
+
+      if (movie) params.append("movie", movie);
+      if (score) params.append("score", score);
+      if (date) {
+        params.append("start_day", date);
+        params.append("end_day", date);
+      }
+
+      const res = await rateService.getRateList(`?${params.toString()}`);
       return {
         ratings: res?.data.rate,
         total: res?.data.pagination.total,
@@ -34,23 +70,28 @@ export const fetchRatings = createAsyncThunk(
         totalPages: res?.data.pagination.totalPages,
       };
     } catch (error) {
-        return thunkAPI.rejectWithValue(error);
+      console.error("Error fetching ratings:", error);
+      return thunkAPI.rejectWithValue("Không thể tải danh sách đánh giá.");
     }
   }
 );
 
-// Slice
 const ratingSlice = createSlice({
   name: "ratingManagement",
   initialState,
   reducers: {
     setInitialRatings(state, action: PayloadAction<RatingState>) {
-      state.ratings = action.payload.ratings;
-      state.total = action.payload.total;
-      state.currentPage = action.payload.currentPage;
-      state.totalPages = action.payload.totalPages;
-      state.loading = false;
-      state.error = null;
+      Object.assign(state, action.payload);
+    },
+    setFilter(
+      state,
+      action: PayloadAction<{
+        movie: string;
+        score: string;
+        date: string;
+      }>
+    ) {
+      state.filter = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -65,7 +106,6 @@ const ratingSlice = createSlice({
         state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.totalPages;
         state.loading = false;
-        state.error = null;
       })
       .addCase(fetchRatings.rejected, (state, action) => {
         state.loading = false;
@@ -74,5 +114,5 @@ const ratingSlice = createSlice({
   },
 });
 
-export const { setInitialRatings } = ratingSlice.actions;
+export const { setInitialRatings, setFilter } = ratingSlice.actions;
 export default ratingSlice.reducer;
