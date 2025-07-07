@@ -1,9 +1,8 @@
 import React from "react";
-import PopupContainer from "../../PopupContainer";
 import { RoomType } from "@/interfaces/room.interface";
 import Seat from "@/components/BookingPageComponents/Seat";
 import handleShowRoom from "./ShowRoom";
-
+import PopupContainer from "@/admin_components/PopupContainer";
 const DetailRoom = ({
   closeForm,
   info,

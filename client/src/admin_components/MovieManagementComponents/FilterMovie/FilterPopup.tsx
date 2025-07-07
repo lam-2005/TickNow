@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
 import PopupContainer from "@/admin_components/PopupContainer";
-import { Cinema } from "@/interfaces/cinema.interface";
+import Genre from "@/interfaces/genre.interface";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/utils/redux/store";
-import { fetchRooms, setFilter } from "@/utils/redux/slices/roomSlice";
-import dataRoom from "@/utils/redux/selectors/roomSelector";
-const FilterItem = ({
-  title,
-  className,
-}: {
-  title: string;
-  className?: string;
-}) => {
+import { fetchMovies, setFilter } from "@/utils/redux/slices/movieSlice";
+import dataMovie from "@/utils/redux/selectors/movieSlector";
+
+const FilterItem = ({ title, className }: { title: string; className?: string }) => {
   return (
     <div
       className={`border-1 border-foreground text-foreground flex-center w-fit px-2 py-1 transition-colors rounded-md hover:bg-primary hover:text-white hover:border-transparent cursor-pointer ${className}`}
@@ -20,83 +15,86 @@ const FilterItem = ({
     </div>
   );
 };
+
 const FilterPopup = ({
   closeForm,
   data,
 }: {
   closeForm: () => void;
-  data: Cinema[];
+  data: Genre[];
 }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const [idCinemas, setIdCinemas] = useState<string[]>([]);
+  const [idGenre, setIdGenre] = useState<string>(""); // chọn 1 thể loại
   const [status, setStatus] = useState<number[]>([]);
-  const { filter } = useSelector(dataRoom);
-  const handleGetIdCinema = (id: string) => {
-    setIdCinemas((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
-    );
-  };
+  const [date, setDate] = useState<string>("");
+  const [star, setStar] = useState<string>("");
+  const { filter } = useSelector(dataMovie);
+
   const handleGetStatus = (id: number) => {
     setStatus((prev) =>
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     );
   };
+
   useEffect(() => {
-    if (filter.cinemas) {
-      setIdCinemas(filter.cinemas.split(","));
-    } else {
-      setIdCinemas([]);
-    }
-    if (filter.status) {
-      setStatus(filter.status.split(",").map((s) => Number(s)));
-    } else {
-      setStatus([]);
-    }
+    setIdGenre(filter.genre || "");
+    setStatus(filter.status ? filter.status.split(",").map((s) => Number(s)) : []);
+    setDate(filter.date || "");
+    setStar(filter.star || "");
   }, [filter]);
 
   const handleFilter = () => {
     dispatch(
-      fetchRooms({
+      fetchMovies({
         limit: 5,
         page: 1,
-        cinemas: idCinemas.join(","),
+        genre: idGenre,
         status: status.join(","),
+        date,
+        star,
       })
     );
     dispatch(
       setFilter({
-        cinemas: idCinemas.join(","),
+        genre: idGenre,
         status: status.join(","),
+        date,
+        star,
       })
     );
     closeForm();
   };
-  console.log(filter);
 
   return (
     <PopupContainer title="Bộ lọc" closeForm={closeForm}>
       <div className="p-5 space-y-5">
+
         <div className="flex gap-4 flex-col">
-          <h1 className="text-xl font-bold">Chọn rạp:</h1>
+          <h1 className="text-xl font-bold">Chọn thể loại:</h1>
           <div className="flex flex-wrap gap-4">
-            {data.map((cinema) => (
-              <button
-                key={cinema._id}
-                onClick={() => handleGetIdCinema(cinema._id)}
-              >
-                {" "}
+            {data.map((genre) => (
+              <label key={genre._id} className="cursor-pointer">
+                <input
+                  type="radio"
+                  name="genre"
+                  value={genre._id}
+                  checked={idGenre === genre._id}
+                  onChange={() => setIdGenre(genre._id.toString())}
+                  className="hidden"
+                />
                 <FilterItem
-                  title={cinema.name}
+                  title={genre.name}
                   className={`${
-                    idCinemas.includes(cinema._id)
+                    idGenre === genre._id
                       ? "bg-primary text-white border-transparent"
                       : ""
                   }`}
                 />
-              </button>
+              </label>
             ))}
           </div>
         </div>
+
         <div className="flex gap-4 flex-col">
           <h1 className="text-xl font-bold">Chọn trạng thái:</h1>
           <div className="flex flex-wrap gap-4">
@@ -110,17 +108,44 @@ const FilterPopup = ({
                   }`}
                   title={`${
                     stt === 1
-                      ? "Không hoạt động"
+                      ? "Đang chiếu"
                       : stt === 2
-                      ? "Hoạt động"
-                      : "Đang bảo trì"
+                      ? "Sắp chiếu"
+                      : "Ngưng chiếu"
                   }`}
                 />
               </button>
             ))}
           </div>
         </div>
+
+        <div className="flex gap-4 flex-col">
+          <h1 className="text-xl font-bold">Chọn ngày chiếu:</h1>
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            className="border border-gray-300 rounded-md p-2 w-fit"
+          />
+        </div>
+
+        <div className="flex gap-4 flex-col">
+          <h1 className="text-xl font-bold">Chọn đánh giá:</h1>
+          <select
+            value={star}
+            onChange={(e) => setStar(e.target.value)}
+            className="border border-gray-300 rounded-md p-2 w-fit"
+          >
+            <option value="">-- Tất cả --</option>
+            <option value="0,3">Dưới 3 sao</option>
+            <option value="3,4">Từ 3 đến 4 sao</option>
+            <option value="4,5">Từ 4 đến 5 sao</option>
+            <option value="5">5 sao</option>
+          </select>
+        </div>
+
       </div>
+
       <div className="flex justify-end p-5 w-full bg-background-card rounded-2xl">
         <button className="btn" onClick={handleFilter}>
           Lọc
