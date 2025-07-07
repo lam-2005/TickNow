@@ -6,9 +6,18 @@ import { AppDispatch } from "@/utils/redux/store";
 import { fetchMovies, setFilter } from "@/utils/redux/slices/movieSlice";
 import dataMovie from "@/utils/redux/selectors/movieSlector";
 
-const FilterItem = ({ title, className }: { title: string; className?: string }) => {
+const FilterItem = ({
+  title,
+  className,
+  onClick,
+}: {
+  title: string;
+  className?: string;
+  onClick?: () => void;
+}) => {
   return (
     <div
+      onClick={onClick}
       className={`border-1 border-foreground text-foreground flex-center w-fit px-2 py-1 transition-colors rounded-md hover:bg-primary hover:text-white hover:border-transparent cursor-pointer ${className}`}
     >
       {title}
@@ -24,31 +33,51 @@ const FilterPopup = ({
   data: Genre[];
 }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const [idGenre, setIdGenre] = useState<string>(""); // chọn 1 thể loại
+  const { filter } = useSelector(dataMovie);
+
+  const [idGenres, setIdGenres] = useState<string[]>([]);
   const [status, setStatus] = useState<number[]>([]);
   const [date, setDate] = useState<string>("");
   const [star, setStar] = useState<string>("");
-  const { filter } = useSelector(dataMovie);
-
-  const handleGetStatus = (id: number) => {
-    setStatus((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
-    );
-  };
 
   useEffect(() => {
-    setIdGenre(filter.genre || "");
-    setStatus(filter.status ? filter.status.split(",").map((s) => Number(s)) : []);
+    const safeGenre = (() => {
+    if (typeof filter.genre === "string") {
+      return filter.genre.split(",");
+    }
+    return [];
+  })();
+
+  const safeStatus = (() => {
+    if (typeof filter.status === "string") {
+      return filter.status.split(",").map(Number);
+    }
+    return [];
+  })();
+    setIdGenres(safeGenre);
+    setStatus(safeStatus);
     setDate(filter.date || "");
     setStar(filter.star || "");
   }, [filter]);
+
+  const handleToggleGenre = (id: string) => {
+    setIdGenres((prev) =>
+      prev.includes(id) ? prev.filter((g) => g !== id) : [...prev, id]
+    );
+  };
+
+  const handleToggleStatus = (id: number) => {
+    setStatus((prev) =>
+      prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
+    );
+  };
 
   const handleFilter = () => {
     dispatch(
       fetchMovies({
         limit: 5,
         page: 1,
-        genre: idGenre,
+        genre: idGenres.join(","),
         status: status.join(","),
         date,
         star,
@@ -56,7 +85,7 @@ const FilterPopup = ({
     );
     dispatch(
       setFilter({
-        genre: idGenre,
+        genre: idGenres.join(","),
         status: status.join(","),
         date,
         star,
@@ -68,58 +97,45 @@ const FilterPopup = ({
   return (
     <PopupContainer title="Bộ lọc" closeForm={closeForm}>
       <div className="p-5 space-y-5">
-
-        <div className="flex gap-4 flex-col">
+        <div className="flex flex-col gap-4">
           <h1 className="text-xl font-bold">Chọn thể loại:</h1>
           <div className="flex flex-wrap gap-4">
             {data.map((genre) => (
-              <label key={genre._id} className="cursor-pointer">
-                <input
-                  type="radio"
-                  name="genre"
-                  value={genre._id}
-                  checked={idGenre === genre._id}
-                  onChange={() => setIdGenre(genre._id.toString())}
-                  className="hidden"
-                />
-                <FilterItem
-                  title={genre.name}
-                  className={`${
-                    idGenre === genre._id
-                      ? "bg-primary text-white border-transparent"
-                      : ""
-                  }`}
-                />
-              </label>
+              <FilterItem
+                key={genre._id}
+                title={genre.name}
+                onClick={() => handleToggleGenre(genre._id.toString())}
+                className={
+                  idGenres.includes(genre._id.toString())
+                    ? "bg-primary text-white border-transparent"
+                    : ""
+                }
+              />
             ))}
           </div>
         </div>
 
-        <div className="flex gap-4 flex-col">
+        <div className="flex flex-col gap-4">
           <h1 className="text-xl font-bold">Chọn trạng thái:</h1>
           <div className="flex flex-wrap gap-4">
             {[1, 2, 3].map((stt) => (
-              <button key={stt} onClick={() => handleGetStatus(stt)}>
-                <FilterItem
-                  className={`${
-                    status.includes(stt)
-                      ? "bg-primary text-white border-transparent"
-                      : ""
-                  }`}
-                  title={`${
-                    stt === 1
-                      ? "Đang chiếu"
-                      : stt === 2
-                      ? "Sắp chiếu"
-                      : "Ngưng chiếu"
-                  }`}
-                />
-              </button>
+              <FilterItem
+                key={stt}
+                title={
+                  stt === 1 ? "Đang chiếu" : stt === 2 ? "Sắp chiếu" : "Ngưng chiếu"
+                }
+                onClick={() => handleToggleStatus(stt)}
+                className={
+                  status.includes(stt)
+                    ? "bg-primary text-white border-transparent"
+                    : ""
+                }
+              />
             ))}
           </div>
         </div>
 
-        <div className="flex gap-4 flex-col">
+        <div className="flex flex-col gap-4">
           <h1 className="text-xl font-bold">Chọn ngày chiếu:</h1>
           <input
             type="date"
@@ -129,7 +145,7 @@ const FilterPopup = ({
           />
         </div>
 
-        <div className="flex gap-4 flex-col">
+        <div className="flex flex-col gap-4">
           <h1 className="text-xl font-bold">Chọn đánh giá:</h1>
           <select
             value={star}
@@ -143,7 +159,6 @@ const FilterPopup = ({
             <option value="5">5 sao</option>
           </select>
         </div>
-
       </div>
 
       <div className="flex justify-end p-5 w-full bg-background-card rounded-2xl">

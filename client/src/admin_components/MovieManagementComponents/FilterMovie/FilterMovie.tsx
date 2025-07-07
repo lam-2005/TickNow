@@ -1,11 +1,17 @@
 "use client";
-import React, { use, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaFilter } from "react-icons/fa6";
 import FilterPopup from "./FilterPopup";
 import Genre from "@/interfaces/genre.interface";
+
 const FilterMovie = ({ data }: { data: Promise<Genre[]> }) => {
   const [openPopup, setOpenPopup] = useState(false);
-  const genre = use(data);
+  const [genres, setGenres] = useState<Genre[]>([]);
+
+  useEffect(() => {
+    data.then((res) => setGenres(res));
+  }, [data]);
+
   return (
     <>
       <button
@@ -16,7 +22,7 @@ const FilterMovie = ({ data }: { data: Promise<Genre[]> }) => {
         Bộ lọc
       </button>
       {openPopup && (
-        <FilterPopup data={genre} closeForm={() => setOpenPopup(false)} />
+        <FilterPopup data={genres} closeForm={() => setOpenPopup(false)} />
       )}
     </>
   );

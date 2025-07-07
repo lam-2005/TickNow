@@ -58,7 +58,7 @@ const MovieList = ({ initData , genre}: { initData: InitDataType, genre:Promise<
         errorAddData: null,
         errorUpdateData: null,
         filter: {
-          genre: "",
+          genre: [],
           status: "",
           date: "",
           star: "",
