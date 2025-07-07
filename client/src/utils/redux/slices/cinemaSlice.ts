@@ -3,8 +3,8 @@ import reduxInitStateDefault, {
   ReduxInitStateDefaultType,
 } from "@/configs/reduxInitStateDefault";
 import { Cinema, CinemaCreateOrUpdate } from "@/interfaces/cinema.interface";
-import { 
-  updateCinema as updateCinemaService, 
+import {
+  updateCinema as updateCinemaService,
   createCinema as createCinemaService,
 } from "@/services/cinema.service";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
@@ -16,7 +16,13 @@ export type CinemaManagementState = ReduxInitStateDefaultType & {
   totalPages: number;
   errorAddData: string | null;
   errorUpdateData: string | null;
+  filter: {
+    name: string;
+    locations: string;
+    status: string;
+  };
 };
+
 const initialState: CinemaManagementState = {
   data: [],
   total: 0,
@@ -24,8 +30,14 @@ const initialState: CinemaManagementState = {
   totalPages: 1,
   errorAddData: null,
   errorUpdateData: null,
+  filter: {
+    name: "",
+    locations: "",
+    status: "",
+  },
   ...reduxInitStateDefault,
 };
+
 const cinemaSlice = createSlice({
   name: "cinemaManagement",
   initialState,
@@ -39,6 +51,9 @@ const cinemaSlice = createSlice({
       state.error = null;
       state.errorAddData = null;
       state.errorUpdateData = null;
+    },
+    setFilter: (state, action) => {
+      state.filter = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -56,40 +71,28 @@ const cinemaSlice = createSlice({
       .addCase(fetchCinemas.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      })
-    //   // thêm
-    //   .addCase(addcinema.pending, (state) => {
-    //     state.loading = true;
-    //     state.errorAddData = null;
-    //   })
-    //   .addCase(addcinema.fulfilled, (state) => {
-    //     state.loading = false;
-    //   })
-    //   .addCase(addcinema.rejected, (state, action) => {
-    //     state.loading = false;
-    //     state.errorAddData = action.payload as string;
-    //   })
-    //   // sửa
-    //   .addCase(updatecinema.pending, (state) => {
-    //     state.loading = true;
-    //     state.errorUpdateData = null;
-    //   })
-    //   .addCase(updatecinema.fulfilled, (state) => {
-    //     state.loading = false;
-    //   })
-    //   .addCase(updatecinema.rejected, (state, action) => {
-    //     state.loading = false;
-    //     state.errorUpdateData = action.payload as string;
-    //   });
+      });
   },
 });
+
 export default cinemaSlice.reducer;
-export const { setInitialcinemas } = cinemaSlice.actions;
+
+export const { setInitialcinemas, setFilter } = cinemaSlice.actions;
+
 export const fetchCinemas = createAsyncThunk(
   "cinemaManagement/fetchCinemas",
-  async ({ page, limit }: { page: number; limit: number }, thunkAPI) => {
+  async (
+    {
+      page,
+      limit,
+      locations = "",
+      status = "",
+      name = "",
+    }: { page: number; limit: number; locations?: string; status?: string, name?: string },
+    thunkAPI
+  ) => {
     try {
-      const data = await getCinemas(page, limit);
+      const data = await getCinemas(page, limit, name, locations, status);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

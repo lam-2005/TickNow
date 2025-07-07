@@ -30,7 +30,7 @@ const VoucherList = ({
   const [openUpdateForm, setOpenUpdateForm] = useState<boolean>(false);
   const [voucher, setVoucher] = useState<Voucher | null>(null);
 //   // lay selector
-  const { data, error, total, currentPage, loading, totalPages } = useSelector(dataVoucherSelector);
+  const { data, error, total, currentPage, loading, totalPages, filter } = useSelector(dataVoucherSelector);
   // hook phan trang
   const { page, changePage, changeRowPerPage, rowsPerPage } = usePanigation(initialData.currentPage);
 
@@ -42,11 +42,31 @@ const VoucherList = ({
     }
 
     if (page <= totalPages) {
-        dispatch(fetchVouchers({ limit: rowsPerPage, page: page }));
-    } else {
-        dispatch(fetchVouchers({ limit: rowsPerPage, page: totalPages }));
-    }
-  }, [dispatch, rowsPerPage, page, initialData, totalPages]);
+      dispatch(
+        fetchVouchers({
+          limit: rowsPerPage,
+          page: page,
+          code: filter.code,
+          timeStart: filter.timeStart,
+          timeEnd: filter.timeEnd,
+          status: filter.status,
+        })
+      );
+
+      return;
+    } 
+
+    dispatch(
+      fetchVouchers({
+        limit: rowsPerPage,
+        page: totalPages,
+        code: filter.code,
+        timeStart: filter.timeStart,
+        timeEnd: filter.timeEnd,
+        status: filter.status,
+      })
+    );
+  }, [dispatch, rowsPerPage, page, initialData, totalPages, filter]);
 
   const columns: Column<Voucher>[] = [
     { key: "code", title: "Mã code" },
@@ -83,7 +103,7 @@ const VoucherList = ({
   const handleCloseUpdate = () => {
     setVoucher(null);
     setOpenUpdateForm(false);
-    dispatch(fetchVouchers({ limit: 5, page: 1 }));
+    // dispatch(fetchVouchers({ limit: 5, page: 1 }));
   }
 
   if (loading) return <p className="text-center">Đang tải dữ liệu...</p>;

@@ -3,6 +3,7 @@ import authReducer from "./slices/authSlice";
 import roomSlice from "./slices/roomSlice";
 import voucherSlide from "@/utils/redux/slices/voucherSlice";
 import cinemaSlice from "@/utils/redux/slices/cinemaSlice";
+import postSlice from "@/utils/redux/slices/postSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     roomManagement: roomSlice,
     voucherManagement: voucherSlide,
     cinemaManagement: cinemaSlice,
+    postManagement: postSlice,
   },
 });
 

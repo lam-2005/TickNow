@@ -22,7 +22,7 @@ const createCinema = async (data: CinemaCreateOrUpdate) => {
 
 const updateCinema = async (data: CinemaCreateOrUpdate) => {
    try {
-    const res = await api.post(`/cinema/update`, data);
+    const res = await api.patch(`/cinema/update/${data.id}`, data);
     return res;
   } catch (error) {
     catchingError(error, "Cập nhật rạp thất bại!");

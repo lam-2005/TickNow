@@ -11,8 +11,9 @@ export type LocationType = {
 };
 type AddFormProps = {
   locations: Location[];
+  closeForm: () => void;
 };
-const AddForm = ({ locations }: AddFormProps) => {
+const AddForm = ({ locations, closeForm }: AddFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const [formData, setFormData] = useState<CinemaCreateOrUpdate>({
       id: "",
@@ -46,6 +47,8 @@ const AddForm = ({ locations }: AddFormProps) => {
       toast.error(`Thêm phòng thất bại: ${err}`);
       console.error(err);
     }
+
+    closeForm();
   };
 
   return (

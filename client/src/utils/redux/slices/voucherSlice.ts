@@ -1,3 +1,4 @@
+// import { getVouchers } from "@/app/(admin)/admin/vouchers/page";
 import { getVouchers } from "@/app/(admin)/admin/vouchers/page";
 import reduxInitStateDefault, {
   ReduxInitStateDefaultType,
@@ -13,7 +14,14 @@ export type voucherManagementState = ReduxInitStateDefaultType & {
   totalPages: number;
   errorAddData: string | null;
   errorUpdateData: string | null;
+  filter: {
+    code: string;
+    timeStart: string;
+    timeEnd: string;
+    status: string;
+  };
 };
+
 const initialState: voucherManagementState = {
   data: [],
   total: 0,
@@ -21,6 +29,12 @@ const initialState: voucherManagementState = {
   totalPages: 1,
   errorAddData: null,
   errorUpdateData: null,
+  filter: {
+    code: "",
+    timeStart: "",
+    timeEnd: "",
+    status: "",
+  },
   ...reduxInitStateDefault,
 };
 
@@ -38,6 +52,9 @@ const voucherSlice = createSlice({
       state.errorAddData = null;
       state.errorUpdateData = null;
     },
+    setFilter: (state, action) => {
+      state.filter = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -54,22 +71,28 @@ const voucherSlice = createSlice({
       .addCase(fetchVouchers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      })
+      });
   },
 });
+
 export default voucherSlice.reducer;
-export const { setInitialVouchers } = voucherSlice.actions;
+export const { setInitialVouchers, setFilter } = voucherSlice.actions;
 
 export const fetchVouchers = createAsyncThunk(
   "voucherManagement/fetchVouchers",
-  async ({ page, limit, params = null }: { page: number; limit: number, params: string|null }, thunkAPI) => {
+  async (
+    { 
+      page,
+      limit,
+      code = "",
+      timeStart = "",
+      timeEnd = "",
+      status = "",
+    }: { page: number; limit: number; code?: string, timeStart?: string, timeEnd?: string, status?: string },
+    thunkAPI
+  ) => {
     try {
-      if (params) {
-        const data = await getVouchers(page, limit, params);
-        return data;
-      }
-
-      const data = await getVouchers(page, limit);
+      const data = await getVouchers(page, limit, code, timeStart, timeEnd, status);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

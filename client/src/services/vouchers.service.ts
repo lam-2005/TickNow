@@ -30,8 +30,8 @@ const createVoucherService = async (data: Voucher) => {
 
 const updateVoucherService = async (data: Voucher) => {
    try {
-    const { code, discount_type, start_date, end_date, max_users, is_active} = data;
-    const res = await api.post(`/voucher/update`, {
+    const { id, code, discount_type, start_date, end_date, max_users, is_active} = data;
+    const res = await api.patch(`/voucher/update/${id}`, {
       code,
       discount_type,
       start_date,

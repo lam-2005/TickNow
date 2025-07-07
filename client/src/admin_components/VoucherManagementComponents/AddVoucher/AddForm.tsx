@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { Voucher } from "@/interfaces/vouchers.interface";
 import { createVoucher, fetchVouchers } from "@/utils/redux/slices/voucherSlice";
 
-const AddForm = () => {
+const AddForm = ({ closeForm } : { closeForm: () => void;}) => {
   const dispatch = useDispatch<AppDispatch>();
   const [formData, setFormData] = useState<Voucher>({
       _id: '',  
@@ -44,6 +44,8 @@ const AddForm = () => {
       toast.error(`Thêm voucher thất bại: ${err}`);
       console.error(err);
     }
+
+    closeForm();
   };
 
   return (

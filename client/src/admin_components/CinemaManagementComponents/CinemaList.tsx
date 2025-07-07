@@ -34,7 +34,7 @@ const CinemaList = ({
   const [openUpdateForm, setOpenUpdateForm] = useState<boolean>(false);
   const [cinema, setCinema] = useState<Cinema | null>(null);
 //   // lay selector
-  const { data, error, total, currentPage, loading, totalPages } =
+  const { data, error, total, currentPage, loading, totalPages, filter } =
     useSelector(dataCinemaSelector);
   // hook phan trang
   const { page, changePage, changeRowPerPage, rowsPerPage } = usePanigation(initialData.currentPage);
@@ -47,11 +47,29 @@ const CinemaList = ({
     }
 
     if (page <= totalPages) {
-        dispatch(fetchCinemas({ limit: rowsPerPage, page: page }));
-    } else {
-        dispatch(fetchCinemas({ limit: rowsPerPage, page: totalPages }));
-    }
-  }, [dispatch, rowsPerPage, page, initialData, totalPages]);
+      dispatch(
+        fetchCinemas({
+          limit: rowsPerPage,
+          page: page,
+          name: filter.name,
+          locations: filter.locations,
+          status: filter.status,
+        })
+      );
+
+      return;
+    } 
+
+    dispatch(
+      fetchCinemas({
+        limit: rowsPerPage,
+        page: totalPages,
+        name: filter.name,
+        locations: filter.locations,
+        status: filter.status,
+      })
+    );
+  }, [dispatch, rowsPerPage, page, initialData, totalPages, filter]);
 
    const columns: Column<Cinema>[] = [
     { key: "name", title: "Tên rạp" },
@@ -80,37 +98,40 @@ const CinemaList = ({
     {
       key: "status",
       title: "Trạng thái",
-      render: (row) => row?.status ? "Hoạt động" : "Ngừng hoạt động",
+      render: (row) =>
+        row?.status === 1 ? "Hoạt động" : "Ngừng hoạt động",
     },
     {
       title: "Thao tác",
       render: (row) => (
         <div className="flex gap-2">
-          <ActionButton bgColor="warning" onClick={() => handleOpenUpdate(row._id)} label="Sửa" />
+          <ActionButton
+            bgColor="warning"
+            onClick={() => handleOpenUpdate(row._id)}
+            label="Sửa"
+          />
         </div>
       ),
     },
   ];
 
-  const handleOpenUpdate = async (id: string) => {
-    const cinema = data?.find((cinema) => cinema._id === id);
-    if (!cinema) {
-      toast.error("Rạp chiếu không tồn tại");
+  const handleOpenUpdate = (id: string) => {
+    const target = data.find((item) => item._id === id);
+    if (!target) {
+      toast.error("Không tìm thấy rạp chiếu");
       return;
     }
-
-    setCinema(cinema);
+    setCinema(target);
     setOpenUpdateForm(true);
   };
 
   const handleCloseUpdate = () => {
     setCinema(null);
     setOpenUpdateForm(false);
-    dispatch(fetchCinemas({ limit: 5, page: 1 }));
+    dispatch(fetchCinemas({ limit: rowsPerPage, page: 1 }));
   }
 
   if (loading) return <p className="text-center">Đang tải dữ liệu...</p>;
-
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (
@@ -122,15 +143,14 @@ const CinemaList = ({
           closeForm={handleCloseUpdate}
         />
       )}
-      
-      {
-        <Table
-          column={columns}
-          data={data}
-          currentPage={currentPage}
-          rowsPerPage={rowsPerPage}
-        />
-      }
+
+      <Table
+        column={columns}
+        data={data}
+        currentPage={currentPage}
+        rowsPerPage={rowsPerPage}
+      />
+
       {total >= rowsPerPage && (
         <Pagination
           currentPage={currentPage}
