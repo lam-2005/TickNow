@@ -12,7 +12,6 @@ const getTicketData = async (page: number, limit: number) => {
     total: res?.data.pagination.total,
     currentPage: res?.data.pagination.page,
     totalPages: res?.data.pagination.totalPages,
-    
   };
 };
 
@@ -20,9 +19,7 @@ const TicketManagement = async () => {
   const res = await getTicketData(1, 5);
   return (
     <div className="card">
-      <HeadingCard title="Quản Lý Vé">
-        {/* <AddScreenBtn /> */}
-      </HeadingCard>
+      <HeadingCard title="Quản Lý Vé">{/* <AddScreenBtn /> */}</HeadingCard>
       <OptionTable />
       <Suspense fallback={<p className="text-center">Đang tải dữ liệu...</p>}>
         <TicketList initData={res} />
