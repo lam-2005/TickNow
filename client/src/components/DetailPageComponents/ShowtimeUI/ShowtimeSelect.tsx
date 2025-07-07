@@ -10,6 +10,7 @@ import React, { useEffect, useState } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import { RiMapPin2Fill } from "react-icons/ri";
 import CinemaShowtimeContainer from "./CinemaShowtimeContainer";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type ListDataSelect = {
   showtimes: Screening[];
@@ -22,6 +23,7 @@ type ShowtimeSelectTypes = {
 };
 const ShowtimeSelect = ({ listData, slug }: ShowtimeSelectTypes) => {
   const { showtimes, locations } = listData;
+  const router = useRouter();
 
   const getDate: { value: string; label: string }[] = [
     ...new Set(showtimes.map((item) => item.date)),
@@ -38,13 +40,20 @@ const ShowtimeSelect = ({ listData, slug }: ShowtimeSelectTypes) => {
       label: label,
     };
   });
-
-  const [selectedDate, setSelectedDate] = useState(getDate[0].value);
-  const [selectedLocation, setSelectedLocation] = useState(locations[0]._id);
+  const searchParams = useSearchParams();
+  const getDateParams = searchParams.get("date");
+  const getLoactionParams = searchParams.get("location");
+  const [selectedDate, setSelectedDate] = useState(
+    getDateParams || getDate[0].value
+  );
+  const [selectedLocation, setSelectedLocation] = useState(
+    getLoactionParams || locations[0]._id
+  );
   const [dataCinemaShowtimes, setDataCinemaShowtimes] = useState<
     CinemaShowtimeType[]
   >([]);
   const [loading, setLoading] = useState<boolean>(true);
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -59,6 +68,9 @@ const ShowtimeSelect = ({ listData, slug }: ShowtimeSelectTypes) => {
       }
     };
     getData();
+    router.push(`?date=${selectedDate}&location=${selectedLocation}`, {
+      scroll: false,
+    });
   }, [slug, selectedDate, selectedLocation]);
 
   return (
@@ -70,7 +82,7 @@ const ShowtimeSelect = ({ listData, slug }: ShowtimeSelectTypes) => {
             leftIcon={<FaCalendarAlt className="text-foreground" size={20} />}
             getLabel={(item) => item.label}
             data={getDate}
-            defaultValue={getDate[0].value}
+            defaultValue={selectedDate}
             getValue={(item) => item.value}
             onChange={(date) => setSelectedDate(date)}
           />
@@ -78,7 +90,7 @@ const ShowtimeSelect = ({ listData, slug }: ShowtimeSelectTypes) => {
             leftIcon={<RiMapPin2Fill className="text-foreground" size={20} />}
             getLabel={(item) => item.name}
             data={locations}
-            defaultValue={locations[0]._id}
+            defaultValue={selectedLocation}
             getValue={(item) => item._id}
             onChange={(location) => setSelectedLocation(location)}
           />
