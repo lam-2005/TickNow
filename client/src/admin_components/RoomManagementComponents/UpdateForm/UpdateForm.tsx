@@ -20,7 +20,7 @@ type UpdateFormProps = {
 };
 const UpdateForm = ({ cinemas, closeForm, info }: UpdateFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { currentPage } = useSelector(dataRoom);
+  const { currentPage, filter } = useSelector(dataRoom);
   const { rowsPerPage } = usePanigation(currentPage);
   const [formData, setFormData] = useState<DataRoomReq>({
     id_cinema: info.id_cinema,
@@ -64,7 +64,14 @@ const UpdateForm = ({ cinemas, closeForm, info }: UpdateFormProps) => {
       if (sure) {
         await dispatch(updateRoom({ id, data: dataRequest })).unwrap();
 
-        await dispatch(fetchRooms({ page: currentPage, limit: rowsPerPage }));
+        await dispatch(
+          fetchRooms({
+            page: currentPage,
+            limit: rowsPerPage,
+            cinemas: filter.cinemas,
+            status: filter.status,
+          })
+        );
         toast.success("Cập nhật phòng thành công!");
         closeForm();
       } else {
