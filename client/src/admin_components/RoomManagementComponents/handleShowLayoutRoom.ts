@@ -1,9 +1,9 @@
-import { RoomData } from "./AddForm/AddForm";
+import { DataRoomReq } from "@/interfaces/room.interface";
 
-export default function handleShowLayoutRoom(roomLayout: RoomData) {
+export default function handleShowLayoutRoom(roomLayout: DataRoomReq) {
   const rows = Number(roomLayout.row);
-  const columns = Number(roomLayout.colunm);
-  const removedSeat = roomLayout.seatRemoved;
+  const columns = Number(roomLayout.column);
+  const removedSeat = roomLayout.seatRemoved ?? {};
   // console.log(rows, columns, removedSeat);
 
   const rowLetters: string[] = [];

@@ -36,7 +36,7 @@ const Movie = async ({ params }: { params: Promise<{ slug: string }> }) => {
   };
   const locations = await fetchLocation();
   return (
-    <div>
+    <div className="transition-all">
       <MovieInfo movie={movie} />
       <div className="container mt-10 space-y-10">
         <ShowtimeSelect

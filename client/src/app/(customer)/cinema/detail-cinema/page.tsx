@@ -28,12 +28,12 @@ const DetailCinema = () => {
         </div>
       </BackgroundPage>
       <div className="flex-column gap-7.5 mt-20">
-        <ShowtimeCard>
+        {/* <ShowtimeCard>
           <ShowtimeItem>
             <ShowType type="Phụ đề" data={[]} />
             <ShowType type="Lồng tiếng" data={[]} />
           </ShowtimeItem>
-        </ShowtimeCard>
+        </ShowtimeCard> */}
       </div>
     </div>
   );

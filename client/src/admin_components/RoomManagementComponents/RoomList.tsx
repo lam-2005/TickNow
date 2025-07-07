@@ -38,7 +38,7 @@ const RoomList = ({
   const [openUpdateForm, setOpenUpdateForm] = useState<boolean>(false);
   const [getInfo, setGetInfo] = useState<RoomType | null>(null);
   // lay selector
-  const { currentPage, loading, data, error, total, totalPages } =
+  const { currentPage, loading, data, error, total, totalPages, filter } =
     useSelector(dataRoom);
   // hook phan trang
   const { page, changePage, changeRowPerPage, rowsPerPage } = usePanigation(
@@ -54,11 +54,25 @@ const RoomList = ({
       return;
     }
     if (page <= totalPages) {
-      dispatch(fetchRooms({ limit: rowsPerPage, page: page }));
+      dispatch(
+        fetchRooms({
+          limit: rowsPerPage,
+          page: page,
+          cinemas: filter.cinemas,
+          status: filter.status,
+        })
+      );
     } else {
-      dispatch(fetchRooms({ limit: rowsPerPage, page: totalPages }));
+      dispatch(
+        fetchRooms({
+          limit: rowsPerPage,
+          page: totalPages,
+          cinemas: filter.cinemas,
+          status: filter.status,
+        })
+      );
     }
-  }, [dispatch, rowsPerPage, page, totalPages]);
+  }, [dispatch, rowsPerPage, page, totalPages, filter.cinemas, filter.status]);
 
   // table
   const col: Column<RoomType>[] = [
@@ -132,6 +146,7 @@ const RoomList = ({
   if (loading) return <p className="text-center">Đang tải dữ liệu...</p>;
 
   if (error) return <p className="text-center text-red-500">{error}</p>;
+  if (data.length === 0) return <p className="text-center">Không có dữ liệu</p>;
 
   return (
     <>
@@ -153,7 +168,7 @@ const RoomList = ({
           rowsPerPage={rowsPerPage}
         />
       }
-      {total >= rowsPerPage && (
+      {total > rowsPerPage && (
         <Pagination
           currentPage={currentPage}
           total={total}

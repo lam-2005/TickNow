@@ -16,7 +16,7 @@ const PopupContainer = ({
         className="absolute inset-0 w-full h-full z-1001"
         onClick={closeForm}
       ></div>
-      <div className="bg-background-card absolute-center w-fit max-h-9/10 rounded-2xl flex-column z-1002">
+      <div className="bg-background-card absolute-center w-fit max-h-9/10 rounded-2xl flex-column z-1002 min-w-2xs">
         <button
           className="absolute top-0 right-0 translate-y-5 -translate-x-5 cursor-pointer"
           onClick={closeForm}
