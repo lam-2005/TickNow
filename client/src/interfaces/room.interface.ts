@@ -11,12 +11,14 @@ export type RoomType = {
     element_selecting: { [key: string]: number[] };
   };
   status: number;
+  createAt?: string;
+  updateAt?: string;
 };
 
 export type DataRoomReq = {
   id_cinema?: string;
-  column?: number;
-  row?: number;
+  column?: number | string;
+  row?: number | string;
   seatRemoved?: { [key: string]: number[] };
   status?: number;
 };

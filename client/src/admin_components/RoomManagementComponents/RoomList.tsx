@@ -2,13 +2,12 @@
 import Pagination from "@/admin_components/Table/Pagination";
 import Table, { Column } from "@/admin_components/Table/Table";
 import usePanigation from "@/hooks/usePanigation";
-import { DataRoomReq, RoomType } from "@/interfaces/room.interface";
+import { RoomType } from "@/interfaces/room.interface";
 import dataRoom from "@/utils/redux/selectors/roomSelector";
 import {
   fetchRooms,
   setInitialRooms,
   showInfoRoom,
-  updateRoom,
 } from "@/utils/redux/slices/roomSlice";
 import { AppDispatch } from "@/utils/redux/store";
 import React, { use, useEffect, useRef, useState } from "react";
@@ -17,7 +16,7 @@ import ActionButton from "../Button/ButtonActions";
 import DetailRoom from "./DetailRoom/DetailRoom";
 import UpdateFormContainer from "./UpdateForm/UpdateFormContainer";
 import { Cinema } from "@/interfaces/cinema.interface";
-import { toast } from "react-toastify";
+import Status from "../StatusUI/Status";
 type InitDataType = {
   rooms: RoomType[];
   total: number;
@@ -39,7 +38,7 @@ const RoomList = ({
   const [openUpdateForm, setOpenUpdateForm] = useState<boolean>(false);
   const [getInfo, setGetInfo] = useState<RoomType | null>(null);
   // lay selector
-  const { currentPage, loading, data, error, total, totalPages } =
+  const { currentPage, loading, data, error, total, totalPages, filter } =
     useSelector(dataRoom);
   // hook phan trang
   const { page, changePage, changeRowPerPage, rowsPerPage } = usePanigation(
@@ -55,11 +54,25 @@ const RoomList = ({
       return;
     }
     if (page <= totalPages) {
-      dispatch(fetchRooms({ limit: rowsPerPage, page: page }));
+      dispatch(
+        fetchRooms({
+          limit: rowsPerPage,
+          page: page,
+          cinemas: filter.cinemas,
+          status: filter.status,
+        })
+      );
     } else {
-      dispatch(fetchRooms({ limit: rowsPerPage, page: totalPages }));
+      dispatch(
+        fetchRooms({
+          limit: rowsPerPage,
+          page: totalPages,
+          cinemas: filter.cinemas,
+          status: filter.status,
+        })
+      );
     }
-  }, [dispatch, rowsPerPage, page, totalPages]);
+  }, [dispatch, rowsPerPage, page, totalPages, filter.cinemas, filter.status]);
 
   // table
   const col: Column<RoomType>[] = [
@@ -87,23 +100,20 @@ const RoomList = ({
     {
       title: "Trạng thái",
       render: (row) => (
-        <ActionButton
-          label={
-            row.status === 1
-              ? "Không hoạt động"
-              : row.status === 2
-              ? "Hoạt động"
-              : "Chưa kích hoạt"
-          }
-          bgColor={
+        <Status
+          color={
             row.status === 1
               ? "error"
               : row.status === 2
               ? "success"
               : "warning"
           }
-          onClick={() =>
-            handleUpdateStatus(row._id, { status: row.status === 1 ? 2 : 1 })
+          title={
+            row.status === 1
+              ? "Không hoạt động"
+              : row.status === 2
+              ? "Hoạt động"
+              : "Đang bảo trì"
           }
         />
       ),
@@ -133,24 +143,10 @@ const RoomList = ({
     setOpenUpdateForm(true);
   };
 
-  const handleUpdateStatus = async (id: string, data: DataRoomReq) => {
-    try {
-      const sure = confirm("Bạn có muốn cập nhật phòng này?");
-      if (sure) {
-        await dispatch(updateRoom({ id, data })).unwrap();
-
-        await dispatch(fetchRooms({ page: currentPage, limit: rowsPerPage }));
-        toast.success("Cập nhật phòng thành công!");
-      } else return;
-    } catch (err) {
-      toast.error(`Cập nhật phòng thất bại: ${err}`);
-      // console.error(`Cập nhật phòng thất bại: ${err}`);
-    }
-  };
-
   if (loading) return <p className="text-center">Đang tải dữ liệu...</p>;
 
   if (error) return <p className="text-center text-red-500">{error}</p>;
+  if (data.length === 0) return <p className="text-center">Không có dữ liệu</p>;
 
   return (
     <>
@@ -172,7 +168,7 @@ const RoomList = ({
           rowsPerPage={rowsPerPage}
         />
       }
-      {total >= rowsPerPage && (
+      {total > rowsPerPage && (
         <Pagination
           currentPage={currentPage}
           total={total}

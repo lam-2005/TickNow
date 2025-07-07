@@ -18,21 +18,16 @@ type UpdateFormProps = {
   closeForm: () => void;
   info: RoomType;
 };
-export type RoomData = {
-  id_cinema: string;
-  colunm: string;
-  row: string;
-  seatRemoved: { [key: string]: number[] };
-};
 const UpdateForm = ({ cinemas, closeForm, info }: UpdateFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { currentPage } = useSelector(dataRoom);
+  const { currentPage, filter } = useSelector(dataRoom);
   const { rowsPerPage } = usePanigation(currentPage);
-  const [formData, setFormData] = useState<RoomData>({
+  const [formData, setFormData] = useState<DataRoomReq>({
     id_cinema: info.id_cinema,
-    colunm: String(info.diagram.column),
+    column: String(info.diagram.column),
     row: String(info.diagram.row),
     seatRemoved: info.diagram.element_remove,
+    status: info.status,
   });
   const listOptionCinemas: CinemaType[] = cinemas.map((item) => {
     return {
@@ -43,23 +38,24 @@ const UpdateForm = ({ cinemas, closeForm, info }: UpdateFormProps) => {
   useEffect(() => {
     if (
       formData.row !== String(info.diagram.row) ||
-      formData.colunm !== String(info.diagram.column)
+      formData.column !== String(info.diagram.column)
     ) {
       setFormData((prev) => ({
         ...prev,
         seatRemoved: {},
       }));
     }
-  }, [formData.row, formData.colunm]);
+  }, [formData.row, formData.column]);
   const dataRequest: DataRoomReq = {
     id_cinema: formData.id_cinema,
-    column: Number(formData.colunm),
+    column: Number(formData.column),
     row: Number(formData.row),
     seatRemoved: formData.seatRemoved,
+    status: formData.status,
   };
   const handleUpdateRoom = async (id: string, e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.colunm || !formData.id_cinema || !formData.row) {
+    if (!formData.column || !formData.id_cinema || !formData.row) {
       toast.warning("Vui lòng nhập đầy đủ thông tin!");
       return;
     }
@@ -68,7 +64,14 @@ const UpdateForm = ({ cinemas, closeForm, info }: UpdateFormProps) => {
       if (sure) {
         await dispatch(updateRoom({ id, data: dataRequest })).unwrap();
 
-        await dispatch(fetchRooms({ page: currentPage, limit: rowsPerPage }));
+        await dispatch(
+          fetchRooms({
+            page: currentPage,
+            limit: rowsPerPage,
+            cinemas: filter.cinemas,
+            status: filter.status,
+          })
+        );
         toast.success("Cập nhật phòng thành công!");
         closeForm();
       } else {
