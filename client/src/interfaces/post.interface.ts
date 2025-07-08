@@ -1,3 +1,4 @@
+
 export type PostType = {
   _id: string;
   id_user: string;
@@ -18,3 +19,4 @@ export type DataPostReq = {
   content: string;
   status?: number | string;
 };
+

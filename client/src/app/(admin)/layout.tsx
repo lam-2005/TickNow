@@ -28,7 +28,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
+  return(
     <html lang="vi">
       <body
         className={`${beVietNamPro.variable} ${oswald.variable} antialiased `}
@@ -44,5 +44,5 @@ export default function RootLayout({
         </AdminProvider>
       </body>
     </html>
-  );
+  ) 
 }

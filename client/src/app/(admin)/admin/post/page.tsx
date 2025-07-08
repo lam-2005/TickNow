@@ -1,3 +1,4 @@
+
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import AddPostBtn from "@/admin_components/PostManagenmentComponents/AddForm/ButtonOpenForm";
 import SearchPost from "@/admin_components/PostManagenmentComponents/FilterPost/SearchPost";
@@ -29,6 +30,7 @@ const PostManagenment = async () => {
       <SearchPost />
       <Suspense fallback={<p className="text-center">Đang tải dữ liệu...</p>}>
         <PostList initData={posts} />
+
       </Suspense>
     </div>
   );

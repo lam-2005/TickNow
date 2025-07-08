@@ -69,11 +69,13 @@ const links: linkInterface[] = [
     url: "/admin/vouchers",
     icon: <MdOutlineLocalOffer />,
   },
+
   {
     id: 10,
     title: "Bài viết",
     url: "/admin/post",
     icon: <RiArticleLine />,
+
   },
 ];
 

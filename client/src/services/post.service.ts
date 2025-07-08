@@ -1,3 +1,4 @@
+
 import api from "@/utils/http";
 import catchingError from "@/utils/catchingError";
 import { DataPostReq } from "@/interfaces/post.interface";
@@ -59,3 +60,4 @@ const deletePostAPI = async (id: string) => {
   }
 };
 export { getPostList, addPostAPI, deletePostAPI, updatePostAPI };
+
