@@ -1,8 +1,16 @@
 "use client";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-const TimeScreening = ({ value }: { value: string }) => (
-  <div className="flex-center py-1 px-4 border-2 border-primary w-fit rounded-[5px] text-sm cursor-pointer hover:bg-primary hover:text-white transition-all">
+const TimeScreening = ({
+  value,
+  className,
+}: {
+  value: string;
+  className?: string;
+}) => (
+  <div
+    className={`flex-center py-1 px-4 border-2 border-primary w-fit rounded-[5px] text-sm cursor-pointer hover:bg-primary hover:text-white transition-all ${className}`}
+  >
     {value}
   </div>
 );
@@ -19,6 +27,10 @@ const ShowType = ({
 }) => {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParamsScreening = useSearchParams();
+  const getSearchParamScreening = searchParamsScreening.get("showtime") || "";
+  console.log(pathname);
+
   const handleChangeShowtime = (id: string) => {
     const searchParams = new URLSearchParams(window.location.search);
     searchParams.set("showtime", id);
@@ -31,7 +43,14 @@ const ShowType = ({
         {data?.map((item) => (
           <button key={item.id} onClick={() => handleChangeShowtime(item.id)}>
             {" "}
-            <TimeScreening value={item.time} />
+            <TimeScreening
+              value={item.time}
+              className={`${
+                getSearchParamScreening === item.id
+                  ? "bg-primary text-white "
+                  : ""
+              } `}
+            />
           </button>
         ))}
       </div>

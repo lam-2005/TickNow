@@ -2,7 +2,7 @@ import { Cinema } from "@/interfaces/cinema.interface";
 import { RoomType } from "@/interfaces/room.interface";
 import React from "react";
 import UpdateForm from "./UpdateForm";
-import PopupContainer from "../PopupContainer";
+import PopupContainer from "../../PopupContainer";
 
 const UpdateFormContainer = ({
   closeForm,

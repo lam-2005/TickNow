@@ -66,9 +66,11 @@ const CinemaShowtimeContainer = ({ data, loading }: Props) => {
           className="flex-column items-center gap-7.5"
           ref={bookingSectionRef}
         >
-          <h2>Chọn ghế - Phòng {showtimeId?.code_room}</h2>
+          <h2>Chọn ghế - Phòng {showtimeId?.room.code_room}</h2>
           <div className="flex-column gap-10 max-w-[1000px] w-full">
-            {showtimeId?.diagram && <Booking roomLayout={showtimeId.diagram} />}
+            {showtimeId?.room.diagram && (
+              <Booking roomLayout={showtimeId.room.diagram} />
+            )}
           </div>
         </div>
       )}

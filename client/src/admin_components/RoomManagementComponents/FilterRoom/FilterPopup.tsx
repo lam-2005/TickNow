@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import PopupContainer from "../PopupContainer";
 import { Cinema } from "@/interfaces/cinema.interface";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/utils/redux/store";
 import { fetchRooms, setFilter } from "@/utils/redux/slices/roomSlice";
 import dataRoom from "@/utils/redux/selectors/roomSelector";
+import PopupContainer from "@/admin_components/PopupContainer";
 const FilterItem = ({
   title,
   className,

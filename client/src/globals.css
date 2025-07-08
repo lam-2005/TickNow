@@ -163,4 +163,23 @@ html[data-theme="dark"] {
   .no-scrollbar {
     @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
   }
+
+  .scroll-bar::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track background */
+  .scroll-bar::-webkit-scrollbar-track {
+    background: #1a1a1a; /* màu nền bạn thích */
+  }
+
+  /* Thumb (cục kéo) */
+  .scroll-bar::-webkit-scrollbar-thumb {
+    background: #b0b0b0; /* màu tương phản */
+    border-radius: 6px;
+  }
+
+  .scroll-bar::-webkit-scrollbar-thumb:hover {
+    background: #ffffff;
+  }
 }
