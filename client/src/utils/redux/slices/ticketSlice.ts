@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Screening, ScreenReq } from "@/interfaces/screening.interface";
-import * as ticketService from "@/services/ticket.service";
-import { Ticket, TicketDetail } from "@/interfaces/ticket.interface";
+import { TicketDetail } from "@/interfaces/ticket.interface";
+import { getTicketData } from "@/app/(admin)/admin/booking/page";
 
 type TicketState = {
   ticket: TicketDetail[];
@@ -22,20 +21,15 @@ const initialState: TicketState = {
   loading: false,
   error: null,
   errorAddData: null,
-  errorUpdateData : null,
+  errorUpdateData: null,
 };
 
 export const fetchTicket = createAsyncThunk(
   "ticket/fetchTicket",
   async ({ page, limit }: { page: number; limit: number }, thunkAPI) => {
     try {
-      const res = await ticketService.getTicketList(`?page=${page}&limit=${limit}`);
-      return {
-        ticket: res?.data.result, // ✅ đúng field từ API
-        total: res?.data.pagination.total,
-        currentPage: res?.data.pagination.page,
-        totalPages: res?.data.pagination.totalPages,
-      };
+      const res = await getTicketData(page, limit);
+      return res;
     } catch {
       return thunkAPI.rejectWithValue("Không thể tải danh sách vé.");
     }
@@ -67,7 +61,7 @@ const ticketSlice = createSlice({
       .addCase(fetchTicket.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      })
+      });
   },
 });
 

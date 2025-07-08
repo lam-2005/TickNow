@@ -1,10 +1,18 @@
 "use client";
 import AddBtn from "@/admin_components/Button/AddBtn";
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import AddForm from "./AddForm";
-import PopupContainer from "../../PopupContainer";
+import PopupContainer from "@/admin_components/PopupContainer";
+import { MovieType } from "@/interfaces/movie.interface";
+import { RoomType } from "@/interfaces/room.interface";
 
-const AddScreenBtn = () => {
+const AddScreenBtn = ({
+  movies,
+  rooms,
+}: {
+  movies: MovieType[];
+  rooms: RoomType[];
+}) => {
   const [openForm, setOpenForm] = useState(false);
   return (
     <>
@@ -14,7 +22,7 @@ const AddScreenBtn = () => {
           title="Thêm suất chiếu mới"
           closeForm={() => setOpenForm(false)}
         >
-          <AddForm/>
+          <AddForm movies={movies} rooms={rooms} />
         </PopupContainer>
       )}
     </>

@@ -1,26 +1,24 @@
 "use client";
 import AddBtn from "@/admin_components/Button/AddBtn";
-import { Cinema } from "@/interfaces/cinema.interface";
-import React, { use, useState } from "react";
-import AddForm from "./AddForm";
+import React, { useState } from "react";
 import PopupContainer from "@/admin_components/PopupContainer";
+import AddForm from "./AddForm";
 
-const AddRoomBtn = ({ cinemas }: { cinemas: Promise<Cinema[]> }) => {
+const AddPostBtn = () => {
   const [openForm, setOpenForm] = useState(false);
-  const listCinemas = use(cinemas);
   return (
     <>
       <AddBtn onClick={() => setOpenForm(true)} />
       {openForm && (
         <PopupContainer
-          title="Thêm phòng chiếu"
+          title="Thêm bài viết"
           closeForm={() => setOpenForm(false)}
         >
-          <AddForm cinemas={listCinemas} />
+          <AddForm />
         </PopupContainer>
       )}
     </>
   );
 };
 
-export default AddRoomBtn;
+export default AddPostBtn;

@@ -15,6 +15,9 @@ import {
 import usePanigation from "@/hooks/usePanigation";
 import UpdateFormContainer from "./UpdateForm/UpdateFormContainer";
 import { toast } from "react-toastify";
+import { MovieType } from "@/interfaces/movie.interface";
+import { RoomType } from "@/interfaces/room.interface";
+import Status from "../StatusUI/Status";
 
 type InitDataType = {
   Screen: Screening[];
@@ -23,13 +26,18 @@ type InitDataType = {
   totalPages: number;
 };
 
-const ScreenList = ({ initData }: { initData: InitDataType }) => {
+const ScreenList = ({
+  initData,
+  moviesOptions,
+  rooms,
+}: {
+  initData: InitDataType;
+  moviesOptions: MovieType[];
+  rooms: RoomType[];
+}) => {
   const dispatch = useDispatch<AppDispatch>();
   const isFirstLoad = useRef(true);
   const [isEditOpen, setIsEditOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<Screening | null>(null);
-
-  // ✅ Thêm fallback an toàn nếu state chưa có dữ liệu
   const {
     Screen = [],
     total = 0,
@@ -77,20 +85,54 @@ const ScreenList = ({ initData }: { initData: InitDataType }) => {
   };
 
   const col: Column<Screening>[] = [
-    { key: "movieName", title: "Tên phim" },
+    {
+      key: "movieName",
+      title: "Tên phim",
+      render(row) {
+        return (
+          <p className="line-clamp-1" title={row.movieName}>
+            {row.movieName}
+          </p>
+        );
+      },
+    },
     { key: "roomCode", title: "Phòng" },
     { key: "time_start", title: "Thời gian chiếu" },
     { key: "time_end", title: "Thời gian ngừng" },
-    { key: "date", title: "Ngày chiếu" },
+    {
+      key: "date",
+      title: "Ngày chiếu",
+      render(row) {
+        const date = new Date(row.date);
+        return <p>{date.toLocaleDateString("vi-VN")}</p>;
+      },
+    },
+    {
+      key: "price",
+      title: "Giá (VNĐ)",
+      render(row) {
+        return (
+          <p>
+            {row.price !== undefined
+              ? row.price.toLocaleString("vi-VN")
+              : "N/A"}
+          </p>
+        );
+      },
+    },
     {
       key: "status",
       title: "Trạng Thái",
       render: (row: Screening) => (
-        <ActionButton
-          label={row.status ? "Hoạt Động" : "Ngừng Hoạt Động"}
-          bgColor={row.status ? "success" : "warning"}
-          onClick={() => null}
+        <Status
+          title={row.status === 2 ? "Đang hoạt động" : "Ngưng hoạt Động"}
+          color={row.status === 2 ? "success" : "error"}
         />
+        // <ActionButton
+        //   label={row.status ? "Hoạt Động" : "Ngừng Hoạt Động"}
+        //   bgColor={row.status ? "success" : "warning"}
+        //   onClick={() => null}
+        // />
       ),
     },
     {
@@ -102,7 +144,6 @@ const ScreenList = ({ initData }: { initData: InitDataType }) => {
               label="Sửa"
               bgColor="warning"
               onClick={() => {
-                setSelectedUser(row);
                 setIsEditOpen(true);
               }}
               id={row._id}
@@ -115,20 +156,15 @@ const ScreenList = ({ initData }: { initData: InitDataType }) => {
 
   if (loading) return <p className="text-center">Đang tải dữ liệu...</p>;
   if (error) return <p className="text-red-500 text-center">{error}</p>;
-  console.log("ScreenList render", {
-    Screen,
-    total,
-    currentPage,
-    totalPages,
-    rowsPerPage,
-  });
-  console.log("Init data screen:", initData);
 
   return (
     <>
       {/* <Table column={col} data={Screen.map((u) => ({ ...u, id: u._id }))} currentPage={currentPage} rowsPerPage={rowsPerPage} />
        */}
-       <Table column={col} data={Screen.map((u: Screening) => ({ ...u, id: u._id }))} />
+      <Table
+        column={col}
+        data={Screen.map((u: Screening) => ({ ...u, id: u._id }))}
+      />
 
       {total >= rowsPerPage && (
         <Pagination
@@ -140,19 +176,9 @@ const ScreenList = ({ initData }: { initData: InitDataType }) => {
           setRowPerPage={changeRowPerPage}
         />
       )}
-      {isEditOpen && selectedUser && (
-        <UpdateFormContainer
-          info={selectedUser}
-          closeForm={() => {
-            setIsEditOpen(false);
-            setSelectedUser(null);
-          }}
-          onSubmit={(data) => {
-            if (!selectedUser?._id) return;
-            handleUpdate(selectedUser._id, data);
-          }}
-        />
-      )}
+      {/* {isEditOpen && (
+        <UpdateFormContainer closeForm={() => setIsEditOpen(false)} />
+      )} */}
     </>
   );
 };

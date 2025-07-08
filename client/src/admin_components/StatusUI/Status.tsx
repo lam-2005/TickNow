@@ -26,7 +26,7 @@ const Status = ({ color, className, title }: Props) => {
       className={`${bgStatus} flex-center gap-2 rounded-[100px] px-3 py-1 ${className} w-fit`}
     >
       <div className={`${colerStatus} size-2.5 rounded-full`}></div>
-      <p className={`${textStatus} text-sm font-bold`}>{title}</p>
+      <p className={`${textStatus} text-sm font-bold text-nowrap`}>{title}</p>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Screening, ScreenReq } from "@/interfaces/screening.interface";
 import * as screenService from "@/services/screening.service";
+import { getScreenData } from "@/app/(admin)/admin/showtime/page";
 
 type ScreenState = {
   Screen: Screening[];
@@ -21,7 +22,7 @@ const initialState: ScreenState = {
   loading: false,
   error: null,
   errorAddData: null,
-  errorUpdateData : null,
+  errorUpdateData: null,
 };
 
 // export const fetchScreen = createAsyncThunk(
@@ -45,13 +46,8 @@ export const fetchScreen = createAsyncThunk(
   "screen/fetchScreen",
   async ({ page, limit }: { page: number; limit: number }, thunkAPI) => {
     try {
-      const res = await screenService.getScreeningList(`?page=${page}&limit=${limit}`);
-      return {
-        Screen: res?.data.result, // ✅ đúng field từ API
-        total: res?.data.pagination.total,
-        currentPage: res?.data.pagination.page,
-        totalPages: res?.data.pagination.totalPages,
-      };
+      const res = await getScreenData(page, limit);
+      return res;
     } catch {
       return thunkAPI.rejectWithValue("Không thể tải danh sách suất chiếu.");
     }
@@ -111,26 +107,26 @@ const screenSlice = createSlice({
       .addCase(addScreen.pending, (state) => {
         state.loading = true;
         state.errorAddData = null;
-        })
+      })
       .addCase(addScreen.fulfilled, (state) => {
         state.loading = false;
-        })
+      })
       .addCase(addScreen.rejected, (state, action) => {
         state.loading = false;
         state.errorAddData = action.payload as string;
-        })
+      })
       // sửa
       .addCase(updateScreen.pending, (state) => {
         state.loading = true;
         state.errorUpdateData = null;
-        })
+      })
       .addCase(updateScreen.fulfilled, (state) => {
         state.loading = false;
-        })
+      })
       .addCase(updateScreen.rejected, (state, action) => {
         state.loading = false;
         state.errorUpdateData = action.payload as string;
-        });
+      });
   },
 });
 

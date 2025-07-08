@@ -5,7 +5,7 @@ import * as ticketService from "@/services/ticket.service";
 import TicketList from "@/admin_components/TicketManagementComponents/TicketList";
 import Ticket from "@/components/Movie/Ticket";
 
-const getTicketData = async (page: number, limit: number) => {
+export const getTicketData = async (page: number, limit: number) => {
   const res = await ticketService.getTicketList(`?page=${page}&limit=${limit}`);
   return {
     ticket: res?.data.ticket,
@@ -17,6 +17,7 @@ const getTicketData = async (page: number, limit: number) => {
 
 const TicketManagement = async () => {
   const res = await getTicketData(1, 5);
+
   return (
     <div className="card">
       <HeadingCard title="Quản Lý Vé">{/* <AddScreenBtn /> */}</HeadingCard>

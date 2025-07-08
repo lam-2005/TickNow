@@ -25,7 +25,7 @@ const PopupContainer = ({
             <IoMdClose />
           </span>
         </button>
-        <h1 className="text-2xl uppercase font-bold p-5 text-center">
+        <h1 className="text-2xl uppercase font-bold p-5 text-center px-15">
           {title}
         </h1>
         {children}
