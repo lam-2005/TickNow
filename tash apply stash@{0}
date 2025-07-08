@@ -1,0 +1,14 @@
+ .../AddForm/ButtonOpenForm.tsx                     |   2 [32m+[m[31m-[m
+ .../DetailRoom/DetailRoom.tsx                      |   2 [32m+[m[31m-[m
+ .../FilterRoom/FilterPopup.tsx                     |   2 [32m+[m[31m-[m
+ .../ScreenManagementComponents/AddForm/AddForm.tsx | 124 [32m++++++[m[31m------[m
+ .../AddForm/ButtonOpenForm.tsx                     |  16 [32m+[m[31m-[m
+ .../AddForm/InputGroup.tsx                         | 136 [32m++++++++[m[31m-----[m
+ .../ScreenManagementComponents/ScreenList.tsx      |  35 [32m++[m[31m--[m
+ .../UpdateForm/InputGroup.tsx                      | 225 [32m++++++++++++[m[31m---------[m
+ .../UpdateForm/UpdateForm.tsx                      |  76 [32m++++[m[31m---[m
+ .../UpdateForm/UpdateFormContainer.tsx             |   9 [32m+[m[31m-[m
+ client/src/app/(admin)/admin/showtime/page.tsx     |  28 [32m++[m[31m-[m
+ client/src/interfaces/screening.interface.ts       |  13 [32m+[m[31m-[m
+ client/src/utils/redux/slices/screenSlice.ts       |  24 [32m+[m[31m--[m
+ 13 files changed, 393 insertions(+), 299 deletions(-)

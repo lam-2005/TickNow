@@ -11,16 +11,16 @@ export interface MovieType {
   trailer: string;
   image: string | File;
   banner: string | File;
-  language: number ;
+  language: number;
   genre: {
     id: number | string;
     name?: string;
   }[];
   status: string | number;
-  star:number;
+  star: number;
 }
 
-export type MovieReq={
+export type MovieReq = {
   name: string;
   release_date: string;
   nation: string;
@@ -28,11 +28,11 @@ export type MovieReq={
   duration: string | number;
   description: string;
   director: string;
-  actor: string;  
+  actor: string;
   trailer: string;
   image: File | null;
   banner: File | null;
   language: number;
   genre: string[];
   status: string | number;
-}
+};

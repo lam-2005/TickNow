@@ -2,11 +2,12 @@ import { Cinema } from "@/interfaces/cinema.interface";
 import React, { useEffect, useState } from "react";
 import InputGroup from "./InputGroup";
 import ShowLayoutRoom from "./ShowLayoutRoom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/utils/redux/store";
 import { DataRoomReq } from "@/interfaces/room.interface";
 import { addRoom, fetchRooms } from "@/utils/redux/slices/roomSlice";
 import { toast } from "react-toastify";
+import dataRoom from "@/utils/redux/selectors/roomSelector";
 export type CinemaType = {
   label: string;
   id: string;
@@ -16,6 +17,7 @@ type AddFormProps = {
 };
 const AddForm = ({ cinemas }: AddFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
+  const { filter } = useSelector(dataRoom);
   const [formData, setFormData] = useState<DataRoomReq>({
     id_cinema: "",
     column: "",
@@ -52,7 +54,14 @@ const AddForm = ({ cinemas }: AddFormProps) => {
       const sure = confirm("Bạn có muốn thêm phòng này?");
       if (sure) {
         await dispatch(addRoom(dataRequest)).unwrap();
-        await dispatch(fetchRooms({ page: 1, limit: 5 }));
+        await dispatch(
+          fetchRooms({
+            page: 1,
+            limit: 5,
+            cinemas: filter.cinemas,
+            status: filter.status,
+          })
+        );
         setFormData({
           id_cinema: "",
           column: "",
@@ -69,7 +78,6 @@ const AddForm = ({ cinemas }: AddFormProps) => {
       console.error(err);
     }
   };
-  console.log(formData.status);
 
   return (
     <>

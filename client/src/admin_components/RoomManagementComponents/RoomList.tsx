@@ -168,7 +168,7 @@ const RoomList = ({
           rowsPerPage={rowsPerPage}
         />
       }
-      {total >= rowsPerPage && (
+      {total > rowsPerPage && (
         <Pagination
           currentPage={currentPage}
           total={total}

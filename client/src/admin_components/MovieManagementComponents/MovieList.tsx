@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 import MovieDetail from "./DetailMovie/DetailMovie";
 import UpdateFormContainer from "./UpdateForm/UpdateFormContainer";
 import Genre from "@/interfaces/genre.interface";
+import Status from "../StatusUI/Status";
 
 type InitDataType = {
   movies: MovieType[];
@@ -25,7 +26,13 @@ type InitDataType = {
   totalPages: number;
 };
 
-const MovieList = ({ initData , genre}: { initData: InitDataType, genre:Promise<Genre[]> }) => {
+const MovieList = ({
+  initData,
+  genre,
+}: {
+  initData: InitDataType;
+  genre: Promise<Genre[]>;
+}) => {
   const dispatch = useDispatch<AppDispatch>();
   const isFirstLoad = useRef(true);
 
@@ -38,8 +45,9 @@ const MovieList = ({ initData , genre}: { initData: InitDataType, genre:Promise<
     error,
   } = useSelector(dataMovie);
 
-  const { page, changePage, changeRowPerPage, rowsPerPage } =
-    usePanigation(initData.currentPage);
+  const { page, changePage, changeRowPerPage, rowsPerPage } = usePanigation(
+    initData.currentPage
+  );
 
   const [showInfo, setShowInfo] = useState<boolean>(false);
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false);
@@ -130,22 +138,21 @@ useEffect(() => {
     {
       title: "Trạng thái",
       render: (row) => (
-        <ActionButton
-          label={
+        <Status
+          title={
             row.status === 1
               ? "Đang Chiếu"
               : row.status === 2
               ? "Sắp Chiếu"
               : "Ngưng Chiếu"
           }
-          bgColor={
+          color={
             row.status === 1
               ? "success"
               : row.status === 2
               ? "warning"
               : "error"
           }
-          onClick={()=>null}
         />
       ),
     },
@@ -164,7 +171,9 @@ useEffect(() => {
                 </span>
               ))
             ) : (
-              <span className="text-gray-500 text-sm italic">Chưa xác định</span>
+              <span className="text-gray-500 text-sm italic">
+                Chưa xác định
+              </span>
             )}
           </div>
         );
@@ -196,10 +205,13 @@ useEffect(() => {
   return (
     <>
       {showInfo && selectedMovie && (
-        <MovieDetail movie={selectedMovie} onClose={() => {
-          setShowInfo(false);
-          setSelectedMovie(null);
-        }} />
+        <MovieDetail
+          movie={selectedMovie}
+          onClose={() => {
+            setShowInfo(false);
+            setSelectedMovie(null);
+          }}
+        />
       )}
       {isEditOpen && selectedMovie && (
         <UpdateFormContainer

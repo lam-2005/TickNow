@@ -10,6 +10,7 @@
 // }
 
 import { MovieType } from "./movie.interface";
+import { RoomType } from "./room.interface";
 
 export interface Screening {
   _id: string; // MongoDB ObjectId dạng string
@@ -18,11 +19,12 @@ export interface Screening {
   time_start: string;
   time_end: string;
   date: string; // Để dễ xử lý ngày, dùng string thay vì Date object
-  status: string;
+  status: number;
   showtype: string;
   roomCode: string | number;
   // Tuỳ chọn nếu có thể mở rộng
   movieName?: string; // Sử dụng khi bạn join từ collection movie
+  price: number;
 }
 export type DetailScreening = {
   _id: string;
@@ -37,6 +39,8 @@ export type DetailScreening = {
     element_selected: { [key: string]: number[] };
     element_selecting: { [key: string]: number[] };
   };
+  room: RoomType;
+  screening: Screening;
 };
 export type CinemaShowtimeType = {
   _id: string;
@@ -66,4 +70,16 @@ export type Showtimes = {
       showtype: string | number;
     }[];
   }[];
+};
+
+export type ScreenReq = {
+  id_room: string;
+  id_cinema?: string;
+  id_movie: string;
+  time_start: string;
+  date: string; // Để dễ xử lý ngày, dùng string thay vì Date object
+  showtype: string | number;
+  // Tuỳ chọn nếu có thể mở rộng
+  status?: number | string; // Optional for update
+  price?: number | string; // Optional for update
 };
