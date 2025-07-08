@@ -21,7 +21,7 @@ const PopupContainer = ({
           className="absolute top-0 right-0 translate-y-5 -translate-x-5 cursor-pointer"
           onClick={closeForm}
         >
-          <span className="text-2xl">
+          <span className="text-2xl cursor-pointer">
             <IoMdClose />
           </span>
         </button>

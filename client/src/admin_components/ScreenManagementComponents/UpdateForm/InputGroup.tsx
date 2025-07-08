@@ -19,9 +19,9 @@ const InputGroup = ({
   listOptionRooms,
 }: InputGroupProps) => {
   const getCinema = groupCinemasWithRooms(listOptionRooms);
-  console.log(getCinema);
+  // console.log(getCinema);
 
-  const [selectedCinemaId, setSelectedCinemaId] = useState("");
+  const [selectedCinemaId, setSelectedCinemaId] = useState(formData.id_cinema);
   // Tìm phòng theo rạp được chọn
   const selectedCinema = getCinema.find(
     (cinema) => cinema.id_cinema === selectedCinemaId
@@ -79,7 +79,17 @@ const InputGroup = ({
           onChange={(e) => setFormData({ ...formData, date: e.target.value })}
         />
       </div>
-
+      <div>
+        <label className="block mb-1 text-sm font-medium">Trạng thái</label>
+        <select
+          className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
+          value={formData.status}
+          onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+        >
+          <option value={2}>Hoạt động</option>
+          <option value={1}>Không hoạt động</option>
+        </select>
+      </div>
       <div>
         <label className="block mb-1 text-sm font-medium">
           Kiểu chiếu <span className="text-red-500">*</span>

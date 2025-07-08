@@ -28,7 +28,7 @@ const InputGroup = ({
     <div className="grid grid-cols-1 md:grid-cols-2 w-3xl gap-4">
       <div>
         <label className="block mb-1 text-sm font-medium">
-          Thời gian bắt đầu <span className="text-red-500">*</span>
+          Chọn phim <span className="text-red-500">*</span>
         </label>
         <Autocomplete
           disablePortal

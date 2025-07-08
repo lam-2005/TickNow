@@ -1,28 +1,42 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Screening, ScreenReq } from "@/interfaces/screening.interface";
 import * as screenService from "@/services/screening.service";
 import { getScreenData } from "@/app/(admin)/admin/showtime/page";
-
-type ScreenState = {
-  Screen: Screening[];
+import reduxInitStateDefault, {
+  ReduxInitStateDefaultType,
+} from "@/configs/reduxInitStateDefault";
+export type RoomManagementState = ReduxInitStateDefaultType & {
+  data: Screening[];
   total: number;
   currentPage: number;
   totalPages: number;
-  loading: boolean;
-  error: string | null;
   errorAddData: string | null;
   errorUpdateData: string | null;
+  filter: {
+    movie: string;
+    date: string;
+    status: string;
+    showtype: string;
+    timeStart: string;
+    timeEnd: string;
+  };
 };
-
-const initialState: ScreenState = {
-  Screen: [],
+const initialState: RoomManagementState = {
+  data: [],
   total: 0,
   currentPage: 1,
   totalPages: 1,
-  loading: false,
-  error: null,
   errorAddData: null,
   errorUpdateData: null,
+  filter: {
+    movie: "",
+    date: "",
+    status: "",
+    showtype: "",
+    timeStart: "",
+    timeEnd: "",
+  },
+  ...reduxInitStateDefault,
 };
 
 // export const fetchScreen = createAsyncThunk(
@@ -44,9 +58,39 @@ const initialState: ScreenState = {
 
 export const fetchScreen = createAsyncThunk(
   "screen/fetchScreen",
-  async ({ page, limit }: { page: number; limit: number }, thunkAPI) => {
+  async (
+    {
+      page,
+      limit,
+      movie = "",
+      date = "",
+      status = "",
+      showtype = "",
+      timeStart = "",
+      timeEnd = "",
+    }: {
+      page: number;
+      limit: number;
+      movie?: string;
+      date?: string;
+      status?: string;
+      showtype?: string;
+      timeStart?: string;
+      timeEnd?: string;
+    },
+    thunkAPI
+  ) => {
     try {
-      const res = await getScreenData(page, limit);
+      const res = await getScreenData(
+        page,
+        limit,
+        movie,
+        date,
+        status,
+        showtype,
+        timeStart,
+        timeEnd
+      );
       return res;
     } catch {
       return thunkAPI.rejectWithValue("Không thể tải danh sách suất chiếu.");
@@ -81,8 +125,18 @@ const screenSlice = createSlice({
   name: "screenManagement",
   initialState,
   reducers: {
-    setInitialScreen(state, action: PayloadAction<ScreenState>) {
-      return { ...state, ...action.payload };
+    setInitialScreen(state, action) {
+      state.loading = false;
+      state.data = action.payload.Screen;
+      state.total = action.payload.total;
+      state.currentPage = action.payload.currentPage;
+      state.totalPages = action.payload.totalPages;
+      state.error = null;
+      state.errorAddData = null;
+      state.errorUpdateData = null;
+    },
+    setFilter: (state, action) => {
+      state.filter = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -92,12 +146,18 @@ const screenSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchScreen.fulfilled, (state, action) => {
-        state.Screen = action.payload.Screen;
+        state.data = action.payload.Screen;
         state.total = action.payload.total;
         state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.totalPages;
         state.loading = false;
         state.error = null;
+        state.filter.movie = action.payload.movie;
+        state.filter.date = action.payload.date;
+        state.filter.status = action.payload.status;
+        state.filter.showtype = action.payload.showtype;
+        state.filter.timeStart = action.payload.timeStart;
+        state.filter.timeEnd = action.payload.timeEnd;
       })
       .addCase(fetchScreen.rejected, (state, action) => {
         state.loading = false;
@@ -130,5 +190,5 @@ const screenSlice = createSlice({
   },
 });
 
-export const { setInitialScreen } = screenSlice.actions;
+export const { setInitialScreen, setFilter } = screenSlice.actions;
 export default screenSlice.reducer;

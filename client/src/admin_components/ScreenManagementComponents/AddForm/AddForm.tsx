@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/utils/redux/store";
 import { fetchScreen, addScreen } from "@/utils/redux/slices/screenSlice";
 import { toast } from "react-toastify";
@@ -8,6 +8,7 @@ import InputGroup from "./InputGroup";
 import { ScreenReq } from "@/interfaces/screening.interface";
 import { MovieType } from "@/interfaces/movie.interface";
 import { RoomType } from "@/interfaces/room.interface";
+import dataScreen from "@/utils/redux/selectors/screenSelector";
 export type MovieOptionsType = {
   label: string;
   id: string;
@@ -20,7 +21,7 @@ const AddForm = ({
   rooms: RoomType[];
 }) => {
   const dispatch = useDispatch<AppDispatch>();
-
+  const { filter } = useSelector(dataScreen);
   const [formData, setFormData] = useState<ScreenReq>({
     id_room: "",
     id_movie: "",
@@ -63,7 +64,18 @@ const AddForm = ({
         })
       ).unwrap();
 
-      await dispatch(fetchScreen({ page: 1, limit: 5 }));
+      await dispatch(
+        fetchScreen({
+          page: 1,
+          limit: 5,
+          date: filter.date,
+          movie: filter.movie,
+          showtype: filter.showtype,
+          status: filter.status,
+          timeEnd: filter.timeEnd,
+          timeStart: filter.timeStart,
+        })
+      );
       toast.success("Thêm Suất chiếu thành công!");
 
       // Reset
@@ -78,7 +90,7 @@ const AddForm = ({
       });
     } catch (err) {
       console.error("Lỗi thêm Suất chiếu:", err);
-      toast.error("Thêm Suất chiếu thất bại!");
+      toast.error(`Thêm Suất chiếu thất bại: ${err}`);
     }
   };
 

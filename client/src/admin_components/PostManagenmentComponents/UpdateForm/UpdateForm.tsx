@@ -18,7 +18,6 @@ const UpdateForm = ({ id, closeForm }: UpdateFormProps) => {
   const { currentPage, filter } = useSelector(postSelector);
   const { rowsPerPage } = usePanigation(currentPage);
   const [loading, setLoading] = useState(true);
-  //   const [detailPost, setDetailPost] = useState<PostType | null>(null);
   const [formData, setFormData] = useState<DataPostReq>({
     image: null,
     start_day: "",
@@ -53,7 +52,7 @@ const UpdateForm = ({ id, closeForm }: UpdateFormProps) => {
   if (loading) return <p>Loading...</p>;
   console.log(formData);
 
-  const handleUpdateRoom = async (id: string) => {
+  const handleUpdatePost = async (id: string) => {
     try {
       const sure = confirm("Bạn có muốn cập nhật phòng này?");
       if (sure) {
@@ -83,7 +82,7 @@ const UpdateForm = ({ id, closeForm }: UpdateFormProps) => {
         <InputGroup formData={formData} setFormData={setFormData} />
       </div>
       <div className="flex justify-end p-5 w-full bg-background-card rounded-2xl">
-        <button className="btn" onClick={() => handleUpdateRoom(id)}>
+        <button className="btn" onClick={() => handleUpdatePost(id)}>
           Cập nhật
         </button>
       </div>
