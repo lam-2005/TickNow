@@ -3,12 +3,19 @@ import SeatNote from "../SeatNote";
 import SeatDiagram from "../SeatDiagram";
 import DetailTicket from "../DetailTicket";
 import Image from "next/image";
-import { RoomType } from "@/interfaces/room.interface";
-
-const Booking = ({ roomLayout }: { roomLayout: RoomType }) => {
+const Booking = ({
+  roomLayout,
+}: {
+  roomLayout: {
+    row: number;
+    column: number;
+    element_remove: { [key: string]: number[] };
+    element_selected: { [key: string]: number[] };
+    element_selecting: { [key: string]: number[] };
+  };
+}) => {
   return (
-    <div className="flex-column items-center gap-5">
-      <h2>Chọn ghế - Phòng {roomLayout.code_room}</h2>
+    <div className="flex-column items-center">
       <div className="w-4/5 h-[148px] relative">
         <Image
           src={"/screen.webp"}
@@ -20,7 +27,7 @@ const Booking = ({ roomLayout }: { roomLayout: RoomType }) => {
         />
       </div>
       <div className="flex-center gap-7.5">
-        <SeatNote color="bg-[#aeaeae]" content="Đã đặt" />
+        <SeatNote color="bg-[#a1a1a1]" content="Đã đặt" />
         <SeatNote color="bg-primary" content="Ghế bạn chọn" />
         <SeatNote color="bg-white" content="Ghế thường" />
       </div>

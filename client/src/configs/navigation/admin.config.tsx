@@ -6,6 +6,7 @@ import { ReactNode } from "react";
 import { SiGoogleclassroom } from "react-icons/si";
 import { IoTicketOutline, IoTimeOutline } from "react-icons/io5";
 import { PiFilmSlateDuotone } from "react-icons/pi";
+import { RiArticleLine } from "react-icons/ri";
 export default interface linkInterface {
   id: number;
   title: string;
@@ -67,6 +68,12 @@ const links: linkInterface[] = [
     title: "Khuyến mãi",
     url: "/admin/vouchers",
     icon: <MdOutlineLocalOffer />,
+  },
+  {
+    id: 10,
+    title: "Bài viết",
+    url: "/admin/post",
+    icon: <RiArticleLine />,
   },
 ];
 

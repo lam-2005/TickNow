@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { linkNavbar } from "@/configs/navigation/header.config";
 import { LinkNavbarType } from "@/interfaces/navigation.interface";
-import { FiSearch } from "react-icons/fi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdClose } from "react-icons/io";
 import { FaUser, FaUserCircle } from "react-icons/fa";
@@ -21,7 +20,6 @@ const Header = () => {
   const pathname = usePathname();
   const [openMenuDropDown, setOpenMenuDropDown] = useState(false);
   const [openUserFormContainer, setOpenUserFormContainer] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
   const { user, token } = useSelector(authSelector);
@@ -31,20 +29,19 @@ const Header = () => {
 
   const isTransparentHeader =
     pathname === "/" || pathname.startsWith("/detail");
-  const [searchText, setSearchText] = useState<string | "">("");
 
   const headerClass = isTransparentHeader
-    ? "min-[480px]:bg-gradient-to-b from-[rgba(0,0,0,.7)] via-[rgba(0,0,0,.2)] to-transparent absolute z-999 top-0 max-[480px]:sticky max-[480px]:bg-background-card min-[480px]:[&_.color-icon]:text-white"
-    : "bg-background-card sticky z-999 top-0";
+    ? "min-[480px]:bg-gradient-to-b from-[rgba(0,0,0,.7)] via-[rgba(0,0,0,.2)] to-transparent absolute z-1000 top-0 max-[480px]:sticky max-[480px]:bg-background-card min-[480px]:[&_.color-icon]:text-white"
+    : "bg-background-card sticky z-1000 top-0";
 
   const textColorClass = isTransparentHeader ? "text-white" : "text-foreground";
 
-  const searchFormClass = `group w-full max-w-2xs py-2 flex items-center bg-transparent not-dark:shadow-lg shadow-foreground/50 focus-within:shadow-foreground/90 
+  const searchFormClass = `group w-full max-w-2xs py-2 flex items-center bg-transparent not-dark:shadow-lg shadow-foreground/50 focus-within:shadow-foreground/90  z-1000
     border-1 dark:border-[rgba(255,255,255,.5)] backdrop-blur-[1.75px] transition-all duration-500 relative
     ${
       isTransparentHeader
         ? "min-[480px]:border-[rgba(255,255,255,.5)] min-[480px]:focus-within:border-white min-[480px]:[&_button_span]:text-white min-[480px]:[&>span]:bg-white min-[480px]:[&>input]:text-white border-transparent"
-        : "border-transparent focus-within:border-transparent"
+        : "border-transparent focus-within:border-transparent z-1000 min-[480px]:border-[rgba(255,255,255,.5)] min-[480px]:focus-within:border-white "
     }`;
 
   return (
@@ -100,32 +97,7 @@ const Header = () => {
         </nav>
 
         <div className="flex gap-5 max-sm:gap-3 items-center">
-          <form action="" className={searchFormClass}>
-            <button
-              type="button"
-              className="px-2 flex-center border-0"
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
-            >
-              <span className="font-bold text-foreground">
-                <FiSearch />
-              </span>
-            </button>
-            <span className="w-[1px] h-3 bg-foreground"></span>
-            <input
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
-              type="search"
-              placeholder="Tìm kiếm"
-              className="w-full h-full outline-0 px-2 text-foreground text-xs"
-              onChange={(e) => setSearchText(e.target.value)}
-            />
-
-            {isSearchOpen && (
-              <div className="absolute top-full right-0 mt-2 z-50">
-                <div className="absolute -top-4 right-4 w-0 h-0 border-l-[16px] border-r-[16px] border-b-[16px] border-l-transparent border-r-transparent border-b-white" />
-                <SearchPopup searchText={searchText} />
-              </div>
-            )}
-          </form>
+          <SearchPopup className={searchFormClass} />
           {token ? (
             <div className="relative group">
               <div className="flex-column items-center gap-1">

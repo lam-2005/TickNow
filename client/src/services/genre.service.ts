@@ -1,3 +1,4 @@
+import catchingError from "@/utils/catchingError";
 import api from "@/utils/http";
 
 const getGenreList = async (param: string = "") => {
@@ -5,8 +6,7 @@ const getGenreList = async (param: string = "") => {
     const res = await api.get(`/genre${param}`);
     return res.data;
   } catch (error) {
-    console.error("Lỗi khi lấy danh sách thể loại", error);
-    throw error;
+    catchingError(error, "Lấy danh sách thể loại thất bại");
   }
 };
 export { getGenreList };

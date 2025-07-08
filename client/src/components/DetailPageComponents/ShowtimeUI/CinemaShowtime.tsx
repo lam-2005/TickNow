@@ -1,38 +1,21 @@
 import ShowType from "@/components/ShowtimeList/ShowType";
 import { CinemaShowtimeType } from "@/interfaces/screening.interface";
 import React from "react";
-export type ShowtimeType = {
-  type: string;
-  data: {
-    id_room: string;
-    time: string;
-    showtype: string;
-  }[];
-};
 const CinemaShowtime = ({ data }: { data: CinemaShowtimeType }) => {
-  const listShowtimes = data.showtimes.reduce((acc, cur) => {
-    const existingGroup = acc.find((item) => item.type === cur.showtype);
-    if (existingGroup) {
-      existingGroup.data.push(cur);
-    } else {
-      acc.push({
-        type: cur.showtype,
-        data: [cur],
-      });
-    }
-    return acc;
-  }, [] as ShowtimeType[]);
+  const sub = data.showtimes.filter((type) => type.showtype === 1);
+  const dub = data.showtimes.filter((type) => type.showtype === 2);
 
   return (
     <div className="space-y-5 bg-background-card rounded-[10px] p-5 w-full">
       <div className="w-full">
-        <h2>{data.name}</h2>
+        <h2>
+          {data.name} ({data.location.location})
+        </h2>
       </div>
       <div className="space-y-5">
         <p>{data.location.deatil_location}</p>
-        {listShowtimes.map((item) => (
-          <ShowType type={item.type} key={item.type} data={item.data} />
-        ))}
+        {sub.length > 0 && <ShowType type="Phụ đề" data={sub} />}
+        {dub.length > 0 && <ShowType type="Lồng tiếng" data={dub} />}
       </div>
     </div>
   );

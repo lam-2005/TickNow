@@ -1,11 +1,15 @@
-import { RoomType } from "@/interfaces/room.interface";
-
-export default function handleBooking(roomLayout: RoomType) {
-  const room = roomLayout.diagram;
-  const rows = room.row;
-  const columns = room.colunm;
-  const removedSeat: { [key: string]: number[] } = room.element_remove;
-  const selectedSeat: { [key: string]: number[] } = room.element_selected;
+export default function handleBooking(roomLayout: {
+  row: number;
+  column: number;
+  element_remove: { [key: string]: number[] };
+  element_selected: { [key: string]: number[] };
+  element_selecting: { [key: string]: number[] };
+}) {
+  // const room = roomLayout.diagram;
+  const rows = roomLayout.row;
+  const columns = roomLayout.column;
+  const removedSeat: { [key: string]: number[] } = roomLayout.element_remove;
+  const selectedSeat: { [key: string]: number[] } = roomLayout.element_selected;
   // console.log(rows, columns, removedSeat);
 
   const rowLetters: string[] = [];

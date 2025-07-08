@@ -36,7 +36,7 @@ export default function Home() {
             <div className="flex justify-between items-center mb-5 px-2">
               <h2 className="self-start uppercase">Phim Đang Chiếu</h2>
               <Link
-                href={"#"}
+                href={"/movies?status=dang-chieu"}
                 className="hover:text-primary transition-colors duration-500"
               >
                 Xem tất cả
@@ -56,7 +56,13 @@ export default function Home() {
             <Suspense fallback={<MovieLoading />}>
               <MovieContainer data={moviesComingSoon} textColor="text-white" />
             </Suspense>
-            <Button title="Xem tất cả" className="self-center mt-10" />
+
+            <Link
+              href={"/movies?status=sap-chieu"}
+              className="self-center mt-10"
+            >
+              <Button title="Xem tất cả" className="" />
+            </Link>
           </div>
         </section>
         <article>
