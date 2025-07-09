@@ -19,15 +19,36 @@ type InitDataType = {
 const RatingList = ({ initData }: { initData: InitDataType }) => {
   const dispatch = useDispatch<AppDispatch>();
   const isFirstLoad = useRef(true);
-  const { ratings, total, currentPage, totalPages, loading, error } = useSelector(dataRating);
-  const { page, changePage, changeRowPerPage, rowsPerPage } = usePanigation(initData.currentPage);
+
+  const {
+    ratings,
+    total,
+    currentPage,
+    totalPages,
+    loading,
+    error,
+  } = useSelector(dataRating);
+
+  const {
+    page,
+    changePage,
+    changeRowPerPage,
+    rowsPerPage,
+  } = usePanigation(initData.currentPage);
 
   useEffect(() => {
-    dispatch(setInitialRatings({
+    dispatch(
+      setInitialRatings({
         ...initData,
         loading: false,
         error: null,
-        }));
+        filter: {
+          movie: "",
+          score: "",
+          date: "",
+        },
+      })
+    );
   }, [dispatch, initData]);
 
   useEffect(() => {
@@ -47,7 +68,9 @@ const RatingList = ({ initData }: { initData: InitDataType }) => {
       title: "Ngày Đánh Giá",
       render: (row: ReviewType) => {
         const date = new Date(row.date);
-        return !isNaN(date.getTime()) ? date.toLocaleDateString("vi-VN") : "Chưa xác định";
+        return !isNaN(date.getTime())
+          ? date.toLocaleDateString("vi-VN")
+          : "Chưa xác định";
       },
     },
     {
@@ -64,7 +87,12 @@ const RatingList = ({ initData }: { initData: InitDataType }) => {
 
   return (
     <>
-      <Table column={columns} data={ratings} currentPage={currentPage} rowsPerPage={rowsPerPage} />
+      <Table
+        column={columns}
+        data={ratings.map((r) => ({ ...r, id: r._id }))}
+        currentPage={currentPage}
+        rowsPerPage={rowsPerPage}
+      />
       {total >= rowsPerPage && (
         <Pagination
           currentPage={currentPage}

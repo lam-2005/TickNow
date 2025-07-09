@@ -11,6 +11,10 @@ type UserState = {
   error: string | null;
   errorAddData: string | null;
   errorUpdateData: string | null;
+  filter: {
+    status: string;
+    role: string;
+  };
 };
 
 const initialState: UserState = {
@@ -21,19 +25,39 @@ const initialState: UserState = {
   loading: false,
   error: null,
   errorAddData: null,
-  errorUpdateData : null,
+  errorUpdateData: null,
+  filter: {
+    status: "",
+    role: "",
+  },
 };
 
 export const fetchUsers = createAsyncThunk(
-  "user/fetchUsers",
-  async ({ page, limit }: { page: number; limit: number }, thunkAPI) => {
+  "userManagement/fetchUsers",
+  async (
+    {
+      page,
+      limit,
+      status = "",
+      role = "",
+    }: { page: number; limit: number; status?: string; role?: string },
+    thunkAPI
+  ) => {
     try {
-      const res = await userService.getUserList(`?page=${page}&limit=${limit}`);
+      const query = new URLSearchParams();
+      query.append("page", page.toString());
+      query.append("limit", limit.toString());
+      if (status) query.append("status", status);
+      if (role) query.append("role", role);
+
+      const res = await userService.getUserList(`?${query.toString()}`);
       return {
         users: res?.data.user,
         total: res?.data.pagination.total,
         currentPage: res?.data.pagination.page,
         totalPages: res?.data.pagination.totalPages,
+        status,
+        role,
       };
     } catch {
       return thunkAPI.rejectWithValue("Không thể tải danh sách người dùng.");
@@ -64,12 +88,16 @@ export const addUser = createAsyncThunk(
     }
   }
 );
+
 const userSlice = createSlice({
-  name: "user",
+  name: "userManagement",
   initialState,
   reducers: {
     setInitialUsers(state, action: PayloadAction<UserState>) {
       return { ...state, ...action.payload };
+    },
+    setFilter(state, action: PayloadAction<{ status: string; role: string }>) {
+      state.filter = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -83,6 +111,8 @@ const userSlice = createSlice({
         state.total = action.payload.total;
         state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.totalPages;
+        state.filter.status = action.payload.status;
+        state.filter.role = action.payload.role;
         state.loading = false;
         state.error = null;
       })
@@ -90,32 +120,30 @@ const userSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
-      // thêm
       .addCase(addUser.pending, (state) => {
         state.loading = true;
         state.errorAddData = null;
-        })
+      })
       .addCase(addUser.fulfilled, (state) => {
         state.loading = false;
-        })
+      })
       .addCase(addUser.rejected, (state, action) => {
         state.loading = false;
         state.errorAddData = action.payload as string;
-        })
-      // sửa
+      })
       .addCase(updateUser.pending, (state) => {
         state.loading = true;
         state.errorUpdateData = null;
-        })
+      })
       .addCase(updateUser.fulfilled, (state) => {
         state.loading = false;
-        })
+      })
       .addCase(updateUser.rejected, (state, action) => {
         state.loading = false;
         state.errorUpdateData = action.payload as string;
-        });
+      });
   },
 });
 
-export const { setInitialUsers } = userSlice.actions;
+export const { setInitialUsers, setFilter } = userSlice.actions;
 export default userSlice.reducer;

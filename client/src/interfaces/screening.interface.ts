@@ -27,6 +27,18 @@ export interface Screening {
   price: number;
 }
 export type DetailScreening = {
+  _id: string;
+  code_room: number;
+  id_cinema: string;
+  status: number;
+  cinema: string;
+  diagram: {
+    row: number;
+    column: number;
+    element_remove: { [key: string]: number[] };
+    element_selected: { [key: string]: number[] };
+    element_selecting: { [key: string]: number[] };
+  };
   room: RoomType;
   screening: Screening;
 };

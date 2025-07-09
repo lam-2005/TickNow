@@ -12,6 +12,12 @@ type MovieState = ReduxInitStateDefaultType & {
   totalPages: number;
   errorAddData: string | null;
   errorUpdateData: string | null;
+  filter: {
+    status: string;
+    genre: string;
+    date: string;
+    star:string;
+  };
 };
 
 const initialState: MovieState = {
@@ -22,21 +28,50 @@ const initialState: MovieState = {
   errorAddData: null,
   errorUpdateData: null,
   ...reduxInitStateDefault,
+  filter: {
+    status: "",
+    genre: "",  
+    date: "",
+    star: "",
+  },
 };
-// Thunks
+
 export const fetchMovies = createAsyncThunk(
   "movieManagement/fetchMovies",
-  async ({ page, limit }: { page: number; limit: number }, thunkAPI) => {
+  async (
+    {
+      page,
+      limit,
+      genre= "",
+      status = "",
+      date = "",
+      star = "",
+    }: { page: number; limit: number; genre?: string; status?: string ; date?: string ; star?: string },
+    thunkAPI
+  ) => {
     try {
-      const res = await movieService.getMovieList(`?page=${page}&limit=${limit}`);
+      const query = new URLSearchParams();
+      query.append("page", page.toString());
+      query.append("limit", limit.toString());
+      if (genre && genre.length > 0) query.append("genre", genre.toString());
+      if (status) query.append("status", status);
+      if (date) query.append("date", date);
+      if (star) query.append("star", star);
+      
+      const res = await movieService.getMovieList(`?${query.toString()}`);
+
       return {
         movies: res?.data.movie,
         total: res?.data.pagination.total,
         currentPage: res?.data.pagination.page,
         totalPages: res?.data.pagination.totalPages,
+        genre: genre,
+        status: status,
+        date: date,
+        star:star,
       };
     } catch (error) {
-      console.log("Error fetching movies:", error);
+      console.error("Không thể tải danh sách phim:", error);
       return thunkAPI.rejectWithValue("Không thể tải danh sách phim.");
     }
   }
@@ -49,7 +84,7 @@ export const addMovie = createAsyncThunk(
       const res = await movieService.createMovie(data);
       return res;
     } catch (error) {
-      console.log("Error adding movie:", error);
+      console.error("Thêm phim thất bại:", error);
       return thunkAPI.rejectWithValue("Thêm phim thất bại.");
     }
   }
@@ -62,29 +97,46 @@ export const updateMovie = createAsyncThunk(
       const res = await movieService.updateMovie(id, data);
       return res;
     } catch (error) {
-      console.log("Error updating movie:", error);
+      console.error("Cập nhật phim thất bại:", error);
       return thunkAPI.rejectWithValue("Cập nhật phim thất bại.");
     }
   }
 );
+
 const movieSlice = createSlice({
   name: "movieManagement",
   initialState,
   reducers: {
-    setInitialMovies(state, action: PayloadAction<MovieState>) {
-      state.data = action.payload.data;
-      state.total = action.payload.total;
-      state.currentPage = action.payload.currentPage;
-      state.totalPages = action.payload.totalPages;
-      state.loading = false;
-      state.error = null;
-      state.errorAddData = null;
-      state.errorUpdateData = null;
-    },
+  setInitialMovies(state, action: PayloadAction<MovieState>) {
+    state.data = action.payload.data;
+    state.total = action.payload.total;
+    state.currentPage = action.payload.currentPage;
+    state.totalPages = action.payload.totalPages;
+    state.loading = false;
+    state.error = null;
+    state.errorAddData = null;
+    state.errorUpdateData = null;
+    state.filter = action.payload.filter ?? {
+      genre: "",
+      status: "",
+      date: "",
+      star: "",
+    };
   },
+  setFilter: (
+    state,
+    action: PayloadAction<{
+      status: string;
+      genre: string;
+      date: string;
+      star: string;
+    }>
+  ) => {
+    state.filter = action.payload;
+  },
+},
   extraReducers: (builder) => {
     builder
-      // Fetch
       .addCase(fetchMovies.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -95,13 +147,16 @@ const movieSlice = createSlice({
         state.total = action.payload.total;
         state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.totalPages;
+        state.filter.genre = action.payload.genre;
+        state.filter.status = action.payload.status;
+        state.filter.date = action.payload.date;
+        state.filter.star = action.payload.star;
       })
       .addCase(fetchMovies.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       })
 
-      // Add
       .addCase(addMovie.pending, (state) => {
         state.loading = true;
         state.errorAddData = null;
@@ -114,7 +169,6 @@ const movieSlice = createSlice({
         state.errorAddData = action.payload as string;
       })
 
-      // Update
       .addCase(updateMovie.pending, (state) => {
         state.loading = true;
         state.errorUpdateData = null;
@@ -125,12 +179,9 @@ const movieSlice = createSlice({
       .addCase(updateMovie.rejected, (state, action) => {
         state.loading = false;
         state.errorUpdateData = action.payload as string;
-      })
+      });
   },
 });
 
 export default movieSlice.reducer;
-export const { setInitialMovies } = movieSlice.actions;
-
-
-
+export const { setInitialMovies, setFilter } = movieSlice.actions;

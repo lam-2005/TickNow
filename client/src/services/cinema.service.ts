@@ -1,3 +1,4 @@
+
 import { CinemaCreateOrUpdate } from "@/interfaces/cinema.interface";
 import catchingError from "@/utils/catchingError";
 import api from "@/utils/http";

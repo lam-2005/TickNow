@@ -55,10 +55,9 @@ const UpdateForm = ({ data, onCancel,genre }: Props) => {
           || !formData.status 
           || !formData.duration 
           || !formData.age 
-          || !formData.banner 
           || !formData.genre
           || !formData.trailer
-          || !formData.image) {
+          ) {
           toast.warning("Vui lòng nhập đầy đủ thông tin bắt buộc!");
           return;
         }

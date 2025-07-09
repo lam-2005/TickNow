@@ -50,10 +50,8 @@ const listOptionGenre: GenreType[] = genre.map((item) => {
           || !formData.status 
           || !formData.duration 
           || !formData.age 
-          || !formData.banner 
           || !formData.genre
-          || !formData.trailer
-          || !formData.image) {
+          || !formData.trailer) {
       toast.warning("Vui lòng nhập đầy đủ thông tin bắt buộc!");
       return;
     }

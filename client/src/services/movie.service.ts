@@ -20,7 +20,7 @@ export const createMovie = async (data: MovieReq) => {
     form.append("name", data.name);
     form.append("release_date", data.release_date);
     form.append("nation", data.nation);
-    form.append("language", data.language);
+    form.append("language", data.language.toString());
     form.append("duration",data.duration.toString());
     form.append("age", data.age);
     form.append("director", data.director);
@@ -56,7 +56,7 @@ export const updateMovie = async (id: string | number, data: MovieReq) => {
     form.append("name", data.name);
     form.append("release_date", data.release_date);
     form.append("nation", data.nation);
-    form.append("language", data.language);
+    form.append("language", data.language.toString());
     form.append("duration", data.duration.toString());
     form.append("age", data.age);
     form.append("director", data.director);

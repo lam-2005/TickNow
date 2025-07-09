@@ -65,23 +65,40 @@ const MovieList = ({
         error: null,
         errorAddData: null,
         errorUpdateData: null,
+        filter: {
+          genre: [],
+          status: "",
+          date: "",
+          star: "",
+        },
       })
     );
   }, [dispatch, initData]);
 
   // Fetch khi thay đổi trang/số dòng
-  useEffect(() => {
-    if (isFirstLoad.current) {
-      isFirstLoad.current = false;
-      return;
-    }
+const { filter } = useSelector(dataMovie);
 
-    if (page <= totalPages) {
-      dispatch(fetchMovies({ limit: rowsPerPage, page }));
-    } else {
-      dispatch(fetchMovies({ limit: rowsPerPage, page: totalPages }));
-    }
-  }, [dispatch, page, rowsPerPage, totalPages]);
+useEffect(() => {
+  if (isFirstLoad.current) {
+    isFirstLoad.current = false;
+    return;
+  }
+
+  const fetchData = () => {
+    const payload = {
+      limit: rowsPerPage,
+      page: page <= totalPages ? page : totalPages,
+      status: filter.status,
+      genre: filter.genre,
+      date: filter.date,
+      star: filter.star,
+    };
+    dispatch(fetchMovies(payload));
+  };
+
+  fetchData();
+}, [dispatch, rowsPerPage, page, totalPages, filter]);
+
 
   const handleOpenDetail = (movie: MovieType) => {
     setSelectedMovie(movie);

@@ -30,7 +30,6 @@ const ShowType = ({
   const searchParamsScreening = useSearchParams();
   const getSearchParamScreening = searchParamsScreening.get("showtime") || "";
   console.log(pathname);
-
   const handleChangeShowtime = (id: string) => {
     const searchParams = new URLSearchParams(window.location.search);
     searchParams.set("showtime", id);
