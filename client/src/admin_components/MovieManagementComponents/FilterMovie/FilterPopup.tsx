@@ -14,16 +14,14 @@ const FilterItem = ({
   title: string;
   className?: string;
   onClick?: () => void;
-}) => {
-  return (
-    <div
-      onClick={onClick}
-      className={`border-1 border-foreground text-foreground flex-center w-fit px-2 py-1 transition-colors rounded-md hover:bg-primary hover:text-white hover:border-transparent cursor-pointer ${className}`}
-    >
-      {title}
-    </div>
-  );
-};
+}) => (
+  <div
+    onClick={onClick}
+    className={`border-1 border-foreground text-foreground flex-center w-fit px-2 py-1 transition-colors rounded-md hover:bg-primary hover:text-white hover:border-transparent cursor-pointer ${className}`}
+  >
+    {title}
+  </div>
+);
 
 const FilterPopup = ({
   closeForm,
@@ -41,52 +39,41 @@ const FilterPopup = ({
   const [star, setStar] = useState<string>("");
 
   useEffect(() => {
-    const safeGenre = (() => {
-    if (typeof filter.genre === "string") {
-      return filter.genre.split(",");
-    }
-    return [];
-  })();
-
-  const safeStatus = (() => {
-    if (typeof filter.status === "string") {
-      return filter.status.split(",").map(Number);
-    }
-    return [];
-  })();
-    setIdGenres(safeGenre);
-    setStatus(safeStatus);
+    setIdGenres(filter.genre ? filter.genre.split(",") : []);
+    setStatus(filter.status ? filter.status.split(",").map(Number) : []);
     setDate(filter.date || "");
     setStar(filter.star || "");
   }, [filter]);
 
-  const handleToggleGenre = (id: string) => {
+  const toggleGenre = (id: string) => {
     setIdGenres((prev) =>
       prev.includes(id) ? prev.filter((g) => g !== id) : [...prev, id]
     );
   };
 
-  const handleToggleStatus = (id: number) => {
+  const toggleStatus = (stt: number) => {
     setStatus((prev) =>
-      prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
+      prev.includes(stt) ? prev.filter((s) => s !== stt) : [...prev, stt]
     );
   };
 
   const handleFilter = () => {
+    const genreStr = idGenres.join(",");
+    const statusStr = status.join(",");
     dispatch(
       fetchMovies({
         limit: 5,
         page: 1,
-        genre: idGenres.join(","),
-        status: status.join(","),
+        genre: genreStr,
+        status: statusStr,
         date,
         star,
       })
     );
     dispatch(
       setFilter({
-        genre: idGenres.join(","),
-        status: status.join(","),
+        genre: genreStr,
+        status: statusStr,
         date,
         star,
       })
@@ -104,7 +91,7 @@ const FilterPopup = ({
               <FilterItem
                 key={genre._id}
                 title={genre.name}
-                onClick={() => handleToggleGenre(genre._id.toString())}
+                onClick={() => toggleGenre(genre._id.toString())}
                 className={
                   idGenres.includes(genre._id.toString())
                     ? "bg-primary text-white border-transparent"
@@ -124,7 +111,7 @@ const FilterPopup = ({
                 title={
                   stt === 1 ? "Đang chiếu" : stt === 2 ? "Sắp chiếu" : "Ngưng chiếu"
                 }
-                onClick={() => handleToggleStatus(stt)}
+                onClick={() => toggleStatus(stt)}
                 className={
                   status.includes(stt)
                     ? "bg-primary text-white border-transparent"

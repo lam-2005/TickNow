@@ -11,6 +11,7 @@ import { fetchUsers, setInitialUsers, updateUser } from "@/utils/redux/slices/us
 import usePanigation from "@/hooks/usePanigation";
 import UpdateFormContainer from "./UpdateForm/UpdateFormContainer";
 import { toast } from "react-toastify";
+import Status from "../StatusUI/Status";
 
 const UserList = ({ initData }: { initData: {
   users: UserType[];
@@ -89,10 +90,17 @@ const UserList = ({ initData }: { initData: {
       key: "status",
       title: "Trạng Thái",
       render: (row: UserType) => (
-        <ActionButton
-          label={row.status ? "Hoạt Động" : "Ngừng Hoạt Động"}
-          bgColor={row.status ? "success" : "warning"}
-          onClick={() => null}
+        <Status
+          title={
+            row.status
+              ? "Hoạt Động"
+              : "Ngưng Hoạt Động"
+          }
+          color={
+            row.status
+              ? "success"
+              : "warning"
+          }
         />
       ),
     },
