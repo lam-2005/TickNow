@@ -66,7 +66,7 @@ const MovieList = ({
         errorAddData: null,
         errorUpdateData: null,
         filter: {
-          genre: [],
+          genre: "",
           status: "",
           date: "",
           star: "",
@@ -76,29 +76,37 @@ const MovieList = ({
   }, [dispatch, initData]);
 
   // Fetch khi thay đổi trang/số dòng
-const { filter } = useSelector(dataMovie);
+  const { filter } = useSelector(dataMovie);
 
-useEffect(() => {
-  if (isFirstLoad.current) {
-    isFirstLoad.current = false;
-    return;
-  }
+  useEffect(() => {
+    if (isFirstLoad.current) {
+      isFirstLoad.current = false;
+      return;
+    }
 
-  const fetchData = () => {
-    const payload = {
-      limit: rowsPerPage,
-      page: page <= totalPages ? page : totalPages,
-      status: filter.status,
-      genre: filter.genre,
-      date: filter.date,
-      star: filter.star,
+    const fetchData = () => {
+      const payload = {
+        limit: rowsPerPage,
+        page: page <= totalPages ? page : totalPages,
+        status: filter.status,
+        genre: filter.genre,
+        date: filter.date,
+        star: filter.star,
+      };
+      dispatch(fetchMovies(payload));
     };
-    dispatch(fetchMovies(payload));
-  };
 
-  fetchData();
-}, [dispatch, rowsPerPage, page, totalPages, filter]);
-
+    fetchData();
+  }, [
+    dispatch,
+    rowsPerPage,
+    page,
+    totalPages,
+    filter.star,
+    filter.status,
+    filter.date,
+    filter.genre,
+  ]);
 
   const handleOpenDetail = (movie: MovieType) => {
     setSelectedMovie(movie);

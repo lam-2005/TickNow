@@ -60,8 +60,8 @@ const roomSlice = createSlice({
         state.total = action.payload.total;
         state.totalPages = action.payload.totalPages;
         state.currentPage = action.payload.currentPage;
-        state.filter.cinemas = action.payload.cinema;
-        state.filter.status = action.payload.status;
+        // state.filter.cinemas = action.payload.cinema;
+        // state.filter.status = action.payload.status;
       })
       .addCase(fetchRooms.rejected, (state, action) => {
         state.loading = false;

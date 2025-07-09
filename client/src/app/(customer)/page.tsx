@@ -8,8 +8,9 @@ import Link from "next/link";
 import MovieLoading from "@/components/Loading/MovieLoading";
 import MovieContainer from "@/components/Movie/MovieContainer";
 import * as movieService from "@/services/movie.service";
-import { getOffersList } from "@/services/offer.service";
 import OfferList from "@/components/Offer/OfferList";
+import OfferLoading from "@/components/Loading/OfferLoading";
+import { getPostList } from "@/services/post.service";
 
 const getMovieNow = async () => {
   try {
@@ -31,18 +32,17 @@ const getMovieComingSoon = async () => {
 
 const getOfferList = async () => {
   try {
-    const res = await getOffersList(`?limit=4`);
-    return res?.data?.post || [];
+    const res = await getPostList(`?limit=8`);
+    return res?.data?.post;
   } catch (error) {
     console.error("Fetch offers failed:", error);
-    return [];
   }
 };
 
-export default async function Home() {
-  const moviesNow = await getMovieNow();
-  const moviesComingSoon = await getMovieComingSoon();
-  const offers = await getOfferList();
+export default function Home() {
+  const moviesNow = getMovieNow();
+  const moviesComingSoon = getMovieComingSoon();
+  const offers = getOfferList();
 
   return (
     <>
@@ -61,7 +61,7 @@ export default async function Home() {
             </div>
 
             <Suspense fallback={<MovieLoading />}>
-              <MovieContainer data={Promise.resolve(moviesNow)} />
+              <MovieContainer data={moviesNow} />
             </Suspense>
           </div>
         </section>
@@ -72,10 +72,7 @@ export default async function Home() {
               Phim Sắp Chiếu
             </h2>
             <Suspense fallback={<MovieLoading />}>
-              <MovieContainer
-                data={Promise.resolve(moviesComingSoon)}
-                textColor="text-white"
-              />
+              <MovieContainer data={moviesComingSoon} textColor="text-white" />
             </Suspense>
 
             <Link
@@ -99,8 +96,9 @@ export default async function Home() {
               </Link>
             </div>
 
-            {/* ✅ Hiển thị danh sách khuyến mãi */}
-            <OfferList offers={offers} />
+            <Suspense fallback={<OfferLoading />}>
+              <OfferList data={offers} />
+            </Suspense>
           </div>
         </article>
       </div>

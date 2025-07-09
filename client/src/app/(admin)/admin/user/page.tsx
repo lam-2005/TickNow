@@ -1,6 +1,5 @@
 import React, { Suspense } from "react";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
-import OptionTable from "@/admin_components/OptionTable/OptionTable";
 import * as userService from "@/services/user.service";
 import UserList from "../../../../admin_components/UserManagementComponents/UserList";
 import AddUserBtn from "@/admin_components/UserManagementComponents/AddForm/ButtonOpenForm";
@@ -24,7 +23,6 @@ const UserManagement = async () => {
         <AddUserBtn />
       </HeadingCard>
       <FilterUser />
-      <OptionTable />
       <Suspense fallback={<p className="text-center">Đang tải dữ liệu...</p>}>
         <UserList initData={res} />
       </Suspense>

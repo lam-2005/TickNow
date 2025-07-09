@@ -25,8 +25,8 @@ export interface CinemaDataReq {
 export interface CinemaCreateOrUpdate {
   id: string;
   name: string;
-  image: string|null;
-  file: File|null;
+  image: string | null;
+  file: File | null;
   status: number;
   id_location: string;
   deatil_location: string;

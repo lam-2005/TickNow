@@ -16,7 +16,7 @@ type MovieState = ReduxInitStateDefaultType & {
     status: string;
     genre: string;
     date: string;
-    star:string;
+    star: string;
   };
 };
 
@@ -30,7 +30,7 @@ const initialState: MovieState = {
   ...reduxInitStateDefault,
   filter: {
     status: "",
-    genre: "",  
+    genre: "",
     date: "",
     star: "",
   },
@@ -42,11 +42,18 @@ export const fetchMovies = createAsyncThunk(
     {
       page,
       limit,
-      genre= "",
+      genre = "",
       status = "",
       date = "",
       star = "",
-    }: { page: number; limit: number; genre?: string; status?: string ; date?: string ; star?: string },
+    }: {
+      page: number;
+      limit: number;
+      genre?: string;
+      status?: string;
+      date?: string;
+      star?: string;
+    },
     thunkAPI
   ) => {
     try {
@@ -57,7 +64,7 @@ export const fetchMovies = createAsyncThunk(
       if (status) query.append("status", status);
       if (date) query.append("date", date);
       if (star) query.append("star", star);
-      
+
       const res = await movieService.getMovieList(`?${query.toString()}`);
 
       return {
@@ -68,7 +75,7 @@ export const fetchMovies = createAsyncThunk(
         genre: genre,
         status: status,
         date: date,
-        star:star,
+        star: star,
       };
     } catch (error) {
       console.error("Không thể tải danh sách phim:", error);
@@ -107,34 +114,26 @@ const movieSlice = createSlice({
   name: "movieManagement",
   initialState,
   reducers: {
-  setInitialMovies(state, action: PayloadAction<MovieState>) {
-    state.data = action.payload.data;
-    state.total = action.payload.total;
-    state.currentPage = action.payload.currentPage;
-    state.totalPages = action.payload.totalPages;
-    state.loading = false;
-    state.error = null;
-    state.errorAddData = null;
-    state.errorUpdateData = null;
-    state.filter = action.payload.filter ?? {
-      genre: "",
-      status: "",
-      date: "",
-      star: "",
-    };
+    setInitialMovies(state, action: PayloadAction<MovieState>) {
+      state.data = action.payload.data;
+      state.total = action.payload.total;
+      state.currentPage = action.payload.currentPage;
+      state.totalPages = action.payload.totalPages;
+      state.loading = false;
+      state.error = null;
+      state.errorAddData = null;
+      state.errorUpdateData = null;
+      state.filter = action.payload.filter ?? {
+        genre: "",
+        status: "",
+        date: "",
+        star: "",
+      };
+    },
+    setFilter: (state, action) => {
+      state.filter = action.payload;
+    },
   },
-  setFilter: (
-    state,
-    action: PayloadAction<{
-      status: string;
-      genre: string;
-      date: string;
-      star: string;
-    }>
-  ) => {
-    state.filter = action.payload;
-  },
-},
   extraReducers: (builder) => {
     builder
       .addCase(fetchMovies.pending, (state) => {

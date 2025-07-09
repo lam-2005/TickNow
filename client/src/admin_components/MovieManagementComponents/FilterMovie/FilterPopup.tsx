@@ -42,18 +42,18 @@ const FilterPopup = ({
 
   useEffect(() => {
     const safeGenre = (() => {
-    if (typeof filter.genre === "string") {
-      return filter.genre.split(",");
-    }
-    return [];
-  })();
+      if (typeof filter.genre === "string") {
+        return filter.genre.split(",");
+      }
+      return [];
+    })();
 
-  const safeStatus = (() => {
-    if (typeof filter.status === "string") {
-      return filter.status.split(",").map(Number);
-    }
-    return [];
-  })();
+    const safeStatus = (() => {
+      if (typeof filter.status === "string") {
+        return filter.status.split(",").map(Number);
+      }
+      return [];
+    })();
     setIdGenres(safeGenre);
     setStatus(safeStatus);
     setDate(filter.date || "");
@@ -122,7 +122,11 @@ const FilterPopup = ({
               <FilterItem
                 key={stt}
                 title={
-                  stt === 1 ? "Đang chiếu" : stt === 2 ? "Sắp chiếu" : "Ngưng chiếu"
+                  stt === 1
+                    ? "Đang chiếu"
+                    : stt === 2
+                    ? "Sắp chiếu"
+                    : "Ngưng chiếu"
                 }
                 onClick={() => handleToggleStatus(stt)}
                 className={

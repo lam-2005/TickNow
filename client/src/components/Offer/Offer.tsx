@@ -1,19 +1,19 @@
+import env from "@/configs/environment";
+import { PostType } from "@/interfaces/post.interface";
 import Image from "next/image";
 
-type OfferProps = {
-  data: {
-    title: string;
-    image: string;
-    date: string;
-  };
-};
-
-const Offer = ({ data }: OfferProps) => {
+const Offer = ({ data }: { data: PostType }) => {
+  const formatDate = new Date(data.start_day.slice(0, 10));
+  const convertedDate = formatDate.toLocaleDateString("vi-VN");
   return (
     <div className="w-full group rounded-2xl dark:bg-transparent dark:shadow-none">
       <div className="relative w-full aspect-[7/4] overflow-hidden rounded-2xl">
         <Image
-          src={data.image || "/offers/offer.webp"}
+          src={`${
+            data.image
+              ? `${env.IMG_API_URL}/post/${data.image}`
+              : "/offers/defaultPost.webp"
+          } `}
           fill
           alt={data.title}
           sizes="350px"
@@ -23,7 +23,7 @@ const Offer = ({ data }: OfferProps) => {
       </div>
       <div className="px-4 mt-2 group-hover:text-primary">
         <time className="line-clamp-2 text-[clamp(0.75rem,2vw,0.875rem)] text-foreground mb-1">
-          {data.date}
+          {convertedDate}
         </time>
         <h3 className="font-text font-bold capitalize line-clamp-2">
           {data.title}

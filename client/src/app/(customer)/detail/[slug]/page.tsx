@@ -35,6 +35,7 @@ const Movie = async ({ params }: { params: Promise<{ slug: string }> }) => {
     }
   };
   const locations = await fetchLocation();
+
   return (
     <div className="transition-all">
       <MovieInfo movie={movie} />

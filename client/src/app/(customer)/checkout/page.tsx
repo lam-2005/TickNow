@@ -1,16 +1,12 @@
 import Button from "@/components/Button/Button";
 import Ticket from "@/components/Movie/Ticket";
-import { useStage } from "@/hooks/contexts/useStage";
 import { MovieType } from "@/interfaces/movie.interface";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import React from "react";
 
 const Payment = () => {
-  const router = useRouter();
-  const { prevStage } = useStage();
   return (
-    <div className="flex gap-5 ">
+    <div className="flex gap-5 mt-10 container">
       <div className="space-y-5 bg-background-card p-5 rounded-[10px] max-w-7/10 w-full h-fit">
         <h2>Thông tin vé</h2>
         <Ticket info={{} as MovieType} />
@@ -82,12 +78,8 @@ const Payment = () => {
             </div>
           </div>
           <div className="space-y-2.5 mt-5">
-            <Button
-              title="Thanh toán"
-              className="w-full"
-              onClick={() => router.push("/booking-successful")}
-            />
-            <Button title="Quay lại" btnSecondary onClick={prevStage} />
+            <Button title="Thanh toán" className="w-full" />
+            <Button title="Quay lại" btnSecondary />
           </div>
         </div>
       </div>

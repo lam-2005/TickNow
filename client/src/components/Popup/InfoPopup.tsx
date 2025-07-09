@@ -8,14 +8,18 @@ import env from "@/configs/environment";
 export const ItemInfo = ({
   title,
   content,
+  className,
 }: {
   title: string;
   content: string;
+  className?: string;
 }) => {
   return (
     <div className="flex gap-7.5 w-full">
       <div className="flex-1 text-nowrap">{title}</div>
-      <strong className="flex-4 block text-white text-justify">
+      <strong
+        className={`flex-4 block text-foreground text-justify ${className}`}
+      >
         {content}
       </strong>
     </div>

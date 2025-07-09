@@ -72,7 +72,6 @@
 
 import React from "react";
 import Image from "next/image";
-import Button from "@/components/Button/Button";
 import { Cinema } from "@/interfaces/cinema.interface";
 
 interface Props {
@@ -100,7 +99,7 @@ const LocationItem = ({ data }: Props) => {
         <p className="text-foreground text-sm leading-relaxed mt-2.5">
           {data.location.deatil_location}
         </p>
-        <Button title="Xem chi tiết" className="mt-5" />
+        {/* <Button title="Xem chi tiết" className="mt-5" /> */}
       </div>
     </div>
   );

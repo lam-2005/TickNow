@@ -1,4 +1,5 @@
 "use client";
+import { getTicket, saveTicket } from "@/utils/saveTicket";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const TimeScreening = ({
@@ -29,12 +30,24 @@ const ShowType = ({
   const pathname = usePathname();
   const searchParamsScreening = useSearchParams();
   const getSearchParamScreening = searchParamsScreening.get("showtime") || "";
-  console.log(pathname);
+  const getSearchParamDate = searchParamsScreening.get("date") || "";
+  const ticket = getTicket();
   const handleChangeShowtime = (id: string) => {
     const searchParams = new URLSearchParams(window.location.search);
     searchParams.set("showtime", id);
     router.push(`${pathname}?${searchParams.toString()}`, { scroll: false });
   };
+  if (ticket) {
+    ticket.screening = {
+      ...ticket.screening,
+      date: getSearchParamDate,
+      id_showtime: data?.find((item) => {
+        return item.id === getSearchParamScreening;
+      }),
+    };
+    saveTicket(ticket);
+  }
+
   return (
     <div className="flex gap-7.5 items-center">
       <p className="w-25">{type}</p>

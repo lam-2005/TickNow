@@ -4,10 +4,19 @@ import TrailerPopup from "@/components/Popup/TrailerPopup";
 import env from "@/configs/environment";
 import usePopup from "@/hooks/usePopup";
 import { MovieType } from "@/interfaces/movie.interface";
+import { saveTicket } from "@/utils/saveTicket";
 import Image from "next/image";
 import React from "react";
 
 const MovieInfo = ({ movie }: { movie: MovieType }) => {
+  const ticket = {
+    movie: movie,
+    cinema: {},
+    screening: {},
+    seats: [],
+    price: 0,
+  };
+  saveTicket(ticket);
   const { trailerPopup, openTrailer, closeTrailer } = usePopup();
   const date = new Date(movie.release_date);
   const formatDate = !isNaN(date.getTime())

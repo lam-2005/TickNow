@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Seat from "./Seat";
 import handleBooking from "@/utils/handleBooking";
+import { getTicket, saveTicket } from "@/utils/saveTicket";
+import { getScreeningList } from "@/services/screening.service";
+import { useSearchParams } from "next/navigation";
 
 const SeatDiagram = ({
   roomLayout,
@@ -15,6 +18,23 @@ const SeatDiagram = ({
 }) => {
   const { layout, selectedSeat } = handleBooking(roomLayout);
   const [selecting, setSeleting] = useState<string[]>([]);
+  const searchParamsScreening = useSearchParams();
+  const getSearchParamScreening = searchParamsScreening.get("showtime") || "";
+  const [loading, setLoading] = useState(false);
+  const [priceShowtime, setPriceShowtime] = useState(0);
+  const ticket = getTicket();
+  const getShowtime = async () => {
+    const res = await getScreeningList(`/${getSearchParamScreening}`);
+    setPriceShowtime(res.data.screening.price);
+    setLoading(false);
+  };
+  useEffect(() => {
+    setLoading(true);
+
+    getShowtime();
+  }, [getSearchParamScreening]);
+  if (loading) console.log("Loading...");
+
   const handleSeatClick = (seatName: string) => {
     if (!seatName) return;
     setSeleting((prev) =>
@@ -23,7 +43,14 @@ const SeatDiagram = ({
         : [...prev, seatName]
     );
   };
-  console.log(selecting);
+
+  if (ticket) {
+    ticket.seats = selecting;
+    if (selecting.length > 0) {
+      ticket.price = selecting.length * priceShowtime;
+    }
+    saveTicket(ticket);
+  }
 
   return (
     <div className="space-y-5 mt-8">

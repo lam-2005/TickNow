@@ -2,23 +2,45 @@
 import React from "react";
 import Button from "../Button/Button";
 import { useRouter } from "next/navigation";
-import { useStage } from "@/hooks/contexts/useStage";
+import { getTicket } from "@/utils/saveTicket";
 
 const DetailTicket = () => {
   const router = useRouter();
-  const { nextStage } = useStage();
+  const ticket = getTicket();
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const weekdays = [
+      "Chủ Nhật",
+      "Thứ Hai",
+      "Thứ Ba",
+      "Thứ Tư",
+      "Thứ Năm",
+      "Thứ Sáu",
+      "Thứ Bảy",
+    ];
+    const dayOfWeek = weekdays[date.getDay()];
+    const dd = String(date.getDate()).padStart(2, "0");
+    const mm = String(date.getMonth() + 1).padStart(2, "0");
+    const yy = String(date.getFullYear());
+
+    return `${dayOfWeek}, ${dd}/${mm}/${yy}`;
+  };
+
+  // if (!ticket) return null;
   return (
     <div className="bg-background-card p-5 w-full rounded-[10px] flex-between mt-5">
       <div className="space-y-2.5">
-        <h2>Phim Chiếu Rạp</h2>
+        <h2>{ticket?.movie.name || ""}</h2>
         <p>
-          <strong>TickNow Quận 12 (Thành phố Hồ Chí Minh)</strong>
+          <strong>{ticket?.cinema.name}</strong>
         </p>
         <p>
-          Suất: <strong>21:00</strong> - Thứ 3, <strong>27/07/2025</strong>
+          Suất: <strong>{ticket?.screening.id_showtime.time}</strong> -{" "}
+          {formatDate(ticket.screening.date)}
         </p>
         <p>
-          Ghế đã chọn: <strong>B1, B2, B3, B4</strong>
+          Ghế đã chọn: <strong>{ticket.seats.join(",")}</strong>
         </p>
       </div>
       <div className="flex flex-col items-end gap-[15px]">
@@ -28,15 +50,12 @@ const DetailTicket = () => {
         </div>
         <div className="flex gap-[5px]">
           <p className="text-lg">Tổng cộng:</p>
-          <span className="text-primary font-bold text-2xl">1.000.000 ₫</span>
+          <span className="text-primary font-bold text-2xl">
+            {ticket.price.toLocaleString("vi-Vn")} ₫
+          </span>
         </div>
         <div className="flex gap-5">
-          <Button
-            title="Quay lại"
-            className="bg-transparent border-1 border-foreground text-foreground before:bg-primary [&_span]:text-foreground hover:[&_span]:text-white hover:border-primary"
-            onClick={() => router.back()}
-          />
-          <Button title="Thanh toán" onClick={nextStage} />
+          <Button title="Thanh toán" onClick={() => router.push("/checkout")} />
         </div>
       </div>
     </div>

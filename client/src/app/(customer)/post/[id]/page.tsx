@@ -1,36 +1,19 @@
+import { PostType } from "@/interfaces/post.interface";
+import { getPostList } from "@/services/post.service";
 import Image from "next/image";
 
-type PostType = {
-  _id: string;
-  title: string;
-  image: string;
-  date: string;
-  content: string;
-};
-
-async function getPostById(id: string): Promise<PostType | null> {
-  try {
-    const res = await fetch(`http://localhost:1001/post/${id}`, {
-      cache: "no-store",
-    });
-    const json = await res.json();
-    return json.data || null;
-  } catch (error) {
-    console.error("Lỗi khi fetch chi tiết post:", error);
-    return null;
-  }
-}
-
-type Props = {
-  params: {
-    id: string;
-  } | Promise<{ id: string }>; // phòng trường hợp params là Promise
-};
-
-export default async function PostDetailPage(props: Props) {
-  const params = await Promise.resolve(props.params); // await params nếu là Promise
-  const post = await getPostById(params.id);
-
+export default async function PostDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const res = await getPostList(`/${id}`);
+  const post: PostType = res?.data;
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("vi-VN");
+  };
   return (
     <div className="container mx-auto px-4 py-10 text-white">
       {!post ? (
@@ -41,11 +24,14 @@ export default async function PostDetailPage(props: Props) {
             {post.title}
           </h1>
 
-          <p className="mb-4 text-sm text-gray-400 italic text-center">{post.date}</p>
-
-          <p className="mb-4 leading-relaxed whitespace-pre-line">
-            {post.content || "Không có nội dung mô tả."}
+          <p className="mb-4 text-sm text-gray-400 italic text-center">
+            Từ {formatDate(post.start_day)} đến {formatDate(post.end_day)}
           </p>
+
+          <p
+            className="mb-4 leading-relaxed whitespace-pre-line"
+            dangerouslySetInnerHTML={{ __html: post.content || "" }}
+          ></p>
 
           {post.image && (
             <div className="mt-8 flex justify-center">

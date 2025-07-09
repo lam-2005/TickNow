@@ -1,27 +1,27 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TicketDetail } from "@/interfaces/ticket.interface";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { Ticket } from "@/interfaces/ticket.interface";
 import { getTicketData } from "@/app/(admin)/admin/booking/page";
+import reduxInitStateDefault, {
+  ReduxInitStateDefaultType,
+} from "@/configs/reduxInitStateDefault";
 
-type TicketState = {
-  ticket: TicketDetail[];
+export type RoomManagementState = ReduxInitStateDefaultType & {
+  data: Ticket[];
   total: number;
   currentPage: number;
   totalPages: number;
-  loading: boolean;
-  error: string | null;
   errorAddData: string | null;
   errorUpdateData: string | null;
 };
-
-const initialState: TicketState = {
-  ticket: [],
+const initialState: RoomManagementState = {
+  data: [],
   total: 0,
   currentPage: 1,
   totalPages: 1,
-  loading: false,
-  error: null,
   errorAddData: null,
   errorUpdateData: null,
+
+  ...reduxInitStateDefault,
 };
 
 export const fetchTicket = createAsyncThunk(
@@ -40,7 +40,7 @@ const ticketSlice = createSlice({
   name: "ticket",
   initialState,
   reducers: {
-    setInitialTicket(state, action: PayloadAction<TicketState>) {
+    setInitialTicket(state, action) {
       return { ...state, ...action.payload };
     },
   },
@@ -51,7 +51,7 @@ const ticketSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchTicket.fulfilled, (state, action) => {
-        state.ticket = action.payload.ticket;
+        state.data = action.payload.ticket;
         state.total = action.payload.total;
         state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.totalPages;

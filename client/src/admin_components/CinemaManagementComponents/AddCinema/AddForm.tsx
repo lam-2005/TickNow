@@ -16,33 +16,29 @@ type AddFormProps = {
 const AddForm = ({ locations, closeForm }: AddFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const [formData, setFormData] = useState<CinemaCreateOrUpdate>({
-      id: "",
-      name: "",
-      image: "",
-      status: 1,
-      file: null,
-      id_location: "",
-      deatil_location: "",
+    id: "",
+    name: "",
+    image: "",
+    status: 1,
+    file: null,
+    id_location: "",
+    deatil_location: "",
   });
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (
-        !formData.name || 
-        !formData.deatil_location || 
-        !formData.id_location
-    ) {
+    if (!formData.name || !formData.deatil_location || !formData.id_location) {
       toast.warning("Vui lòng nhập đầy đủ thông tin!");
       return;
     }
 
     try {
-        const sure = confirm("Bạn có muốn thêm?");
-        if (!sure) return;
+      const sure = confirm("Bạn có muốn thêm?");
+      if (!sure) return;
 
-        await dispatch(createCinema({ data: formData })).unwrap();
-        toast.success("Thêm phòng thành công!");
-        dispatch(fetchCinemas({ limit: 5, page: 1 }));
+      await dispatch(createCinema({ data: formData })).unwrap();
+      toast.success("Thêm phòng thành công!");
+      dispatch(fetchCinemas({ limit: 5, page: 1 }));
     } catch (err) {
       toast.error(`Thêm phòng thất bại: ${err}`);
       console.error(err);
@@ -57,7 +53,7 @@ const AddForm = ({ locations, closeForm }: AddFormProps) => {
         <InputGroup
           formData={formData}
           setFormData={setFormData}
-          locations ={locations}
+          locations={locations}
           isCreate={true}
         />
       </div>

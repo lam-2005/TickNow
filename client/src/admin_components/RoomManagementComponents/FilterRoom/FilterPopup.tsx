@@ -55,8 +55,14 @@ const FilterPopup = ({
     }
   }, [filter]);
 
-  const handleFilter = () => {
+  const handleFilter = async () => {
     dispatch(
+      setFilter({
+        cinemas: idCinemas.join(","),
+        status: status.join(","),
+      })
+    );
+    await dispatch(
       fetchRooms({
         limit: 5,
         page: 1,
@@ -64,16 +70,9 @@ const FilterPopup = ({
         status: status.join(","),
       })
     );
-    dispatch(
-      setFilter({
-        cinemas: idCinemas.join(","),
-        status: status.join(","),
-      })
-    );
+
     closeForm();
   };
-  console.log(filter);
-
   return (
     <PopupContainer title="Bộ lọc" closeForm={closeForm}>
       <div className="p-5 space-y-5">

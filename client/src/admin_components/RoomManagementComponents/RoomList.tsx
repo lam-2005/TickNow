@@ -73,7 +73,18 @@ const RoomList = ({
       );
     }
   }, [dispatch, rowsPerPage, page, totalPages, filter.cinemas, filter.status]);
+  useEffect(() => {
+    dispatch(
+      fetchRooms({
+        limit: rowsPerPage,
+        page: 1,
+        cinemas: filter.cinemas,
+        status: filter.status,
+      })
+    );
 
+    changePage(1);
+  }, [filter, dispatch]);
   // table
   const col: Column<RoomType>[] = [
     { key: "cinema", title: "Rạp chiếu" },
@@ -168,7 +179,7 @@ const RoomList = ({
           rowsPerPage={rowsPerPage}
         />
       }
-      {total > rowsPerPage && (
+      {
         <Pagination
           currentPage={currentPage}
           total={total}
@@ -177,7 +188,7 @@ const RoomList = ({
           setPage={changePage}
           setRowPerPage={changeRowPerPage}
         />
-      )}
+      }
     </>
   );
 };

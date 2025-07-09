@@ -2,17 +2,21 @@
 import React, { useEffect, useRef, useState } from "react";
 import Table, { Column } from "@/admin_components/Table/Table";
 import Pagination from "@/admin_components/Table/Pagination";
-import { TicketDetail, TicketReq } from "@/interfaces/ticket.interface";
+import { Ticket } from "@/interfaces/ticket.interface";
 import ActionButton from "@/admin_components/Button/ButtonActions";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/utils/redux/store";
 import dataTicket from "@/utils/redux/selectors/ticketSelector";
 import usePanigation from "@/hooks/usePanigation";
-import { fetchTicket, setInitialTicket } from "@/utils/redux/slices/ticketSlice";
-import { toast } from "react-toastify";
+import {
+  fetchTicket,
+  setInitialTicket,
+} from "@/utils/redux/slices/ticketSlice";
+import Status from "../StatusUI/Status";
+import DetailTicket from "./DetailTicket/DetailTicket";
 
 type InitDataType = {
-  ticket: TicketDetail[];
+  ticket: Ticket[];
   total: number;
   currentPage: number;
   totalPages: number;
@@ -22,16 +26,16 @@ const TicketList = ({ initData }: { initData: InitDataType }) => {
   const dispatch = useDispatch<AppDispatch>();
   const isFirstLoad = useRef(true);
   const [isEditOpen, setIsEditOpen] = useState(false);
-  const [selectedTicket, setSelectedTicket] = useState<TicketDetail | null>(null);
+  const [selectedTicket, setSelectedTicket] = useState("");
 
-  const { ticket , total, currentPage, totalPages, loading, error } =
+  const { data, total, currentPage, totalPages, loading, error } =
     useSelector(dataTicket);
   const { page, changePage, changeRowPerPage, rowsPerPage } = usePanigation(
     initData.currentPage
   );
 
   useEffect(() => {
-    dispatch(setInitialTicket({ ...initData, loading: false, errorAddData: null, errorUpdateData: null, error: null }));
+    dispatch(setInitialTicket(initData));
   }, [dispatch, initData]);
 
   useEffect(() => {
@@ -42,82 +46,92 @@ const TicketList = ({ initData }: { initData: InitDataType }) => {
     dispatch(fetchTicket({ page, limit: rowsPerPage }));
   }, [dispatch, page, rowsPerPage]);
 
-
-  // const col: Column<TicketDetail>[] = [
-  //   { key: "userName", title: "Tên khách hàng" },
-  //   { key: "movie", title: "Tên phim" },
-  //   { key: "price", title: "Giá vé" },
-  //   { key: "cinema", title: "Rạp" },
-  //   { key: "room", title: "Phòng" },
-  //   // { key: "seat", title: "Số ghế" },
-  //   { key: "type", title: "Trạng thái" },
-  //   {
-  //     title: "Thao Tác",
-  //     render(row: TicketDetail) {
-  //       return (
-  //         <div className="flex gap-2">
-  //           <ActionButton
-  //             label="Xóa"
-  //             bgColor="warning"
-  //             onClick={() => {
-  //               setSelectedTicket(row);
-  //               setIsEditOpen(true);
-  //             }}
-  //             id={row._id}
-  //           />
-  //         </div>
-  //       );
-  //     },
-  //   },
-  // ];
-
-  const col: Column<TicketDetail>[] = [
-  { key: "userName", title: "Tên khách hàng" },
-  { key: "price", title: "Giá vé" },
-  {
-    title: "Rạp",
-    render: (row) => row.cinema?.name || "Không có",
-  },
-  {
-    title: "Phòng",
-    render: (row) => row.room?.code || "Không có",
-  },
-  {
-    title: "Số ghế",
-    render: (row) => row.seat.join(", "),
-  },
-  {
-    title: "Trạng thái",
-    render: (row) => (row.type === 2 ? "Đã thanh toán" : "Chưa thanh toán"),
-  },
-  {
-    title: "Thao Tác",
-    render(row: TicketDetail) {
-      return (
-        <div className="flex gap-2">
-          <ActionButton
-            label="Xóa"
-            bgColor="warning"
-            onClick={() => {
-              setSelectedTicket(row);
-              setIsEditOpen(true);
-            }}
-            id={row._id}
-          />
-        </div>
+  useEffect(() => {
+    if (isFirstLoad.current) {
+      isFirstLoad.current = false;
+      return;
+    }
+    if (page <= totalPages) {
+      dispatch(
+        fetchTicket({
+          limit: rowsPerPage,
+          page: page,
+        })
       );
-    },
-  },
-];
+    } else {
+      dispatch(
+        fetchTicket({
+          limit: rowsPerPage,
+          page: totalPages,
+        })
+      );
+    }
+  }, [dispatch, rowsPerPage, page, totalPages]);
 
+  const col: Column<Ticket>[] = [
+    { key: "userName", title: "Tên khách hàng" },
+    { key: "price", title: "Giá vé" },
+    {
+      title: "Rạp",
+      render: (row) => row.cinema?.name || "Không có",
+    },
+    {
+      title: "Phòng",
+      render: (row) => row.room?.code || "Không có",
+    },
+    {
+      title: "Số ghế",
+      render: (row) => row.seat.join(", "),
+    },
+    {
+      title: "Trạng thái",
+      render: (row) => (
+        <Status
+          title={`${row.type === 1 ? "Chưa thanh toán" : "Đã thanh toán"}`}
+          color={`${row.type === 1 ? "error" : "success"}`}
+        />
+      ),
+    },
+    {
+      title: "Thao Tác",
+      render(row) {
+        return (
+          <div className="flex gap-2">
+            <ActionButton
+              label="Xem vé"
+              bgColor="success"
+              onClick={() => handleShowDetail(row._id)}
+            />
+            <ActionButton label="Hủy vé" bgColor="error" onClick={() => null} />
+          </div>
+        );
+      },
+    },
+  ];
+
+  const handleShowDetail = (id: string) => {
+    setSelectedTicket(id);
+    setIsEditOpen(true);
+  };
 
   if (loading) return <p className="text-center">Đang tải dữ liệu...</p>;
   if (error) return <p className="text-red-500 text-center">{error}</p>;
 
   return (
     <>
-      <Table column={col} data={ticket.map((u) => ({ ...u, id: u._id }))} currentPage={currentPage} rowsPerPage={rowsPerPage} />
-      {total >= rowsPerPage && (
+      {isEditOpen && (
+        <DetailTicket
+          id={selectedTicket}
+          closeForm={() => setIsEditOpen(false)}
+        />
+      )}
+      <Table
+        column={col}
+        data={data}
+        currentPage={currentPage}
+        rowsPerPage={rowsPerPage}
+      />
+      {
         <Pagination
           currentPage={currentPage}
           total={total}
@@ -126,20 +140,7 @@ const TicketList = ({ initData }: { initData: InitDataType }) => {
           setPage={changePage}
           setRowPerPage={changeRowPerPage}
         />
-      )}
-      {/* {isEditOpen && selectedUser && (
-        <UpdateFormContainer
-          info={selectedUser}
-          closeForm={() => {
-            setIsEditOpen(false);
-            setSelectedUser(null);
-          }}
-          onSubmit={(data) => {
-            if (!selectedUser?._id) return;
-            handleUpdate(selectedUser._id, data);
-          }}
-        />
-      )} */}
+      }
     </>
   );
 };

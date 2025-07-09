@@ -1,6 +1,5 @@
 import React, { Suspense } from "react";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
-import OptionTable from "@/admin_components/OptionTable/OptionTable";
 import * as rateService from "@/services/rate.service";
 import RatingList from "@/admin_components/RatingManagermentComponents/RateList";
 import FilterRating from "@/admin_components/RatingManagermentComponents/FilterRating/FilterRating";
@@ -39,7 +38,7 @@ const RateManagement = async () => {
     <div className="card">
       <HeadingCard title="Quản Lý Đánh Giá" />
       <FilterRating movies={res.movies} />
-      <OptionTable />
+      {/* <OptionTable /> */}
       <Suspense fallback={<p className="text-center">Đang tải dữ liệu...</p>}>
         <RatingList initData={res} />
       </Suspense>

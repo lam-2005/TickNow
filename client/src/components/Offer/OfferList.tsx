@@ -1,40 +1,26 @@
-import Link from "next/link";
+"use client";
+import React, { use } from "react";
+import CustomSlider from "../CustomSlider/CustomSlider";
+import { PostType } from "@/interfaces/post.interface";
 import Offer from "./Offer";
-
-type OfferType = {
-  _id: string;
-  content: string;
-  img: string;
-  start_day: string;
-  end_day: string;
-};
-
-type Props = {
-  offers: OfferType[];
-};
-
-export default function OfferList({ offers }: Props) {
-  if (!offers || offers.length === 0) {
-    return <p className="text-center text-gray-500">Không có khuyến mãi nào.</p>;
-  }
-
+const OfferList = ({ data }: { data: Promise<PostType[]> }) => {
+  const getMovie = use(data);
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mb-10">
-      {offers.map((item) => (
-        <Link
-          href={`/post/${item._id}`}
-          key={item._id}
-          className="bg-background-card rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow pb-5 block"
-        >
-          <Offer
-            data={{
-              title: item.content,
-              image: item.img,
-              date: `Từ ${new Date(item.start_day).toLocaleDateString("vi-VN")} đến ${new Date(item.end_day).toLocaleDateString("vi-VN")}`,
-            }}
-          />
-        </Link>
+    <CustomSlider
+      xl={4}
+      lg={3}
+      md={2}
+      sm={2}
+      slidesToShow={4}
+      slidesToScroll={4}
+    >
+      {getMovie.map((item) => (
+        <div className="px-2 " key={item._id}>
+          <Offer data={item} />
+        </div>
       ))}
-    </div>
+    </CustomSlider>
   );
-}
+};
+
+export default OfferList;

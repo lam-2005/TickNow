@@ -7,19 +7,21 @@ import userSlice from "./slices/userSlice";
 import movieSlice from "./slices/movieSlice";
 import ticketSlice from "./slices/ticketSlice";
 import postSlice from "./slices/postSlice";
-
+import cinemaSlice from "./slices/cinemaSlice";
+import voucherSlice from "./slices/voucherSlice";
 
 const store = configureStore({
   reducer: {
-     auth: authReducer,
+    auth: authReducer,
     roomManagement: roomSlice,
     ratingManagement: ratingSlice,
     userManagement: userSlice,
     movieManagement: movieSlice,
     screenManagement: screenSlice,
     ticketManagement: ticketSlice,
-
     postManagement: postSlice,
+    cinemaManagement: cinemaSlice,
+    voucherManagement: voucherSlice,
   },
 });
 

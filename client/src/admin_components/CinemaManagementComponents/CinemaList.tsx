@@ -9,8 +9,13 @@ import ActionButton from "../Button/ButtonActions";
 import UpdateFormContainer from "./UpdateCinema/UpdateFormContainer";
 import { Cinema, Location } from "@/interfaces/cinema.interface";
 import dataCinemaSelector from "@/utils/redux/selectors/selectorCinema";
-import { fetchCinemas, setInitialcinemas } from "@/utils/redux/slices/cinemaSlice";
+import {
+  fetchCinemas,
+  setInitialcinemas,
+} from "@/utils/redux/slices/cinemaSlice";
 import { toast } from "react-toastify";
+import env from "@/configs/environment";
+import Image from "next/image";
 
 type InitDataType = {
   cinemas: Cinema[];
@@ -22,28 +27,30 @@ const CinemaList = ({
   initData,
   initLocations,
 }: {
-    initData: Promise<InitDataType>;
-    initLocations: Promise<Location[]>;
+  initData: Promise<InitDataType>;
+  initLocations: Promise<Location[]>;
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   const initialData = use(initData);
   const locations = use(initLocations);
-  
+
   const isFirstLoad = useRef(true);
-//   const [showInfo, setShowInfo] = useState<boolean>(false);
+  //   const [showInfo, setShowInfo] = useState<boolean>(false);
   const [openUpdateForm, setOpenUpdateForm] = useState<boolean>(false);
   const [cinema, setCinema] = useState<Cinema | null>(null);
-//   // lay selector
+  //   // lay selector
   const { data, error, total, currentPage, loading, totalPages, filter } =
     useSelector(dataCinemaSelector);
   // hook phan trang
-  const { page, changePage, changeRowPerPage, rowsPerPage } = usePanigation(initialData.currentPage);
+  const { page, changePage, changeRowPerPage, rowsPerPage } = usePanigation(
+    initialData.currentPage
+  );
 
   useEffect(() => {
     if (isFirstLoad.current) {
-        dispatch(setInitialcinemas(initialData));
-        isFirstLoad.current = false;
-        return;
+      dispatch(setInitialcinemas(initialData));
+      isFirstLoad.current = false;
+      return;
     }
 
     if (page <= totalPages) {
@@ -58,7 +65,7 @@ const CinemaList = ({
       );
 
       return;
-    } 
+    }
 
     dispatch(
       fetchCinemas({
@@ -71,7 +78,7 @@ const CinemaList = ({
     );
   }, [dispatch, rowsPerPage, page, initialData, totalPages, filter]);
 
-   const columns: Column<Cinema>[] = [
+  const columns: Column<Cinema>[] = [
     { key: "name", title: "Tên rạp" },
     {
       key: "location",
@@ -83,7 +90,15 @@ const CinemaList = ({
       title: "Hình ảnh",
       render: (row) =>
         row?.image ? (
-          <div>TODO</div>
+          <div>
+            <Image
+              src={`${env.IMG_API_URL}/cinema/${row?.image}`}
+              height={70}
+              width={100}
+              alt=""
+            />
+          </div>
+        ) : (
           // <Image
           //   src={row.image}
           //   alt={`Ảnh ${row.name}`}
@@ -91,15 +106,13 @@ const CinemaList = ({
           //   height={50}
           //   className="rounded border object-cover"
           // />
-        ) : (
           <span>Không có ảnh</span>
         ),
     },
     {
       key: "status",
       title: "Trạng thái",
-      render: (row) =>
-        row?.status === 1 ? "Hoạt động" : "Ngừng hoạt động",
+      render: (row) => (row?.status === 1 ? "Hoạt động" : "Ngừng hoạt động"),
     },
     {
       title: "Thao tác",
@@ -129,7 +142,7 @@ const CinemaList = ({
     setCinema(null);
     setOpenUpdateForm(false);
     dispatch(fetchCinemas({ limit: rowsPerPage, page: 1 }));
-  }
+  };
 
   if (loading) return <p className="text-center">Đang tải dữ liệu...</p>;
   if (error) return <p className="text-center text-red-500">{error}</p>;
