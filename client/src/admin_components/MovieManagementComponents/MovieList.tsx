@@ -66,7 +66,7 @@ const MovieList = ({
         errorAddData: null,
         errorUpdateData: null,
         filter: {
-          genre: [],
+          genre: "",
           status: "",
           date: "",
           star: "",
