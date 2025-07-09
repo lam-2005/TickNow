@@ -5,8 +5,17 @@ import { AppDispatch } from "@/utils/redux/store";
 import { fetchUsers, setFilter } from "@/utils/redux/slices/userSlice";
 import dataUser from "@/utils/redux/selectors/userSelector";
 
-const FilterItem = ({ title, className }: { title: string; className?: string }) => (
+const FilterItem = ({
+  title,
+  className,
+  onClick,
+}: {
+  title: string;
+  className?: string;
+  onClick?: () => void;
+}) => (
   <div
+    onClick={onClick}
     className={`border-1 border-foreground text-foreground flex-center w-fit px-2 py-1 transition-colors rounded-md hover:bg-primary hover:text-white hover:border-transparent cursor-pointer ${className}`}
   >
     {title}
@@ -20,29 +29,30 @@ const FilterPopup = ({ closeForm }: { closeForm: () => void }) => {
   const [status, setStatus] = useState<string[]>([]);
   const [role, setRole] = useState<string>("");
 
-  const handleGetStatus = (value: string) => {
+  useEffect(() => {
+    setStatus(filter.status ? filter.status.split(",") : []);
+    setRole(filter.role || "");
+  }, [filter]);
+
+  const toggleStatus = (value: string) => {
     setStatus((prev) =>
-      prev.includes(value) ? prev.filter((item) => item !== value) : [...prev, value]
+      prev.includes(value) ? prev.filter((s) => s !== value) : [...prev, value]
     );
   };
 
-  useEffect(() => {
-    setStatus(filter.status ? filter.status.split(",") : []);
-    setRole(filter.role ?? "");
-  }, [filter]);
-
   const handleFilter = () => {
+    const statusStr = status.join(",");
     dispatch(
       fetchUsers({
         page: 1,
         limit: 10,
-        status: status.join(","), // ví dụ: "true,false"
+        status: statusStr,
         role,
       })
     );
     dispatch(
       setFilter({
-        status: status.join(","),
+        status: statusStr,
         role,
       })
     );
@@ -52,24 +62,28 @@ const FilterPopup = ({ closeForm }: { closeForm: () => void }) => {
   return (
     <PopupContainer title="Bộ lọc" closeForm={closeForm}>
       <div className="p-5 space-y-5">
-        <div className="flex gap-4 flex-col">
+        <div className="flex flex-col gap-4">
           <h1 className="text-xl font-bold">Trạng thái:</h1>
           <div className="flex flex-wrap gap-4">
             {[
               { label: "Hoạt động", value: "true" },
               { label: "Ngưng hoạt động", value: "false" },
-            ].map((s) => (
-              <button key={s.value} onClick={() => handleGetStatus(s.value)}>
-                <FilterItem
-                  title={s.label}
-                  className={`${status.includes(s.value) ? "bg-primary text-white border-transparent" : ""}`}
-                />
-              </button>
+            ].map((item) => (
+              <FilterItem
+                key={item.value}
+                title={item.label}
+                onClick={() => toggleStatus(item.value)}
+                className={
+                  status.includes(item.value)
+                    ? "bg-primary text-white border-transparent"
+                    : ""
+                }
+              />
             ))}
           </div>
         </div>
 
-        <div className="flex gap-4 flex-col">
+        <div className="flex flex-col gap-4">
           <h1 className="text-xl font-bold">Vai trò:</h1>
           <select
             value={role}
