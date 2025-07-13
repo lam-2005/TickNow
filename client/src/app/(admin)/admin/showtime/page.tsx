@@ -17,8 +17,8 @@ const getRoomList = async () => {
 };
 
 const ScreenManagement = async () => {
-  const res = await getScreenData(1, 5);
-  const movies = await getMovie();
+  const res = await getScreenData(1, 5); // gọi hàm lấy dữ liệu để đặc cho redux đã viết bên service mặc đinh là trang 1 giới hạn 5
+  const movies = await getMovie(); // lấy dữ liệu tất cả những thứ cần lọc ví dụ như lọc rạp lấy tất cả rạp ra, tương tự nếu có lọc phim, vé, ...
   const rooms = await getRoomList();
 
   return (

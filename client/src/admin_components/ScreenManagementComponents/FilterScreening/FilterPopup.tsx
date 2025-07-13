@@ -94,7 +94,7 @@ const FilterPopup = ({
   const handleGetStatus = (id: number) => {
     setStatus((prev) =>
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
-    );
+    ); // cái lọc nhiều trạng thái
   };
   const handleGetShơtype = (id: number) => {
     setShowtype((prev) =>
@@ -102,8 +102,10 @@ const FilterPopup = ({
     );
   };
   useEffect(() => {
+    // khi web vừa load
     if (filter.movie) {
-      setIdMovie(filter.movie.split(","));
+      //nếu có lọc (filter lấy từ selector)
+      setIdMovie(filter.movie.split(",")); // dữ liệu của filter lấy từ selector là dạng chuỗi có nên là tách tnahfh dạng mảng
     } else {
       setIdMovie([]);
     }
@@ -152,7 +154,7 @@ const FilterPopup = ({
       fetchScreen({
         limit: 5,
         page: 1,
-        movie: idMovies.join(","),
+        movie: idMovies.join(","), // chuyển mảng thành chuỗi
         status: status.join(","),
         date: dateRange.join(","),
         showtype: showtype.join(","),
@@ -181,6 +183,7 @@ const FilterPopup = ({
           <h1 className="text-xl font-bold">Chọn phim:</h1>
           <div className="flex flex-wrap gap-4">
             <Autocomplete
+              // lọc chiều có checkboxes
               multiple
               id="checkboxes-tags-demo"
               className="w-full"
