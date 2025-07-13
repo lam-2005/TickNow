@@ -39,21 +39,8 @@ const FilterPopup = ({
   const [star, setStar] = useState<string>("");
 
   useEffect(() => {
-    const safeGenre = (() => {
-      if (typeof filter.genre === "string") {
-        return filter.genre.split(",");
-      }
-      return [];
-    })();
-
-    const safeStatus = (() => {
-      if (typeof filter.status === "string") {
-        return filter.status.split(",").map(Number);
-      }
-      return [];
-    })();
-    setIdGenres(safeGenre);
-    setStatus(safeStatus);
+    setIdGenres(filter.genre ? filter.genre.split(",") : []);
+    setStatus(filter.status ? filter.status.split(",").map(Number) : []);
     setDate(filter.date || "");
     setStar(filter.star || "");
   }, [filter]);
@@ -71,7 +58,7 @@ const FilterPopup = ({
   };
 
   const handleFilter = () => {
-    const genreStr = idGenres.join(",");
+    const genreStr = idGenres.filter(Boolean).join(",");
     const statusStr = status.join(",");
     dispatch(
       fetchMovies({
@@ -122,11 +109,7 @@ const FilterPopup = ({
               <FilterItem
                 key={stt}
                 title={
-                  stt === 1
-                    ? "Đang chiếu"
-                    : stt === 2
-                    ? "Sắp chiếu"
-                    : "Ngưng chiếu"
+                  stt === 1 ? "Đang chiếu" : stt === 2 ? "Sắp chiếu" : "Ngưng chiếu"
                 }
                 onClick={() => toggleStatus(stt)}
                 className={
