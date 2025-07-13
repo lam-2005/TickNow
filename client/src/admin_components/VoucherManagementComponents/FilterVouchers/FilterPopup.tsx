@@ -11,11 +11,11 @@ import { getVoucherList } from "@/services/vouchers.service";
 const formatDate = (dateStr: string) => {
   const date = new Date(dateStr);
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
 
   return `${year}-${month}-${day}`;
-}
+};
 
 const FilterItem = ({
   title,
@@ -33,11 +33,7 @@ const FilterItem = ({
   );
 };
 
-const FilterPopup = ({
-  closeForm,
-}: {
-  closeForm: () => void;
-}) => {
+const FilterPopup = ({ closeForm }: { closeForm: () => void }) => {
   const dispatch = useDispatch<AppDispatch>();
   const [vouchers, setVouchers] = useState<Voucher[]>([]);
   const [code, setCode] = useState<string>();
@@ -55,16 +51,16 @@ const FilterPopup = ({
   };
 
   useEffect(() => {
-    getVoucherList().then(res => {
-      setVouchers(res?.voucher ?? [])
-    })
+    getVoucherList().then((res) => {
+      setVouchers(res?.voucher ?? []);
+    });
   }, []);
 
   useEffect(() => {
-    setCode(filter.code ?? '')
-    setTimeStart(filter.timeStart ?? '')
-    setTimeEnd(filter.timeEnd ?? '')
-  
+    setCode(filter.code ?? "");
+    setTimeStart(filter.timeStart ?? "");
+    setTimeEnd(filter.timeEnd ?? "");
+
     if (filter.status) {
       setStatus(filter.status.split(",").map((s) => s));
     } else {
@@ -97,13 +93,17 @@ const FilterPopup = ({
   return (
     <PopupContainer title="Bộ lọc Voucher" closeForm={closeForm}>
       <div className="p-5 space-y-5 overflow-y-scroll">
-
         <div className="flex gap-4 flex-col">
           <h1 className="text-xl font-bold">Chọn mã code:</h1>
           <div className="flex flex-wrap gap-4">
             {vouchers?.length > 0 ? (
               vouchers.map((loc) => (
-                <button key={loc._id} onClick={() => code == loc.code ? setCode("") : setCode(loc.code)}>
+                <button
+                  key={loc._id}
+                  onClick={() =>
+                    code == loc.code ? setCode("") : setCode(loc.code)
+                  }
+                >
                   <FilterItem
                     title={loc.code}
                     className={`${
@@ -115,7 +115,9 @@ const FilterPopup = ({
                 </button>
               ))
             ) : (
-              <p className="text-sm italic text-muted">Không có dữ liệu mã code.</p>
+              <p className="text-sm italic text-muted">
+                Không có dữ liệu mã code.
+              </p>
             )}
           </div>
         </div>
@@ -125,21 +127,38 @@ const FilterPopup = ({
           <div className="flex flex-wrap gap-4">
             {vouchers?.length > 0 ? (
               vouchers
-              .filter((voucher, index, self) => index === self.findIndex(v => formatDate(v.start_date) === formatDate(voucher.start_date)))
-              .map((loc) => (
-                <button key={loc._id} onClick={() => timeStart == formatDate(loc.start_date) ? setTimeStart("") : setTimeStart(formatDate(loc.start_date))}>
-                  <FilterItem
-                    title={formatDate(loc.start_date)}
-                    className={`${
-                      timeStart === formatDate(loc.start_date)
-                        ? "bg-primary text-white border-transparent"
-                        : ""
-                    }`}
-                  />
-                </button>
-              ))
+                .filter(
+                  (voucher, index, self) =>
+                    index ===
+                    self.findIndex(
+                      (v) =>
+                        formatDate(v.start_date) ===
+                        formatDate(voucher.start_date)
+                    )
+                )
+                .map((loc) => (
+                  <button
+                    key={loc._id}
+                    onClick={() =>
+                      timeStart == formatDate(loc.start_date)
+                        ? setTimeStart("")
+                        : setTimeStart(formatDate(loc.start_date))
+                    }
+                  >
+                    <FilterItem
+                      title={formatDate(loc.start_date)}
+                      className={`${
+                        timeStart === formatDate(loc.start_date)
+                          ? "bg-primary text-white border-transparent"
+                          : ""
+                      }`}
+                    />
+                  </button>
+                ))
             ) : (
-              <p className="text-sm italic text-muted">Không có dữ liệu ngày bắt đầu.</p>
+              <p className="text-sm italic text-muted">
+                Không có dữ liệu ngày bắt đầu.
+              </p>
             )}
           </div>
         </div>
@@ -149,21 +168,37 @@ const FilterPopup = ({
           <div className="flex flex-wrap gap-4">
             {vouchers?.length > 0 ? (
               vouchers
-              .filter((voucher, index, self) => index === self.findIndex(v => formatDate(v.end_date) === formatDate(voucher.end_date)))
-              .map((loc) => (
-                <button key={loc._id} onClick={() => timeEnd == formatDate(loc.end_date) ? setTimeEnd("") : setTimeEnd(formatDate(loc.end_date))}>
-                  <FilterItem
-                    title={formatDate(loc.end_date)}
-                    className={`${
-                      timeEnd === formatDate(loc.end_date)
-                        ? "bg-primary text-white border-transparent"
-                        : ""
-                    }`}
-                  />
-                </button>
-              ))
+                .filter(
+                  (voucher, index, self) =>
+                    index ===
+                    self.findIndex(
+                      (v) =>
+                        formatDate(v.end_day) === formatDate(voucher.end_day)
+                    )
+                )
+                .map((loc) => (
+                  <button
+                    key={loc._id}
+                    onClick={() =>
+                      timeEnd == formatDate(loc.end_day)
+                        ? setTimeEnd("")
+                        : setTimeEnd(formatDate(loc.end_day))
+                    }
+                  >
+                    <FilterItem
+                      title={formatDate(loc.end_day)}
+                      className={`${
+                        timeEnd === formatDate(loc.end_day)
+                          ? "bg-primary text-white border-transparent"
+                          : ""
+                      }`}
+                    />
+                  </button>
+                ))
             ) : (
-              <p className="text-sm italic text-muted">Không có dữ liệu ngày kết thúc.</p>
+              <p className="text-sm italic text-muted">
+                Không có dữ liệu ngày kết thúc.
+              </p>
             )}
           </div>
         </div>

@@ -7,6 +7,8 @@ import ThemeLayout from "@/components/ThemeLayout/ThemeLayout";
 import AppProvider from "@/hooks/contexts/AppProvider";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { ToastContainer } from "react-toastify";
+import ClearTicketOnRouteChange from "@/components/CLearRouterChange/ClearRouterChange";
+import { cookies } from "next/headers";
 const beVietNamPro = Be_Vietnam_Pro({
   weight: ["300", "700"],
   variable: "--font-be-vietnam-pro-sans",
@@ -24,20 +26,24 @@ export const metadata: Metadata = {
   description: "Website đặt vé xem phim",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = cookies();
+  const token = (await cookieStore).get("token")?.value;
+
   return (
     <html lang="vi">
       <body
         className={`${beVietNamPro.variable} ${oswald.variable} antialiased`}
       >
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-          <AppProvider>
+          <AppProvider initToken={token}>
             <ThemeLayout>
-              <ToastContainer theme="colored" />
+              <ToastContainer theme="dark" />
+              <ClearTicketOnRouteChange />
               <Header />
               <main className="">{children}</main>
               <Footer />

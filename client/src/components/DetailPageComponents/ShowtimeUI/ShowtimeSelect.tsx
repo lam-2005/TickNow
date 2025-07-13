@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import { RiMapPin2Fill } from "react-icons/ri";
 import CinemaShowtimeContainer from "./CinemaShowtimeContainer";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type ListDataSelect = {
   showtimes: Screening[];
@@ -23,7 +23,9 @@ type ShowtimeSelectTypes = {
 };
 const ShowtimeSelect = ({ listData, slug }: ShowtimeSelectTypes) => {
   const { showtimes, locations } = listData;
+  const searchParams = useSearchParams();
   const router = useRouter();
+  const pathname = usePathname();
 
   const getDate: { value: string; label: string }[] = [
     ...new Set(showtimes.map((item) => item.date)),
@@ -40,23 +42,20 @@ const ShowtimeSelect = ({ listData, slug }: ShowtimeSelectTypes) => {
       label: label,
     };
   });
-  const searchParams = useSearchParams();
-  const getDateParams = searchParams.get("date");
-  const getLoactionParams = searchParams.get("location");
-  const [selectedDate, setSelectedDate] = useState(
-    getDateParams || getDate[0].value
-  );
-  const [selectedLocation, setSelectedLocation] = useState(
-    getLoactionParams || locations[0]._id
-  );
+  const getDateParams = searchParams.get("date") || getDate[0].value;
+  const getLocationParams = searchParams.get("location") || locations[0]._id;
+  const [selectedDate, setSelectedDate] = useState(getDateParams);
+  const [selectedLocation, setSelectedLocation] = useState(getLocationParams);
   const [dataCinemaShowtimes, setDataCinemaShowtimes] = useState<
     CinemaShowtimeType[]
   >([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    // setLoading(true);
     const getData = async () => {
       try {
+        setLoading(true);
         const res = await getMovieList(
           `/${slug}?date=${selectedDate}&location=${selectedLocation}`
         );
@@ -68,11 +67,28 @@ const ShowtimeSelect = ({ listData, slug }: ShowtimeSelectTypes) => {
       }
     };
     getData();
-    router.push(`?date=${selectedDate}&location=${selectedLocation}`, {
-      scroll: false,
-    });
   }, [slug, selectedDate, selectedLocation]);
+  const changDate = (date: string) => {
+    setSelectedDate(date);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("date", date);
+    // Xóa param showtime nếu có
+    if (params.has("showtime")) {
+      params.delete("showtime");
+    }
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  };
 
+  const changeLocation = (location: string) => {
+    setSelectedLocation(location);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("location", location);
+    // Xóa param showtime nếu có
+    if (params.has("showtime")) {
+      params.delete("showtime");
+    }
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  };
   return (
     <>
       <div className="flex-column items-center gap-7.5">
@@ -84,7 +100,7 @@ const ShowtimeSelect = ({ listData, slug }: ShowtimeSelectTypes) => {
             data={getDate}
             defaultValue={selectedDate}
             getValue={(item) => item.value}
-            onChange={(date) => setSelectedDate(date)}
+            onChange={(date) => changDate(date)}
           />
           <SelectComponent
             leftIcon={<RiMapPin2Fill className="text-foreground" size={20} />}
@@ -92,7 +108,7 @@ const ShowtimeSelect = ({ listData, slug }: ShowtimeSelectTypes) => {
             data={locations}
             defaultValue={selectedLocation}
             getValue={(item) => item._id}
-            onChange={(location) => setSelectedLocation(location)}
+            onChange={(location) => changeLocation(location)}
           />
         </SelectContainer>
       </div>

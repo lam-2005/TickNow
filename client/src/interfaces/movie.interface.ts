@@ -11,7 +11,7 @@ export interface MovieType {
   trailer: string;
   image: string | File;
   banner: string | File;
-  language: number;
+  language: string;
   genre: {
     id: number | string;
     name?: string;
@@ -32,7 +32,7 @@ export type MovieReq = {
   trailer: string;
   image: File | null;
   banner: File | null;
-  language: number;
+  language: number | string;
   genre: string[];
   status: string | number;
 };

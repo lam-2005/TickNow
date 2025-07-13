@@ -3,6 +3,11 @@ export type RoomType = {
   cinema?: string;
   code_room: string;
   id_cinema: string;
+  location?: {
+    id_location?: string;
+    deatil_location?: string;
+    location?: string;
+  };
   diagram: {
     row: number;
     column: number;

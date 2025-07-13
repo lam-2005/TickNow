@@ -1,12 +1,11 @@
-import StageBooking from "@/components/BookingPageComponents/StageBooking";
 import Button from "@/components/Button/Button";
+import Link from "next/link";
 import React from "react";
 import { IoCloseSharp } from "react-icons/io5";
 
 const BookingFailed = () => {
   return (
     <div className="mt-10 space-y-10">
-      <StageBooking currentStage={3} />
       <div className="flex-column items-center gap-[40px] rounded-[15px] bg-background-card w-fit m-auto p-10">
         <div className="flex-center flex-col gap-5">
           <div className="size-[70px] rounded-[50%] bg-red-500 flex-center">
@@ -30,7 +29,9 @@ const BookingFailed = () => {
           </p>
         </div>
         <div className="flex gap-7.5">
-          <Button title="Quay về trang chủ" className="w-50" />
+          <Link href={"/"}>
+            <Button title="Quay về trang chủ" className="w-50" />
+          </Link>
         </div>
       </div>
     </div>

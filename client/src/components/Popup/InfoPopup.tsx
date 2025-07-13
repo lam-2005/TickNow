@@ -48,7 +48,7 @@ const InfoPopup = ({
             />
           </div>
           <div className="flex-1 flex-column justify-between items-start">
-            <div className="space-y-2.5">
+            <div className="space-y-2.5 w-full">
               <div className="flex items-center gap-2.5">
                 <h2>{info.name}</h2>
                 <span className="bg-primary py-0.5 px-2 rounded-[5px] font-semibold italic text-white">

@@ -1,10 +1,14 @@
 // import { getVouchers } from "@/app/(admin)/admin/vouchers/page";
-import { getVouchers } from "@/app/(admin)/admin/vouchers/page";
+
 import reduxInitStateDefault, {
   ReduxInitStateDefaultType,
 } from "@/configs/reduxInitStateDefault";
 import { Voucher } from "@/interfaces/vouchers.interface";
-import { createVoucherService, updateVoucherService } from "@/services/vouchers.service";
+import {
+  createVoucherService,
+  getVouchers,
+  updateVoucherService,
+} from "@/services/vouchers.service";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export type voucherManagementState = ReduxInitStateDefaultType & {
@@ -81,18 +85,32 @@ export const { setInitialVouchers, setFilter } = voucherSlice.actions;
 export const fetchVouchers = createAsyncThunk(
   "voucherManagement/fetchVouchers",
   async (
-    { 
+    {
       page,
       limit,
       code = "",
       timeStart = "",
       timeEnd = "",
       status = "",
-    }: { page: number; limit: number; code?: string, timeStart?: string, timeEnd?: string, status?: string },
+    }: {
+      page: number;
+      limit: number;
+      code?: string;
+      timeStart?: string;
+      timeEnd?: string;
+      status?: string;
+    },
     thunkAPI
   ) => {
     try {
-      const data = await getVouchers(page, limit, code, timeStart, timeEnd, status);
+      const data = await getVouchers(
+        page,
+        limit,
+        code,
+        timeStart,
+        timeEnd,
+        status
+      );
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

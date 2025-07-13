@@ -21,14 +21,7 @@ const Movie = ({
   textColor?: string;
 }) => {
   const router = useRouter();
-  const {
-    trailerPopup,
-    openTrailer,
-    infoPopup,
-    openInfo,
-    closeInfo,
-    closeTrailer,
-  } = usePopup();
+  const { trailerPopup, infoPopup, closeInfo, closeTrailer } = usePopup();
   const slugName = convertSlug(info.name);
 
   return (
@@ -47,7 +40,7 @@ const Movie = ({
       "
         >
           <Link href={`/detail/${slugName}-${info._id}`}>
-            <div className="w-full h-full relative rounded-xl overflow-hidden">
+            <div className="w-full h-full relative rounded-xl overflow-hidden bg-loading">
               <Image
                 fill
                 src={`${env.IMG_API_URL}/movie/${info.image}`}
@@ -60,8 +53,8 @@ const Movie = ({
             </div>
           </Link>
           <div className=" flex absolute -bottom-5 w-full justify-evenly z-10">
-            <ButtonPlay onClick={openTrailer} />
-            <ButtonInfo onClick={openInfo} />
+            <ButtonPlay nameMovie={info.name} trailer={info.trailer} />
+            <ButtonInfo info={info} />
           </div>
         </div>
         <h3

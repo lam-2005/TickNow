@@ -21,7 +21,7 @@ const Seat = ({
         seatName === "" ? seatRemoveStyle : ""
       } 
       select-none bg-white hover:text-background hover:bg-primary
-      disabled:bg-[#aeaeae] disabled:cursor-not-allowed disabled:hover:text-foreground ${className}`}
+      disabled:bg-stone-600 disabled:cursor-not-allowed disabled:hover:text-foreground ${className}`}
     >
       {seatName}
     </button>

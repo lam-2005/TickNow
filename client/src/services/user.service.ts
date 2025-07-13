@@ -46,4 +46,38 @@ const updateUserAPI = async (id: string, req: UserReq) => {
     catchingError(error, "Cập nhật người dùng thất bại!");
   }
 };
-export { getUserList, loginAPI, signupAPI ,addUser, updateUserAPI};
+const userInfoAPI = async (token: string) => {
+  try {
+    const res = await api.post(
+      "/user/info",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return res;
+  } catch (error) {
+    catchingError(error, "Lấy người dùng thất bại!");
+  }
+};
+
+export const getUserData = async (page: number, limit: number) => {
+  const res = await getUserList(`?page=${page}&limit=${limit}`);
+  return {
+    users: res?.data.user,
+    total: res?.data.pagination.total,
+    currentPage: res?.data.pagination.page,
+    totalPages: res?.data.pagination.totalPages,
+  };
+};
+
+export {
+  getUserList,
+  loginAPI,
+  signupAPI,
+  addUser,
+  updateUserAPI,
+  userInfoAPI,
+};

@@ -1,4 +1,3 @@
-
 import api from "@/utils/http";
 import catchingError from "@/utils/catchingError";
 import { DataPostReq } from "@/interfaces/post.interface";
@@ -32,7 +31,7 @@ const addPostAPI = async (req: DataPostReq) => {
 
 const updatePostAPI = async (id: string, req: DataPostReq) => {
   try {
-    const form = new FormData();
+    const form = new FormData(); // dùng để gửi ảnh
     form.append("title", req.title);
     form.append("content", req.content);
     form.append("start_day", req.start_day);
@@ -59,5 +58,20 @@ const deletePostAPI = async (id: string) => {
     catchingError(error, "Xóa bài thất bại!");
   }
 };
-export { getPostList, addPostAPI, deletePostAPI, updatePostAPI };
 
+export const getPost = async (
+  page: number,
+  limit: number,
+  title: string = ""
+) => {
+  const res = await getPostList(`?page=${page}&limit=${limit}&title=${title}`);
+  return {
+    posts: res?.data.post,
+    total: res?.data.pagination.total,
+    currentPage: res?.data.pagination.page,
+    totalPages: res?.data.pagination.totalPages,
+    title: title,
+  };
+};
+
+export { getPostList, addPostAPI, deletePostAPI, updatePostAPI };

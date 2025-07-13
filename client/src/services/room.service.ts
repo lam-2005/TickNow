@@ -26,4 +26,23 @@ const updateRoomAPI = async (id: string, req: DataRoomReq) => {
     catchingError(error, "Cập nhật phòng thất bại!");
   }
 };
+
+export const getRoomData = async (
+  page: number,
+  limit: number,
+  cinema: string = "",
+  status: string = ""
+) => {
+  const res = await getRoom(
+    `?page=${page}&limit=${limit}&cinema=${cinema}&status=${status}`
+  );
+  return {
+    rooms: res?.data.room,
+    total: res?.data.pagination.total,
+    currentPage: res?.data.pagination.page,
+    totalPages: res?.data.pagination.totalPages,
+    cinema: cinema,
+    status: status,
+  };
+};
 export { getRoom, addRoomAPI, updateRoomAPI };

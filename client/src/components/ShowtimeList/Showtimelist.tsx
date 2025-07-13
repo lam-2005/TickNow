@@ -1,44 +1,141 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import ShowtimeCard from "./ShowtimeCard";
 import ShowtimeItem from "./ShowtimeItem";
-import ShowType from "./ShowType";
-import { Showtimes } from "@/interfaces/screening.interface";
+import ShowType, { TimeScreening } from "./ShowType";
+import BackgroundPage from "../BackgroundPage/BackgroundPage";
+import { Cinema } from "@/interfaces/cinema.interface";
+import { MovieType } from "@/interfaces/movie.interface";
+import { getMovieList } from "@/services/movie.service";
+import LoadingSkeleton from "./LoadingSkeleton";
+import FilterShowtime from "./FilterShowtime";
+import { useRouter } from "next/navigation";
+import convertSlug from "@/utils/convertSlug";
+type FilterShowtimeProps = {
+  cinemas: Cinema[];
+  showtimes: { value: string; label: string }[];
+  movies: MovieType[];
+};
+type ShowtimeProps = {
+  listFilter: FilterShowtimeProps;
+};
+const Showtimelist = ({ listFilter }: ShowtimeProps) => {
+  const router = useRouter();
+  const { cinemas, movies, showtimes } = listFilter;
+  const [selectedDate, setSelectedDate] = useState(showtimes[0].value);
+  const [selectedMovie, setSelectedMovie] = useState("");
+  const [selectedCinema, setSelectedCinema] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [dataShowtime, setDataShowtime] = useState<
+    {
+      film: MovieType;
+      cinemas: Cinema[];
+    }[]
+  >([]);
+  const getListShowtime = async (
+    date: string,
+    movie: string,
+    cinema: string
+  ) => {
+    try {
+      setLoading(true);
+      const res = await getMovieList(
+        `/schedue?date=${date}&movie=${movie}&cinema=${cinema}&status=1`
+      );
+      setDataShowtime(res?.data.data);
+    } catch (error) {
+      console.error("Không thể tải suất chiếu: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    getListShowtime(selectedDate, selectedMovie, selectedCinema);
+  }, [selectedDate, selectedCinema, selectedMovie]);
 
-const Showtimelist = ({ data, date }: { data: Showtimes[]; date: string }) => {
   return (
-    <div className="flex-column gap-7.5 mt-20">
-      {data && data.length !== 0 ? (
-        data.map((item) => (
-          <ShowtimeCard
-            key={item.film._id}
-            title="Phim chiếu rạp"
-            data={item.film}
-            date={date}
-          >
-            {item.cinemas.map((cinema) => {
-              const sub = cinema.showtimes.filter(
-                (type) => type.showtype === 1
-              );
-              console.log(cinema.showtimes);
-              const dub = cinema.showtimes.filter(
-                (type) => type.showtype === 2
-              );
+    <>
+      <BackgroundPage image="background_movie.webp" title="Lịch chiếu phim">
+        <div className=" absolute z-20 bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2">
+          <FilterShowtime
+            cinemas={cinemas}
+            movies={movies}
+            showtimes={showtimes}
+            selectedCinema={selectedCinema}
+            selectedDate={selectedDate}
+            selectedMovie={selectedMovie}
+            setSelectedMovie={setSelectedMovie}
+            setSelectedCinema={setSelectedCinema}
+            setSelectedDate={setSelectedDate}
+          />
+        </div>
+      </BackgroundPage>
+      <div className="flex-column gap-7.5 mt-20">
+        {loading ? (
+          <LoadingSkeleton />
+        ) : dataShowtime && dataShowtime.length > 0 ? (
+          dataShowtime.map((item) => {
+            const slugName = convertSlug(item.film.name);
+            return (
+              <ShowtimeCard
+                key={item.film._id}
+                title="Rạp chiếu"
+                data={item.film}
+                date={selectedDate}
+              >
+                {item.cinemas.map((cinema) => {
+                  const sub =
+                    cinema.showtimes?.filter((type) => type.showtype === 1) ||
+                    [];
+                  const dub =
+                    cinema.showtimes?.filter((type) => type.showtype === 2) ||
+                    [];
 
-              return (
-                <ShowtimeItem key={cinema.id} nameCinema={cinema.name}>
-                  {sub.length > 0 && <ShowType type="Phụ đề" data={sub} />}
-                  {dub.length > 0 && <ShowType type="Lồng tiếng" data={dub} />}
-                </ShowtimeItem>
-              );
-            })}
-          </ShowtimeCard>
-        ))
-      ) : (
-        <p className="text-center bg-background-card w-[80%]  p-5 rounded-2xl container ">
-          Không có suất chiếu nào vào ngày này
-        </p>
-      )}
-    </div>
+                  return (
+                    <ShowtimeItem key={cinema.id} nameCinema={cinema.name}>
+                      {sub.length > 0 && (
+                        <ShowType type="Phụ đề">
+                          {sub.map((time) => (
+                            <TimeScreening
+                              key={time.id}
+                              value={time.time}
+                              onClick={() =>
+                                router.push(
+                                  `/detail/${slugName}-${item.film._id}?date=${selectedDate}&location=${cinema.location.id_location}&showtime=${time.id}`
+                                )
+                              }
+                            />
+                          ))}
+                        </ShowType>
+                      )}
+                      {dub.length > 0 && (
+                        <ShowType type="Lồng tiếng">
+                          {dub.map((time) => (
+                            <TimeScreening
+                              key={time.id}
+                              value={time.time}
+                              onClick={() =>
+                                router.push(
+                                  `/detail/${slugName}-${item.film._id}?date=${selectedDate}&location=${cinema.location.id_location}&showtime=${time.id}`
+                                )
+                              }
+                            />
+                          ))}
+                        </ShowType>
+                      )}
+                    </ShowtimeItem>
+                  );
+                })}
+              </ShowtimeCard>
+            );
+          })
+        ) : (
+          <p className="text-center bg-background-card w-[80%]  p-5 rounded-2xl container ">
+            Không có suất chiếu nào vào ngày này
+          </p>
+        )}
+      </div>
+    </>
   );
 };
 export default Showtimelist;

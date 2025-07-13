@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Screening, ScreenReq } from "@/interfaces/screening.interface";
 import * as screenService from "@/services/screening.service";
-import { getScreenData } from "@/app/(admin)/admin/showtime/page";
 import reduxInitStateDefault, {
   ReduxInitStateDefaultType,
 } from "@/configs/reduxInitStateDefault";
 export type RoomManagementState = ReduxInitStateDefaultType & {
+  // dứ copy như này đổi cái kiểu của data, và filter cần lọc gì thì ghi ra và kiểu của nó là string
   data: Screening[];
   total: number;
   currentPage: number;
@@ -22,6 +22,7 @@ export type RoomManagementState = ReduxInitStateDefaultType & {
   };
 };
 const initialState: RoomManagementState = {
+  // dữ liệu khởi tạo làm như này là đc
   data: [],
   total: 0,
   currentPage: 1,
@@ -39,30 +40,13 @@ const initialState: RoomManagementState = {
   ...reduxInitStateDefault,
 };
 
-// export const fetchScreen = createAsyncThunk(
-//   "screen/fetchScreen",
-//   async ({ page, limit }: { page: number; limit: number }, thunkAPI) => {
-//     try {
-//       const res = await screenService.getScreeningList(`?page=${page}&limit=${limit}`);
-//       return {
-//         Screen: res?.data.user,
-//         total: res?.data.pagination.total,
-//         currentPage: res?.data.pagination.page,
-//         totalPages: res?.data.pagination.totalPages,
-//       };
-//     } catch {
-//       return thunkAPI.rejectWithValue("Không thể tải danh sách người dùng.");
-//     }
-//   }
-// );
-
 export const fetchScreen = createAsyncThunk(
   "screen/fetchScreen",
   async (
     {
       page,
       limit,
-      movie = "",
+      movie = "", // các dữ liệu lọc truyền mặc định là ""
       date = "",
       status = "",
       showtype = "",
@@ -71,7 +55,7 @@ export const fetchScreen = createAsyncThunk(
     }: {
       page: number;
       limit: number;
-      movie?: string;
+      movie?: string; // nhó là có ? cho các cái lọc
       date?: string;
       status?: string;
       showtype?: string;
@@ -81,7 +65,8 @@ export const fetchScreen = createAsyncThunk(
     thunkAPI
   ) => {
     try {
-      const res = await getScreenData(
+      const res = await screenService.getScreenData(
+        // gọi tới hàm service dùng để đặt cho redux đã viết bên file service
         page,
         limit,
         movie,
@@ -136,6 +121,7 @@ const screenSlice = createSlice({
       state.errorUpdateData = null;
     },
     setFilter: (state, action) => {
+      // dùng ddeeer lưu giá trị lọc
       state.filter = action.payload;
     },
   },
@@ -152,7 +138,7 @@ const screenSlice = createSlice({
         state.totalPages = action.payload.totalPages;
         state.loading = false;
         state.error = null;
-        state.filter.movie = action.payload.movie;
+        state.filter.movie = action.payload.movie; // luu giá trị lọc nếu có
         state.filter.date = action.payload.date;
         state.filter.status = action.payload.status;
         state.filter.showtype = action.payload.showtype;

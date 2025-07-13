@@ -27,11 +27,11 @@ const getCinema = async (locationId: string) => {
 const CinemaPage = async ({
   searchParams,
 }: {
-  searchParams: { locationId?: string };
+  searchParams: Promise<{ locationId?: string }>;
 }) => {
-  const locationId = searchParams.locationId || "";
+  const { locationId } = await searchParams;
   const locationList = await getLocation();
-  const cinemas = await getCinema(locationId);
+  const cinemas = await getCinema(locationId || "");
 
   return (
     <>

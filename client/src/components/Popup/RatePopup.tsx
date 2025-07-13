@@ -1,11 +1,32 @@
 import React from "react";
 import PopupContainer from "./PopupContainer";
 import Image from "next/image";
-import { env } from "process";
 import Button from "../Button/Button";
-import { FaRegStar } from "react-icons/fa6";
+import Rating from "@mui/material/Rating";
+import Box from "@mui/material/Box";
+import { FaRegStar, FaStar } from "react-icons/fa";
+const labels: { [index: string]: string } = {
+  0: "Chưa đánh giá",
+  0.5: "Rất tệ",
+  1: "Tệ",
+  1.5: "Chán",
+  2: "Tạm",
+  2.5: "Ổn",
+  3: "Hay",
+  3.5: "Rất hay",
+  4: "Tuyệt",
+  4.5: "Rất tuyệt",
+  5: "Siêu phẩm",
+};
+function getLabelText(value: number) {
+  return `${value} Star${value !== 1 ? "s" : ""}, ${labels[value]}`;
+}
 
 const RatePopup = ({ onClose }: { onClose: () => void }) => {
+  const [value, setValue] = React.useState<number | null>(0);
+  const [hover, setHover] = React.useState(-1);
+  console.log(value);
+
   return (
     <PopupContainer onClose={onClose}>
       <div className="w-full space-y-5 ">
@@ -26,35 +47,52 @@ const RatePopup = ({ onClose }: { onClose: () => void }) => {
                 <h2>Đánh giá phim: Âm Dương Lộ</h2>
               </div>
               <div className="flex gap-5">
-                <span className="text-lg">Đánh giá:</span>
+                <span className="text-lg font-bold">Đánh giá:</span>
                 <div className="flex items-center gap-2.5">
-                  <div className="flex gap-2.5">
-                    <span className="text-xl">
-                      <FaRegStar />
-                    </span>
-                    <span className="text-xl">
-                      <FaRegStar />
-                    </span>
-                    <span className="text-xl">
-                      <FaRegStar />
-                    </span>
-                    <span className="text-xl">
-                      <FaRegStar />
-                    </span>
-                    <span className="text-xl">
-                      <FaRegStar />
-                    </span>
-                  </div>
-                  <span className="">0/5</span>
+                  <Box
+                    sx={{
+                      width: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Rating
+                      name="hover-feedback"
+                      value={value}
+                      precision={0.5}
+                      getLabelText={getLabelText}
+                      onChange={(event, newValue) => {
+                        setValue(newValue);
+                      }}
+                      onChangeActive={(event, newHover) => {
+                        setHover(newHover);
+                      }}
+                      icon={
+                        <div className="text-yellow-400 mr-1">
+                          <FaStar className="text-2xl" />
+                        </div>
+                      }
+                      emptyIcon={
+                        <div className="text-yellow-400 mr-1">
+                          <FaRegStar className="text-2xl" />
+                        </div>
+                      }
+                    />
+                    {value !== null && (
+                      <Box sx={{ ml: 2, textWrap: "nowrap" }}>
+                        {labels[hover !== -1 ? hover : value]}
+                      </Box>
+                    )}
+                  </Box>
                 </div>
               </div>
               <div className="flex-column w-full gap-2.5">
-                <span className="text-lg">Bình luận</span>
+                <span className="text-lg font-bold">Bình luận:</span>
                 <textarea
                   name=""
                   id=""
                   placeholder="Nhập bình luận của bạn"
-                  className="border border-gray-300 rounded-lg p-2 w-full h-24 "
+                  className="border border-gray-300 p-2 w-full h-24 "
                 ></textarea>
               </div>
             </div>

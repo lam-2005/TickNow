@@ -1,9 +1,13 @@
-import { getRoomData } from "@/app/(admin)/admin/room/page";
 import reduxInitStateDefault, {
   ReduxInitStateDefaultType,
 } from "@/configs/reduxInitStateDefault";
 import { DataRoomReq, RoomType } from "@/interfaces/room.interface";
-import { addRoomAPI, getRoom, updateRoomAPI } from "@/services/room.service";
+import {
+  addRoomAPI,
+  getRoom,
+  getRoomData,
+  updateRoomAPI,
+} from "@/services/room.service";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export type RoomManagementState = ReduxInitStateDefaultType & {

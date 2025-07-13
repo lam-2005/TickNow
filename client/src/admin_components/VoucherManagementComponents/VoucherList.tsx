@@ -78,14 +78,14 @@ const VoucherList = ({ initData }: { initData: Promise<InitDataType> }) => {
       key: "start_date",
       title: "Ngày bắt đầu",
       render(row) {
-        return <p>{row.start_date.slice(0, 10)}</p>;
+        return <p>{row?.start_date ? row?.start_date.slice(0, 10) : ""}</p>;
       },
     },
     {
-      key: "end_date",
+      key: "end_day",
       title: "Ngày kết thúc",
       render(row) {
-        return <p>{row.end_date.slice(0, 10)}</p>;
+        return <p>{row?.end_day ? row?.end_day.slice(0, 10) : ""}</p>;
       },
     },
     {

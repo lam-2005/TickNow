@@ -1,4 +1,3 @@
-
 export type PostType = {
   _id: string;
   id_user: string;
@@ -12,11 +11,10 @@ export type PostType = {
 };
 
 export type DataPostReq = {
-  image: File | null | string;
+  image: File | null | string; // up ảnh
   start_day: string;
   end_day: string;
   title: string;
   content: string;
   status?: number | string;
 };
-

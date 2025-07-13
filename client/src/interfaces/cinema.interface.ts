@@ -5,7 +5,7 @@ export interface Location {
 
 export interface Cinema {
   _id: string;
-  id: string;
+  id?: string;
   name: string;
   image: string;
   status: number;
@@ -13,6 +13,11 @@ export interface Cinema {
     id_location: string;
     deatil_location: string;
   };
+  showtimes?: {
+    id: string;
+    time: string;
+    showtype: number;
+  }[];
 }
 export interface CinemaDataReq {
   name?: string;

@@ -1,4 +1,3 @@
-import { getCinemas } from "@/app/(admin)/admin/cinema/page";
 import reduxInitStateDefault, {
   ReduxInitStateDefaultType,
 } from "@/configs/reduxInitStateDefault";
@@ -6,6 +5,7 @@ import { Cinema, CinemaCreateOrUpdate } from "@/interfaces/cinema.interface";
 import {
   updateCinema as updateCinemaService,
   createCinema as createCinemaService,
+  getCinemas,
 } from "@/services/cinema.service";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
@@ -88,7 +88,13 @@ export const fetchCinemas = createAsyncThunk(
       locations = "",
       status = "",
       name = "",
-    }: { page: number; limit: number; locations?: string; status?: string, name?: string },
+    }: {
+      page: number;
+      limit: number;
+      locations?: string;
+      status?: string;
+      name?: string;
+    },
     thunkAPI
   ) => {
     try {

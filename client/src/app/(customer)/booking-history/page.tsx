@@ -2,7 +2,6 @@
 import RatePopup from "@/components/Popup/RatePopup";
 import TicketPopup from "@/components/Popup/TicketPopup";
 import usePopup from "@/hooks/usePopup";
-import { MovieType } from "@/interfaces/movie.interface";
 import { useRouter } from "next/navigation";
 
 const Profile = () => {
@@ -18,9 +17,7 @@ const Profile = () => {
   } = usePopup();
   return (
     <div className="container flex-column items-center mt-10 gap-10">
-      {ticketPopup && (
-        <TicketPopup info={{} as MovieType} onClose={closeTicket} />
-      )}
+      {ticketPopup && <TicketPopup onClose={closeTicket} />}
       {ratingPopup && <RatePopup onClose={closeRating} />}
       <h2>Thông tin cá nhân</h2>
       <div className="space-x-10">

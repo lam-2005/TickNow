@@ -28,13 +28,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return(
+  return (
     <html lang="vi">
       <body
         className={`${beVietNamPro.variable} ${oswald.variable} antialiased `}
       >
         <AdminProvider>
-          <ToastContainer theme="colored" />
+          <ToastContainer />
           <Navbar />
 
           <main className="w-full">
@@ -44,5 +44,5 @@ export default function RootLayout({
         </AdminProvider>
       </body>
     </html>
-  ) 
+  );
 }

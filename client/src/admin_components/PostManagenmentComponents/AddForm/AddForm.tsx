@@ -9,7 +9,7 @@ import { addPost, fetchPosts } from "@/utils/redux/slices/postSlice";
 const AddForm = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [formData, setFormData] = useState<DataPostReq>({
-    image: null,
+    image: null, //upfile mặc định là null
     start_day: "",
     end_day: "",
     title: "",

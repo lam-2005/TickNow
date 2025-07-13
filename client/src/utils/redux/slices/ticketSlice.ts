@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Ticket } from "@/interfaces/ticket.interface";
-import { getTicketData } from "@/app/(admin)/admin/booking/page";
+import { getTicketData } from "@/services/ticket.service";
 import reduxInitStateDefault, {
   ReduxInitStateDefaultType,
 } from "@/configs/reduxInitStateDefault";

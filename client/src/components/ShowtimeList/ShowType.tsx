@@ -1,15 +1,14 @@
-"use client";
-import { getTicket, saveTicket } from "@/utils/saveTicket";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-
-const TimeScreening = ({
+export const TimeScreening = ({
   value,
+  onClick,
   className,
 }: {
   value: string;
+  onClick?: () => void;
   className?: string;
 }) => (
   <div
+    onClick={onClick}
     className={`flex-center py-1 px-4 border-2 border-primary w-fit rounded-[5px] text-sm cursor-pointer hover:bg-primary hover:text-white transition-all ${className}`}
   >
     {value}
@@ -17,55 +16,15 @@ const TimeScreening = ({
 );
 const ShowType = ({
   type,
-  data,
+  children,
 }: {
   type: string;
-  data?: {
-    id: string;
-    time: string;
-    showtype: string | number;
-  }[];
+  children: React.ReactNode;
 }) => {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParamsScreening = useSearchParams();
-  const getSearchParamScreening = searchParamsScreening.get("showtime") || "";
-  const getSearchParamDate = searchParamsScreening.get("date") || "";
-  const ticket = getTicket();
-  const handleChangeShowtime = (id: string) => {
-    const searchParams = new URLSearchParams(window.location.search);
-    searchParams.set("showtime", id);
-    router.push(`${pathname}?${searchParams.toString()}`, { scroll: false });
-  };
-  if (ticket) {
-    ticket.screening = {
-      ...ticket.screening,
-      date: getSearchParamDate,
-      id_showtime: data?.find((item) => {
-        return item.id === getSearchParamScreening;
-      }),
-    };
-    saveTicket(ticket);
-  }
-
   return (
     <div className="flex gap-7.5 items-center">
       <p className="w-25">{type}</p>
-      <div className="flex gap-2.5 flex-wrap">
-        {data?.map((item) => (
-          <button key={item.id} onClick={() => handleChangeShowtime(item.id)}>
-            {" "}
-            <TimeScreening
-              value={item.time}
-              className={`${
-                getSearchParamScreening === item.id
-                  ? "bg-primary text-white "
-                  : ""
-              } `}
-            />
-          </button>
-        ))}
-      </div>
+      <div className="flex gap-2.5 flex-wrap">{children}</div>
     </div>
   );
 };

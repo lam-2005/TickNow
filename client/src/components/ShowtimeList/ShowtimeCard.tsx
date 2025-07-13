@@ -19,14 +19,7 @@ const ShowtimeCard = ({
   children: React.ReactNode;
   date: string;
 }) => {
-  const {
-    trailerPopup,
-    openTrailer,
-    infoPopup,
-    openInfo,
-    closeInfo,
-    closeTrailer,
-  } = usePopup();
+  const { trailerPopup, infoPopup, closeInfo, closeTrailer } = usePopup();
   const dateFormat = new Date(date);
 
   const day = dateFormat.getDate().toString().padStart(2, "0");
@@ -55,8 +48,8 @@ const ShowtimeCard = ({
             className="object-cover rounded-[10px] "
           />
           <div className=" flex absolute bottom-0 translate-y-1/2 w-full justify-evenly z-10">
-            <ButtonPlay onClick={openTrailer} />
-            <ButtonInfo onClick={openInfo} />
+            <ButtonPlay nameMovie={data.name} trailer={data.trailer} />
+            <ButtonInfo info={data} />
           </div>
         </div>
         <div className="space-y-[10px] flex-1">

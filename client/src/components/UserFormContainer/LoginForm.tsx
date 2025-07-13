@@ -4,10 +4,8 @@ import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import React, { useState } from "react";
 import useTouched from "@/hooks/useTouched";
 import validateForm from "@/utils/validate";
-import { loginUser } from "@/utils/redux/slices/authSlice";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/utils/redux/store";
 import { toast } from "react-toastify";
+import { useAuth } from "@/hooks/contexts/useAuth";
 const LoginForm = ({
   closeForm,
   setOpenForm,
@@ -26,7 +24,7 @@ const LoginForm = ({
     }
   );
 
-  const dispatch = useDispatch<AppDispatch>();
+  const { setUser } = useAuth();
   const errors = validateForm({
     email: formData.email,
     password: formData.password,
@@ -38,7 +36,16 @@ const LoginForm = ({
       return;
     }
     try {
-      await dispatch(loginUser(formData)).unwrap();
+      const res = await fetch("/api/auth", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const result = await res.json();
+      localStorage.setItem("user", JSON.stringify(result.res.data.user));
+      setUser({ name: result.res.data.user, token: result.res.data.token });
       toast.success("Đăng nhập thành công");
       closeForm();
     } catch (err) {

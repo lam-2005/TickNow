@@ -5,18 +5,8 @@ import UserList from "../../../../admin_components/UserManagementComponents/User
 import AddUserBtn from "@/admin_components/UserManagementComponents/AddForm/ButtonOpenForm";
 import FilterUser from "@/admin_components/UserManagementComponents/FilterUser/FilterUser";
 
-const getUserData = async (page: number, limit: number) => {
-  const res = await userService.getUserList(`?page=${page}&limit=${limit}`);
-  return {
-    users: res?.data.user,
-    total: res?.data.pagination.total,
-    currentPage: res?.data.pagination.page,
-    totalPages: res?.data.pagination.totalPages,
-  };
-};
-
 const UserManagement = async () => {
-  const res = await getUserData(1, 5);
+  const res = await userService.getUserData(1, 5);
   return (
     <div className="card">
       <HeadingCard title="Quản Lý Người Dùng">

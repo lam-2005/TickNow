@@ -13,6 +13,16 @@ export const getMovieList = async (param: string = "") => {
   }
 };
 
+export const getMovieData = async (page: number, limit: number) => {
+  const res = await getMovieList(`?page=${page}&limit=${limit}`);
+  return {
+    movies: res?.data.movie,
+    total: res?.data.pagination.total,
+    currentPage: res?.data.pagination.page,
+    totalPages: res?.data.pagination.totalPages,
+  };
+};
+
 export const createMovie = async (data: MovieReq) => {
   try {
     const form = new FormData();
@@ -21,7 +31,7 @@ export const createMovie = async (data: MovieReq) => {
     form.append("release_date", data.release_date);
     form.append("nation", data.nation);
     form.append("language", data.language.toString());
-    form.append("duration",data.duration.toString());
+    form.append("duration", data.duration.toString());
     form.append("age", data.age);
     form.append("director", data.director);
     form.append("actor", data.actor);
@@ -47,7 +57,6 @@ export const createMovie = async (data: MovieReq) => {
     throw error;
   }
 };
-
 
 export const updateMovie = async (id: string | number, data: MovieReq) => {
   try {

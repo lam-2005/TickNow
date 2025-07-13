@@ -7,6 +7,7 @@ import React, { use, useEffect, useState } from "react";
 import { SampleArrow } from "../CustomSlider/Arrow";
 import Slider from "react-slick";
 import Button from "../Button/Button";
+import { FaStar } from "react-icons/fa";
 
 const SliderList = ({ data }: { data: Promise<MovieType[]> }) => {
   const getMovie = use(data);
@@ -117,7 +118,10 @@ const SliderList = ({ data }: { data: Promise<MovieType[]> }) => {
                   className="w-px h-3.5 bg-subtitle block"
                   aria-hidden="true"
                 ></span>
-                <span className="text-white">{"Đang cập nhật"}</span>
+                <span className="text-white flex items-center">
+                  <strong>{item.star}</strong>/5
+                  <FaStar className="text-xl text-yellow-400 ml-1" />
+                </span>
               </div>
               <p
                 title="Phim"

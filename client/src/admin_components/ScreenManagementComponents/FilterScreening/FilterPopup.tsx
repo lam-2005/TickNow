@@ -41,12 +41,13 @@ const FilterPopup = ({
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const listOptionMovies: MovieOptionsType[] = movies.map((item) => {
+    // dữ liệu select/option
     return {
       label: item.name,
       id: item._id,
     };
   });
-  const [idMovies, setIdMovie] = useState<string[]>([]);
+  const [idMovies, setIdMovie] = useState<string[]>([]); // nếu lọc nhiêu thì [] con 1 thì cứ ""
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [status, setStatus] = useState<number[]>([]);
@@ -54,7 +55,7 @@ const FilterPopup = ({
   const [dateRange, setDateRange] = useState<string[]>([]);
   const [timeStart, setTimeStart] = useState("");
   const [timeEnd, setTimeEnd] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState(""); // kiểm lỗi
 
   useEffect(() => {
     setError("");
@@ -87,15 +88,9 @@ const FilterPopup = ({
     const ids = values.map((item) => item.id);
     setIdMovie(ids);
   };
-  console.log();
 
   const dispatch = useDispatch<AppDispatch>();
   const { filter } = useSelector(dataScreen);
-  // const handleGetIdCinema = (id: string) => {
-  //   setIdCinemas((prev) =>
-  //     prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
-  //   );
-  // };
   const handleGetStatus = (id: number) => {
     setStatus((prev) =>
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]

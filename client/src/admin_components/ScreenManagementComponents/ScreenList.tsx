@@ -18,6 +18,7 @@ import { RoomType } from "@/interfaces/room.interface";
 import Status from "../StatusUI/Status";
 
 type InitDataType = {
+  //type của dữ liệu render lần dâu (khi lgoij hàm service lấy dữ liệu dặt cho redux hãy log ra xem có gì r viết theo
   Screen: Screening[];
   total: number;
   currentPage: number;
@@ -25,27 +26,27 @@ type InitDataType = {
 };
 
 const ScreenList = ({
-  initData,
-  moviesOptions,
-  rooms,
+  initData, // dữ liệu render lần đaau khi mới mở web
+  moviesOptions, //dùng làm select/option khi làm form add (cái này sẽ là dữ liêu  bên trang page fetch api về )
+  rooms, // làm select/option khi làm form add tương tự với cái trên
 }: {
   initData: InitDataType;
   moviesOptions: MovieType[];
   rooms: RoomType[];
 }) => {
-  const dispatch = useDispatch<AppDispatch>();
-  const isFirstLoad = useRef(true);
-  const [openUpdateForm, setOpenUpdateForm] = useState<boolean>(false);
-  const [idScreening, setIdScreening] = useState("");
+  const dispatch = useDispatch<AppDispatch>(); // hàm dis patch actuion của redux
+  const isFirstLoad = useRef(true); // nhận biết khi web load lần đầu để hiển thị dữ liệu render lần đâu
+  const [openUpdateForm, setOpenUpdateForm] = useState<boolean>(false); // mở form update
+  const [idScreening, setIdScreening] = useState(""); // id dùng để update
   const { data, total, currentPage, totalPages, loading, error, filter } =
-    useSelector(dataScreen);
+    useSelector(dataScreen); //tất carselector của redux
 
   const { page, changePage, changeRowPerPage, rowsPerPage } = usePanigation(
     initData.currentPage
-  );
+  ); //khỏi tạo phân trang
 
   useEffect(() => {
-    dispatch(setInitialScreen(initData));
+    dispatch(setInitialScreen(initData)); //dùng để hiển thị dữ liệu render lần đâu
   }, [dispatch, initData]);
   useEffect(() => {
     if (isFirstLoad.current) {
@@ -53,6 +54,7 @@ const ScreenList = ({
       return;
     }
     if (page <= totalPages) {
+      // nếu trang hiện tại bé tồng số trang thì gọi action fectch dữ liêu bên redux và limit, page là rowPerPage, page từ hook phân trang ở dòng 43 và các giá trị còn lại là các filter trong selectors
       dispatch(
         fetchScreen({
           limit: rowsPerPage,
@@ -66,6 +68,7 @@ const ScreenList = ({
         })
       );
     } else {
+      // nếu ngược điều kiện trên thì page sẽ là totalPages
       dispatch(
         fetchScreen({
           limit: rowsPerPage,
@@ -91,19 +94,6 @@ const ScreenList = ({
     filter.timeEnd,
     filter.timeStart,
   ]);
-
-  // const handleUpdate = async (id: string, data: ScreenReq) => {
-  //   try {
-  //     const sure = confirm("Bạn có muốn cập nhật suất chiếu này?");
-  //     if (!sure) return;
-  //     await dispatch(updateScreen({ id, data })).unwrap();
-  //     toast.success("Cập nhật suất chiếu thành công!");
-  //     dispatch(fetchScreen({ page: currentPage, limit: rowsPerPage }));
-  //   } catch (err) {
-  //     console.log("Cập nhật suất chiếu thất bại:", err);
-  //     toast.error("Cập nhật suất chiếu thất bại!");
-  //   }
-  // };
 
   const col: Column<Screening>[] = [
     {
@@ -146,14 +136,9 @@ const ScreenList = ({
       title: "Trạng Thái",
       render: (row: Screening) => (
         <Status
-          title={row.status === 2 ? "Đang hoạt động" : "Ngưng hoạt Động"}
-          color={row.status === 2 ? "success" : "error"}
+          title={row.status === 2 ? "Đang hoạt động" : "Ngưng hoạt Động"} // tên của status
+          color={row.status === 2 ? "success" : "error"} // màu của status
         />
-        // <ActionButton
-        //   label={row.status ? "Hoạt Động" : "Ngừng Hoạt Động"}
-        //   bgColor={row.status ? "success" : "warning"}
-        //   onClick={() => null}
-        // />
       ),
     },
     {
@@ -164,7 +149,7 @@ const ScreenList = ({
             <ActionButton
               label="Sửa"
               bgColor="warning"
-              onClick={() => handleOpenUpdate(row._id)}
+              onClick={() => handleOpenUpdate(row._id)} // truyền hàm đã viết vào và truyền cái id của cái hàng đó
             />
           </div>
         );
@@ -172,20 +157,19 @@ const ScreenList = ({
     },
   ];
   const handleOpenUpdate = async (id: string) => {
+    // hàm xử lí lấy id để update và mở form update
     setIdScreening(id);
     setOpenUpdateForm(true);
   };
-  if (loading) return <p className="text-center">Đang tải dữ liệu...</p>;
-  if (error) return <p className="text-red-500 text-center">{error}</p>;
-  console.log(idScreening);
+  if (loading) return <p className="text-center">Đang tải dữ liệu...</p>; // nếu loading là true thì loading
+  if (error) return <p className="text-red-500 text-center">{error}</p>; // có lỗi thì báo
 
   return (
     <>
-      {/* <Table column={col} data={Screen.map((u) => ({ ...u, id: u._id }))} currentPage={currentPage} rowsPerPage={rowsPerPage} />
-       */}
+      {/* data chính là cái data của selector truyền thảng vào props data cảu cái Table này là đc k cần phải chuyển đổi tùm lum */}
       <Table column={col} data={data} />
 
-      {total >= rowsPerPage && (
+      {total >= rowsPerPage && ( // nếu tổng số item trong data >= số limit mới có phần trang ví dụ tổng item là 4, limit là 5 thì k hiện còn lớn hon là hiện
         <Pagination
           currentPage={currentPage}
           total={total}
@@ -195,14 +179,15 @@ const ScreenList = ({
           setRowPerPage={changeRowPerPage}
         />
       )}
-      {openUpdateForm && idScreening && (
-        <UpdateFormContainer
-          id={idScreening}
-          movies={moviesOptions}
-          rooms={rooms}
-          closeForm={() => setOpenUpdateForm(false)}
-        />
-      )}
+      {openUpdateForm &&
+        idScreening && ( //nếu openUpdateForm=true và idScreening tồn tại thì mở cái update
+          <UpdateFormContainer
+            id={idScreening} // truyền id nhận đc vào
+            movies={moviesOptions} //dữ liệu để làm select/option
+            rooms={rooms} //dữ liệu để làm select/option
+            closeForm={() => setOpenUpdateForm(false)} // dùng để đóng form
+          />
+        )}
     </>
   );
 };

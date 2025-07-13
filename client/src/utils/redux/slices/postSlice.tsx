@@ -1,4 +1,3 @@
-import { getPost } from "@/app/(admin)/admin/post/page";
 import reduxInitStateDefault, {
   ReduxInitStateDefaultType,
 } from "@/configs/reduxInitStateDefault";
@@ -6,6 +5,7 @@ import { DataPostReq, PostType } from "@/interfaces/post.interface";
 import {
   addPostAPI,
   deletePostAPI,
+  getPost,
   updatePostAPI,
 } from "@/services/post.service";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";

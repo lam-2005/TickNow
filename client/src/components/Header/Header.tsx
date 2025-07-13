@@ -12,19 +12,27 @@ import MenuDropDown from "./MenuDropDown";
 import UserFormContainer from "../UserFormContainer/UserFormContainer";
 import SearchPopup from "../Popup/SearchPopup";
 import { useRouter } from "next/navigation";
-import { logout } from "@/utils/redux/slices/authSlice";
-import { useDispatch, useSelector } from "react-redux";
-import authSelector from "@/utils/redux/selectors/selectorAuth";
+import { toast } from "react-toastify";
+import { useAuth } from "@/hooks/contexts/useAuth";
+import { privateRoute } from "@/middleware";
 
 const Header = () => {
   const pathname = usePathname();
   const [openMenuDropDown, setOpenMenuDropDown] = useState(false);
   const [openUserFormContainer, setOpenUserFormContainer] = useState(false);
   const router = useRouter();
-  const dispatch = useDispatch();
-  const { user, token } = useSelector(authSelector);
-  const handleLogout = () => {
-    dispatch(logout());
+  const { setUser, user } = useAuth();
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/logout", { method: "POST" });
+      localStorage.removeItem("user");
+      if (privateRoute.user.some((url) => pathname.startsWith(url)))
+        router.push("/");
+      setUser(null);
+    } catch (error) {
+      toast.error("Có lỗi khi đăng xuất");
+      console.error(error);
+    }
   };
 
   const isTransparentHeader =
@@ -36,7 +44,7 @@ const Header = () => {
 
   const textColorClass = isTransparentHeader ? "text-white" : "text-foreground";
 
-  const searchFormClass = `group w-full max-w-2xs py-2 flex items-center bg-transparent not-dark:shadow-lg shadow-foreground/50 focus-within:shadow-foreground/90  z-1000
+  const searchFormClass = `group w-full max-w-2xs py-2 flex items-center bg-transparent shadow-foreground/50 focus-within:shadow-foreground/90  z-1000
     border-1 dark:border-[rgba(255,255,255,.5)] backdrop-blur-[1.75px] transition-all duration-500 relative
     ${
       isTransparentHeader
@@ -98,7 +106,7 @@ const Header = () => {
 
         <div className="flex gap-5 max-sm:gap-3 items-center">
           <SearchPopup className={searchFormClass} />
-          {token ? (
+          {user ? (
             <div className="relative group">
               <div className="flex-column items-center gap-1">
                 <div className="flex-center">
@@ -109,7 +117,7 @@ const Header = () => {
                     isTransparentHeader ? "text-white " : "text-foreground"
                   } text-nowrap line-clamp-1 font-bold text-sm`}
                 >
-                  {user}
+                  {user?.name}
                 </div>
               </div>
               <div

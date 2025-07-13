@@ -3,19 +3,8 @@ import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import * as ticketService from "@/services/ticket.service";
 import TicketList from "@/admin_components/TicketManagementComponents/TicketList";
 
-export const getTicketData = async (page: number, limit: number) => {
-  const res = await ticketService.getTicketList(`?page=${page}&limit=${limit}`);
-  return {
-    ticket: res?.data.ticket,
-    total: res?.data.pagination.total,
-    currentPage: res?.data.pagination.page,
-    totalPages: res?.data.pagination.totalPages,
-  };
-};
-
 const TicketManagement = async () => {
-  const res = await getTicketData(1, 5);
-  console.log(res);
+  const res = await ticketService.getTicketData(1, 5);
 
   return (
     <div className="card">

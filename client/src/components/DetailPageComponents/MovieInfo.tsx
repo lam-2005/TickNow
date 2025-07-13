@@ -1,38 +1,31 @@
 "use client";
 import { ButtonPlay } from "@/components/Button/ButtonOfItemMovie";
-import TrailerPopup from "@/components/Popup/TrailerPopup";
 import env from "@/configs/environment";
-import usePopup from "@/hooks/usePopup";
 import { MovieType } from "@/interfaces/movie.interface";
-import { saveTicket } from "@/utils/saveTicket";
+import { saveTicket, TicketTypeLocalStorage } from "@/utils/saveTicket";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
+import { FaStar } from "react-icons/fa";
 
 const MovieInfo = ({ movie }: { movie: MovieType }) => {
-  const ticket = {
+  const ticket: TicketTypeLocalStorage = {
     movie: movie,
-    cinema: {},
-    screening: {},
+    screening: null,
     seats: [],
     price: 0,
+    total: 0,
   };
-  saveTicket(ticket);
-  const { trailerPopup, openTrailer, closeTrailer } = usePopup();
+  useEffect(() => {
+    saveTicket(ticket);
+  }, []);
   const date = new Date(movie.release_date);
   const formatDate = !isNaN(date.getTime())
     ? date.toLocaleDateString("vi-VN")
     : "Đang Cập Nhật";
   return (
     <>
-      {trailerPopup && (
-        <TrailerPopup
-          name={movie.name}
-          url={movie.trailer}
-          onClose={closeTrailer}
-        />
-      )}
       <div className="relative w-screen max-h-[500px] h-full aspect-video text-white">
-        <div className="bg-amber-300 w-full h-full brightness-50 relative">
+        <div className="w-full h-full brightness-50 relative ">
           {" "}
           <Image
             src={`${env.IMG_API_URL}/banner/${movie.banner}`}
@@ -40,8 +33,7 @@ const MovieInfo = ({ movie }: { movie: MovieType }) => {
             fill
             priority
             sizes="1280px"
-            className="object-cover
-                "
+            className="object-cover"
           />
           <div
             //   ${
@@ -55,18 +47,19 @@ const MovieInfo = ({ movie }: { movie: MovieType }) => {
           ></div>
         </div>
         <div className="container flex gap-[25px] w-full absolute bottom-0 left-1/2 -translate-x-1/2">
-          <div className="relative max-w-[204px] max-h-[300px] aspect-[2/3] w-full bg-red-400 rounded-[15px]">
+          <div className="relative max-w-[204px] max-h-[300px] aspect-[2/3] w-full">
             <Image
               src={`${env.IMG_API_URL}/movie/${movie.image}`}
               alt={movie.name}
               fill
               priority
               sizes="1280px"
-              className="object-cover
+              className="object-cover rounded-xl 
                 "
             />
             <ButtonPlay
-              onClick={openTrailer}
+              nameMovie={movie.name}
+              trailer={movie.trailer}
               className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2"
             />
           </div>
@@ -79,7 +72,14 @@ const MovieInfo = ({ movie }: { movie: MovieType }) => {
             </div>
 
             <div className="flex gap-5 [&_div]:not-first:before:w-px [&_div]:not-first:before:h-[12px] [&_div]:not-first:before:bg-white [&_div]:not-first:before:absolute [&_div]:not-first:relative [&_div]:not-first:before:-left-2.5 [&_div]:not-first:before:top-1/2 [&_div]:not-first:before:-translate-y-1/2">
-              <div>0.0/10</div>
+              <div className="flex items-center gap-1">
+                <span>
+                  <strong>{movie.star}</strong>/5
+                </span>
+                <span className="text-xl text-yellow-400">
+                  <FaStar />
+                </span>
+              </div>
               <div>{movie.duration} phút</div>
               <div>
                 {movie.genre

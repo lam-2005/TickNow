@@ -30,16 +30,17 @@ const InputGroup = ({
         <label className="block mb-1 text-sm font-medium">
           Chọn phim <span className="text-red-500">*</span>
         </label>
+        {/* đây là select option chọn nhiều cứ copy rồi làm theo là đc */}
         <Autocomplete
           disablePortal
-          options={listOptionMovies}
+          options={listOptionMovies} // dữ liệu select/option đã được thay đỏi từ cái movie mình fectch về ở pagetsx
           size="small"
           className="min-w-[300px]"
-          getOptionLabel={(option) => option.label}
-          isOptionEqualToValue={(option, value) => option.id === value.id}
+          getOptionLabel={(option) => option.label} //dùng để hiển thị ui (nhớ lấy đúng với dữ liệu MovieOptionsType )
+          isOptionEqualToValue={(option, value) => option.id === value.id} //dùng để lấy giá trị để gửi đi (nhớ lấy đúng với dữ liệu MovieOptionsType )
           value={
             listOptionMovies.find((c) => c.id === formData.id_movie) || null
-          }
+          } // cứ làm theo này là đc k biết thì nt hỏi
           onChange={(event, newValue) => {
             setFormData({
               ...formData,
@@ -111,6 +112,7 @@ const InputGroup = ({
           Chọn rạp <span className="text-red-500">*</span>
         </label>
         <select
+          // select/option chọn 1
           value={selectedCinemaId}
           onChange={(e) => {
             setSelectedCinemaId(e.target.value);

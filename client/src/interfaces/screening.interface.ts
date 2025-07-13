@@ -12,6 +12,7 @@
 import { MovieType } from "./movie.interface";
 import { RoomType } from "./room.interface";
 
+/// Dữ liệu data lấy về
 export interface Screening {
   _id: string; // MongoDB ObjectId dạng string
   id_room: string;
@@ -20,7 +21,7 @@ export interface Screening {
   time_end: string;
   date: string; // Để dễ xử lý ngày, dùng string thay vì Date object
   status: number;
-  showtype: string;
+  showtype: string | number;
   roomCode: string | number;
   // Tuỳ chọn nếu có thể mở rộng
   movieName?: string; // Sử dụng khi bạn join từ collection movie
@@ -32,6 +33,11 @@ export type DetailScreening = {
   id_cinema: string;
   status: number;
   cinema: string;
+  location?: {
+    id_location?: string;
+    deatil_location?: string;
+    location?: string;
+  };
   diagram: {
     row: number;
     column: number;
@@ -64,6 +70,11 @@ export type Showtimes = {
   cinemas: {
     id: string;
     name: string;
+    location: {
+      id_location: string;
+      deatil_location: string;
+      location: string;
+    };
     showtimes: {
       id: string;
       time: string;
@@ -72,6 +83,7 @@ export type Showtimes = {
   }[];
 };
 
+//Dữ liệu gửi đi
 export type ScreenReq = {
   id_room: string;
   id_cinema?: string;

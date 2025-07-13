@@ -27,7 +27,7 @@ const Booking = ({
         />
       </div>
       <div className="flex-center gap-7.5">
-        <SeatNote color="bg-[#a1a1a1]" content="Đã đặt" />
+        <SeatNote color="bg-stone-600" content="Đã được đặt" />
         <SeatNote color="bg-primary" content="Ghế bạn chọn" />
         <SeatNote color="bg-white" content="Ghế thường" />
       </div>
