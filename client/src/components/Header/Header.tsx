@@ -24,7 +24,11 @@ const Header = () => {
   const { setUser, user } = useAuth();
   const handleLogout = async () => {
     try {
-      await fetch("/api/logout", { method: "POST" });
+      await fetch("/api/logout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "user" }),
+      });
       localStorage.removeItem("user");
       if (privateRoute.user.some((url) => pathname.startsWith(url)))
         router.push("/");

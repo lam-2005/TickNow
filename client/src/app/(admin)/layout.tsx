@@ -5,6 +5,7 @@ import Navbar from "@/admin_components/Navbar/Navbar";
 import Header from "@/admin_components/Header/Header";
 import AdminProvider from "@/hooks/contexts/AdminProvider";
 import { ToastContainer } from "react-toastify";
+import { cookies } from "next/headers";
 
 const beVietNamPro = Be_Vietnam_Pro({
   weight: ["300", "700"],
@@ -23,17 +24,19 @@ export const metadata: Metadata = {
   description: "Website đặt vé xem phim",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = cookies();
+  const tokenAdmin = (await cookieStore).get("tokenAdmin")?.value;
   return (
     <html lang="vi">
       <body
         className={`${beVietNamPro.variable} ${oswald.variable} antialiased `}
       >
-        <AdminProvider>
+        <AdminProvider initAdminToken={tokenAdmin}>
           <ToastContainer />
           <Navbar />
 

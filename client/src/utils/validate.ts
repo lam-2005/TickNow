@@ -5,6 +5,7 @@ export type FieldsType = {
   phone?: string;
   password?: string;
   confirmPassword?: string;
+  newPassword?: string;
 };
 export type RegisterRequestType = Omit<FieldsType, "confirmPassword">;
 type ErrorsType = {
@@ -42,7 +43,11 @@ const validateForm = (values: FieldsType): ErrorsType => {
   } else if (values.password.length < 6) {
     errors.password = "Mật khẩu phải có ít nhất 6 ký tự";
   }
-
+  if (!values.newPassword) {
+    errors.newPassword = "Mật khẩu là bắt buộc";
+  } else if (values.newPassword.length < 6) {
+    errors.newPassword = "Mật khẩu phải có ít nhất 6 ký tự";
+  }
   if (!values.confirmPassword) {
     errors.confirmPassword = "Vui lòng xác nhận mật khẩu";
   } else if (values.password !== values.confirmPassword) {

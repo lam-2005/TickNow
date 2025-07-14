@@ -18,7 +18,14 @@ const Navbar = () => {
             href={"/admin"}
             className="h-[80px] sticky top-0 z-1000 flex-center py-[15px]  border-b-1 border-border-navbar"
           >
-            <Image src={"/logo/logo.webp"} alt="" width={150} height={50} />
+            <Image
+              src={"/logo/logo.webp"}
+              alt="TickNow"
+              width={150}
+              height={50}
+              style={{ height: "50px", width: "150px", objectFit: "contain" }}
+              priority
+            />
           </Link>
           <div className="flex-column p-2.5 gap-2.5 overflow-y-auto flex-1">
             {links.map((l: linkInterface) => (

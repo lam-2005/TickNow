@@ -19,6 +19,6 @@ const catchingError = (error: unknown, errorMessageDefault?: string) => {
     // Các lỗi JS runtime khác
     errorMessage = error.message;
   }
-  throw errorMessage;
+  throw new Error(errorMessage);
 };
 export default catchingError;

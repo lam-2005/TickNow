@@ -6,6 +6,7 @@ interface TouchedType {
   password?: boolean;
   confirmPassword?: boolean;
   phone?: boolean;
+  newPassword?: boolean;
 }
 const useTouched = () => {
   const [touched, setTouched] = useState<TouchedType>({
@@ -15,11 +16,14 @@ const useTouched = () => {
     password: false,
     confirmPassword: false,
     phone: false,
+    newPassword: false,
   });
   const touchedEmail = () => setTouched({ ...touched, email: true });
   const touchedFullName = () => setTouched({ ...touched, name: true });
   const touchedDateOfBirth = () => setTouched({ ...touched, year: true });
   const touchedPassword = () => setTouched({ ...touched, password: true });
+  const touchedNewPassword = () =>
+    setTouched({ ...touched, newPassword: true });
   const touchedConfirmPassword = () =>
     setTouched({ ...touched, confirmPassword: true });
   const touchedPhone = () => setTouched({ ...touched, phone: true });
@@ -31,6 +35,7 @@ const useTouched = () => {
     touchedPassword,
     touchedConfirmPassword,
     touchedPhone,
+    touchedNewPassword,
   };
 };
 

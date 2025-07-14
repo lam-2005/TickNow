@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro, Oswald } from "next/font/google";
 import "@/app/(admin)/globals.css";
+import { cookies } from "next/headers";
+import AdminLoginProvider from "@/hooks/contexts/AdminLoginProvider";
+import { ToastContainer } from "react-toastify";
 
 const beVietNamPro = Be_Vietnam_Pro({
   weight: ["300", "700"],
@@ -19,17 +22,22 @@ export const metadata: Metadata = {
   description: "Website đặt vé xem phim",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = cookies();
+  const tokenAdmin = (await cookieStore).get("tokenAdmin")?.value;
   return (
     <html lang="vi">
       <body
         className={`${beVietNamPro.variable} ${oswald.variable} antialiased `}
       >
-        <main className="w-full flex-center">{children}</main>
+        <AdminLoginProvider initAdminToken={tokenAdmin}>
+          <ToastContainer />
+          <main className="w-full flex-center">{children}</main>
+        </AdminLoginProvider>
       </body>
     </html>
   );

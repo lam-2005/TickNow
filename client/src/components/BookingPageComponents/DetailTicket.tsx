@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Button from "../Button/Button";
 import { useRouter } from "next/navigation";
 import { getTicket, TicketTypeLocalStorage } from "@/utils/saveTicket";
+import { toast } from "react-toastify";
 
 const DetailTicket = () => {
   const router = useRouter();
@@ -42,6 +43,13 @@ const DetailTicket = () => {
     return `${dayOfWeek}, ${dd}/${mm}/${yy}`;
   };
 
+  const handleRedirectCheckoutPage = () => {
+    if (ticket?.seats.length === 0) {
+      toast.warning("Vui lòng chọn ghế để tiếp tục");
+      return;
+    }
+    router.push("/checkout");
+  };
   // if (!ticket) return null;
   return (
     <div className="bg-background-card p-5 w-full rounded-[10px] flex justify-between mt-5">
@@ -80,7 +88,7 @@ const DetailTicket = () => {
           </div>
         </div>
         <div className="flex gap-5 ">
-          <Button title="Thanh toán" onClick={() => router.push("/checkout")} />
+          <Button title="Thanh toán" onClick={handleRedirectCheckoutPage} />
         </div>
       </div>
     </div>
