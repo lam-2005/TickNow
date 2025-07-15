@@ -2,6 +2,7 @@
 import Button from "@/components/Button/Button";
 import { useAuth } from "@/hooks/contexts/useAuth";
 import { Voucher } from "@/interfaces/vouchers.interface";
+import { checkoutTicket } from "@/services/ticket.service";
 import { getVoucherList } from "@/services/vouchers.service";
 import {
   getTicket,
@@ -97,17 +98,23 @@ const Payment = () => {
     }
   }, [totalPrice]);
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     if (!user?.token) {
       toast.warning("Vui lòng đăng nhập để thanh toán");
       return;
     }
-    console.log({
-      price: ticket?.total,
-      screening: ticket?.screening?.screeningInfo._id,
-      voucher: idVoucher,
-      seat: ticket?.seats,
-    });
+    try {
+      const res = await checkoutTicket(user.token, {
+        price: ticket?.total || "",
+        screening: ticket?.screening?.screeningInfo._id || "",
+        voucher: idVoucher,
+        seat: ticket?.seats || [],
+      });
+
+      if (res) router.push(res?.payUrl);
+    } catch (error) {
+      toast.error(`Thanh toán không thành công: ${error}`);
+    }
   };
 
   return (

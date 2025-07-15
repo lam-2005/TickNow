@@ -1,8 +1,9 @@
+import catchingError from "@/utils/catchingError";
 import api from "@/utils/http";
 const getTicketList = async (param: string = "") => {
   try {
-    const res = api.get(`/ticket${param}`);
-    return await res;
+    const res = await api.get(`/ticket${param}`);
+    return res;
   } catch (error) {
     console.log("Error fetching data:", error);
   }
@@ -16,4 +17,39 @@ export const getTicketData = async (page: number, limit: number) => {
     totalPages: res?.data.pagination.totalPages,
   };
 };
-export { getTicketList };
+interface CheckoutResponse {
+  payUrl: string;
+  // Add other fields if the API returns more data
+}
+export const checkoutTicket = async (
+  token: string,
+  data: {
+    price: number | string;
+    screening: string;
+    voucher?: string;
+    seat: string[];
+  }
+): Promise<CheckoutResponse | undefined> => {
+  try {
+    return await api.post("payos/create-payment-link", data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (error) {
+    catchingError(error, "Thanh toán thất bại!");
+  }
+};
+const getTicketUserList = async (token: string) => {
+  try {
+    const res = await api.get("/ticket", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res;
+  } catch (error) {
+    catchingError(error, "Thanh toán thất bại!");
+  }
+};
+export { getTicketList, getTicketUserList };

@@ -83,7 +83,7 @@ const FilterPopup = ({
 
   return (
     <PopupContainer title="Bộ lọc" closeForm={closeForm}>
-      <div className="p-5 space-y-5">
+      <div className="p-5 space-y-5 overflow-x-hidden overflow-y-auto">
         <div className="flex flex-col gap-4">
           <h1 className="text-xl font-bold">Chọn thể loại:</h1>
           <div className="flex flex-wrap gap-4">
@@ -109,7 +109,11 @@ const FilterPopup = ({
               <FilterItem
                 key={stt}
                 title={
-                  stt === 1 ? "Đang chiếu" : stt === 2 ? "Sắp chiếu" : "Ngưng chiếu"
+                  stt === 1
+                    ? "Đang chiếu"
+                    : stt === 2
+                    ? "Sắp chiếu"
+                    : "Ngưng chiếu"
                 }
                 onClick={() => toggleStatus(stt)}
                 className={

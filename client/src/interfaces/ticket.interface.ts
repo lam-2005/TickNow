@@ -47,3 +47,19 @@ export type DataTicketReq = {
     seatSelected: string[];
   };
 };
+
+export type DataTicketUserList = {
+  _id: string;
+  code: number | string;
+  id_user: string;
+  id_screening: string;
+  seat: string[];
+  id_voucher: string;
+  price: number;
+  type: number;
+  autoDeleteAt: string;
+  createdAt: string;
+  updatedAt: string;
+  userName: string;
+  movie: string;
+};

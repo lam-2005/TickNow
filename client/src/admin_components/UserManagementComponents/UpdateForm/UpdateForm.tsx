@@ -10,7 +10,12 @@ interface Props {
   onlyEditStatusAndRole?: boolean;
 }
 
-const UpdateForm = ({ data, onSubmit, onCancel, onlyEditStatusAndRole }: Props) => {
+const UpdateForm = ({
+  data,
+  onSubmit,
+  onCancel,
+  onlyEditStatusAndRole,
+}: Props) => {
   const [formData, setFormData] = useState<UserReq>({
     name: data.name,
     email: data.email,
@@ -29,6 +34,7 @@ const UpdateForm = ({ data, onSubmit, onCancel, onlyEditStatusAndRole }: Props) 
       role: formData.role,
     };
     onSubmit(payload as UserReq);
+    onCancel();
   };
 
   return (
