@@ -12,6 +12,7 @@ export type DataEditProfileReq = {
   password?: string;
   newPassword?: string;
   confirmPassword?: string;
+  retypePassword?: string;
 };
 const ProfileInfo = ({ info }: { info: UserType }) => {
   const date = new Date(info?.year);

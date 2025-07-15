@@ -3440,5 +3440,584 @@
       "daSuDung": 16,
       "trangThai": "Kích hoạt"
     }
-  ]
+  ],
+  "data": {
+    "ticket": [
+      {
+        "_id": "6874ab2b457e7f7732cfbdd6",
+        "code": 1234568326,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J47"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 2000,
+        "type": 2,
+        "createdAt": "2025-07-14T07:00:59.619Z",
+        "updatedAt": "2025-07-14T07:01:35.044Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "6874ab02457e7f7732cfbdc6",
+        "code": 1234568324,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J46"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 2000,
+        "type": 1,
+        "autoDeleteAt": "2025-07-14T08:00:17.478Z",
+        "createdAt": "2025-07-14T07:00:18.019Z",
+        "updatedAt": "2025-07-14T07:00:18.019Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "6874aa9ecbccd80795ee275e",
+        "code": 1234568324,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J45"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 2000,
+        "type": 1,
+        "createdAt": "2025-07-14T06:58:38.869Z",
+        "updatedAt": "2025-07-14T06:58:59.370Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "6874aa14460dd39606322cc9",
+        "code": 1234568322,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J44"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 2000,
+        "type": 1,
+        "createdAt": "2025-07-14T06:56:20.052Z",
+        "updatedAt": "2025-07-14T06:57:11.165Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "6874a87ef3f5608d1cc62b87",
+        "code": 1234568321,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J43"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 2000,
+        "type": 2,
+        "createdAt": "2025-07-14T06:49:34.317Z",
+        "updatedAt": "2025-07-14T06:56:16.039Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "6873d7393f343a5176fc554f",
+        "code": 123456832,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J42"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 2000,
+        "type": 2,
+        "createdAt": "2025-07-13T15:56:41.300Z",
+        "updatedAt": "2025-07-13T15:56:41.300Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "6873d3ab3f343a5176fc551a",
+        "code": 123456828,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J41"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 2000,
+        "type": 2,
+        "createdAt": "2025-07-13T15:41:31.939Z",
+        "updatedAt": "2025-07-13T15:41:31.939Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "6870bf53eeab58b924108075",
+        "code": 123456813,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J32"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 2000,
+        "type": 2,
+        "createdAt": "2025-07-11T07:37:55.519Z",
+        "updatedAt": "2025-07-11T07:37:55.519Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "6870be68fdde578335938638",
+        "code": 123456812,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J30"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 2000,
+        "type": 1,
+        "createdAt": "2025-07-11T07:34:00.690Z",
+        "updatedAt": "2025-07-11T07:34:00.690Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "6870bdd0f17124dba4d7e6bf",
+        "code": 1234568111212512,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J29"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 2000,
+        "type": 1,
+        "createdAt": "2025-07-11T07:31:28.988Z",
+        "updatedAt": "2025-07-11T07:31:28.988Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "6870bc11cf70e0f30b4a1ea9",
+        "code": 123456811121251,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J28"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 2000,
+        "type": 1,
+        "createdAt": "2025-07-11T07:24:01.386Z",
+        "updatedAt": "2025-07-11T07:24:01.386Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "6870bad2fb80cdc21c793bb2",
+        "code": 12345681112125,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J27"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 22000,
+        "type": 1,
+        "createdAt": "2025-07-11T07:18:42.869Z",
+        "updatedAt": "2025-07-11T07:18:42.869Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "6870b9ab4842ce1703f38caf",
+        "code": 12345681112124,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J26"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 22000,
+        "type": 1,
+        "createdAt": "2025-07-11T07:13:47.861Z",
+        "updatedAt": "2025-07-11T07:13:47.861Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "6870b778e4f625b4c18fd916",
+        "code": 123456811121212,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J25"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 2000,
+        "type": 1,
+        "createdAt": "2025-07-11T07:04:24.400Z",
+        "updatedAt": "2025-07-11T07:04:24.400Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "6870967e80f1d545e79c481e",
+        "code": 12345681112121,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J24"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 2000,
+        "type": 1,
+        "createdAt": "2025-07-11T04:43:42.663Z",
+        "updatedAt": "2025-07-11T04:43:42.663Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "68700963b31295536f31941b",
+        "code": 12345681112112,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J23"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 2000,
+        "type": 1,
+        "createdAt": "2025-07-10T18:41:39.845Z",
+        "updatedAt": "2025-07-10T18:41:39.845Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "687008a7855a4c50fa0a9dfc",
+        "code": 123456811121,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J22"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 2000,
+        "type": 1,
+        "createdAt": "2025-07-10T18:38:31.486Z",
+        "updatedAt": "2025-07-10T18:38:31.486Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "687007517516c531fd13ce1b",
+        "code": 12345681112,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J21"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 2000,
+        "type": 1,
+        "createdAt": "2025-07-10T18:32:49.145Z",
+        "updatedAt": "2025-07-10T18:32:49.145Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "687006d8af8723e546631e4e",
+        "code": 1234568111,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J20"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 2000,
+        "type": 1,
+        "createdAt": "2025-07-10T18:30:48.340Z",
+        "updatedAt": "2025-07-10T18:30:48.340Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "6870067843e311a0a8f0cb92",
+        "code": 123456811,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J19"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 2000,
+        "type": 1,
+        "createdAt": "2025-07-10T18:29:12.390Z",
+        "updatedAt": "2025-07-10T18:29:12.390Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "687005e520160c0966f92c3a",
+        "code": 1234568,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J18"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 2000,
+        "type": 1,
+        "createdAt": "2025-07-10T18:26:45.158Z",
+        "updatedAt": "2025-07-10T18:26:45.158Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "6870053170a9cfd6e6554f6b",
+        "code": 123456,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J15"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 2000,
+        "type": 1,
+        "createdAt": "2025-07-10T18:23:45.834Z",
+        "updatedAt": "2025-07-10T18:23:45.834Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "686f8eb7dfe155056ad3d131",
+        "code": 1234567921,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J1"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 2000,
+        "type": 1,
+        "createdAt": "2025-07-10T09:58:15.604Z",
+        "updatedAt": "2025-07-10T09:58:15.604Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "686f1de5450ab46c1199f7bd",
+        "code": 123456791,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J4"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 100000,
+        "type": 2,
+        "createdAt": "2025-07-10T01:56:53.693Z",
+        "updatedAt": "2025-07-10T01:56:53.693Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "686e74f943fa43ddaf5e6832",
+        "code": 12345679,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J5"],
+        "id_voucher": "6862860a9c6ac5e743435a0b",
+        "price": 100000,
+        "type": 2,
+        "createdAt": "2025-07-09T13:56:09.218Z",
+        "updatedAt": "2025-07-09T13:56:09.218Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "686e66af45e13c1ce4faf85a",
+        "code": 12345679,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J12"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 100000,
+        "type": 1,
+        "createdAt": "2025-07-09T12:55:11.122Z",
+        "updatedAt": "2025-07-09T12:55:11.122Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "686e630014479076a2b5087f",
+        "code": 694456755,
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215314",
+        "seat": ["J11"],
+        "id_voucher": "6854bec8dfd0fbd63c272969",
+        "price": 35000,
+        "type": 1,
+        "createdAt": "2025-07-09T12:39:28.066Z",
+        "updatedAt": "2025-07-09T12:39:28.066Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "686c0b683ec2781c4ad63b38",
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215315",
+        "seat": ["C10"],
+        "id_voucher": "6854bec8dfd0fbd63c27296a",
+        "price": 33500,
+        "type": 1,
+        "createdAt": "2025-07-07T18:01:12.090Z",
+        "updatedAt": "2025-07-07T18:01:12.090Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "686c0b12bd19eb9384db06e2",
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215315",
+        "seat": ["C8"],
+        "id_voucher": null,
+        "price": 50000,
+        "type": 1,
+        "createdAt": "2025-07-07T17:59:46.496Z",
+        "updatedAt": "2025-07-07T17:59:46.496Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "686c0aebfcde71e47e842d5b",
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215315",
+        "seat": ["C9"],
+        "id_voucher": null,
+        "price": 50000,
+        "type": 1,
+        "createdAt": "2025-07-07T17:59:07.963Z",
+        "updatedAt": "2025-07-07T17:59:07.963Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "id_voucher": null,
+        "_id": "686c0aa3f187643a00dc96f1",
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215315",
+        "seat": ["C7", "C6"],
+        "price": 100000,
+        "type": 1,
+        "createdAt": "2025-07-07T17:57:55.884Z",
+        "updatedAt": "2025-07-07T17:57:55.884Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      },
+      {
+        "_id": "686c0960fd22a5654eefbe66",
+        "id_user": "685455a4103c0ee2d1a12003",
+        "id_screening": "68513a8057a350b1b7215315",
+        "seat": ["C4", "C5"],
+        "id_voucher": "6854bec8dfd0fbd63c27296a",
+        "price": 67000,
+        "type": 1,
+        "createdAt": "2025-07-07T17:52:32.749Z",
+        "updatedAt": "2025-07-07T17:52:32.749Z",
+        "userName": "Trần Văn Giới",
+        "cinema": {
+          "id": "684a4cc5a290f33e71b13b42",
+          "name": "TickNow Lâm Đồng"
+        },
+        "room": { "id": "6861efcda86198a7691aab6e", "code": "3" }
+      }
+    ],
+    "pagination": {}
+  },
+  "status": true,
+  "message": "Lấy tất cả vé thành công"
 }
