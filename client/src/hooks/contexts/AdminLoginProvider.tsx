@@ -2,10 +2,9 @@
 import React from "react";
 import { Provider } from "react-redux";
 import store from "@/utils/redux/store";
-import { ToggleNavProvider } from "./ToggleNavContext";
 import { AuthProvider } from "./useAuth";
 
-const AdminProvider = ({
+const AdminLoginProvider = ({
   children,
   initAdminToken,
 }: {
@@ -14,11 +13,9 @@ const AdminProvider = ({
 }) => {
   return (
     <Provider store={store}>
-      <AuthProvider initAdminToken={initAdminToken}>
-        <ToggleNavProvider>{children}</ToggleNavProvider>
-      </AuthProvider>
+      <AuthProvider initAdminToken={initAdminToken}>{children}</AuthProvider>
     </Provider>
   );
 };
 
-export default AdminProvider;
+export default AdminLoginProvider;

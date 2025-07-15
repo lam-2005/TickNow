@@ -1,3 +1,4 @@
+import { DataEditProfileReq } from "@/components/ProfilePage/ProfileInfo";
 import { LoginType, UserReq } from "@/interfaces/user.interface";
 import catchingError from "@/utils/catchingError";
 import api from "@/utils/http";
@@ -38,7 +39,7 @@ const addUser = async (data: UserReq) => {
   }
 };
 
-const updateUserAPI = async (id: string, req: UserReq) => {
+const updateUserAPI = async (id: string, req: UserReq | DataEditProfileReq)  => {
   try {
     const res = await api.patch(`/user/update/${id}`, req);
     return res;

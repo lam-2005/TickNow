@@ -6,7 +6,7 @@ import AddUserBtn from "@/admin_components/UserManagementComponents/AddForm/Butt
 import FilterUser from "@/admin_components/UserManagementComponents/FilterUser/FilterUser";
 
 const UserManagement = async () => {
-  const res = await userService.getUserData(1, 5);
+  const res = userService.getUserData(1, 5);
   return (
     <div className="card">
       <HeadingCard title="Quản Lý Người Dùng">

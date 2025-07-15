@@ -11,7 +11,6 @@ const RateManagement = async () => {
     <div className="card">
       <HeadingCard title="Quản Lý Đánh Giá" />
       <FilterRating movies={res.movies} />
-      {/* <OptionTable /> */}
       <Suspense fallback={<p className="text-center">Đang tải dữ liệu...</p>}>
         <RatingList initData={res} />
       </Suspense>

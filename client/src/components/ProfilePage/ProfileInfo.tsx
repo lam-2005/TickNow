@@ -4,7 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import Button from "../Button/Button";
 import useTouched from "@/hooks/useTouched";
 import validateForm from "@/utils/validate";
-type DataEditProfileReq = {
+import ChangePasswordPopup from "../Popup/ChangePasswordPopup";
+export type DataEditProfileReq = {
   name?: string;
   phone?: string;
   year?: string | number;
@@ -13,14 +14,22 @@ type DataEditProfileReq = {
   confirmPassword?: string;
 };
 const ProfileInfo = ({ info }: { info: UserType }) => {
+  const date = new Date(info?.year);
+  const formattedDateData = date.toISOString().split("T")[0];
+  const formattedDateDisplay = date.toLocaleDateString("vi-vn", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
   const focusRef = useRef<HTMLInputElement>(null);
   const { touched, touchedPhone, touchedFullName, touchedDateOfBirth } =
     useTouched();
   const [editProfile, setEditProfile] = useState(false);
+  const [editPass, setEditPass] = useState(false);
   const [formdata, setFormdata] = useState<DataEditProfileReq>({
     name: info.name || "",
     phone: info?.phone || "",
-    year: info.year || "",
+    year: formattedDateData || "",
   });
   const errors = validateForm({
     name: formdata.name,
@@ -113,29 +122,34 @@ const ProfileInfo = ({ info }: { info: UserType }) => {
             <>
               <input
                 onBlur={touchedDateOfBirth}
-                className="max-w-[360px] w-full border border-stone-500 px-5 py-2.5 focus:border-foreground outline-none transition-all"
+                className={`max-w-[360px] w-fit border border-stone-500 px-5 py-2.5 focus:border-foreground outline-none transition-all bg-transparent appearance-none [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:cursor-pointer ${
+                  touched.year && errors.year
+                    ? "border-red-500! focus:border-red-500"
+                    : "border-stone-500 focus:border-foreground"
+                }`}
                 name="year"
-                type="text"
+                type="date"
                 value={formdata.year}
                 onChange={handleChange}
               />
-              {/* {touched.phone && errors.phone && (
+              {touched.year && errors.year && (
                 <p className="text-red-600 text-[13px] bg-red-200 px-2 py-0.75 rounded-sm w-fit">
-                  {errors.phone}
+                  {errors.year}
                 </p>
-              )} */}
+              )}
             </>
           ) : (
             <div className="max-w-[360px] w-full bg-background-card rounded-[5px] px-5 py-2.5 text-gray-400">
-              {info?.year}
+              {formattedDateDisplay}
             </div>
           )}
         </div>
-        {/* {isOpen && <ChangePasswordPopup onClose={() => setIsOpen(false)} />}  */}
+        {editPass && <ChangePasswordPopup onClose={() => setEditPass(false)} />}
       </div>
       <div className="flex gap-5 mt-6">
         {!editProfile && (
           <Button
+            onClick={() => setEditPass(true)}
             title="Đổi mật khẩu"
             className="[&_span]:text-sm bg-transparent border-1 border-foreground text-foreground before:bg-primary [&_span]:text-foreground hover:[&_span]:text-white hover:border-primary"
           />

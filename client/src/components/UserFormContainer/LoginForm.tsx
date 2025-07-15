@@ -6,6 +6,7 @@ import useTouched from "@/hooks/useTouched";
 import validateForm from "@/utils/validate";
 import { toast } from "react-toastify";
 import { useAuth } from "@/hooks/contexts/useAuth";
+import { useRouter } from "next/navigation";
 const LoginForm = ({
   closeForm,
   setOpenForm,
@@ -15,6 +16,7 @@ const LoginForm = ({
   setOpenReset: () => void;
   closeForm: () => void;
 }) => {
+  const router = useRouter();
   const { touched, touchedEmail, touchedPassword } = useTouched();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [formData, setFormData] = useState<{ email: string; password: string }>(
@@ -23,8 +25,7 @@ const LoginForm = ({
       password: "",
     }
   );
-
-  const { setUser } = useAuth();
+  const { setUser, setAdmin } = useAuth();
   const errors = validateForm({
     email: formData.email,
     password: formData.password,
@@ -36,7 +37,7 @@ const LoginForm = ({
       return;
     }
     try {
-      const res = await fetch("/api/auth", {
+      const res = await fetch("/api/auth/user", {
         method: "POST",
         body: JSON.stringify(formData),
         headers: {
@@ -44,10 +45,20 @@ const LoginForm = ({
         },
       });
       const result = await res.json();
-      localStorage.setItem("user", JSON.stringify(result.res.data.user));
-      setUser({ name: result.res.data.user, token: result.res.data.token });
+      if (!res.ok) {
+        toast.error(`Đăng nhập thất bại: ${result.message}`);
+        return;
+      }
       toast.success("Đăng nhập thành công");
-      closeForm();
+      if (result.isAdmin) {
+        localStorage.setItem("admin", JSON.stringify(result.res.data.user));
+        setAdmin({ name: result.res.data.user, token: result.res.data.token });
+        router.replace("/admin");
+      } else {
+        localStorage.setItem("user", JSON.stringify(result.res.data.user));
+        setUser({ name: result.res.data.user, token: result.res.data.token });
+        closeForm();
+      }
     } catch (err) {
       toast.error(`Đăng nhập thất bại: ${err}`);
       console.error(err);

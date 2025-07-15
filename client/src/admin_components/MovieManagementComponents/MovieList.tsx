@@ -30,11 +30,13 @@ const MovieList = ({
   initData,
   genre,
 }: {
-  initData: InitDataType;
+  initData: Promise<InitDataType>;
   genre: Promise<Genre[]>;
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   const isFirstLoad = useRef(true);
+
+  const initialData = use(initData);
 
   const {
     data: movies,
@@ -46,7 +48,7 @@ const MovieList = ({
   } = useSelector(dataMovie);
 
   const { page, changePage, changeRowPerPage, rowsPerPage } = usePanigation(
-    initData.currentPage
+    initialData.currentPage
   );
 
   const [showInfo, setShowInfo] = useState<boolean>(false);
@@ -57,10 +59,10 @@ const MovieList = ({
   useEffect(() => {
     dispatch(
       setInitialMovies({
-        data: initData.movies,
-        total: initData.total,
-        currentPage: initData.currentPage,
-        totalPages: initData.totalPages,
+        data: initialData.movies,
+        total: initialData.total,
+        currentPage: initialData.currentPage,
+        totalPages: initialData.totalPages,
         loading: false,
         error: null,
         errorAddData: null,
@@ -73,9 +75,9 @@ const MovieList = ({
         },
       })
     );
-  }, [dispatch, initData]);
+  }, [dispatch, initialData]);
 
-  // Fetch khi thay đổi trang/số dòng
+  // Fetch lại khi thay đổi trang/số dòng
   const { filter } = useSelector(dataMovie);
 
   useEffect(() => {

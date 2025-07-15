@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PopupContainer from "./PopupContainer";
 import Image from "next/image";
 import Button from "../Button/Button";
@@ -24,9 +24,11 @@ function getLabelText(value: number) {
 
 const RatePopup = ({ onClose }: { onClose: () => void }) => {
   const [value, setValue] = React.useState<number | null>(0);
+  const [comment, setComment] = useState("");
   const [hover, setHover] = React.useState(-1);
-  console.log(value);
-
+  const handleRating = () => {
+    console.log({ star: value, comment });
+  };
   return (
     <PopupContainer onClose={onClose}>
       <div className="w-full space-y-5 ">
@@ -92,12 +94,14 @@ const RatePopup = ({ onClose }: { onClose: () => void }) => {
                   name=""
                   id=""
                   placeholder="Nhập bình luận của bạn"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
                   className="border border-gray-300 p-2 w-full h-24 "
                 ></textarea>
               </div>
             </div>
             <div className="flex justify-end">
-              <Button title="Đánh giá" />
+              <Button title="Đánh giá" onClick={handleRating} />
             </div>
           </div>
         </div>

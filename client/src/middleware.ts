@@ -1,4 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
+// import { matcher } from "./middleware.config";
 export const privateRoute = {
   user: [
     "/profile",
@@ -13,26 +14,18 @@ const authRoute = ["/auth-admin"];
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const token = request.cookies.get("token")?.value;
+  const tokenAdmin = request.cookies.get("tokenAdmin")?.value;
   if (privateRoute.user.some((url) => pathname.startsWith(url)) && !token) {
     return NextResponse.redirect(new URL("/", request.url));
   }
-  if (privateRoute.admin.some((url) => pathname.startsWith(url)) && !token) {
+  if (
+    privateRoute.admin.some((url) => pathname.startsWith(url)) &&
+    !tokenAdmin
+  ) {
     return NextResponse.redirect(new URL("/auth-admin/login", request.url));
   }
-  if (authRoute.some((url) => pathname.startsWith(url)) && token) {
+  if (authRoute.some((url) => pathname.startsWith(url)) && tokenAdmin) {
     return NextResponse.redirect(new URL("/admin", request.url));
   }
   return NextResponse.next();
 }
-
-export const config = {
-  matcher: [
-    "/",
-    "/profile/:path*",
-    "/booking-history/:path*",
-    "/booking-successful/:path*",
-    "/booking-failed/:path*",
-    "/auth-admin/:path*",
-    "/admin/:path*",
-  ],
-};
