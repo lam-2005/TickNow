@@ -15,18 +15,17 @@ const getCinemaList = async (param: string = "") => {
 const addCinema = async (data: CinemaReq) => {
   try {
     const formData = new FormData();
-    formData.append('name', data.name);
-    formData.append('image', data.image);
-    formData.append('status', String(data.status));
-    formData.append('id_location', data.id_location);
-    formData.append('deatil_location', data.deatil_location);
+    formData.append("name", data.name);
+    if (data.image) formData.append("image", data.image);
+    formData.append("status", String(data.status));
+    formData.append("id_location", data.id_location || "");
+    formData.append("deatil_location", data.deatil_location || "");
 
-     const res = await api.post("/cinema/add", formData, {
+    const res = await api.post("/cinema/add", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
-    // const res = await api.post("/cinema/add", data);
     return res;
   } catch (error) {
     catchingError(error, "Thêm rạp thất bại!");
@@ -35,7 +34,15 @@ const addCinema = async (data: CinemaReq) => {
 
 const updateCinema = async (id: string, data: CinemaReq) => {
   try {
-    const res = await api.patch(`/cinema/update/${id}`, data);
+    const formData = new FormData();
+    formData.append("name", data.name);
+    if (data.image) formData.append("image", data.image);
+    formData.append("status", String(data.status));
+    const res = await api.patch(`/cinema/update/${id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return res;
   } catch (error) {
     catchingError(error, "Cập nhật rạp thất bại!");
@@ -44,7 +51,7 @@ const updateCinema = async (id: string, data: CinemaReq) => {
 
 const getCinemaDetail = async (id: string) => {
   try {
-    const res = await api.get(`/cinema/${id}`);
+    const res = await api.get(`/cinema/detail/${id}`);
     return res.data;
   } catch (error) {
     catchingError(error, "Lấy chi tiết rạp thất bại!");
@@ -73,9 +80,4 @@ export const getCinemaData = async (
   };
 };
 
-export {
-  getCinemaList,
-  addCinema,
-  updateCinema,
-  getCinemaDetail, 
-};
+export { getCinemaList, addCinema, updateCinema, getCinemaDetail };

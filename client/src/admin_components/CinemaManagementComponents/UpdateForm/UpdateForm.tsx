@@ -28,22 +28,16 @@ const UpdateForm = ({
     name: "",
     image: "",
     status: 1,
-    id_location: "",
-    deatil_location: "",
   });
 
   useEffect(() => {
     const fetchCinema = async (id: string) => {
       try {
         const data = await getCinemaDetail(id);
-        const location = data.location || {};
-
         setFormData({
           name: data.name || "",
-          image: data.image || "",
-          status: data.status ?? 1, // dùng nullish để tránh undefined
-          id_location: location.id_location || "",
-          deatil_location: location.deatil_location || "",
+          image: data.image || null,
+          status: data.status,
         });
       } catch (error) {
         toast.error("Không thể tải chi tiết rạp");
@@ -57,25 +51,12 @@ const UpdateForm = ({
   }, [id]);
 
   const handleUpdateCinema = async (id: string) => {
-    const name = (formData.name || "").trim();
-    const detailLocation = (formData.deatil_location || "").trim();
-
-    if (!name || !formData.id_location || !detailLocation) {
-      toast.error("Vui lòng điền đầy đủ thông tin tên rạp và địa chỉ.");
-      return;
-    }
-
     try {
       const confirmUpdate = confirm("Bạn có muốn cập nhật rạp này?");
       if (!confirmUpdate) return;
-
-      const payload: CinemaReq = {
-        ...formData,
-        name,
-        deatil_location: detailLocation,
-      };
-
-      await dispatch(updateCinema({ id, data: payload })).unwrap();
+      console.log(id);
+      console.log(formData);
+      await dispatch(updateCinema({ id: id, data: formData })).unwrap();
       toast.success("Cập nhật rạp thành công!");
 
       await dispatch(
@@ -90,7 +71,7 @@ const UpdateForm = ({
 
       closeForm();
     } catch (err) {
-      toast.error("Cập nhật rạp thất bại");
+      toast.error(`Cập nhật rạp thất bại ${err}`);
       console.error(err);
     }
   };

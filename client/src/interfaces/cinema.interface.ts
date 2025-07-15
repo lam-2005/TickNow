@@ -3,15 +3,15 @@ export interface CinemaRes {
   name: string;
   image: string;
   status: number;
-  location: LocationType; 
+  location: LocationType;
 }
 
 export interface CinemaReq {
   name: string;
-  image: File | Blob | "" ;
+  image: File | null | string;
   status: number | string;
-  id_location: string;
-  deatil_location: string;
+  id_location?: string;
+  deatil_location?: string;
 }
 
 export interface CinemaDetail extends CinemaRes {
@@ -36,4 +36,3 @@ export interface LocationRes {
   _id: string;
   name: string;
 }
-

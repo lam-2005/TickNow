@@ -1,19 +1,42 @@
 "use client";
-import React from "react";
-import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
+import React, { useState } from "react";
+// import Autocomplete from "@mui/material/Autocomplete";
+// import TextField from "@mui/material/TextField";
 import { CinemaReq, LocationType } from "@/interfaces/cinema.interface";
+import Button from "@mui/material/Button";
+import { styled } from "@mui/material/styles";
+import Image from "next/image";
 
 type InputGroupProps = {
   formData: CinemaReq;
   setFormData: (data: CinemaReq) => void;
   locations: LocationType[];
 };
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
+const InputGroup = ({ formData, setFormData }: InputGroupProps) => {
+  // const selectedLocation = locations.find(
+  //   (l) => l.id_location === formData.id_location
+  // ) || null;
+  const [preview, setPreview] = useState<string | null>(null);
 
-const InputGroup = ({ formData, setFormData, locations }: InputGroupProps) => {
-  const selectedLocation = locations.find(
-    (l) => l.id_location === formData.id_location
-  ) || null;
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setPreview(imageUrl);
+      setFormData({ ...formData, image: file });
+    }
+  };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 w-3xl gap-4">
@@ -27,8 +50,30 @@ const InputGroup = ({ formData, setFormData, locations }: InputGroupProps) => {
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
         />
       </div>
-
-      <div>
+      <div className="my-5">
+        <Button
+          component="label"
+          role={undefined}
+          variant="contained"
+          tabIndex={-1}
+        >
+          Hình ảnh rạp
+          <VisuallyHiddenInput
+            type="file"
+            onChange={handleFileChange}
+            multiple
+          />
+        </Button>
+        {preview && (
+          <Image
+            alt="cinema image"
+            src={preview || ""}
+            width={300}
+            height={300}
+          />
+        )}
+      </div>
+      {/* <div>
         <label className="block mb-1 text-sm font-medium">Địa chỉ chi tiết *</label>
         <input
           type="text"
@@ -54,7 +99,7 @@ const InputGroup = ({ formData, setFormData, locations }: InputGroupProps) => {
           onChange={() => {}}
           renderInput={(params) => <TextField {...params} label="Chọn tỉnh/thành" />}
         />
-      </div>
+      </div> */}
 
       <div>
         <label className="block mb-1 text-sm font-medium">Trạng thái</label>

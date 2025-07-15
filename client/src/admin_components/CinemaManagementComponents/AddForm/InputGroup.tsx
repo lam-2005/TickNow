@@ -24,7 +24,11 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-const InputGroupCinema = ({ formData, setFormData, locationOptions }: Props) => {
+const InputGroupCinema = ({
+  formData,
+  setFormData,
+  locationOptions,
+}: Props) => {
   const [preview, setPreview] = useState<string | null>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,9 +51,7 @@ const InputGroupCinema = ({ formData, setFormData, locationOptions }: Props) => 
           placeholder="Nhập tên rạp"
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
           value={formData.name}
-          onChange={(e) =>
-            setFormData({ ...formData, name: e.target.value })
-          }
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
         />
       </div>
 
@@ -67,7 +69,7 @@ const InputGroupCinema = ({ formData, setFormData, locationOptions }: Props) => 
             multiple
           />
         </Button>
-        {(preview) && (
+        {preview && (
           <Image
             alt="cinema image"
             src={preview || ""}
@@ -130,7 +132,7 @@ const InputGroupCinema = ({ formData, setFormData, locationOptions }: Props) => 
           }
         >
           <option value={2}>Hoạt động</option>
-          <option value={1}>Tạm dừng</option>
+          <option value={1}>Không hoạt động</option>
         </select>
       </div>
     </div>
