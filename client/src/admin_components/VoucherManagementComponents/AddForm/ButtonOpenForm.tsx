@@ -1,7 +1,7 @@
 "use client";
 import AddBtn from "@/admin_components/Button/AddBtn";
 import React, { useState } from "react";
-import PopupContainer from "@/admin_components/VoucherManagementComponents/PopupContainer";
+import PopupContainer from "@/admin_components/PopupContainer";
 import AddForm from "./AddForm";
 
 const AddVoucherBtn = () => {

@@ -1,74 +1,81 @@
-import { CinemaCreateOrUpdate } from "@/interfaces/cinema.interface";
-import catchingError from "@/utils/catchingError";
 import api from "@/utils/http";
+import catchingError from "@/utils/catchingError";
+import { CinemaReq } from "@/interfaces/cinema.interface";
 
 const getCinemaList = async (param: string = "") => {
   try {
     const res = await api.get(`/cinema${param}`);
-    return res.data;
+    return res;
   } catch (error) {
-    catchingError(error, "Lỗi khi lấy dữ liệu rạp!");
+    console.error("Error fetching cinema list:", error);
+    throw error;
   }
 };
 
-const createCinema = async (data: CinemaCreateOrUpdate) => {
+const addCinema = async (data: CinemaReq) => {
   try {
-    const res = await api.post(`/cinema/add`, data);
+    const formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('image', data.image);
+    formData.append('status', String(data.status));
+    formData.append('id_location', data.id_location);
+    formData.append('deatil_location', data.deatil_location);
+
+     const res = await api.post("/cinema/add", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    // const res = await api.post("/cinema/add", data);
     return res;
   } catch (error) {
     catchingError(error, "Thêm rạp thất bại!");
   }
 };
 
-const updateCinema = async (data: CinemaCreateOrUpdate) => {
+const updateCinema = async (id: string, data: CinemaReq) => {
   try {
-    const res = await api.patch(`/cinema/update/${data.id}`, data);
+    const res = await api.patch(`/cinema/update/${id}`, data);
     return res;
   } catch (error) {
     catchingError(error, "Cập nhật rạp thất bại!");
   }
 };
 
-const getLocationList = async (param: string = "") => {
+const getCinemaDetail = async (id: string) => {
   try {
-    const res = await api.get(`/location${param}`);
+    const res = await api.get(`/cinema/${id}`);
     return res.data;
   } catch (error) {
-    catchingError(error, "Lỗi khi lấy dữ liệu địa chỉ!");
+    catchingError(error, "Lấy chi tiết rạp thất bại!");
+    throw error;
   }
 };
 
-export const getCinemas = async (
+export const getCinemaData = async (
   page: number,
   limit: number,
-  name: string | null = null,
-  location: string | null = null,
-  status: string | null = null
+  name: string = "",
+  location: string = "",
+  status: string = ""
 ) => {
-  let queries = `?page=${page}&limit=${limit}`;
-
-  if (name) {
-    queries += `&name=${name}`;
-  }
-
-  if (location) {
-    queries += `&location=${location}`;
-  }
-
-  if (status) {
-    queries += `&status=${status}`;
-  }
-
-  const res = await getCinemaList(queries);
+  const res = await getCinemaList(
+    `?page=${page}&limit=${limit}&name=${name}&location=${location}&status=${status}`
+  );
   return {
-    cinemas: res?.cinema,
-    total: res?.pagination.total,
-    currentPage: res?.pagination.page,
-    totalPages: res?.pagination.totalPages,
-    name: name,
-    location: location,
-    status: status,
+    Cinema: res?.data.cinema,
+    total: res?.data.pagination.total,
+    currentPage: res?.data.pagination.page,
+    totalPages: res?.data.pagination.totalPages,
+    name,
+    location,
+    status,
   };
 };
 
-export { getCinemaList, getLocationList, createCinema, updateCinema };
+export {
+  getCinemaList,
+  addCinema,
+  updateCinema,
+  getCinemaDetail, 
+};

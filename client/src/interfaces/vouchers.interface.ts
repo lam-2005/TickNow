@@ -6,6 +6,16 @@ export interface Voucher {
   user_count: number;
   max_users: number;
   start_date: string;
-  end_day: string;
+  end_date: string;
+  is_active: number | string;
+}
+
+export interface VoucherReq {
+  code: string;
+  discount_type: number;
+  user_count: number;
+  max_users: number;
+  start_date: string;
+  end_date: string;
   is_active: number | string;
 }

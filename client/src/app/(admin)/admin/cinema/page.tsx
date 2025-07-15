@@ -1,30 +1,28 @@
-import AddCinemaBtn from "@/admin_components/CinemaManagementComponents/AddCinema/ButtonOpenCinema";
-import CinemaList from "@/admin_components/CinemaManagementComponents/CinemaList";
-import FilterCinema from "@/admin_components/CinemaManagementComponents/FilterCinema/FIlterCinema";
-import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
-import { getCinemas, getLocationList } from "@/services/cinema.service";
 import React, { Suspense } from "react";
+import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
+import CinemaList from "@/admin_components/CinemaManagementComponents/CinemaList";
+import AddCinemaBtn from "@/admin_components/CinemaManagementComponents/AddForm/ButtonOpenCinema";
+import FilterCinema from "@/admin_components/CinemaManagementComponents/FilterCinema/FIlterCinema";
+import { getCinemaData } from "@/services/cinema.service";
+import { getLocationList } from "@/services/location.service";
 
 const getLocations = async () => {
   const res = await getLocationList();
-  return res.location;
+  return res?.location || [];
 };
 
-const CinemaManagement = () => {
-  const cinemas = getCinemas(1, 10);
-  const locations = getLocations();
+const CinemaManagement = async () => {
+  const initData = await getCinemaData(1, 5);
+  const locations = await getLocations(); 
 
   return (
     <div className="card">
-      <HeadingCard title="Quản Lý Rap Chiếu">
+      <HeadingCard title="Quản Lý Rạp Chiếu">
         <AddCinemaBtn locations={locations} />
       </HeadingCard>
-      {/* <OptionTable /> */}
-
       <FilterCinema locations={locations} />
-
       <Suspense fallback={<p className="text-center">Đang tải dữ liệu...</p>}>
-        <CinemaList initData={cinemas} initLocations={locations} />
+        <CinemaList initData={initData} locations={locations} />
       </Suspense>
     </div>
   );

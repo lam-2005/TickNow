@@ -1,6 +1,6 @@
 import React from "react";
 import UpdateForm from "./UpdateForm";
-import PopupContainer from "../PopupContainer";
+import PopupContainer from "@/admin_components/PopupContainer";
 import { Voucher } from "@/interfaces/vouchers.interface";
 
 const UpdateFormContainer = ({

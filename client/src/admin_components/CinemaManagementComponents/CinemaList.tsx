@@ -1,89 +1,116 @@
 "use client";
-import Pagination from "@/admin_components/Table/Pagination";
+import React, { useEffect, useRef, useState } from "react";
 import Table, { Column } from "@/admin_components/Table/Table";
-import usePanigation from "@/hooks/usePanigation";
-import { AppDispatch } from "@/utils/redux/store";
-import React, { use, useEffect, useRef, useState } from "react";
+import Pagination from "@/admin_components/Table/Pagination";
+import { CinemaRes } from "@/interfaces/cinema.interface";
+import ActionButton from "@/admin_components/Button/ButtonActions";
 import { useDispatch, useSelector } from "react-redux";
-import ActionButton from "../Button/ButtonActions";
-import UpdateFormContainer from "./UpdateCinema/UpdateFormContainer";
-import { Cinema, Location } from "@/interfaces/cinema.interface";
-import dataCinemaSelector from "@/utils/redux/selectors/selectorCinema";
+import { AppDispatch } from "@/utils/redux/store";
+import dataCinema from "@/utils/redux/selectors/selectorCinema";
 import {
-  fetchCinemas,
-  setInitialcinemas,
+  fetchCinema,
+  setInitialCinema,
 } from "@/utils/redux/slices/cinemaSlice";
-import { toast } from "react-toastify";
-import env from "@/configs/environment";
+import usePanigation from "@/hooks/usePanigation";
+import UpdateFormContainer from "./UpdateForm/UpdateFormContainer";
+import Status from "../StatusUI/Status";
+import { LocationType } from "@/interfaces/cinema.interface";
 import Image from "next/image";
+import env from "@/configs/environment";
 
 type InitDataType = {
-  cinemas: Cinema[];
+  Cinema: CinemaRes[];
   total: number;
   currentPage: number;
   totalPages: number;
 };
+
 const CinemaList = ({
   initData,
-  initLocations,
+  locations,
 }: {
-  initData: Promise<InitDataType>;
-  initLocations: Promise<Location[]>;
+  initData: InitDataType;
+  locations: LocationType[];
 }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const initialData = use(initData);
-  const locations = use(initLocations);
-
   const isFirstLoad = useRef(true);
-  //   const [showInfo, setShowInfo] = useState<boolean>(false);
-  const [openUpdateForm, setOpenUpdateForm] = useState<boolean>(false);
-  const [cinema, setCinema] = useState<Cinema | null>(null);
-  //   // lay selector
-  const { data, error, total, currentPage, loading, totalPages, filter } =
-    useSelector(dataCinemaSelector);
-  // hook phan trang
+  const [openUpdateForm, setOpenUpdateForm] = useState(false);
+  const [idCinema, setIdCinema] = useState("");
+
+  const { data, total, currentPage, totalPages, loading, error, filter } =
+    useSelector(dataCinema);
+
   const { page, changePage, changeRowPerPage, rowsPerPage } = usePanigation(
-    initialData.currentPage
+    initData.currentPage
   );
 
   useEffect(() => {
+    dispatch(setInitialCinema(initData));
+  }, [dispatch, initData]);
+
+  useEffect(() => {
     if (isFirstLoad.current) {
-      dispatch(setInitialcinemas(initialData));
       isFirstLoad.current = false;
       return;
     }
-
     if (page <= totalPages) {
       dispatch(
-        fetchCinemas({
+        fetchCinema({
           limit: rowsPerPage,
           page: page,
           name: filter.name,
-          locations: filter.locations,
+          location: filter.location,
           status: filter.status,
         })
       );
-
-      return;
+    } else {
+      dispatch(
+        fetchCinema({
+          limit: rowsPerPage,
+          page: totalPages,
+          name: filter.name,
+          location: filter.location,
+          status: filter.status,
+        })
+      );
     }
+  }, [
+    dispatch,
+    page,
+    rowsPerPage,
+    totalPages,
+    filter.name,
+    filter.location,
+    filter.status,
+  ]);
 
-    dispatch(
-      fetchCinemas({
-        limit: rowsPerPage,
-        page: totalPages,
-        name: filter.name,
-        locations: filter.locations,
-        status: filter.status,
-      })
-    );
-  }, [dispatch, rowsPerPage, page, initialData, totalPages, filter]);
+  const handleOpenUpdate = (id: string) => {
+    setIdCinema(id);
+    setOpenUpdateForm(true);
+  };
 
-  const columns: Column<Cinema>[] = [
-    { key: "name", title: "Tên rạp" },
+  const col: Column<CinemaRes>[] = [
+    {
+      key: "name",
+      title: "Tên rạp",
+      render(row) {
+        return (
+          <p className="line-clamp-1" title={row.name}>
+            {row.name}
+          </p>
+        );
+      },
+    },
     {
       key: "location",
-      title: "Địa chỉ",
-      render: (row) => row.location?.deatil_location || "Chưa có địa chỉ",
+      title: "Vị trí",
+      render(row) {
+        return (
+          <p>
+            {row.location?.location || ""} - {row.location?.deatil_location}
+          </p>
+        );
+      },
     },
     {
       key: "image",
@@ -99,71 +126,41 @@ const CinemaList = ({
             />
           </div>
         ) : (
-          // <Image
-          //   src={row.image}
-          //   alt={`Ảnh ${row.name}`}
-          //   width={80}
-          //   height={50}
-          //   className="rounded border object-cover"
-          // />
           <span>Không có ảnh</span>
         ),
     },
     {
       key: "status",
-      title: "Trạng thái",
-      render: (row) => (row?.status === 1 ? "Hoạt động" : "Ngừng hoạt động"),
+      title: "Trạng Thái",
+      render: (row) => (
+        <Status
+          title={row.status === 2 ? "Đang hoạt động" : "Ngưng hoạt Động"} 
+          color={row.status === 2 ? "success" : "error"} 
+        />
+      ),
     },
     {
       title: "Thao tác",
-      render: (row) => (
-        <div className="flex gap-2">
-          <ActionButton
-            bgColor="warning"
-            onClick={() => handleOpenUpdate(row._id)}
-            label="Sửa"
-          />
-        </div>
-      ),
+      render(row: CinemaRes) {
+        return (
+          <div className="flex gap-2">
+            <ActionButton
+              label="Sửa"
+              bgColor="warning"
+              onClick={() => handleOpenUpdate(row._id)}
+            />
+          </div>
+        );
+      },
     },
   ];
 
-  const handleOpenUpdate = (id: string) => {
-    const target = data.find((item) => item._id === id);
-    if (!target) {
-      toast.error("Không tìm thấy rạp chiếu");
-      return;
-    }
-    setCinema(target);
-    setOpenUpdateForm(true);
-  };
-
-  const handleCloseUpdate = () => {
-    setCinema(null);
-    setOpenUpdateForm(false);
-    dispatch(fetchCinemas({ limit: rowsPerPage, page: 1 }));
-  };
-
   if (loading) return <p className="text-center">Đang tải dữ liệu...</p>;
-  if (error) return <p className="text-center text-red-500">{error}</p>;
+  if (error) return <p className="text-red-500 text-center">{error}</p>;
 
   return (
     <>
-      {openUpdateForm && cinema && (
-        <UpdateFormContainer
-          cinema={cinema}
-          locations={locations}
-          closeForm={handleCloseUpdate}
-        />
-      )}
-
-      <Table
-        column={columns}
-        data={data}
-        currentPage={currentPage}
-        rowsPerPage={rowsPerPage}
-      />
-
+      <Table column={col} data={data} />
       {total >= rowsPerPage && (
         <Pagination
           currentPage={currentPage}
@@ -172,6 +169,13 @@ const CinemaList = ({
           rowPerPage={rowsPerPage}
           setPage={changePage}
           setRowPerPage={changeRowPerPage}
+        />
+      )}
+      {openUpdateForm && idCinema && (
+        <UpdateFormContainer
+          id={idCinema}
+          locations={locations}
+          closeForm={() => setOpenUpdateForm(false)}
         />
       )}
     </>

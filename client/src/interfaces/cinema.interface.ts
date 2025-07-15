@@ -1,38 +1,39 @@
-export interface Location {
+export interface CinemaRes {
   _id: string;
-  name: string;
-}
-
-export interface Cinema {
-  _id: string;
-  id?: string;
   name: string;
   image: string;
   status: number;
-  location: {
-    id_location: string;
-    deatil_location: string;
-  };
-  showtimes?: {
-    id: string;
-    time: string;
-    showtype: number;
-  }[];
-}
-export interface CinemaDataReq {
-  name?: string;
-  image?: string;
-  deatil_location?: string;
-  status?: number;
-  city_name?: string;
+  location: LocationType; 
 }
 
-export interface CinemaCreateOrUpdate {
-  id: string;
+export interface CinemaReq {
   name: string;
-  image: string | null;
-  file: File | null;
-  status: number;
+  image: File | Blob | "" ;
+  status: number | string;
   id_location: string;
   deatil_location: string;
 }
+
+export interface CinemaDetail extends CinemaRes {
+  totalRooms?: number;
+  totalShowtimes?: number;
+  createdAt?: string;
+}
+
+export type LocationOptionsType = {
+  label: string;
+  id: string;
+};
+
+export interface LocationType {
+  id_location: string;
+  deatil_location: string;
+  location?: string;
+  status?: number;
+}
+
+export interface LocationRes {
+  _id: string;
+  name: string;
+}
+
