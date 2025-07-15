@@ -1,155 +1,130 @@
-"use client";
 import React, { useEffect, useState } from "react";
-import PopupContainer from "../PopupContainer";
-import { Cinema, Location } from "@/interfaces/cinema.interface";
-import dataCinemaSelector from "@/utils/redux/selectors/selectorCinema";
 import { useDispatch, useSelector } from "react-redux";
-import { getCinemaList } from "@/services/cinema.service";
+import PopupContainer from "@/admin_components/PopupContainer";
+import Autocomplete from "@mui/material/Autocomplete";
+import Checkbox from "@mui/material/Checkbox";
+import TextField from "@mui/material/TextField";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import { AppDispatch } from "@/utils/redux/store";
-import { fetchCinemas, setFilter } from "@/utils/redux/slices/cinemaSlice";
+import { fetchCinema, setFilterCinema } from "@/utils/redux/slices/cinemaSlice";
+import { LocationRes } from "@/interfaces/cinema.interface";
+import cinemaSelector from "@/utils/redux/selectors/selectorCinema";
 
-type Props = {
-  closeForm: () => void;
-  locations: Location[];
-};
+const FilterItem = ({ title, className }: { title: string; className?: string }) => (
+  <div className={`border-1 border-foreground text-foreground flex-center w-fit px-2 py-1 transition-colors rounded-md hover:bg-primary hover:text-white hover:border-transparent cursor-pointer ${className}`}>
+    {title}
+  </div>
+);
 
-const FilterItem = ({
-  title,
-  className,
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+
+const FilterPopup = ({
+  locations,
+  closeForm,
 }: {
-  title: string;
-  className?: string;
+  locations: LocationRes[];
+  closeForm: () => void;
 }) => {
-  return (
-    <div
-      className={`border-1 border-foreground text-foreground flex-center w-fit px-2 py-1 transition-colors rounded-md hover:bg-primary hover:text-white hover:border-transparent cursor-pointer ${className}`}
-    >
-      {title}
-    </div>
-  );
-};
+  const listLocationOptions = locations.map((item) => ({
+    label: item.name,
+    id: item._id,
+  }));
 
-const FilterPopup = ({ closeForm, locations }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
-  const [cinemas, setCinemas] = useState<Cinema[]>([]);
+  const { filter } = useSelector(cinemaSelector);
+
+  const [name, setName] = useState<string>("");
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
-  const [status, setStatus] = useState<number[]>([]);
-  const [name, setName] = useState<string>();
-  const { filter } = useSelector(dataCinemaSelector);
+  const [status, setStatus] = useState<string>("");
 
   useEffect(() => {
-    getCinemaList().then(res => {
-      setCinemas(res?.cinema ?? [])
-    });
-  }, [])
-
-  const handleGetLocation = (id: string) => {
-    setSelectedLocations((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
-    );
-  };
-
-  const handleGetStatus = (id: number) => {
-    setStatus((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
-    );
-  };
-
-  useEffect(() => {
-    setName(filter.name ?? '')
-  
-    if (filter.locations) {
-      setSelectedLocations(filter.locations.split(",").map((s) => s));
-    } else {
-      setSelectedLocations([]);
-    }
-
-    if (filter.status) {
-      setStatus(filter.status.split(",").map((s) => Number(s)));
-    } else {
-      setStatus([]);
-    }
+    setName(filter.name || "");
+    setStatus(filter.status || "");
+    setSelectedLocations(filter.location ? filter.location.split(",") : []);
   }, [filter]);
-  
+
+  const handleLocationChange = (values: { label: string; id: string }[]) => {
+    const ids = values.map((item) => item.id);
+    setSelectedLocations(ids);
+  };
+
   const handleFilter = () => {
     dispatch(
-      fetchCinemas({
-        limit: 5,
+      fetchCinema({
         page: 1,
-        name: name,
-        locations: selectedLocations.join(","),
-        status: status.join(","),
+        limit: 10,
+        name,
+        location: selectedLocations.join(","),
+        status,
       })
     );
     dispatch(
-      setFilter({
-        name: name,
-        locations: selectedLocations.join(","),
-        status: status.join(","),
+      setFilterCinema({
+        name,
+        location: selectedLocations.join(","),
+        status,
       })
     );
     closeForm();
   };
 
   return (
-    <PopupContainer title="Bộ lọc" closeForm={closeForm}>
-      <div className="p-5 space-y-5 overflow-y-scroll">
-        <div className="flex gap-4 flex-col">
-          <h1 className="text-xl font-bold">Chọn tên:</h1>
-          <div className="flex flex-wrap gap-4">
-            {cinemas?.length > 0 ? (
-              cinemas.map((loc) => (
-                <button key={loc._id} onClick={() => name == loc.name ? setName("") : setName(loc.name)}>
-                  <FilterItem
-                    title={loc.name}
-                    className={`${
-                      name == loc.name
-                        ? "bg-primary text-white border-transparent"
-                        : ""
-                    }`}
-                  />
-                </button>
-              ))
-            ) : (
-              <p className="text-sm italic text-muted">Không có dữ liệu cinema.</p>
-            )}
-          </div>
+    <PopupContainer title="Bộ lọc rạp chiếu" closeForm={closeForm}>
+      <div className="p-5 space-y-5 overflow-hidden overflow-y-auto">
+        <div className="flex flex-col gap-2">
+          <label className="font-bold text-lg">Tên rạp:</label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Nhập tên rạp"
+            className="border border-foreground p-2 rounded-md"
+          />
         </div>
 
-        <div className="flex gap-4 flex-col">
-          <h1 className="text-xl font-bold">Chọn khu vực:</h1>
-          <div className="flex flex-wrap gap-4">
-            {locations?.length > 0 ? (
-              locations.map((loc) => (
-                <button key={loc._id} onClick={() => handleGetLocation(loc._id)}>
-                  <FilterItem
-                    title={loc.name}
-                    className={`${
-                      selectedLocations.includes(loc._id)
-                        ? "bg-primary text-white border-transparent"
-                        : ""
-                    }`}
-                  />
-                </button>
-              ))
-            ) : (
-              <p className="text-sm italic text-muted">Không có dữ liệu khu vực.</p>
+        <div className="flex flex-col gap-2">
+          <label className="font-bold text-lg">Chọn khu vực:</label>
+          <Autocomplete
+            multiple
+            id="checkboxes-location"
+            className="w-full"
+            options={listLocationOptions}
+            disableCloseOnSelect
+            getOptionLabel={(option) => option.label}
+            value={listLocationOptions.filter((option) =>
+              selectedLocations.includes(option.id)
             )}
-          </div>
+            onChange={(_, values) => handleLocationChange(values)}
+            renderOption={(props, option, { selected }) => {
+              const { key, ...rest } = props;
+              return (
+                <li key={key} {...rest}>
+                  <Checkbox
+                    icon={icon}
+                    checkedIcon={checkedIcon}
+                    style={{ marginRight: 8 }}
+                    checked={selected}
+                  />
+                  {option.label}
+                </li>
+              );
+            }}
+            renderInput={(params) => (
+              <TextField {...params} label="Chọn khu vực" placeholder="Khu vực" />
+            )}
+          />
         </div>
 
-        <div className="flex gap-4 flex-col">
-          <h1 className="text-xl font-bold">Chọn trạng thái:</h1>
-          <div className="flex flex-wrap gap-4">
-            {[1, 2].map((stt) => (
-              <button key={stt} onClick={() => handleGetStatus(stt)}>
+        <div className="flex flex-col gap-2">
+          <label className="font-bold text-lg">Trạng thái:</label>
+          <div className="flex gap-4 flex-wrap">
+            {["1", "2"].map((stt) => (
+              <button key={stt} onClick={() => setStatus(status === stt ? "" : stt)}>
                 <FilterItem
-                  className={`${
-                    status.includes(stt)
-                      ? "bg-primary text-white border-transparent"
-                      : ""
-                  }`}
-                  title={stt === 1 ? "Hoạt động" : "Ngừng hoạt động"}
+                  className={status === stt ? "bg-primary text-white border-transparent" : ""}
+                  title={stt === "1" ? "Không hoạt động" : "Hoạt động"}
                 />
               </button>
             ))}

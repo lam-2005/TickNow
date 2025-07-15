@@ -5,6 +5,9 @@ import Button from "../Button/Button";
 import useTouched from "@/hooks/useTouched";
 import validateForm from "@/utils/validate";
 import ChangePasswordPopup from "../Popup/ChangePasswordPopup";
+import { updateUserAPI } from "@/services/user.service";
+import { toast } from "react-toastify";
+import { useAuth } from "@/hooks/contexts/useAuth";
 export type DataEditProfileReq = {
   name?: string;
   phone?: string;
@@ -12,10 +15,14 @@ export type DataEditProfileReq = {
   password?: string;
   newPassword?: string;
   confirmPassword?: string;
-  retypePassword?: string;
+
+  retypePassword?: string
+
 };
-const ProfileInfo = ({ info }: { info: UserType }) => {
-  const date = new Date(info?.year);
+const ProfileInfo = ({ info, token }: { info: UserType, token: string }) => {
+  const { setUser } = useAuth()
+  const [infoUser, setInfoUser] = useState(info)
+  const date = new Date(infoUser?.year);
   const formattedDateData = date.toISOString().split("T")[0];
   const formattedDateDisplay = date.toLocaleDateString("vi-vn", {
     day: "2-digit",
@@ -48,7 +55,28 @@ const ProfileInfo = ({ info }: { info: UserType }) => {
       focusRef.current?.focus();
     }
   }, [editProfile]);
+  const handleEditProfile = async () => {
+    // console.log(formData);
+    // setIsEditing(false)
+    try {
+      const res = await updateUserAPI(info._id, formdata)
+      toast.success('Chỉnh sửa thành công')
+      setEditProfile(false)
 
+      localStorage.setItem("user", JSON.stringify(formdata?.name) || "")
+      const newName = localStorage.getItem("user") || ""
+      setUser({ name: JSON.parse(newName), token: token })
+      setInfoUser({
+        ...infoUser,
+        name: formdata.name || "",
+        phone: formdata.phone || "",
+        year: formdata.year || ""
+      })
+    } catch (error) {
+      toast.error(`Chỉnh sửa thất bại ${error}`)
+      console.error(error)
+    }
+  }
   return (
     <>
       <div className="grid grid-cols-[repeat(2,minmax(0,360px))] gap-x-10 gap-y-5">
@@ -59,11 +87,10 @@ const ProfileInfo = ({ info }: { info: UserType }) => {
               <input
                 onBlur={touchedFullName}
                 ref={focusRef}
-                className={`max-w-[360px] w-full border px-5 py-2.5 focus:border-foreground outline-none transition-all ${
-                  touched.name && errors.name
-                    ? "border-red-500 focus:border-red-500"
-                    : "border-stone-500 focus:border-foreground"
-                }`}
+className={`max-w-[360px] w-full border px-5 py-2.5 focus:border-foreground outline-none transition-all ${touched.name && errors.name
+                  ? "border-red-500 focus:border-red-500"
+                  : "border-stone-500 focus:border-foreground"
+                  }`}
                 name="name"
                 type="text"
                 placeholder="Nhập họ và tên"
@@ -78,14 +105,14 @@ const ProfileInfo = ({ info }: { info: UserType }) => {
             </>
           ) : (
             <div className="max-w-[360px] w-full bg-background-card rounded-[5px] px-5 py-2.5 text-gray-400">
-              {info?.name}
+              {infoUser?.name}
             </div>
           )}
         </div>
         <div className="space-y-2.5">
           <span className="block">Email</span>
           <div className="max-w-[360px] w-full bg-background-card rounded-[5px] px-5 py-2.5 text-gray-400">
-            {info?.email}
+            {infoUser?.email}
           </div>
         </div>
         <div className="space-y-2.5">
@@ -94,11 +121,10 @@ const ProfileInfo = ({ info }: { info: UserType }) => {
             <>
               <input
                 onBlur={touchedPhone}
-                className={`max-w-[360px] w-full border px-5 py-2.5 focus:border-foreground outline-none transition-all ${
-                  touched.phone && errors.phone
-                    ? "border-red-500 focus:border-red-500"
-                    : "border-stone-500 focus:border-foreground"
-                }`}
+                className={`max-w-[360px] w-full border px-5 py-2.5 focus:border-foreground outline-none transition-all ${touched.phone && errors.phone
+                  ? "border-red-500 focus:border-red-500"
+                  : "border-stone-500 focus:border-foreground"
+                  }`}
                 name="phone"
                 type="text"
                 placeholder="Nhập số điện thoại"
@@ -113,7 +139,7 @@ const ProfileInfo = ({ info }: { info: UserType }) => {
             </>
           ) : (
             <div className="max-w-[360px] w-full bg-background-card rounded-[5px] px-5 py-2.5 text-gray-400">
-              {info?.phone || "Chưa có số điện thoại"}
+              {infoUser?.phone || "Chưa có số điện thoại"}
             </div>
           )}
         </div>
@@ -123,11 +149,10 @@ const ProfileInfo = ({ info }: { info: UserType }) => {
             <>
               <input
                 onBlur={touchedDateOfBirth}
-                className={`max-w-[360px] w-fit border border-stone-500 px-5 py-2.5 focus:border-foreground outline-none transition-all bg-transparent appearance-none [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:cursor-pointer ${
-                  touched.year && errors.year
-                    ? "border-red-500! focus:border-red-500"
-                    : "border-stone-500 focus:border-foreground"
-                }`}
+                className={`max-w-[360px] w-fit border border-stone-500 px-5 py-2.5 focus:border-foreground outline-none transition-all bg-transparent appearance-none [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:cursor-pointer ${touched.year && errors.year
+                  ? "border-red-500! focus:border-red-500"
+                  : "border-stone-500 focus:border-foreground"
+                  }`}
                 name="year"
                 type="date"
                 value={formdata.year}
@@ -145,7 +170,7 @@ const ProfileInfo = ({ info }: { info: UserType }) => {
             </div>
           )}
         </div>
-        {editPass && <ChangePasswordPopup onClose={() => setEditPass(false)} />}
+        {editPass && <ChangePasswordPopup info={info} onClose={() => setEditPass(false)} />}
       </div>
       <div className="flex gap-5 mt-6">
         {!editProfile && (
@@ -161,9 +186,7 @@ const ProfileInfo = ({ info }: { info: UserType }) => {
               title="Lưu thay đổi"
               className="[&_span]:text-sm disabled:brightness-50 disabled:cursor-not-allowed cursor-pointer"
               disabled={errors.name || errors.phone ? true : false}
-              onClick={() => {
-                setEditProfile(false);
-              }}
+              onClick={handleEditProfile}
             />
             <Button
               title="Hủy"

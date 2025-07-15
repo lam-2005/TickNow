@@ -1,26 +1,33 @@
 import React, { useState } from "react";
-import InputGroup from "../InputGroup";
+import InputGroup from "./InputGroup";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/utils/redux/store";
 import { toast } from "react-toastify";
-import { Voucher } from "@/interfaces/vouchers.interface";
-import { updateVoucher } from "@/utils/redux/slices/voucherSlice";
+import { Voucher, VoucherReq } from "@/interfaces/vouchers.interface";
+import { fetchVouchers, updateVoucher } from "@/utils/redux/slices/voucherSlice";
 
 type UpdateFormProps = {
   voucher: Voucher;
   closeForm: () => void;
 };
+
+const formatDate = (date: string | null | undefined) => {
+  if (!date) {
+    return "";
+  }
+
+  return new Date(date).toISOString().slice(0, 10);
+};
+
 const UpdateForm = ({ voucher, closeForm }: UpdateFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
-  const [formData, setFormData] = useState<Voucher>({
-    _id: voucher._id,
-    id: voucher.id,
+  const [formData, setFormData] = useState<VoucherReq>({
     code: voucher.code,
     discount_type: voucher.discount_type,
     user_count: voucher.user_count,
     max_users: voucher.max_users,
-    start_date: voucher.start_date,
-    end_day: voucher.end_day,
+    start_date: formatDate(voucher.start_date),
+    end_date: formatDate(voucher.end_date),
     is_active: voucher.is_active,
   });
 
@@ -30,7 +37,7 @@ const UpdateForm = ({ voucher, closeForm }: UpdateFormProps) => {
       !formData.code ||
       !formData.discount_type ||
       !formData.start_date ||
-      !formData.end_day ||
+      !formData.end_date ||
       !formData.max_users
     ) {
       toast.warning("Vui lòng nhập đầy đủ thông tin!");
@@ -41,8 +48,10 @@ const UpdateForm = ({ voucher, closeForm }: UpdateFormProps) => {
       const sure = confirm("Bạn có muốn cập nhật?");
       if (!sure) return;
 
-      await dispatch(updateVoucher({ data: formData })).unwrap();
+      await dispatch(updateVoucher({ id: voucher._id, data: formData })).unwrap();
       toast.success("Cập nhật voucher thành công!");
+
+      dispatch(fetchVouchers({ limit: 5, page: 1 }));
       closeForm();
     } catch (err) {
       toast.error(`Cập nhật voucher thất bại: ${err}`);

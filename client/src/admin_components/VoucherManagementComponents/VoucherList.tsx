@@ -3,10 +3,10 @@ import Pagination from "@/admin_components/Table/Pagination";
 import Table, { Column } from "@/admin_components/Table/Table";
 import usePanigation from "@/hooks/usePanigation";
 import { AppDispatch } from "@/utils/redux/store";
-import React, { use, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ActionButton from "../Button/ButtonActions";
-import UpdateFormContainer from "./UpdateVoucher/UpdateFormContainer";
+import UpdateFormContainer from "./UpdateForm/UpdateFormContainer";
 import { toast } from "react-toastify";
 import { Voucher } from "@/interfaces/vouchers.interface";
 import dataVoucherSelector from "@/utils/redux/selectors/selectorVoucher";
@@ -21,9 +21,8 @@ type InitDataType = {
   currentPage: number;
   totalPages: number;
 };
-const VoucherList = ({ initData }: { initData: Promise<InitDataType> }) => {
+const VoucherList = ({ initData }: { initData: InitDataType }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const initialData = use(initData);
 
   const isFirstLoad = useRef(true);
   const [openUpdateForm, setOpenUpdateForm] = useState<boolean>(false);
@@ -33,42 +32,51 @@ const VoucherList = ({ initData }: { initData: Promise<InitDataType> }) => {
     useSelector(dataVoucherSelector);
   // hook phan trang
   const { page, changePage, changeRowPerPage, rowsPerPage } = usePanigation(
-    initialData.currentPage
+    initData.currentPage
   );
 
   useEffect(() => {
-    if (isFirstLoad.current) {
-      dispatch(setInitialVouchers(initialData));
-      isFirstLoad.current = false;
-      return;
-    }
-
-    if (page <= totalPages) {
-      dispatch(
-        fetchVouchers({
-          limit: rowsPerPage,
-          page: page,
-          code: filter.code,
-          timeStart: filter.timeStart,
-          timeEnd: filter.timeEnd,
-          status: filter.status,
-        })
-      );
-
-      return;
-    }
-
-    dispatch(
-      fetchVouchers({
-        limit: rowsPerPage,
-        page: totalPages,
-        code: filter.code,
-        timeStart: filter.timeStart,
-        timeEnd: filter.timeEnd,
-        status: filter.status,
-      })
-    );
-  }, [dispatch, rowsPerPage, page, initialData, totalPages, filter]);
+      dispatch(setInitialVouchers(initData));
+    }, [dispatch, initData]);
+  
+    useEffect(() => {
+      if (isFirstLoad.current) {
+        isFirstLoad.current = false;
+        return;
+      }
+      if (page <= totalPages) {
+        dispatch(
+          fetchVouchers({
+            limit: rowsPerPage,
+            page: page,
+            code: filter.code,
+            timeStart: filter.timeStart,
+            timeEnd: filter.timeEnd,
+            status: filter.status,
+          })
+        );
+      } else {
+        dispatch(
+          fetchVouchers({
+            limit: rowsPerPage,
+            page: totalPages,
+            code: filter.code,
+            timeStart: filter.timeStart,
+            timeEnd: filter.timeEnd,
+            status: filter.status,
+          })
+        );
+      }
+    }, [
+      dispatch,
+      page,
+      rowsPerPage,
+      totalPages,
+      filter.code,
+      filter.timeStart,
+      filter.timeEnd,
+      filter.status,
+    ]);
 
   const columns: Column<Voucher>[] = [
     { key: "code", title: "Mã code" },
@@ -82,10 +90,10 @@ const VoucherList = ({ initData }: { initData: Promise<InitDataType> }) => {
       },
     },
     {
-      key: "end_day",
+      key: "end_date",
       title: "Ngày kết thúc",
       render(row) {
-        return <p>{row?.end_day ? row?.end_day.slice(0, 10) : ""}</p>;
+        return <p>{row?.end_date ? row?.end_date.slice(0, 10) : ""}</p>;
       },
     },
     {
@@ -95,7 +103,7 @@ const VoucherList = ({ initData }: { initData: Promise<InitDataType> }) => {
           <ActionButton
             label="Sửa"
             onClick={() => handleOpenUpdate(row._id)}
-            bgColor="bg-yellow-500"
+            bgColor="warning"
           />
         </div>
       ),
@@ -120,7 +128,6 @@ const VoucherList = ({ initData }: { initData: Promise<InitDataType> }) => {
   };
 
   if (loading) return <p className="text-center">Đang tải dữ liệu...</p>;
-
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (

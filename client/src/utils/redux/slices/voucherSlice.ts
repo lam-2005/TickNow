@@ -3,7 +3,7 @@
 import reduxInitStateDefault, {
   ReduxInitStateDefaultType,
 } from "@/configs/reduxInitStateDefault";
-import { Voucher } from "@/interfaces/vouchers.interface";
+import { Voucher, VoucherReq } from "@/interfaces/vouchers.interface";
 import {
   createVoucherService,
   getVouchers,
@@ -120,7 +120,7 @@ export const fetchVouchers = createAsyncThunk(
 
 export const createVoucher = createAsyncThunk(
   "voucherManagement/createVoucher",
-  async ({ data }: { data: Voucher }, thunkAPI) => {
+  async ({ data }: { data: VoucherReq }, thunkAPI) => {
     try {
       const res = await createVoucherService(data);
       return res;
@@ -132,9 +132,9 @@ export const createVoucher = createAsyncThunk(
 
 export const updateVoucher = createAsyncThunk(
   "voucherManagement/updateVoucher",
-  async ({ data }: { data: Voucher }, thunkAPI) => {
+  async ({ id, data }: { id: string, data: VoucherReq }, thunkAPI) => {
     try {
-      const res = await updateVoucherService(data);
+      const res = await updateVoucherService(id, data);
       return res;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
