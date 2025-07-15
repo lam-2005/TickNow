@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const Profile = async () => {
   const cookieStore = cookies();
-  const token = (await cookieStore).get("token")?.value || null;
+  const token = (await cookieStore).get("token")?.value || "";
   let userInfo = null;
   if (token) {
     try {
@@ -36,7 +36,7 @@ const Profile = async () => {
           Lịch sử đặt vé
         </Link>
       </div>
-      <ProfileInfo info={userInfo} />
+      <ProfileInfo info={userInfo} token={token} />
     </div>
   );
 };

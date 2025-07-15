@@ -4,12 +4,16 @@ import useTouched from "@/hooks/useTouched";
 import validateForm from "@/utils/validate";
 import { DataEditProfileReq } from "../ProfilePage/ProfileInfo";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
+import { updateUserAPI } from "@/services/user.service";
+import { UserType } from "@/interfaces/user.interface";
+import { toast } from "react-toastify";
 
 interface Props {
+  info: UserType
   onClose: () => void;
 }
 
-const ChangePasswordPopup = ({ onClose }: Props) => {
+const ChangePasswordPopup = ({ onClose, info }: Props) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] =
@@ -37,6 +41,29 @@ const ChangePasswordPopup = ({ onClose }: Props) => {
       [e.target.name]: e.target.value,
     });
   };
+
+  const handleEditPass = async () => {
+    try {
+      const res = await updateUserAPI(info._id, { retypePassword: formdata.password, password: formdata.newPassword })
+      toast.success('Đổi mật khẩu thành công')
+      setFormdata({
+        password: "",
+        confirmPassword: "",
+        newPassword: "",
+      })
+      onClose()
+    } catch (error) {
+      toast.error(`Đổi mật khẩu thất bại: ${error}`)
+      console.error(error)
+    }
+
+  }
+
+  if (formdata.confirmPassword !== formdata.newPassword) {
+    errors.confirmPassword = "Mật khẩu xác nhận không khớp";
+  } else {
+    errors.confirmPassword = "";
+  }
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div
@@ -68,16 +95,14 @@ const ChangePasswordPopup = ({ onClose }: Props) => {
                 value={formdata.password}
                 onChange={handleChange}
                 placeholder="Mật khẩu hiện tại"
-                className={`w-full px-4 py-3 bg-[#1c1c1c] border  text-sm placeholder-gray-400 outline-none focus:border-foreground transition ${
-                  touched.password && errors.password
-                    ? "border-red-500 focus:border-red-500"
-                    : "border-[#3f3f3f] focus:border-foreground"
-                }`}
+                className={`w-full px-4 py-3 bg-[#1c1c1c] border  text-sm placeholder-gray-400 outline-none focus:border-foreground transition ${touched.password && errors.password
+                  ? "border-red-500 focus:border-red-500"
+                  : "border-[#3f3f3f] focus:border-foreground"
+                  }`}
               />
               <span
-                className={`absolute peer-focus/input:block  right-0 top-1/2 -translate-y-1/2 p-1 cursor-pointer -translate-x-2.5 text-xl ${
-                  formdata.password ? "block" : "hidden"
-                }`}
+                className={`absolute peer-focus/input:block  right-0 top-1/2 -translate-y-1/2 p-1 cursor-pointer -translate-x-2.5 text-xl ${formdata.password ? "block" : "hidden"
+                  }`}
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? <IoIosEye /> : <IoIosEyeOff />}
@@ -98,16 +123,14 @@ const ChangePasswordPopup = ({ onClose }: Props) => {
                 value={formdata.newPassword}
                 onChange={handleChange}
                 placeholder="Mật khẩu mới"
-                className={`w-full px-4 py-3 bg-[#1c1c1c] border border-[#3f3f3f] text-sm placeholder-gray-400 outline-none focus:border-foreground transition ${
-                  touched.newPassword && errors.newPassword
-                    ? "border-red-500 focus:border-red-500"
-                    : "border-[#3f3f3f] focus:border-foreground"
-                }`}
+                className={`w-full px-4 py-3 bg-[#1c1c1c] border border-[#3f3f3f] text-sm placeholder-gray-400 outline-none focus:border-foreground transition ${touched.newPassword && errors.newPassword
+                  ? "border-red-500 focus:border-red-500"
+                  : "border-[#3f3f3f] focus:border-foreground"
+                  }`}
               />
               <span
-                className={`absolute peer-focus/input:block  right-0 top-1/2 -translate-y-1/2 p-1 cursor-pointer -translate-x-2.5 text-xl ${
-                  formdata.newPassword ? "block" : "hidden"
-                }`}
+                className={`absolute peer-focus/input:block  right-0 top-1/2 -translate-y-1/2 p-1 cursor-pointer -translate-x-2.5 text-xl ${formdata.newPassword ? "block" : "hidden"
+                  }`}
                 onClick={() => setShowNewPassword(!showNewPassword)}
               >
                 {showNewPassword ? <IoIosEye /> : <IoIosEyeOff />}
@@ -129,16 +152,14 @@ const ChangePasswordPopup = ({ onClose }: Props) => {
                 onBlur={touchedConfirmPassword}
                 name="confirmPassword"
                 placeholder="Xác nhận mật khẩu mới"
-                className={`w-full px-4 py-3 bg-[#1c1c1c] border border-[#3f3f3f] text-sm placeholder-gray-400 outline-none focus:border-foreground transition ${
-                  touched.confirmPassword && errors.confirmPassword
-                    ? "border-red-500 focus:border-red-500"
-                    : "border-[#3f3f3f] focus:border-foreground"
-                }`}
+                className={`w-full px-4 py-3 bg-[#1c1c1c] border border-[#3f3f3f] text-sm placeholder-gray-400 outline-none focus:border-foreground transition ${touched.confirmPassword && errors.confirmPassword
+                  ? "border-red-500 focus:border-red-500"
+                  : "border-[#3f3f3f] focus:border-foreground"
+                  }`}
               />
               <span
-                className={`absolute peer-focus/input:block  right-0 top-1/2 -translate-y-1/2 p-1 cursor-pointer -translate-x-2.5 text-xl ${
-                  formdata.confirmPassword ? "block" : "hidden"
-                }`}
+                className={`absolute peer-focus/input:block  right-0 top-1/2 -translate-y-1/2 p-1 cursor-pointer -translate-x-2.5 text-xl ${formdata.confirmPassword ? "block" : "hidden"
+                  }`}
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
                 {showConfirmPassword ? <IoIosEye /> : <IoIosEyeOff />}
@@ -150,7 +171,7 @@ const ChangePasswordPopup = ({ onClose }: Props) => {
               </p>
             )}
           </div>
-          <Button title="Xác nhận" className="w-full" />
+          <Button type="button" onClick={handleEditPass} disabled={errors.password || errors.newPassword || errors.confirmPassword || !formdata.password || !formdata.confirmPassword || !formdata.newPassword ? true : false} title="Xác nhận" className="w-full" />
         </form>
       </div>
     </div>
