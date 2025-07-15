@@ -33,13 +33,7 @@ const TableTicket = ({ data }: { data: DataTicketUserList[] }) => {
   return (
     <>
       {ticketPopup && <TicketInfo onClose={closeTicket} idTicket={idTicket} />}
-      {ratingPopup && (
-        <RatePopup
-          idTicket={idTicket}
-          onClose={closeRating}
-          onGetStatus={handleGetStatusCmt}
-        />
-      )}
+      {ratingPopup && <RatePopup idTicket={idTicket} onClose={closeRating} />}
       <table border={0} className="w-full">
         <thead className="[&_th]:text-center [&_th]:py-2 [&_th]:px-4 [&_th]:text-sm [&_th]:font-semibold border-1 border-primary">
           <tr className="bg-primary text-white">
