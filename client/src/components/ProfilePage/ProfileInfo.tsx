@@ -15,7 +15,9 @@ export type DataEditProfileReq = {
   password?: string;
   newPassword?: string;
   confirmPassword?: string;
+
   retypePassword?: string
+
 };
 const ProfileInfo = ({ info, token }: { info: UserType, token: string }) => {
   const { setUser } = useAuth()

@@ -11,6 +11,20 @@ const getRateList = async (param: string = "") => {
   }
 };
 
+export const ratingAPI = async (data: {
+  score: number;
+  comment: string;
+  movie: string;
+  ticket: string;
+}) => {
+  try {
+    const res = await api.post("/rate/update-rate", data);
+    return res;
+  } catch (error) {
+    catchingError(error, "Thêm dữ liệu thất bại");
+  }
+};
+
 export const getRateData = async (page: number, limit: number) => {
   const res = await getRateList(`?page=${page}&limit=${limit}`);
   const ratings: ReviewType[] = res?.data.rate || [];

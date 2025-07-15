@@ -10,7 +10,7 @@ const UpdateFormContainer = ({
   closeForm: () => void;
 }) => {
   return (
-    <PopupContainer title="Cập nhật phòng chiếu" closeForm={closeForm}>
+    <PopupContainer title="Cập nhật bài viết" closeForm={closeForm}>
       <UpdateForm closeForm={closeForm} id={id} />
     </PopupContainer>
   );

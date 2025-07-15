@@ -87,7 +87,7 @@ const TicketList = ({ initData }: { initData: InitDataType }) => {
       title: "Trạng thái",
       render: (row) => (
         <Status
-          title={`${row.type === 1 ? "Chưa thanh toán" : "Đã thanh toán"}`}
+          title={`${row.type === 1 ? "Thanh toán thất bại" : "Đã thanh toán"}`}
           color={`${row.type === 1 ? "error" : "success"}`}
         />
       ),

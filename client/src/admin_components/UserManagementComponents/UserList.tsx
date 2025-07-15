@@ -7,7 +7,11 @@ import ActionButton from "@/admin_components/Button/ButtonActions";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/utils/redux/store";
 import dataUser from "@/utils/redux/selectors/userSelector";
-import { fetchUsers, setInitialUsers, updateUser } from "@/utils/redux/slices/userSlice";
+import {
+  fetchUsers,
+  setInitialUsers,
+  updateUser,
+} from "@/utils/redux/slices/userSlice";
 import usePanigation from "@/hooks/usePanigation";
 import UpdateFormContainer from "./UpdateForm/UpdateFormContainer";
 import { toast } from "react-toastify";
@@ -89,14 +93,29 @@ const UserList = ({ initData }: { initData: Promise<InitDataType> }) => {
     { key: "name", title: "Tên Người Dùng" },
     { key: "phone", title: "Số Điện Thoại" },
     { key: "email", title: "Email" },
-    { key: "year", title: "Năm Sinh" },
+    {
+      key: "year",
+      title: "Ngày Sinh",
+      render(row) {
+        const date = new Date(row.year);
+        return (
+          <p>
+            {date.toLocaleDateString("vi-vn", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            })}
+          </p>
+        );
+      },
+    },
     {
       key: "status",
       title: "Trạng Thái",
       render: (row: UserType) => (
         <Status
           title={row.status ? "Hoạt Động" : "Ngưng Hoạt Động"}
-          color={row.status ? "success" : "warning"}
+          color={row.status ? "success" : "error"}
         />
       ),
     },

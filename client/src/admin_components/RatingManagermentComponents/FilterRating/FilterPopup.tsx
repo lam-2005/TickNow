@@ -29,7 +29,7 @@ const RatingFilterPopup = ({
     dispatch(
       fetchRatings({
         page: 1,
-        limit: 10,
+        limit: 5,
         score,
         movie,
         date,
