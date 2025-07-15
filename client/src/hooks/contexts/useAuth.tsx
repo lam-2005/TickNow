@@ -1,4 +1,5 @@
 import { useContext, createContext, useState, useEffect } from "react";
+
 type User = {
   name: string;
   token: string;
