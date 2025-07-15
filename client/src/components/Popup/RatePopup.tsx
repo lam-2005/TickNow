@@ -76,7 +76,7 @@ const RatePopup = ({
   return (
     <PopupContainer onClose={onClose}>
       {loading ? (
-        <div className="w-full space-y-5 overflow-x-hidden overflow-y-auto">
+        <div className="w-full space-y-5 ">
           <div className="flex gap-7.5">
             <div className="relative max-w-[220px] w-full h-full aspect-[2/3] animate-pulse bg-loading overflow-hidden rounded-[10px]"></div>
             <div className="flex-1 flex-column justify-between items-start">
