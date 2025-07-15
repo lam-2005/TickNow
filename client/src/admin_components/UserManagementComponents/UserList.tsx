@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import Table, { Column } from "@/admin_components/Table/Table";
 import Pagination from "@/admin_components/Table/Pagination";
 import { UserReq, UserType } from "@/interfaces/user.interface";
@@ -13,27 +13,31 @@ import UpdateFormContainer from "./UpdateForm/UpdateFormContainer";
 import { toast } from "react-toastify";
 import Status from "../StatusUI/Status";
 
-const UserList = ({ initData }: { initData: {
+type InitDataType = {
   users: UserType[];
   total: number;
   currentPage: number;
   totalPages: number;
-} }) => {
+};
+
+const UserList = ({ initData }: { initData: Promise<InitDataType> }) => {
   const dispatch = useDispatch<AppDispatch>();
   const isFirstLoad = useRef(true);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
 
+  const initialData = use(initData);
+
   const { users, total, currentPage, totalPages, loading, error, filter } =
     useSelector(dataUser);
   const { page, changePage, changeRowPerPage, rowsPerPage } = usePanigation(
-    initData.currentPage
+    initialData.currentPage
   );
 
   useEffect(() => {
     dispatch(
       setInitialUsers({
-        ...initData,
+        ...initialData,
         loading: false,
         errorAddData: null,
         errorUpdateData: null,
@@ -44,7 +48,7 @@ const UserList = ({ initData }: { initData: {
         },
       })
     );
-  }, [dispatch, initData]);
+  }, [dispatch, initialData]);
 
   useEffect(() => {
     if (isFirstLoad.current) {
@@ -91,16 +95,8 @@ const UserList = ({ initData }: { initData: {
       title: "Trạng Thái",
       render: (row: UserType) => (
         <Status
-          title={
-            row.status
-              ? "Hoạt Động"
-              : "Ngưng Hoạt Động"
-          }
-          color={
-            row.status
-              ? "success"
-              : "warning"
-          }
+          title={row.status ? "Hoạt Động" : "Ngưng Hoạt Động"}
+          color={row.status ? "success" : "warning"}
         />
       ),
     },

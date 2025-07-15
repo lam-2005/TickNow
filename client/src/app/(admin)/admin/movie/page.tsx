@@ -12,7 +12,7 @@ const getGerne = async () => {
 };
 
 const MovieManagement = async () => {
-  const movieData = await movieService.getMovieData(1, 5);
+  const movieData = movieService.getMovieData(1, 5);
   const genres = getGerne();
   console.log("Genres:", genres);
   return (
