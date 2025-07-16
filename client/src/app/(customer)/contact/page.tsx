@@ -20,6 +20,26 @@ const ContactPage = () => {
 
   const [loading, setLoading] = useState(false);
 
+  const validateField = (name: string, value: string): string => {
+    let message = "";
+    if (name === "name" && !value.trim()) {
+      message = "Vui lòng nhập họ và tên";
+    }
+    if (name === "phone") {
+      if (!value.trim()) message = "Vui lòng nhập số điện thoại";
+      else if (!/^\d{10,11}$/.test(value))
+        message = "Số điện thoại không hợp lệ";
+    }
+    if (name === "email") {
+      if (!value.trim()) message = "Vui lòng nhập email";
+      else if (!/\S+@\S+\.\S+/.test(value)) message = "Email không hợp lệ";
+    }
+    if (name === "message" && !value.trim()) {
+      message = "Vui lòng nhập nội dung";
+    }
+    return message;
+  };
+
   const validateAll = () => {
     const newErrors = {
       name: formData.name.trim() ? "" : "Vui lòng nhập họ và tên",
@@ -44,6 +64,14 @@ const ContactPage = () => {
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleBlur = (
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    const errorMessage = validateField(name, value);
+    setErrors((prev) => ({ ...prev, [name]: errorMessage }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -126,7 +154,8 @@ const ContactPage = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-background text-foreground rounded outline-none border border-gray-600 focus:border-primary"
+                onBlur={handleBlur}
+                className="w-full px-4 py-2 bg-background text-foreground rounded outline-none border border-gray-600 focus:border-white"
                 placeholder="Nhập họ tên của bạn"
               />
               {errors.name && (
@@ -144,7 +173,8 @@ const ContactPage = () => {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-background text-foreground rounded outline-none border border-gray-600 focus:border-primary"
+                onBlur={handleBlur}
+                className="w-full px-4 py-2 bg-background text-foreground rounded outline-none border border-gray-600 focus:border-white"
                 placeholder="Nhập số điện thoại của bạn"
               />
               {errors.phone && (
@@ -162,7 +192,8 @@ const ContactPage = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-background text-foreground rounded outline-none border border-gray-600 focus:border-primary"
+                onBlur={handleBlur}
+                className="w-full px-4 py-2 bg-background text-foreground rounded outline-none border border-gray-600 focus:border-white"
                 placeholder="example@gmail.com"
               />
               {errors.email && (
@@ -180,7 +211,8 @@ const ContactPage = () => {
                 rows={4}
                 value={formData.message}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-background text-foreground rounded outline-none border border-gray-600 focus:border-primary"
+                onBlur={handleBlur}
+                className="w-full px-4 py-2 bg-background text-foreground rounded outline-none border border-gray-600 focus:border-white"
                 placeholder="Bạn cần hỗ trợ điều gì?"
               />
               {errors.message && (
