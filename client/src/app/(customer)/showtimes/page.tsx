@@ -11,7 +11,7 @@ const getListDateShowtime = async () => {
 };
 const getListCinema = async () => {
   const res = await getCinemaList();
-  return res.cinema;
+  return res?.data.cinema;
 };
 const getListMovie = async () => {
   const res = await getMovieList("?status=1");

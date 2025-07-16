@@ -1,7 +1,7 @@
 import CommentContainer from "@/components/DetailPageComponents/CommentComponent/CommentContainer";
 import MovieInfo from "@/components/DetailPageComponents/MovieInfo";
 import ShowtimeSelect from "@/components/DetailPageComponents/ShowtimeUI/ShowtimeSelect";
-import { getLocationList } from "@/services/cinema.service";
+import { getLocationList } from "@/services/location.service";
 import { getMovieList } from "@/services/movie.service";
 import { getScreeningList } from "@/services/screening.service";
 import { getIdFromSlug } from "@/utils/convertSlug";

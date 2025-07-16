@@ -1,12 +1,16 @@
 import env from "@/configs/environment";
 import { PostType } from "@/interfaces/post.interface";
 import Image from "next/image";
+import Link from "next/link";
 
 const Offer = ({ data }: { data: PostType }) => {
   const formatDate = new Date(data.start_day.slice(0, 10));
   const convertedDate = formatDate.toLocaleDateString("vi-VN");
   return (
-    <div className="w-full group rounded-2xl dark:bg-transparent dark:shadow-none">
+    <Link
+      href={`/post/${data._id}`}
+      className="w-full group rounded-2xl dark:bg-transparent dark:shadow-none"
+    >
       <div className="relative w-full aspect-[7/4] overflow-hidden rounded-2xl">
         <Image
           src={`${
@@ -29,7 +33,7 @@ const Offer = ({ data }: { data: PostType }) => {
           {data.title}
         </h3>
       </div>
-    </div>
+    </Link>
   );
 };
 

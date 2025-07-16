@@ -7,7 +7,7 @@ import FIlterRoom from "@/admin_components/RoomManagementComponents/FilterRoom/F
 import { getRoomData } from "@/services/room.service";
 
 const getCinema = async () => {
-  const res = await getCinemaList();
+  const res = (await getCinemaList()) as any;
   return res.cinema;
 };
 const RoomManagement = () => {

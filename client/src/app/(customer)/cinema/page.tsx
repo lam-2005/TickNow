@@ -1,8 +1,9 @@
 import React from "react";
-import { getCinemaList, getLocationList } from "@/services/cinema.service";
+import { getCinemaList } from "@/services/cinema.service";
 import BackgroundPage from "@/components/BackgroundPage/BackgroundPage";
 import FilterCinema from "@/components/CinemaComponent/FilterCinema";
 import CinemaList from "@/components/CinemaComponent/CinemaList";
+import { getLocationList } from "@/services/location.service";
 
 const getLocation = async () => {
   try {
@@ -18,10 +19,9 @@ const getCinema = async (locationId: string) => {
     const res = await getCinemaList(
       locationId ? `?location=${locationId}` : ""
     );
-    return res.cinema;
+    return res?.data.cinema;
   } catch (error) {
     console.error(error);
-    return [];
   }
 };
 const CinemaPage = async ({

@@ -77,11 +77,11 @@ export const updateMovie = async (id: string | number, data: MovieReq) => {
     data.genre.forEach((id) => form.append("genre[]", id));
 
     // Chỉ append nếu là file mới, tránh gửi file cũ dạng string
-    if (data.image instanceof File) {
+    if (data.image) {
       form.append("image", data.image);
     }
 
-    if (data.banner instanceof File) {
+    if (data.banner) {
       form.append("banner", data.banner);
     }
 

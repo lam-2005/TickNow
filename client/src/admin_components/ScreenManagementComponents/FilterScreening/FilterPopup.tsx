@@ -174,7 +174,6 @@ const FilterPopup = ({
     );
     closeForm();
   };
-  // console.log(filter);
 
   return (
     <PopupContainer title="Bộ lọc" closeForm={closeForm}>

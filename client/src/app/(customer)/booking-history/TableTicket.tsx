@@ -2,10 +2,25 @@
 import RatePopup from "@/components/Popup/RatePopup";
 import usePopup from "@/hooks/usePopup";
 import { DataTicketUserList } from "@/interfaces/ticket.interface";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TicketInfo from "./TicketInfo";
-const TableTicket = ({ data }: { data: DataTicketUserList[] }) => {
+import { toast } from "react-toastify";
+import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
+import { getTicketUserList } from "@/services/ticket.service";
+const TableTicket = ({
+  data,
+  token,
+}: {
+  data: DataTicketUserList;
+  token: string;
+}) => {
   const [idTicket, setIdTickket] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [newData, setNewData] = useState<DataTicketUserList | null>(null);
+  const [page, setPage] = useState(1);
+  useEffect(() => {
+    setNewData(data);
+  }, [data]);
   const {
     ticketPopup,
     openTicket,
@@ -30,6 +45,20 @@ const TableTicket = ({ data }: { data: DataTicketUserList[] }) => {
     setIdTickket(id);
     openTicket();
   };
+  useEffect(() => {
+    const getNewData = async () => {
+      try {
+        setLoading(true);
+        const res = await getTicketUserList(`?page=${page}&limit=5`, token);
+        setNewData(res?.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getNewData();
+  }, [page]);
   return (
     <>
       {ticketPopup && <TicketInfo onClose={closeTicket} idTicket={idTicket} />}
@@ -42,50 +71,124 @@ const TableTicket = ({ data }: { data: DataTicketUserList[] }) => {
             <th className="">Tên phim</th>
             <th className="">Chi tiết vé</th>
             <th className="">Trạng thái</th>
-            <th className="">Hành động</th>
+            <th className="">Đánh giá phim</th>
           </tr>
         </thead>
-        <tbody className="[&_tr]:even:bg-background-card border-1 border-foreground">
-          {data.map((item) => (
-            <tr key={item._id} className="text-center">
-              <td className="py-2">{item.code}</td>
-              <td className="py-2">{formatDate(item.updatedAt)}</td>
-              <td className="py-2 max-w-[500px]">
-                <p className="line-clamp-1">{item.movie}</p>
-              </td>
-
-              <td className="py-2">
-                <button
-                  className="text-primary hover:underline"
-                  onClick={() => handleGetIdTicketInfo(item._id)}
-                >
-                  Xem
-                </button>
-              </td>
-              <td className="py-2 ">
-                {item.type === 1 ? (
-                  <p className="text-red-500 font-bold w-fit mx-auto rounded-full px-2.5 py-0.5 bg-red-300">
-                    Thanh toán thất bại
-                  </p>
-                ) : item.type === 2 ? (
-                  <p className="text-green-600 font-bold w-fit mx-auto rounded-full px-2.5 py-0.5 bg-green-300">
-                    Đã thanh toán
-                  </p>
-                ) : (
-                  "Thanh toán thất bại"
-                )}
-              </td>
-              <td className="py-2">
-                <button
-                  className="text-primary hover:underline"
-                  onClick={() => handleGetIdTicket(item._id)}
-                >
-                  Đánh giá phim
-                </button>
+        {loading ? (
+          <tbody>
+            <tr>
+              <td colSpan={6} className="p-4 text-center">
+                Đang tải dữ liệu...
               </td>
             </tr>
-          ))}
-        </tbody>
+          </tbody>
+        ) : (
+          <tbody className="[&_tr]:even:bg-background-card border-1 border-foreground">
+            {newData?.tickets.map((item) => (
+              <tr key={item._id} className="text-center">
+                <td className="py-2">{item.code}</td>
+                <td className="py-2">{formatDate(item.updatedAt)}</td>
+                <td className="py-2 max-w-[500px]">
+                  <p className="line-clamp-1">{item.movie}</p>
+                </td>
+
+                <td className="py-2">
+                  <button
+                    className="text-primary hover:underline"
+                    onClick={() => handleGetIdTicketInfo(item._id)}
+                  >
+                    Xem
+                  </button>
+                </td>
+                <td className="py-2 ">
+                  {item.type === 1 ? (
+                    <p className="text-red-500 font-bold w-fit mx-auto rounded-full px-2.5 py-0.5 bg-red-300">
+                      Thanh toán thất bại
+                    </p>
+                  ) : item.type === 2 ? (
+                    <p className="text-green-600 font-bold w-fit mx-auto rounded-full px-2.5 py-0.5 bg-green-300">
+                      Đã thanh toán
+                    </p>
+                  ) : (
+                    "Thanh toán thất bại"
+                  )}
+                </td>
+                <td className="py-2">
+                  {item?.status_cmt && item?.status_cmt === 1 ? (
+                    <p
+                      className="text-primary/50 cursor-default"
+                      onClick={() =>
+                        toast.info(
+                          "Bạn chỉ được đánh giá sau khi trải nghiệm phim"
+                        )
+                      }
+                    >
+                      Đánh giá
+                    </p>
+                  ) : item?.status_cmt && item?.status_cmt === 2 ? (
+                    <button
+                      className="text-primary hover:underline"
+                      onClick={() => handleGetIdTicket(item._id)}
+                    >
+                      Đánh giá
+                    </button>
+                  ) : item?.status_cmt && item?.status_cmt === 3 ? (
+                    <p
+                      className="cursor-default"
+                      onClick={() => toast.info("Bạn đã đánh giá phim này")}
+                    >
+                      Đã đánh giá
+                    </p>
+                  ) : (
+                    <p
+                      className="text-primary/50 cursor-default"
+                      onClick={() => toast.info("Bạn chưa đặt vé phim này")}
+                    >
+                      Đánh giá
+                    </p>
+                  )}
+                </td>
+              </tr>
+            ))}
+            <tr className="bg-background! border-t-1 border-t-foreground">
+              <td colSpan={6}>
+                {" "}
+                <div className="flex items-center justify-end gap-5 p-5 py-3">
+                  <div>
+                    Hiển thị {(page - 1) * (newData?.pagination.limit || 5) + 1}
+                    –
+                    {Math.min(
+                      page * (newData?.pagination.limit || 5),
+                      newData?.pagination.total || 5
+                    )}{" "}
+                    của {newData?.pagination.total} mục
+                  </div>
+                  <div className="flex">
+                    <button
+                      onClick={() => setPage(page - 1)}
+                      className={`flex-center text-3xl text-foreground  cursor-pointer                   ${
+                        page === 1 ? "text-gray-400 pointer-events-none" : ""
+                      }`}
+                    >
+                      <BiChevronLeft />
+                    </button>
+                    <button
+                      onClick={() => setPage(page + 1)}
+                      className={`flex-center text-3xl text-foreground  cursor-pointer           ${
+                        newData?.pagination.totalPages &&
+                        page === newData?.pagination.totalPages
+                          ? "text-gray-400 pointer-events-none"
+                          : ""
+                      } `}
+                    >
+                      <BiChevronRight />
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        )}
       </table>
     </>
   );

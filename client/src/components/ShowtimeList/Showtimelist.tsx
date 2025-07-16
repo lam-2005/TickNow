@@ -83,19 +83,21 @@ const Showtimelist = ({ listFilter }: ShowtimeProps) => {
                 data={item.film}
                 date={selectedDate}
               >
-                {item.cinemas.map((cinema) => {
+                {item.cinemas.map((cinema: any) => {
                   const sub =
-                    cinema.showtimes?.filter((type) => type.showtype === 1) ||
-                    [];
+                    cinema.showtimes?.filter(
+                      (type: any) => type.showtype === 1
+                    ) || [];
                   const dub =
-                    cinema.showtimes?.filter((type) => type.showtype === 2) ||
-                    [];
+                    cinema.showtimes?.filter(
+                      (type: any) => type.showtype === 2
+                    ) || [];
 
                   return (
                     <ShowtimeItem key={cinema.id} nameCinema={cinema.name}>
                       {sub.length > 0 && (
                         <ShowType type="Phụ đề">
-                          {sub.map((time) => (
+                          {sub.map((time: any) => (
                             <TimeScreening
                               key={time.id}
                               value={time.time}
@@ -110,7 +112,7 @@ const Showtimelist = ({ listFilter }: ShowtimeProps) => {
                       )}
                       {dub.length > 0 && (
                         <ShowType type="Lồng tiếng">
-                          {dub.map((time) => (
+                          {dub.map((time: any) => (
                             <TimeScreening
                               key={time.id}
                               value={time.time}

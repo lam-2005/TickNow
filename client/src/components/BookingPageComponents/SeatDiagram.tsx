@@ -4,7 +4,7 @@ import handleBooking from "@/utils/handleBooking";
 import {
   getTicket,
   saveTicket,
-  TicketTypeLocalStorage,
+  // TicketTypeLocalStorage,
 } from "@/utils/saveTicket";
 
 const SeatDiagram = ({
@@ -20,12 +20,12 @@ const SeatDiagram = ({
 }) => {
   const { layout, selectedSeat } = handleBooking(roomLayout);
   const [selecting, setSelecting] = useState<string[]>([]);
-  const [ticket, setTicket] = useState<TicketTypeLocalStorage | null>(null);
+  // const [ticket, setTicket] = useState<TicketTypeLocalStorage | null>(null);
 
-  useEffect(() => {
-    const storedTicket = getTicket();
-    setTicket(storedTicket);
-  }, []);
+  // useEffect(() => {
+  //   const storedTicket = getTicket();
+  //   setTicket(storedTicket);
+  // }, []);
 
   const handleSeatClick = (seatName: string) => {
     if (!seatName) return;
@@ -37,18 +37,17 @@ const SeatDiagram = ({
   };
 
   useEffect(() => {
-    if (ticket) {
-      const updatedTicket = { ...ticket, seats: selecting };
-
-      if (ticket.screening?.screeningInfo?.price) {
-        updatedTicket.price =
-          selecting.length * ticket.screening.screeningInfo.price;
-      } else {
-        updatedTicket.price = 0;
-      }
-
+    const storedTicket = getTicket();
+    if (storedTicket) {
+      const updatedTicket = {
+        ...storedTicket,
+        seats: selecting,
+        price: storedTicket.screening?.screeningInfo?.price
+          ? selecting.length * storedTicket.screening.screeningInfo.price
+          : 0,
+      };
       saveTicket(updatedTicket);
-      setTicket(updatedTicket);
+      // setTicket(updatedTicket);
     }
   }, [selecting]);
 

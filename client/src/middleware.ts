@@ -18,6 +18,10 @@ export function middleware(request: NextRequest) {
   if (privateRoute.user.some((url) => pathname.startsWith(url)) && !token) {
     return NextResponse.redirect(new URL("/", request.url));
   }
+  if (pathname.startsWith("/reset-password") && token) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
   if (
     privateRoute.admin.some((url) => pathname.startsWith(url)) &&
     !tokenAdmin

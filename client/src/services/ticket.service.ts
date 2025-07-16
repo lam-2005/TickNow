@@ -5,7 +5,7 @@ const getTicketList = async (param: string = "") => {
     const res = await api.get(`/ticket${param}`);
     return res;
   } catch (error) {
-    console.log("Error fetching data:", error);
+    catchingError(error, "Lấy dữ liệu thất bại!");
   }
 };
 export const getTicketData = async (page: number, limit: number) => {
@@ -40,16 +40,16 @@ export const checkoutTicket = async (
     catchingError(error, "Thanh toán thất bại!");
   }
 };
-const getTicketUserList = async (token: string) => {
+const getTicketUserList = async (param?: string, token?: string) => {
   try {
-    const res = await api.get("/ticket", {
+    const res = await api.get(`/ticket${param}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     return res;
   } catch (error) {
-    catchingError(error, "Thanh toán thất bại!");
+    catchingError(error, "Lấy dữ liệu thất bại!");
   }
 };
 export { getTicketList, getTicketUserList };

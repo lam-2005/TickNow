@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Offer from "@/components/Offer/Offer";
 import { getPostList } from "@/services/post.service";
 import { PostType } from "@/interfaces/post.interface";
@@ -25,13 +24,7 @@ export default async function PostPage() {
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mb-10">
           {posts.map((item: PostType) => (
-            <Link
-              href={`/post/${item._id}`}
-              key={item._id}
-              className="bg-background-card rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow pb-5 block"
-            >
-              <Offer data={item} />
-            </Link>
+            <Offer data={item} key={item._id} />
           ))}
         </div>
       )}

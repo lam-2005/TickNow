@@ -17,6 +17,25 @@ const ContactPage = () => {
     message: "",
   });
 
+  const validateField = (name: string, value: string): string => {
+    let message = "";
+    if (name === "name" && !value.trim()) {
+      message = "Vui lòng nhập họ và tên";
+    }
+    if (name === "phone") {
+      if (!value.trim()) message = "Vui lòng nhập số điện thoại";
+      else if (!/^\d{10,11}$/.test(value))
+        message = "Số điện thoại không hợp lệ";
+    }
+    if (name === "email") {
+      if (!value.trim()) message = "Vui lòng nhập email";
+      else if (!/\S+@\S+\.\S+/.test(value)) message = "Email không hợp lệ";
+    }
+    if (name === "message" && !value.trim()) {
+      message = "Vui lòng nhập nội dung";
+    }
+
+    return message;
   const [loading, setLoading] = useState(false);
 
   const validateAll = () => {
@@ -38,13 +57,45 @@ const ContactPage = () => {
     return !Object.values(newErrors).some((err) => err);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleBlur = (
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    const errorMessage = validateField(name, value);
+    setErrors((prev) => ({ ...prev, [name]: errorMessage }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    let hasError = false;
+    const newErrors: typeof errors = {
+      name: "",
+      phone: "",
+      email: "",
+      message: "",
+    };
+
+    Object.entries(formData).forEach(([key, value]) => {
+      const errorMsg = validateField(key, value);
+      newErrors[key as keyof typeof newErrors] = errorMsg;
+      if (errorMsg) hasError = true;
+    });
+
+    setErrors(newErrors);
+
+    if (!hasError) {
+      alert("Đã gửi liên hệ thành công!");
+      console.log("Data gửi:", formData);
+      setFormData({ name: "", phone: "", email: "", message: "" });
+      setErrors({ name: "", phone: "", email: "", message: "" });
     if (!validateAll()) return;
 
     setLoading(true);
@@ -78,7 +129,9 @@ const ContactPage = () => {
 
   return (
     <section className="max-w-4xl mx-auto px-4 py-10 text-foreground">
-      <h2 className="text-3xl font-bold mb-8 text-center text-primary">Liên hệ với TickNow</h2>
+      <h2 className="text-3xl font-bold mb-8 text-center text-primary">
+        Liên hệ với TickNow
+      </h2>
 
       <div className="grid md:grid-cols-2 gap-10">
         <div className="space-y-6">
@@ -86,7 +139,9 @@ const ContactPage = () => {
             <FaPhoneAlt className="text-primary mt-1" />
             <div>
               <h4 className="font-semibold">Hotline</h4>
-              <p className="text-foreground">1900 1234 (8:00 - 22:00, hàng ngày)</p>
+              <p className="text-foreground">
+                1900 1234 (8:00 - 22:00, hàng ngày)
+              </p>
             </div>
           </div>
           <div className="flex items-start gap-4">
@@ -100,7 +155,9 @@ const ContactPage = () => {
             <FaMapMarkerAlt className="text-primary mt-1" />
             <div>
               <h4 className="font-semibold">Văn phòng</h4>
-              <p className="text-foreground">Công viên phần mềm Quang Trung, Quận 12, TP.HCM</p>
+              <p className="text-foreground">
+                Công viên phần mềm Quang Trung, Quận 12, TP.HCM
+              </p>
             </div>
           </div>
         </div>
@@ -108,7 +165,9 @@ const ContactPage = () => {
         <div>
           <form className="space-y-5" onSubmit={handleSubmit} noValidate>
             <div>
-              <label htmlFor="name" className="block font-medium mb-1">Họ và tên</label>
+              <label htmlFor="name" className="block font-medium mb-1">
+                Họ và tên
+              </label>
               <input
                 type="text"
                 id="name"
@@ -118,11 +177,15 @@ const ContactPage = () => {
                 className="w-full px-4 py-2 bg-background text-foreground rounded outline-none border border-gray-600 focus:border-white"
                 placeholder="Nhập họ tên của bạn"
               />
-              {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+              {errors.name && (
+                <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+              )}
             </div>
 
             <div>
-              <label htmlFor="phone" className="block font-medium mb-1">Số điện thoại</label>
+              <label htmlFor="phone" className="block font-medium mb-1">
+                Số điện thoại
+              </label>
               <input
                 type="text"
                 id="phone"
@@ -132,11 +195,15 @@ const ContactPage = () => {
                 className="w-full px-4 py-2 bg-background text-foreground rounded outline-none border border-gray-600 focus:border-white"
                 placeholder="Nhập số điện thoại của bạn"
               />
-              {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
+              {errors.phone && (
+                <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+              )}
             </div>
 
             <div>
-              <label htmlFor="email" className="block font-medium mb-1">Email</label>
+              <label htmlFor="email" className="block font-medium mb-1">
+                Email
+              </label>
               <input
                 type="email"
                 id="email"
@@ -146,11 +213,15 @@ const ContactPage = () => {
                 className="w-full px-4 py-2 bg-background text-foreground rounded outline-none border border-gray-600 focus:border-white"
                 placeholder="example@gmail.com"
               />
-              {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+              )}
             </div>
 
             <div>
-              <label htmlFor="message" className="block font-medium mb-1">Nội dung</label>
+              <label htmlFor="message" className="block font-medium mb-1">
+                Nội dung
+              </label>
               <textarea
                 id="message"
                 name="message"
@@ -160,7 +231,9 @@ const ContactPage = () => {
                 className="w-full px-4 py-2 bg-background text-foreground rounded outline-none border border-gray-600 focus:border-white"
                 placeholder="Bạn cần hỗ trợ điều gì?"
               />
-              {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
+              {errors.message && (
+                <p className="text-red-500 text-sm mt-1">{errors.message}</p>
+              )}
             </div>
 
             <button

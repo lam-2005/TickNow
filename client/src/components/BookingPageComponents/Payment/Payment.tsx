@@ -70,7 +70,7 @@ const Payment = () => {
 
     const now = new Date();
     const startDate = new Date(voucher.start_date);
-    const endDate = new Date(voucher.end_day);
+    const endDate = new Date(voucher.end_date || "");
 
     if (now < startDate || now > endDate) {
       toast.info("Mã giảm giá hết hạn!");
@@ -126,16 +126,16 @@ const Payment = () => {
           <div className="active [&.active]:border-primary w-full border-2 border-foreground flex gap-2.5 items-center py-2.5 px-[15px] rounded-[5px] hover:border-primary transition-colors duration-300">
             <div className="size-7.5 bg-amber-200 rounded-[5px] relative overflow-hidden">
               <Image
-                src={"/logo/vnpay.webp"}
+                src={"/logo/payos.webp"}
                 alt="vnpay-logo"
                 sizes="30px"
                 fill
                 className="object-cover"
               />
             </div>
-            <span>VNPAY</span>
+            <span>payOS</span>
           </div>
-          <div className="w-full border-2 border-foreground flex gap-2.5 items-center py-2.5 px-[15px] rounded-[5px] hover:border-primary transition-colors duration-300">
+          {/* <div className="w-full border-2 border-foreground flex gap-2.5 items-center py-2.5 px-[15px] rounded-[5px] hover:border-primary transition-colors duration-300">
             <div className="size-7.5 bg-amber-200 rounded-[5px] relative overflow-hidden">
               {" "}
               <Image
@@ -147,7 +147,7 @@ const Payment = () => {
               />
             </div>
             <span>Momo</span>
-          </div>
+          </div> */}
         </div>
       </div>
 

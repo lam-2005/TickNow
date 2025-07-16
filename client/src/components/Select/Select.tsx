@@ -69,7 +69,7 @@ export const SelectComponent = <T,>({
           }}
         >
           {placeholder && <MenuItem value="">{placeholder}</MenuItem>}
-          {data.map((item, idx) => (
+          {data?.map((item, idx) => (
             <MenuItem key={idx} value={getValue(item)}>
               {getLabel(item)}
             </MenuItem>

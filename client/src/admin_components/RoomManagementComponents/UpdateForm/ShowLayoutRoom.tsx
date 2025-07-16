@@ -13,7 +13,6 @@ const ShowLayoutRoom = ({
   ) => void;
 }) => {
   const { layout } = handleShowLayoutRoom(formData);
-  console.log(layout);
 
   const handleToggleSeat = (seatId: string) => {
     const rowLetter = seatId[0];

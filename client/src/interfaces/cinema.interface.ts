@@ -5,7 +5,6 @@ export interface CinemaRes {
   status: number;
   location: LocationType;
 }
-
 export interface CinemaReq {
   name: string;
   image: File | null | string;

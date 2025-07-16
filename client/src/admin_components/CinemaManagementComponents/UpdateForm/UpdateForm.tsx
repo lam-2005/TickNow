@@ -54,8 +54,6 @@ const UpdateForm = ({
     try {
       const confirmUpdate = confirm("Bạn có muốn cập nhật rạp này?");
       if (!confirmUpdate) return;
-      console.log(id);
-      console.log(formData);
       await dispatch(updateCinema({ id: id, data: formData })).unwrap();
       toast.success("Cập nhật rạp thành công!");
 

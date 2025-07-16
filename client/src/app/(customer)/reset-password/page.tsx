@@ -2,11 +2,23 @@
 import Button from "@/components/Button/Button";
 import { DataEditProfileReq } from "@/components/ProfilePage/ProfileInfo";
 import useTouched from "@/hooks/useTouched";
+import { resetPassAPI } from "@/services/user.service";
 import validateForm from "@/utils/validate";
-import React, { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { FormEvent, useEffect, useState } from "react";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
+import { toast } from "react-toastify";
 
 const ReserPassword = () => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const token = searchParams.get("token") || "";
+  useEffect(() => {
+    const currentToken = searchParams.get("token");
+    if (!currentToken) {
+      router.replace("/");
+    }
+  }, [searchParams]);
   const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] =
     useState<boolean>(false);
@@ -31,10 +43,28 @@ const ReserPassword = () => {
   } else {
     errors.confirmPassword = "";
   }
+  const handleResetPassword = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!formdata.confirmPassword || !formdata.newPassword) {
+      toast.warning("Vui lòng nhập đủ thông tin");
+      return;
+    }
+    try {
+      await resetPassAPI({
+        token,
+        password: formdata.newPassword || "123456",
+      });
+      toast.success("Khôi phục mật khẩu thành công");
+      router.push("/");
+    } catch (error) {
+      toast.error(`Có lỗi xảy ra khi gửi yêu cầu: ${error}`);
+      console.error(error);
+    }
+  };
   return (
     <div className="max-w-[400px] m-auto mt-15">
       <h2 className="text-center mb-5">Đặt mật khẩu mới</h2>
-      <form className="space-y-6 ">
+      <form className="space-y-6 " onSubmit={handleResetPassword}>
         <div className="flex-column gap-2">
           <div className="relative">
             <input

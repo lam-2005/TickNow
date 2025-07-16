@@ -84,8 +84,8 @@ const UserList = ({ initData }: { initData: Promise<InitDataType> }) => {
         })
       );
     } catch (err) {
-      console.log("Cập nhật người dùng thất bại:", err);
-      toast.error("Cập nhật người dùng thất bại!");
+      toast.error(`Cập nhật người dùng thất bại! ${err}`);
+      console.error("Cập nhật người dùng thất bại:", err);
     }
   };
 
