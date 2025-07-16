@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -17,25 +18,6 @@ const ContactPage = () => {
     message: "",
   });
 
-  const validateField = (name: string, value: string): string => {
-    let message = "";
-    if (name === "name" && !value.trim()) {
-      message = "Vui lòng nhập họ và tên";
-    }
-    if (name === "phone") {
-      if (!value.trim()) message = "Vui lòng nhập số điện thoại";
-      else if (!/^\d{10,11}$/.test(value))
-        message = "Số điện thoại không hợp lệ";
-    }
-    if (name === "email") {
-      if (!value.trim()) message = "Vui lòng nhập email";
-      else if (!/\S+@\S+\.\S+/.test(value)) message = "Email không hợp lệ";
-    }
-    if (name === "message" && !value.trim()) {
-      message = "Vui lòng nhập nội dung";
-    }
-
-    return message;
   const [loading, setLoading] = useState(false);
 
   const validateAll = () => {
@@ -64,38 +46,8 @@ const ContactPage = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleBlur = (
-    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    const errorMessage = validateField(name, value);
-    setErrors((prev) => ({ ...prev, [name]: errorMessage }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    let hasError = false;
-    const newErrors: typeof errors = {
-      name: "",
-      phone: "",
-      email: "",
-      message: "",
-    };
-
-    Object.entries(formData).forEach(([key, value]) => {
-      const errorMsg = validateField(key, value);
-      newErrors[key as keyof typeof newErrors] = errorMsg;
-      if (errorMsg) hasError = true;
-    });
-
-    setErrors(newErrors);
-
-    if (!hasError) {
-      alert("Đã gửi liên hệ thành công!");
-      console.log("Data gửi:", formData);
-      setFormData({ name: "", phone: "", email: "", message: "" });
-      setErrors({ name: "", phone: "", email: "", message: "" });
     if (!validateAll()) return;
 
     setLoading(true);
@@ -113,15 +65,15 @@ const ContactPage = () => {
 
       const result = await res.json();
       if (result.status) {
-        alert(result.message || "Gửi liên hệ thành công!");
+        toast.success(result.message || "Gửi liên hệ thành công!");
         setFormData({ name: "", phone: "", email: "", message: "" });
         setErrors({ name: "", phone: "", email: "", message: "" });
       } else {
-        alert("Gửi thất bại, vui lòng thử lại.");
+        toast.error("Gửi thất bại, vui lòng thử lại.");
       }
     } catch (error) {
       console.error("Lỗi gửi liên hệ:", error);
-      alert("Đã xảy ra lỗi. Vui lòng thử lại.");
+      toast.error("Đã xảy ra lỗi. Vui lòng thử lại.");
     } finally {
       setLoading(false);
     }

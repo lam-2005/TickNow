@@ -11,7 +11,7 @@ const getTicketList = async (param: string = "") => {
 export const getTicketData = async (page: number, limit: number) => {
   const res = await getTicketList(`?page=${page}&limit=${limit}`);
   return {
-    ticket: res?.data.ticket,
+    ticket: res?.data.tickets,
     total: res?.data.pagination.total,
     currentPage: res?.data.pagination.page,
     totalPages: res?.data.pagination.totalPages,
