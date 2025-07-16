@@ -17,61 +17,62 @@ const ContactPage = () => {
     message: "",
   });
 
-  const validateField = (name: string, value: string): string => {
-    let message = "";
-    if (name === "name" && !value.trim()) {
-      message = "Vui lòng nhập họ và tên";
-    }
-    if (name === "phone") {
-      if (!value.trim()) message = "Vui lòng nhập số điện thoại";
-      else if (!/^\d{10,11}$/.test(value)) message = "Số điện thoại không hợp lệ";
-    }
-    if (name === "email") {
-      if (!value.trim()) message = "Vui lòng nhập email";
-      else if (!/\S+@\S+\.\S+/.test(value)) message = "Email không hợp lệ";
-    }
-    if (name === "message" && !value.trim()) {
-      message = "Vui lòng nhập nội dung";
-    }
+  const [loading, setLoading] = useState(false);
 
-    return message;
+  const validateAll = () => {
+    const newErrors = {
+      name: formData.name.trim() ? "" : "Vui lòng nhập họ và tên",
+      phone: !formData.phone.trim()
+        ? "Vui lòng nhập số điện thoại"
+        : !/^\d{10,11}$/.test(formData.phone)
+        ? "Số điện thoại không hợp lệ"
+        : "",
+      email: !formData.email.trim()
+        ? "Vui lòng nhập email"
+        : !/\S+@\S+\.\S+/.test(formData.email)
+        ? "Email không hợp lệ"
+        : "",
+      message: formData.message.trim() ? "" : "Vui lòng nhập nội dung",
+    };
+    setErrors(newErrors);
+    return !Object.values(newErrors).some((err) => err);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-
-    // Clear lỗi nếu người dùng bắt đầu chỉnh sửa lại
-    if (errors[name as keyof typeof errors]) {
-      const newError = validateField(name, value);
-      setErrors((prev) => ({ ...prev, [name]: newError }));
-    }
   };
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    const errorMessage = validateField(name, value);
-    setErrors((prev) => ({ ...prev, [name]: errorMessage }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    let hasError = false;
-    const newErrors: typeof errors = { name: "", phone: "", email: "", message: "" };
+    if (!validateAll()) return;
 
-    Object.entries(formData).forEach(([key, value]) => {
-      const errorMsg = validateField(key, value);
-      newErrors[key as keyof typeof newErrors] = errorMsg;
-      if (errorMsg) hasError = true;
-    });
+    setLoading(true);
+    try {
+      const res = await fetch("http://localhost:1001/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          content: formData.message,
+        }),
+      });
 
-    setErrors(newErrors);
-
-    if (!hasError) {
-      alert("Đã gửi liên hệ thành công!");
-      console.log("Data gửi:", formData);
-      setFormData({ name: "", phone: "", email: "", message: "" });
-      setErrors({ name: "", phone: "", email: "", message: "" });
+      const result = await res.json();
+      if (result.status) {
+        alert(result.message || "Gửi liên hệ thành công!");
+        setFormData({ name: "", phone: "", email: "", message: "" });
+        setErrors({ name: "", phone: "", email: "", message: "" });
+      } else {
+        alert("Gửi thất bại, vui lòng thử lại.");
+      }
+    } catch (error) {
+      console.error("Lỗi gửi liên hệ:", error);
+      alert("Đã xảy ra lỗi. Vui lòng thử lại.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -114,7 +115,6 @@ const ContactPage = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                onBlur={handleBlur}
                 className="w-full px-4 py-2 bg-background text-foreground rounded outline-none border border-gray-600 focus:border-primary"
                 placeholder="Nhập họ tên của bạn"
               />
@@ -124,12 +124,11 @@ const ContactPage = () => {
             <div>
               <label htmlFor="phone" className="block font-medium mb-1">Số điện thoại</label>
               <input
-                type="tel"
+                type="text"
                 id="phone"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                onBlur={handleBlur}
                 className="w-full px-4 py-2 bg-background text-foreground rounded outline-none border border-gray-600 focus:border-primary"
                 placeholder="Nhập số điện thoại của bạn"
               />
@@ -144,7 +143,6 @@ const ContactPage = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                onBlur={handleBlur}
                 className="w-full px-4 py-2 bg-background text-foreground rounded outline-none border border-gray-600 focus:border-primary"
                 placeholder="example@gmail.com"
               />
@@ -159,7 +157,6 @@ const ContactPage = () => {
                 rows={4}
                 value={formData.message}
                 onChange={handleChange}
-                onBlur={handleBlur}
                 className="w-full px-4 py-2 bg-background text-foreground rounded outline-none border border-gray-600 focus:border-primary"
                 placeholder="Bạn cần hỗ trợ điều gì?"
               />
@@ -168,9 +165,10 @@ const ContactPage = () => {
 
             <button
               type="submit"
-              className="bg-primary text-foreground py-2 px-6 rounded hover:bg-opacity-90 transition"
+              disabled={loading}
+              className="bg-primary text-foreground py-2 px-6 rounded hover:bg-opacity-90 transition disabled:opacity-50"
             >
-              Gửi liên hệ
+              {loading ? "Đang gửi..." : "Gửi liên hệ"}
             </button>
           </form>
         </div>
