@@ -10,7 +10,6 @@ export default function handleBooking(roomLayout: {
   const columns = roomLayout.column;
   const removedSeat: { [key: string]: number[] } = roomLayout.element_remove;
   const selectedSeat: { [key: string]: number[] } = roomLayout.element_selected;
-  // console.log(rows, columns, removedSeat);
 
   const rowLetters: string[] = [];
   for (let i = 0; i < rows; i++) {

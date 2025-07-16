@@ -6,7 +6,6 @@ const getRateList = async (param: string = "") => {
     const res = api.get(`/rate${param}`);
     return await res;
   } catch (error) {
-    console.log("Error fetching data:", error);
     catchingError(error, "Lấy dữ liệu thất bại");
   }
 };

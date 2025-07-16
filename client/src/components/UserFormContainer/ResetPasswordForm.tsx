@@ -3,11 +3,27 @@ import Input from "./Input";
 import Button from "../Button/Button";
 import useTouched from "@/hooks/useTouched";
 import validateForm from "@/utils/validate";
+import { toast } from "react-toastify";
+import { forgetPassAPI } from "@/services/user.service";
 
 const ResetPasswordForm = ({ setOpenForm }: { setOpenForm: () => void }) => {
   const { touched, touchedEmail } = useTouched();
   const [email, setEmail] = useState<string>("");
   const errors = validateForm({ email });
+  const handleForrgetPass = async () => {
+    if (!email) {
+      toast.warning("Vui lòng nhập email của bạn");
+      return;
+    }
+    try {
+      await forgetPassAPI(email);
+      toast.success("Một liên kết đã gửi đến, hãy kiểm tra email của bạn");
+    } catch (error) {
+      toast.error(`Không thể gửi email: ${error}`);
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <h2 className="text-2xl font-semibold">Khôi phục mật khẩu của bạn</h2>
@@ -34,6 +50,7 @@ const ResetPasswordForm = ({ setOpenForm }: { setOpenForm: () => void }) => {
           title="Gửi email khôi phục"
           className="w-full uppercase"
           disabled={errors.email ? true : false}
+          onClick={handleForrgetPass}
         />
       </form>
       <div className="text-subtitle text-center space-y-1 mt-5 ">

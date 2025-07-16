@@ -14,7 +14,6 @@ const getGerne = async () => {
 const MovieManagement = async () => {
   const movieData = movieService.getMovieData(1, 5);
   const genres = getGerne();
-  console.log("Genres:", genres);
   return (
     <div className="card">
       <HeadingCard title="Quản Lý Phim">

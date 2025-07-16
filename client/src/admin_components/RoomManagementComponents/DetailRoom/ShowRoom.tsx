@@ -6,7 +6,6 @@ export default function handleShowRoom(roomLayout: RoomType) {
   const columns = room.column;
   const removedSeat: { [key: string]: number[] } = room.element_remove;
   const selectedSeat: { [key: string]: number[] } = room.element_selected;
-  // console.log(rows, columns, removedSeat);
 
   const rowLetters: string[] = [];
   for (let i = 0; i < rows; i++) {

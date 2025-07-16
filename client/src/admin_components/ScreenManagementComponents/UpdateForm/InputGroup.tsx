@@ -19,7 +19,6 @@ const InputGroup = ({
   listOptionRooms,
 }: InputGroupProps) => {
   const getCinema = groupCinemasWithRooms(listOptionRooms);
-  // console.log(getCinema);
 
   const [selectedCinemaId, setSelectedCinemaId] = useState(formData.id_cinema);
   // Tìm phòng theo rạp được chọn

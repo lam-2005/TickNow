@@ -8,7 +8,6 @@ const getUserList = async (param: string = "") => {
     const res = api.get(`/user${param}`);
     return await res;
   } catch (error) {
-    console.log("Error fetching data:", error);
     catchingError(error, "Lấy dữ liệu thất bại");
   }
 };
@@ -23,8 +22,6 @@ const loginAPI = async (data: LoginType) => {
 const signupAPI = async (data: FieldsType) => {
   try {
     const res = await api.post("/user/register", data);
-    console.log(res);
-
     return res;
   } catch (error) {
     catchingError(error, "Đăng ký thất bại!");
@@ -39,7 +36,7 @@ const addUser = async (data: UserReq) => {
   }
 };
 
-const updateUserAPI = async (id: string, req: UserReq | DataEditProfileReq)  => {
+const updateUserAPI = async (id: string, req: UserReq | DataEditProfileReq) => {
   try {
     const res = await api.patch(`/user/update/${id}`, req);
     return res;
@@ -74,6 +71,20 @@ export const getUserData = async (page: number, limit: number) => {
   };
 };
 
+const forgetPassAPI = async (email: string) => {
+  try {
+    await api.post("/user/reset-password", { email });
+  } catch (error) {
+    catchingError(error, "Có lỗi khi gửi email");
+  }
+};
+const resetPassAPI = async (data: { token: string; password: string }) => {
+  try {
+    await api.post("/user/new-password", data);
+  } catch (error) {
+    catchingError(error, "Có lỗi khi gửi khi yêu cầu từ server");
+  }
+};
 export {
   getUserList,
   loginAPI,
@@ -81,4 +92,6 @@ export {
   addUser,
   updateUserAPI,
   userInfoAPI,
+  forgetPassAPI,
+  resetPassAPI,
 };

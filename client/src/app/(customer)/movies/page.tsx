@@ -8,11 +8,11 @@ import { getCinemaList } from "@/services/cinema.service";
 import FilterMovie from "./MoviePageContainer/FilterMovie";
 const getListDateShowtime = async () => {
   const res = await getScreeningList();
-  return res.data.result;
+  return res?.data.result;
 };
 const getListCinema = async () => {
   const res = await getCinemaList();
-  return res.cinema;
+  return res?.data.cinema;
 };
 
 const MovieSection = async ({
@@ -27,7 +27,7 @@ const MovieSection = async ({
 }) => {
   const { status, cinema, date } = await searchParams;
   const [resMovieShowing, showtimes, cinemas] = await Promise.all([
-    await getMovieList(
+    getMovieList(
       `${
         status && status === "dang-chieu"
           ? `/filter?status=1&date=${date || ""}&cinema=${cinema || ""}`

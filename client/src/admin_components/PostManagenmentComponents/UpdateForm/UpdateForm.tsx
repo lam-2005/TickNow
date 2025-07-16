@@ -50,7 +50,6 @@ const UpdateForm = ({ id, closeForm }: UpdateFormProps) => {
   }, [id]);
 
   if (loading) return <p>Loading...</p>;
-  console.log(formData);
 
   const handleUpdatePost = async (id: string) => {
     try {

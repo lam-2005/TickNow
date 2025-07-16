@@ -16,6 +16,7 @@ const eslintConfig = [
     rules: {
       // Ví dụ: chuyển exhaust-deps thành 'off'
       "react-hooks/exhaustive-deps": "off",
+      "@typescript-eslint/no-explicit-any": "off",
     },
   },
 ];

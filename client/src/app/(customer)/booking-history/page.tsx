@@ -6,8 +6,8 @@ import { cookies } from "next/headers";
 const Profile = async () => {
   const tokenStore = cookies();
   const token = (await tokenStore).get("token")?.value || "";
-  const res = await getTicketUserList(token);
-  const dataTicket = res?.data.ticket;
+  const res = await getTicketUserList("?page=1&limit=5", token);
+  const dataTicket = res?.data;
 
   return (
     <div className="container flex-column items-center mt-10 gap-10">
@@ -22,7 +22,7 @@ const Profile = async () => {
           Lịch sử đặt vé
         </button>
       </div>
-      <TableTicket data={dataTicket} />
+      <TableTicket data={dataTicket} token={token} />
     </div>
   );
 };

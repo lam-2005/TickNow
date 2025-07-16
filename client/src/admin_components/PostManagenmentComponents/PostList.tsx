@@ -140,10 +140,8 @@ const PostList = ({ initData }: { initData: InitDataType }) => {
     setIdPost(id);
     setOpenUpdateForm(true);
   };
-  console.log(idPost);
 
   if (loading) return <p className="text-center">Đang tải dữ liệu...</p>;
-  console.log(data);
 
   if (error) return <p className="text-center text-red-500">{error}</p>;
   if (data.length === 0) return <p className="text-center">Không có dữ liệu</p>;

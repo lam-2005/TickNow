@@ -33,10 +33,10 @@ const DetailPost = ({
       closeForm={closeForm}
       title={getInfo?.title || "Thông tin bài viết"}
     >
-      <p className="px-5 pb-5">
+      <div className="px-5 pb-5 overflow-y-auto overflow-x-hidden">
         {" "}
         <div dangerouslySetInnerHTML={{ __html: getInfo?.content || "" }} />
-      </p>
+      </div>
     </PopupContainer>
   );
 };

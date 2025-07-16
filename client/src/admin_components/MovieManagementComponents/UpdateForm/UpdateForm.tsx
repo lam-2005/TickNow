@@ -18,19 +18,19 @@ type Props = {
   genre: Genre[];
 };
 
-const UpdateForm = ({ data, onCancel,genre }: Props) => {
+const UpdateForm = ({ data, onCancel, genre }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
   const listOptionGenre: GenreType[] = genre.map((item) => {
-        return {
-          label: item.name,
-          id: String(item._id),
-        };
-      });
+    return {
+      label: item.name,
+      id: String(item._id),
+    };
+  });
   const { currentPage } = useSelector(dataMovie);
   const { rowsPerPage } = usePanigation(currentPage);
 
   const date = new Date(data.release_date);
-  const formatted = date.toISOString().split('T')[0];
+  const formatted = date.toISOString().split("T")[0];
   const [formData, setFormData] = useState<MovieReq>({
     name: data.name,
     release_date: formatted,
@@ -41,47 +41,62 @@ const UpdateForm = ({ data, onCancel,genre }: Props) => {
     director: data.director,
     actor: data.actor,
     status: data.status,
-    genre:[...data.genre.map((item) => String(item.id))],
+    genre: [...data.genre.map((item) => String(item.id))],
     trailer: data.trailer,
     image: null,
     banner: null,
     description: data.description,
   });
 
-  const handleSubmit = async (id: string,e: React.FormEvent) => {
+  const handleSubmit = async (id: string, e: React.FormEvent) => {
     e.preventDefault();
-        if (!formData.name 
-          || !formData.release_date 
-          || !formData.status 
-          || !formData.duration 
-          || !formData.age 
-          || !formData.genre
-          || !formData.trailer
-          ) {
-          toast.warning("Vui lòng nhập đầy đủ thông tin bắt buộc!");
-          return;
-        }
-        const confirmAdd = confirm("Bạn có muốn cập nhật phim này?");
-        if (!confirmAdd) return;
-        try {
-          const res = await dispatch(updateMovie({ id, data: {...formData, duration: Number(formData.duration)} })).unwrap();
-          console.log("Cập nhật phim thành công:", res);
-          toast.success("Cập nhật phim thành công!");
-          await dispatch(fetchMovies({ page: currentPage, limit: rowsPerPage }));
-          onCancel();
-        } catch (err) {
-          console.error("Lỗi Cập nhật phim:", err);
-          toast.error("Cập nhật phim thất bại!");
-        }
+    if (
+      !formData.name ||
+      !formData.release_date ||
+      !formData.status ||
+      !formData.duration ||
+      !formData.age ||
+      !formData.genre ||
+      !formData.trailer
+    ) {
+      toast.warning("Vui lòng nhập đầy đủ thông tin bắt buộc!");
+      return;
+    }
+    const confirmAdd = confirm("Bạn có muốn cập nhật phim này?");
+    if (!confirmAdd) return;
+    try {
+      await dispatch(
+        updateMovie({
+          id,
+          data: { ...formData, duration: Number(formData.duration) },
+        })
+      ).unwrap();
+
+      toast.success("Cập nhật phim thành công!");
+      await dispatch(fetchMovies({ page: currentPage, limit: rowsPerPage }));
+      onCancel();
+    } catch (err) {
+      console.error("Lỗi Cập nhật phim:", err);
+      toast.error("Cập nhật phim thất bại!");
+    }
   };
-  console.log("formData", JSON.stringify(formData));
+
   return (
-    <form  className="flex flex-col w-3.5xl h-full overflow-y-auto">
+    <form className="flex flex-col w-3.5xl h-full overflow-y-auto">
       <div className="flex-1 overflow-y-auto px-5">
-        <InputGroup listOptionGenre={listOptionGenre} formData={formData} setFormData={setFormData}  />
+        <InputGroup
+          listOptionGenre={listOptionGenre}
+          formData={formData}
+          setFormData={setFormData}
+        />
       </div>
       <div className="flex justify-end gap-2 p-5 bg-background-card rounded-b-xl">
-        <button onClick={(e)=>{handleSubmit(data._id, e)}} className="btn bg-success text-white">
+        <button
+          onClick={(e) => {
+            handleSubmit(data._id, e);
+          }}
+          className="btn bg-success text-white"
+        >
           Cập nhật
         </button>
       </div>

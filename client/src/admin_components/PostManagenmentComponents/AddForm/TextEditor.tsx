@@ -33,6 +33,7 @@ const TextEditor = ({
         onModelChange={(e: string) => setFormData({ ...formData, content: e })}
         config={{
           placeholderText: "Nhập nội dung bài viết...",
+          imagePaste: true,
         }}
       />
     </div>

@@ -11,6 +11,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { RiMapPin2Fill } from "react-icons/ri";
 import CinemaShowtimeContainer from "./CinemaShowtimeContainer";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { toast } from "react-toastify";
 
 type ListDataSelect = {
   showtimes: Screening[];
@@ -61,7 +62,8 @@ const ShowtimeSelect = ({ listData, slug }: ShowtimeSelectTypes) => {
         );
         setDataCinemaShowtimes(res?.data.cinemas);
       } catch (err) {
-        console.log("Lỗi khi lấy dữ liệu lịch chiếu: ", err);
+        toast.error(`Có lỗi khi lấy dữ liệu lịch chiếu`);
+        console.error("Lỗi khi lấy dữ liệu lịch chiếu: ", err);
       } finally {
         setLoading(false);
       }

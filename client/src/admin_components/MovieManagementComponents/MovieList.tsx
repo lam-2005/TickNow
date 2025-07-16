@@ -128,8 +128,8 @@ const MovieList = ({
       toast.success("Cập nhật phim thành công!");
       dispatch(fetchMovies({ page: currentPage, limit: rowsPerPage }));
     } catch (err) {
-      console.log("Cập nhật phim thất bại:", err);
-      toast.error("Cập nhật phim thất bại!");
+      toast.error(`Cập nhật phim thất bại: ${err}`);
+      console.error(err);
     }
   };
 

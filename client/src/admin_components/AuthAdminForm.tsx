@@ -51,7 +51,6 @@ const AuthAdminForm = () => {
     } catch (err) {
       toast.error(`Đăng nhập thất bại: ${err}`);
       console.error(err);
-      //   console.log(err);
     }
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

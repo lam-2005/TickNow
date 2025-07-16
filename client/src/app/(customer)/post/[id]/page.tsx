@@ -28,10 +28,12 @@ export default async function PostDetailPage({
             Từ {formatDate(post.start_day)} đến {formatDate(post.end_day)}
           </p>
 
-          <p
-            className="mb-4 leading-relaxed whitespace-pre-line"
-            dangerouslySetInnerHTML={{ __html: post.content || "" }}
-          ></p>
+          <div className="mb-4 leading-relaxed whitespace-pre-line">
+            <div
+              className=""
+              dangerouslySetInnerHTML={{ __html: post.content || "" }}
+            />
+          </div>
 
           {post.image && (
             <div className="mt-8 flex justify-center">

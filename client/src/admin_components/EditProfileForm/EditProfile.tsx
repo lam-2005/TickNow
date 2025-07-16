@@ -44,7 +44,6 @@ const EditProfile = ({
       focusRef.current?.focus();
     }
   }, [isEditing]);
-  console.log(Info);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -52,8 +51,6 @@ const EditProfile = ({
     });
   };
   const handleEditProfile = async () => {
-    // console.log(formData);
-    // setIsEditing(false)
     try {
       await updateUserAPI(Info._id, formData);
       toast.success("chỉnh sửa thành công");
