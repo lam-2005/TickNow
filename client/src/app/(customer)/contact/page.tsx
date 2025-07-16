@@ -115,7 +115,7 @@ const ContactPage = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-background text-foreground rounded outline-none border border-gray-600 focus:border-primary"
+                className="w-full px-4 py-2 bg-background text-foreground rounded outline-none border border-gray-600 focus:border-white"
                 placeholder="Nhập họ tên của bạn"
               />
               {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
@@ -129,7 +129,7 @@ const ContactPage = () => {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-background text-foreground rounded outline-none border border-gray-600 focus:border-primary"
+                className="w-full px-4 py-2 bg-background text-foreground rounded outline-none border border-gray-600 focus:border-white"
                 placeholder="Nhập số điện thoại của bạn"
               />
               {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
@@ -143,7 +143,7 @@ const ContactPage = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-background text-foreground rounded outline-none border border-gray-600 focus:border-primary"
+                className="w-full px-4 py-2 bg-background text-foreground rounded outline-none border border-gray-600 focus:border-white"
                 placeholder="example@gmail.com"
               />
               {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
@@ -157,7 +157,7 @@ const ContactPage = () => {
                 rows={4}
                 value={formData.message}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-background text-foreground rounded outline-none border border-gray-600 focus:border-primary"
+                className="w-full px-4 py-2 bg-background text-foreground rounded outline-none border border-gray-600 focus:border-white"
                 placeholder="Bạn cần hỗ trợ điều gì?"
               />
               {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
