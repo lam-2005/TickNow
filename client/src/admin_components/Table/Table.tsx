@@ -12,17 +12,19 @@ const Table = <T extends { _id: string | number }>({
   data,
   currentPage,
   rowsPerPage,
+  className,
 }: {
   column: Column<T>[];
   data: T[];
   currentPage?: number;
   rowsPerPage?: number;
+  className?: string;
 }) => {
   return (
     <>
       <table
-        className="border-collapse w-full overflow-x-auto border-none [&_td]:py-2.5 [&_td]:px-5 [&_td]:text-start
-        [&_th]:py-2.5 [&_th]:px-5 [&_th]:text-start"
+        className={`border-collapse w-full overflow-x-auto border-none [&_td]:py-2.5 [&_td]:px-5 [&_td]:text-start
+        [&_th]:py-2.5 [&_th]:px-5 [&_th]:text-start ${className}`}
       >
         <thead className="bg-primary text-white">
           <tr>

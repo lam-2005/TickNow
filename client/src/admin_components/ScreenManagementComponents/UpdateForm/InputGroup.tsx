@@ -85,8 +85,8 @@ const InputGroup = ({
           value={formData.status}
           onChange={(e) => setFormData({ ...formData, status: e.target.value })}
         >
-          <option value={2}>Hoạt động</option>
-          <option value={1}>Không hoạt động</option>
+          <option value={1}>Hoạt động</option>
+          <option value={2}>Không hoạt động</option>
         </select>
       </div>
       <div>

@@ -4,12 +4,20 @@ import { useToggleNav } from "@/hooks/contexts/ToggleNavContext";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
-import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
+import React, { useEffect, useState } from "react";
+import { BiChevronDown } from "react-icons/bi";
+import { TfiDashboard } from "react-icons/tfi";
 
 const Navbar = () => {
   const pathname = usePathname();
   const { toggle } = useToggleNav();
+  const [subMenuOpen, setSubMenuOpen] = useState<{ report: boolean }>({
+    report: true,
+  });
+  useEffect(() => {
+    if (pathname !== "/admin" || pathname.startsWith("/admin/dashboard"))
+      setSubMenuOpen({ ...subMenuOpen, report: false });
+  }, [pathname]);
   return (
     <>
       {toggle && (
@@ -27,7 +35,67 @@ const Navbar = () => {
               priority
             />
           </Link>
-          <div className="flex-column p-2.5 gap-2.5 overflow-y-auto flex-1">
+          <div className="flex-column  gap-2.5 overflow-y-auto flex-1">
+            <div>
+              <div
+                className={`cursor-pointer font-base p-2.5 rounded-[5px] text-white flex capitalize gap-2.5 items-center hover:bg-[rgba(255,255,255,0.1)]
+                  `}
+                onClick={() =>
+                  setSubMenuOpen({
+                    ...setSubMenuOpen,
+                    report: !subMenuOpen.report,
+                  })
+                }
+              >
+                <span className="flex justify-center text-white items-center text-2xl">
+                  <TfiDashboard />
+                </span>{" "}
+                <p className="text-sm text-white">Thống kê</p>
+                <span
+                  className={`flex justify-center text-white items-center text-2xl ml-14 ${
+                    subMenuOpen.report ? "active" : ""
+                  } [&.active]:-rotate-180 transition-all`}
+                >
+                  <BiChevronDown />
+                </span>
+              </div>
+              {
+                <div
+                  className={`text-sm ${
+                    subMenuOpen.report ? "block" : "hidden"
+                  }`}
+                >
+                  <Link
+                    href={"/admin"}
+                    className={`py-2 pl-11 block ${
+                      pathname === "/admin" ? "bg-white/10" : "bg-black/50"
+                    }`}
+                  >
+                    Tổng quan
+                  </Link>
+                  <Link
+                    href={"/admin/dashboard/movie"}
+                    className={`py-2 pl-11 block ${
+                      pathname === "/admin/dashboard/movie"
+                        ? "bg-white/10"
+                        : "bg-black/50"
+                    }`}
+                  >
+                    Doanh thu theo phim
+                  </Link>
+                  <Link
+                    href={"/admin/dashboard/cinema"}
+                    className={`py-2 pl-11 block ${
+                      pathname === "/admin/dashboard/cinema"
+                        ? "bg-white/10"
+                        : "bg-black/50"
+                    }`}
+                  >
+                    Doanh thu theo rạp
+                  </Link>
+                </div>
+              }
+            </div>
             {links.map((l: linkInterface) => (
               <Link
                 key={l.id}
@@ -42,13 +110,6 @@ const Navbar = () => {
                 <p className="text-sm text-white">{l.title}</p>
               </Link>
             ))}
-          </div>
-          <div className="py-2.5 px-5 flex justify-end border-t-1 border-border-navbar">
-            <button className="border-transparent bg-transparent cursor-pointer group/toggle">
-              <span className="flex-center text-2xl text-stone-500 group-hover/toggle:text-white">
-                <MdKeyboardDoubleArrowLeft />
-              </span>
-            </button>
           </div>
         </div>
       )}

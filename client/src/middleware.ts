@@ -31,5 +31,8 @@ export function middleware(request: NextRequest) {
   if (authRoute.some((url) => pathname.startsWith(url)) && tokenAdmin) {
     return NextResponse.redirect(new URL("/admin", request.url));
   }
+  if (pathname === "/admin/dashboard" && tokenAdmin) {
+    return NextResponse.redirect(new URL("/admin", request.url));
+  }
   return NextResponse.next();
 }

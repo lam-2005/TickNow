@@ -1,4 +1,3 @@
-import { TfiDashboard } from "react-icons/tfi";
 import { FaRegStar, FaRegUser } from "react-icons/fa6";
 import { TbBrandCarbon } from "react-icons/tb";
 import { MdOutlineLocalOffer } from "react-icons/md";
@@ -14,13 +13,6 @@ export default interface linkInterface {
   icon: ReactNode;
 }
 const links: linkInterface[] = [
-  {
-    id: 1,
-    title: "Thống kê",
-    url: "/admin",
-    icon: <TfiDashboard />,
-  },
-
   {
     id: 6,
     title: "Phim chiếu",
@@ -75,7 +67,6 @@ const links: linkInterface[] = [
     title: "Bài viết",
     url: "/admin/post",
     icon: <RiArticleLine />,
-
   },
 ];
 
