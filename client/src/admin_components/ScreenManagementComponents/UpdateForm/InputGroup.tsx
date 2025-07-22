@@ -47,7 +47,7 @@ const InputGroup = ({
               id_movie: newValue ? newValue.id : "",
             });
           }}
-          renderInput={(params) => <TextField {...params} label="Chọn phim" />}
+          renderInput={(params) => <TextField {...params} />}
         />
       </div>
 
@@ -78,7 +78,7 @@ const InputGroup = ({
           onChange={(e) => setFormData({ ...formData, date: e.target.value })}
         />
       </div>
-      <div>
+      {/* <div>
         <label className="block mb-1 text-sm font-medium">Trạng thái</label>
         <select
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
@@ -88,7 +88,7 @@ const InputGroup = ({
           <option value={1}>Hoạt động</option>
           <option value={2}>Không hoạt động</option>
         </select>
-      </div>
+      </div> */}
       <div>
         <label className="block mb-1 text-sm font-medium">
           Kiểu chiếu <span className="text-red-500">*</span>

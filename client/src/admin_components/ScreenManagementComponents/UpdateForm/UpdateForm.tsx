@@ -44,13 +44,25 @@ const UpdateForm = ({
   const dispatch = useDispatch<AppDispatch>();
   const { currentPage, filter } = useSelector(dataScreen);
   const { rowsPerPage } = usePanigation(currentPage);
+  // useEffect(() => {
 
+  // }, [formData.date]);
   useEffect(() => {
     const getScreengDetail = async (id: string) => {
       try {
         const res = await getScreeningList(`/${id}`);
         const data: DetailScreening = res?.data;
+
+        const currentDate = new Date();
+        const selectedDate = new Date(data.screening.date.slice(0, 10));
+        const initialStatus =
+          selectedDate < currentDate &&
+          selectedDate.toDateString() !== currentDate.toDateString()
+            ? 1
+            : 2;
+
         setFormData({
+          ...formData,
           id_room: data.room._id,
           id_movie: data.screening.id_movie,
           time_start: data.screening.time_start,
@@ -58,7 +70,7 @@ const UpdateForm = ({
           showtype: data.screening.showtype,
           price: data.screening.price,
           id_cinema: data.room.id_cinema,
-          status: data.screening.status,
+          status: initialStatus,
         });
       } catch (error) {
         console.error("Failed to fetch screening detail", error);
@@ -69,6 +81,7 @@ const UpdateForm = ({
 
     getScreengDetail(id);
   }, [id]);
+  console.log(formData.status);
 
   const handleUpdateScreening = async (id: string) => {
     try {

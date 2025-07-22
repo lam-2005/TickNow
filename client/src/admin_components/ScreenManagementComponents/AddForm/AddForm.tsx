@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/utils/redux/store";
 import { fetchScreen, addScreen } from "@/utils/redux/slices/screenSlice";
@@ -34,6 +34,20 @@ const AddForm = ({
     showtype: 1,
     price: "",
   });
+  const [error, setError] = useState<string>("");
+  useEffect(() => {
+    if (formData.date) {
+      const currentDate = new Date();
+      const selectedDate = new Date(formData.date);
+
+      setError(
+        selectedDate < currentDate &&
+          selectedDate.toDateString() !== currentDate.toDateString()
+          ? "Ngày chiếu không được trước ngày hiện tại."
+          : ""
+      );
+    }
+  }, [formData.date]);
   const listOptionMovies: MovieOptionsType[] = movies.map((item) => {
     // dùng để biến cái data movie từ kiểu MOvieType ở interface thành dạng MovieOptionsType với label là dùng để hiển thị ui , id là giá trị nhận đc
     return {
@@ -52,9 +66,10 @@ const AddForm = ({
       !formData.time_start ||
       !formData.date ||
       !formData.showtype ||
-      !formData.price
+      !formData.price ||
+      error
     ) {
-      toast.warning("Vui lòng nhập đầy đủ thông tin!!");
+      toast.warning("Vui lòng nhập đầy đủ và đúng thông tin!!");
       return;
     }
 
@@ -111,6 +126,7 @@ const AddForm = ({
     <>
       <div className="space-y-5 px-5 flex-1 overflow-x-hidden overflow-y-auto">
         <InputGroup
+          error={error}
           formData={formData} // truyền vào để có thể thay đổi input
           setFormData={setFormData} // truyền vào để thay đổi input
           listOptionMovies={listOptionMovies} // dùng làm select/option

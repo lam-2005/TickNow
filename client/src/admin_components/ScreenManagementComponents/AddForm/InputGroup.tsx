@@ -10,6 +10,7 @@ type InputGroupProps = {
   setFormData: (data: ScreenReq) => void;
   listOptionMovies: MovieOptionsType[];
   listOptionRooms: RoomType[];
+  error?: string; // optional error prop to display validation errors
 };
 
 const InputGroup = ({
@@ -17,6 +18,7 @@ const InputGroup = ({
   setFormData,
   listOptionMovies,
   listOptionRooms,
+  error,
 }: InputGroupProps) => {
   const getCinema = groupCinemasWithRooms(listOptionRooms);
   const [selectedCinemaId, setSelectedCinemaId] = useState("");
@@ -47,7 +49,7 @@ const InputGroup = ({
               id_movie: newValue ? newValue.id : "",
             });
           }}
-          renderInput={(params) => <TextField {...params} label="Chọn phim" />}
+          renderInput={(params) => <TextField {...params} />}
         />
       </div>
 
@@ -70,12 +72,16 @@ const InputGroup = ({
         <label className="block mb-1 text-sm font-medium">
           Ngày chiếu<span className="text-red-500">*</span>
         </label>
-        <input
+        <TextField
+          className="w-full"
           type="date"
-          placeholder="Ngày chiếu"
-          className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
+          required
+          id="outlined-required"
+          error={error ? true : false}
+          helperText={error}
           value={formData.date}
           onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+          InputLabelProps={{ shrink: true }}
         />
       </div>
 
