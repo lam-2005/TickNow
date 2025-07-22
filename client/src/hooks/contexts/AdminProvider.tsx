@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import store from "@/utils/redux/store";
 import { ToggleNavProvider } from "./ToggleNavContext";
 import { AuthProvider } from "./useAuth";
+import { ConfirmProvider } from "./useConfirm";
 
 const AdminProvider = ({
   children,
@@ -15,7 +16,9 @@ const AdminProvider = ({
   return (
     <Provider store={store}>
       <AuthProvider initAdminToken={initAdminToken}>
-        <ToggleNavProvider>{children}</ToggleNavProvider>
+        <ToggleNavProvider>
+          <ConfirmProvider>{children}</ConfirmProvider>
+        </ToggleNavProvider>
       </AuthProvider>
     </Provider>
   );

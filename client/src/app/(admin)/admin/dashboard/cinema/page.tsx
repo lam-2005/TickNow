@@ -11,7 +11,7 @@ const col: Column<{
   ticket: string;
   total: string;
 }>[] = [
-  { key: "movie", title: "Tên phim" },
+  { key: "movie", title: "Tên rạp" },
   { key: "ticket", title: "Tổng vé bán ra" },
   { key: "total", title: "Tổng doanh thu" },
 ];
@@ -38,11 +38,11 @@ const StatisticsCinema = () => {
               xAxis={[
                 {
                   data: [
-                    "Phim 1 cực kỳ là dài luôn đó nha",
-                    "Phim 2",
-                    "Phim 3",
-                    "Phim 4",
-                    "Phim 5",
+                    "Rạp 1 cực kỳ là dài luôn đó nha",
+                    "Rạp 2",
+                    "Rạp 3",
+                    "Rạp 4",
+                    "Rạp 5",
                     "Phim 6",
                   ],
                   tickLabelStyle: {
@@ -69,20 +69,20 @@ const StatisticsCinema = () => {
               xAxis={[
                 {
                   data: [
-                    "Phim 1",
-                    "Phim 2",
-                    "Phim 3",
-                    "Phim 4",
-                    "Phim 5",
-                    "Phim 6",
-                    "Phim 7",
-                    "Phim 8",
-                    "Phim 9",
-                    "Phim 10",
-                    "Phim 11",
-                    "Phim 12",
-                    "Phim 12",
-                    "Phim 12",
+                    "Rạp 1",
+                    "Rạp 2",
+                    "Rạp 3",
+                    "Rạp 4",
+                    "Rạp 5",
+                    "Rạp 6",
+                    "Rạp 7",
+                    "Rạp 8",
+                    "Rạp 9",
+                    "Rạp 10",
+                    "Rạp 11",
+                    "Rạp 12",
+                    "Rạp 12",
+                    "Rạp 12",
                   ],
 
                   tickLabelStyle: {
@@ -98,7 +98,7 @@ const StatisticsCinema = () => {
       </div>
       <Table
         column={col}
-        data={[{ _id: 1, movie: "Phim 1", ticket: "5", total: "1000000" }]}
+        data={[{ _id: 1, movie: "Rạp 1", ticket: "5", total: "1000000" }]}
       />
     </div>
   );

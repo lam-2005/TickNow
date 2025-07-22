@@ -35,7 +35,6 @@ export const createMovie = async (data: MovieReq) => {
     form.append("age", data.age);
     form.append("director", data.director);
     form.append("actor", data.actor);
-    form.append("status", data.status.toString());
     form.append("trailer", data.trailer);
     form.append("description", data.description);
 
@@ -70,7 +69,7 @@ export const updateMovie = async (id: string | number, data: MovieReq) => {
     form.append("age", data.age);
     form.append("director", data.director);
     form.append("actor", data.actor);
-    form.append("status", data.status.toString());
+    if (data.status) form.append("status", data.status as string);
     form.append("trailer", data.trailer);
     form.append("description", data.description);
 

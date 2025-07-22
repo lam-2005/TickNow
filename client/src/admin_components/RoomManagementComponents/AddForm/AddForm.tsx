@@ -8,6 +8,7 @@ import { DataRoomReq } from "@/interfaces/room.interface";
 import { addRoom, fetchRooms } from "@/utils/redux/slices/roomSlice";
 import { toast } from "react-toastify";
 import dataRoom from "@/utils/redux/selectors/roomSelector";
+import { useConfirm } from "@/hooks/contexts/useConfirm";
 export type CinemaType = {
   label: string;
   id: string;
@@ -16,6 +17,7 @@ type AddFormProps = {
   cinemas: Cinema[];
 };
 const AddForm = ({ cinemas }: AddFormProps) => {
+  const confirm = useConfirm();
   const dispatch = useDispatch<AppDispatch>();
   const { filter } = useSelector(dataRoom);
   const [formData, setFormData] = useState<DataRoomReq>({
@@ -25,6 +27,7 @@ const AddForm = ({ cinemas }: AddFormProps) => {
     seatRemoved: {},
     status: 2,
   });
+
   const listOptionCinemas: CinemaType[] = cinemas.map((item) => {
     return {
       label: item.name,
@@ -51,7 +54,10 @@ const AddForm = ({ cinemas }: AddFormProps) => {
       return;
     }
     try {
-      const sure = confirm("Bạn có muốn thêm phòng này?");
+      const sure = await confirm({
+        title: "Bạn có muốn thêm phòng này?",
+        content: "Hành động này sẽ không thể hoàn tác",
+      });
       if (sure) {
         await dispatch(addRoom(dataRequest)).unwrap();
         await dispatch(

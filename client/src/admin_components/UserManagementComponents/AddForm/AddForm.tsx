@@ -6,10 +6,11 @@ import { fetchUsers, addUser } from "@/utils/redux/slices/userSlice";
 import { toast } from "react-toastify";
 import InputGroup from "./InputGroup";
 import { UserReq } from "@/interfaces/user.interface";
+import { useConfirm } from "@/hooks/contexts/useConfirm";
 
 const AddForm = () => {
   const dispatch = useDispatch<AppDispatch>();
-
+  const confirm = useConfirm();
   const [formData, setFormData] = useState<UserReq>({
     name: "",
     email: "",
@@ -57,6 +58,12 @@ const AddForm = () => {
     }
 
     try {
+      const sure = await confirm({
+        title: "Bạn có muốn thêm người dùng?",
+        content: "Hành động này sẽ không thể hoàn tác",
+      });
+      if (!sure) return;
+
       await dispatch(
         addUser({
           ...formData,

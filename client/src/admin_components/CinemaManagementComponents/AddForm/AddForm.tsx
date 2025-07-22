@@ -7,6 +7,7 @@ import { addCinema, fetchCinema } from "@/utils/redux/slices/cinemaSlice";
 import InputGroup from "./InputGroup";
 import { CinemaReq, LocationRes } from "@/interfaces/cinema.interface";
 import dataCinema from "@/utils/redux/selectors/selectorCinema";
+import { useConfirm } from "@/hooks/contexts/useConfirm";
 
 export type LocationOptionsType = {
   label: string;
@@ -15,14 +16,14 @@ export type LocationOptionsType = {
 
 const AddCinemaForm = ({
   locations,
-  closeForm
+  closeForm,
 }: {
   locations: LocationRes[];
   closeForm: () => void;
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { filter } = useSelector(dataCinema);
-
+  const confirm = useConfirm();
   const [formData, setFormData] = useState<CinemaReq>({
     name: "",
     image: "",
@@ -32,7 +33,7 @@ const AddCinemaForm = ({
   });
 
   const locationOptions: LocationOptionsType[] = locations.map((item) => ({
-    label: item.name, 
+    label: item.name,
     id: item._id,
   }));
 
@@ -46,14 +47,17 @@ const AddCinemaForm = ({
       return;
     }
 
-    const confirmAdd = confirm("Bạn có muốn thêm Rạp chiếu mới?");
+    const confirmAdd = await confirm({
+      title: "Bạn có muốn thêm Rạp chiếu mới?",
+      content: "Hành động này sẽ không thể hoàn tác",
+    });
     if (!confirmAdd) return;
 
     try {
       await dispatch(
         addCinema({
           ...formData,
-          status: Number(status)
+          status: Number(status),
         })
       ).unwrap();
 

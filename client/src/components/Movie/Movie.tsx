@@ -43,7 +43,10 @@ const Movie = ({
             <div className="w-full h-full relative rounded-xl overflow-hidden bg-loading">
               <Image
                 fill
-                src={`${env.IMG_API_URL}/movie/${info.image}`}
+                src={
+                  `${env.IMG_API_URL}/movie/${info.image}` ||
+                  "/movies/default.png"
+                }
                 alt="Phim"
                 sizes="300px"
                 loading="lazy"

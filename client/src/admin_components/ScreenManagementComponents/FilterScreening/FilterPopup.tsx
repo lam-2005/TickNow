@@ -150,6 +150,7 @@ const FilterPopup = ({
       toast.error(error);
       return;
     }
+
     dispatch(
       fetchScreen({
         limit: 5,
@@ -248,33 +249,34 @@ const FilterPopup = ({
           </div>
         </div>
         <div className="flex gap-4 flex-col">
-          <h1 className="text-xl font-bold">
-            Chọn ngày chiếu:{" "}
-            {error && <p className="text-red-500 font-medium">{error}</p>}
-          </h1>
+          <h1 className="text-xl font-bold">Chọn ngày chiếu: </h1>
           <div className="flex gap-10">
-            <div className="flex items-start gap-2">
-              <label htmlFor="" className="text-lg font-bold">
-                Từ:
-              </label>
-              <input
-                type="date"
-                value={fromDate}
-                onChange={(e) => setFromDate(e.target.value)}
-                className="border border-foreground p-2"
-              />
-            </div>
-            <div className="flex items-start gap-2">
-              <label htmlFor="" className="text-lg font-bold">
-                Đến:
-              </label>
-              <input
-                type="date"
-                value={toDate}
-                onChange={(e) => setToDate(e.target.value)}
-                className="border border-foreground p-2"
-              />
-            </div>
+            <TextField
+              className="w-full"
+              type="date"
+              required
+              error={error ? true : false}
+              helperText={error}
+              id="outlined-required"
+              label="Từ"
+              value={fromDate}
+              onChange={(e) => setFromDate(e.target.value)}
+              placeholder="Nhập ngày bắt đầu"
+              InputLabelProps={{ shrink: true }}
+            />
+
+            <TextField
+              className="w-full"
+              type="date"
+              required
+              id="outlined-required"
+              error={error ? true : false}
+              label="Đến"
+              value={toDate}
+              onChange={(e) => setToDate(e.target.value)}
+              placeholder="Nhập ngày kết thúc"
+              InputLabelProps={{ shrink: true }}
+            />
           </div>
         </div>
         <div className="flex gap-4 flex-col">

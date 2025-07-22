@@ -4,7 +4,10 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/utils/redux/store";
 import { toast } from "react-toastify";
 import { Voucher, VoucherReq } from "@/interfaces/vouchers.interface";
-import { fetchVouchers, updateVoucher } from "@/utils/redux/slices/voucherSlice";
+import {
+  fetchVouchers,
+  updateVoucher,
+} from "@/utils/redux/slices/voucherSlice";
 
 type UpdateFormProps = {
   voucher: Voucher;
@@ -30,25 +33,36 @@ const UpdateForm = ({ voucher, closeForm }: UpdateFormProps) => {
     end_date: formatDate(voucher.end_date),
     is_active: voucher.is_active,
   });
-
-  const handleUpdate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (
-      !formData.code ||
-      !formData.discount_type ||
-      !formData.start_date ||
-      !formData.end_date ||
-      !formData.max_users
-    ) {
-      toast.warning("Vui lòng nhập đầy đủ thông tin!");
+  const [errors, setErrors] = React.useState("");
+  React.useEffect(() => {
+    setErrors("");
+    const currentDate = new Date(formData.start_date);
+    const endDate = new Date(formData.end_date);
+    if (currentDate >= endDate) {
+      setErrors("Ngày bắt đầu không được lớn hơn hoặc bằng ngày kết thúc");
       return;
     }
-
+    if (formData.end_date && !formData.start_date) {
+      setErrors("Vui lòng nhập ngày bắt đầu trước khi nhập ngày kết thúc");
+    }
+  }, [formData.start_date, formData.end_date]);
+  const handleUpdate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.code || !formData.discount_type || errors) {
+      toast.warning("Vui lòng nhập đầy đủ và đúng thông tin!");
+      return;
+    }
+    if (!formData.max_users && !formData.start_date) {
+      toast.warning("Vui lòng nhập số lượng tối đa hoặc ngày bắt đầu!");
+      return;
+    }
     try {
       const sure = confirm("Bạn có muốn cập nhật?");
       if (!sure) return;
 
-      await dispatch(updateVoucher({ id: voucher._id, data: formData })).unwrap();
+      await dispatch(
+        updateVoucher({ id: voucher._id, data: formData })
+      ).unwrap();
       toast.success("Cập nhật voucher thành công!");
 
       dispatch(fetchVouchers({ limit: 5, page: 1 }));
@@ -62,7 +76,11 @@ const UpdateForm = ({ voucher, closeForm }: UpdateFormProps) => {
   return (
     <>
       <div className="space-y-5 px-5 flex-1 overflow-x-hidden overflow-y-auto">
-        <InputGroup formData={formData} setFormData={setFormData} />
+        <InputGroup
+          formData={formData}
+          setFormData={setFormData}
+          errors={errors}
+        />
       </div>
       <div className="flex justify-end p-5 w-full bg-background-card rounded-2xl">
         <button className="btn" onClick={handleUpdate}>

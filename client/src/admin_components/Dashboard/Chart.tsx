@@ -31,6 +31,11 @@ const Chart = ({
       <p className="text-center text-xl font-bold">{title}</p>
       {children || (
         <LineChart
+          localeText={{
+            loading: "Đang tải dữ liệu...",
+            noData: "Không có dữ liệu",
+          }}
+          loading={yLabels.length === 0}
           height={400}
           series={[
             {

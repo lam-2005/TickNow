@@ -64,12 +64,12 @@ const InputGroupCinema = ({
         >
           Hình ảnh rạp
           <VisuallyHiddenInput
+            accept="image/*"
             type="file"
             onChange={handleFileChange}
-            multiple
           />
         </Button>
-        {preview && (
+        {preview && formData.image && (
           <Image
             alt="cinema image"
             src={preview || ""}

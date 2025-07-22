@@ -1,11 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import Autocomplete from "@mui/material/Autocomplete";
 // import TextField from "@mui/material/TextField";
 import { CinemaReq, LocationType } from "@/interfaces/cinema.interface";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import Image from "next/image";
+import env from "@/configs/environment";
 
 type InputGroupProps = {
   formData: CinemaReq;
@@ -29,6 +30,11 @@ const InputGroup = ({ formData, setFormData }: InputGroupProps) => {
   // ) || null;
   const [preview, setPreview] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (formData.image) {
+      setPreview(formData.image as string);
+    }
+  }, [formData.image]);
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -64,10 +70,10 @@ const InputGroup = ({ formData, setFormData }: InputGroupProps) => {
             multiple
           />
         </Button>
-        {preview && (
+        {preview && formData.image && (
           <Image
             alt="cinema image"
-            src={preview || ""}
+            src={`${env.IMG_API_URL}/cinema/${preview}` || ""}
             width={300}
             height={300}
           />

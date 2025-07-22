@@ -15,8 +15,9 @@ const Navbar = () => {
     report: true,
   });
   useEffect(() => {
-    if (pathname !== "/admin" || pathname.startsWith("/admin/dashboard"))
-      setSubMenuOpen({ ...subMenuOpen, report: false });
+    if (pathname === "/admin" || pathname.startsWith("/admin/dashboard"))
+      setSubMenuOpen({ ...subMenuOpen, report: true });
+    else setSubMenuOpen({ ...subMenuOpen, report: false });
   }, [pathname]);
   return (
     <>

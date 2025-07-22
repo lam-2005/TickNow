@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { fetchMovies, updateMovie } from "@/utils/redux/slices/movieSlice";
 import dataMovie from "@/utils/redux/selectors/movieSlector";
 import usePanigation from "@/hooks/usePanigation";
+import { useConfirm } from "@/hooks/contexts/useConfirm";
 
 type Props = {
   data: MovieType;
@@ -20,6 +21,7 @@ type Props = {
 
 const UpdateForm = ({ data, onCancel, genre }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
+  const confirm = useConfirm();
   const listOptionGenre: GenreType[] = genre.map((item) => {
     return {
       label: item.name,
@@ -43,8 +45,8 @@ const UpdateForm = ({ data, onCancel, genre }: Props) => {
     status: data.status,
     genre: [...data.genre.map((item) => String(item.id))],
     trailer: data.trailer,
-    image: null,
-    banner: null,
+    image: data.image || null,
+    banner: data.banner || null,
     description: data.description,
   });
 
@@ -53,22 +55,28 @@ const UpdateForm = ({ data, onCancel, genre }: Props) => {
     if (
       !formData.name ||
       !formData.release_date ||
-      !formData.status ||
       !formData.duration ||
       !formData.age ||
       !formData.genre ||
-      !formData.trailer
+      !formData.trailer ||
+      !formData.image ||
+      !formData.banner ||
+      !formData.director
     ) {
-      toast.warning("Vui lòng nhập đầy đủ thông tin bắt buộc!");
+      toast.warning("Vui lòng nhập đầy đủ và đúng thông tin bắt buộc!");
       return;
     }
-    const confirmAdd = confirm("Bạn có muốn cập nhật phim này?");
+
+    const confirmAdd = await confirm({
+      title: "Bạn có muốn cập nhật phim này?",
+      content: "Hành động này sẽ không thể hoàn tác",
+    });
     if (!confirmAdd) return;
     try {
       await dispatch(
         updateMovie({
           id,
-          data: { ...formData, duration: Number(formData.duration) },
+          data: formData,
         })
       ).unwrap();
 
@@ -80,6 +88,7 @@ const UpdateForm = ({ data, onCancel, genre }: Props) => {
       toast.error("Cập nhật phim thất bại!");
     }
   };
+  console.log(formData);
 
   return (
     <form className="flex flex-col w-3.5xl h-full overflow-y-auto">

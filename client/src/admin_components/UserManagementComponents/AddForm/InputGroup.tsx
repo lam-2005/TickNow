@@ -50,10 +50,10 @@ const InputGroup = ({ formData, setFormData }: InputGroupProps) => {
 
       <div>
         <label className="block mb-1 text-sm font-medium">
-          Năm sinh <span className="text-red-500">*</span>
+          Ngày sinh <span className="text-red-500">*</span>
         </label>
         <input
-          type="number"
+          type="date"
           placeholder="Năm sinh"
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
           value={formData.year}
@@ -70,7 +70,9 @@ const InputGroup = ({ formData, setFormData }: InputGroupProps) => {
           placeholder="Nhập mật khẩu"
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
           value={formData.password}
-          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, password: e.target.value })
+          }
         />
       </div>
 
@@ -83,7 +85,9 @@ const InputGroup = ({ formData, setFormData }: InputGroupProps) => {
           placeholder="Nhập lại mật khẩu"
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
           value={formData.confirmPassword}
-          onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, confirmPassword: e.target.value })
+          }
         />
       </div>
 
@@ -93,9 +97,18 @@ const InputGroup = ({ formData, setFormData }: InputGroupProps) => {
         </label>
         <select
           className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
-          value={formData.role === true ? "admin" : formData.role === false ? "user" : ""}
+          value={
+            formData.role === true
+              ? "admin"
+              : formData.role === false
+              ? "user"
+              : ""
+          }
           onChange={(e) =>
-            setFormData({ ...formData, role: e.target.value === "admin" ? true : false })
+            setFormData({
+              ...formData,
+              role: e.target.value === "admin" ? true : false,
+            })
           }
         >
           <option value="user">Người dùng</option>

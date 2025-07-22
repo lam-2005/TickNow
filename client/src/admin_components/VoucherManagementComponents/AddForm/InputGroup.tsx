@@ -8,9 +8,10 @@ import { VoucherReq } from "@/interfaces/vouchers.interface";
 type InputGroupProps = {
   formData: VoucherReq;
   setFormData: (data: VoucherReq) => void;
+  errors?: string;
 };
 
-const InputGroup = ({ formData, setFormData }: InputGroupProps) => {
+const InputGroup = ({ formData, setFormData, errors }: InputGroupProps) => {
   const onChangeData = (key: string, value: string | number) => {
     setFormData({ ...formData, [key]: value });
   };
@@ -49,23 +50,28 @@ const InputGroup = ({ formData, setFormData }: InputGroupProps) => {
         placeholder="Nhập số lượng tối đa"
       />
 
-      <TextField
-        className="w-full"
-        type="date"
-        required
-        id="outlined-required"
-        label="Ngày bắt đầu"
-        defaultValue={formData?.start_date}
-        onChange={(e) => onChangeData("start_date", e.target.value)}
-        placeholder="Nhập ngày bắt đầu"
-        InputLabelProps={{ shrink: true }}
-      />
+      <div>
+        <TextField
+          className="w-full"
+          type="date"
+          required
+          error={errors ? true : false}
+          helperText={errors}
+          id="outlined-required"
+          label="Ngày bắt đầu"
+          defaultValue={formData?.start_date}
+          onChange={(e) => onChangeData("start_date", e.target.value)}
+          placeholder="Nhập ngày bắt đầu"
+          InputLabelProps={{ shrink: true }}
+        />
+      </div>
 
       <TextField
         className="w-full"
         type="date"
         required
         id="outlined-required"
+        error={errors ? true : false}
         label="Ngày kết thúc"
         defaultValue={formData?.end_date}
         onChange={(e) => onChangeData("end_date", e.target.value)}
@@ -81,7 +87,7 @@ const InputGroup = ({ formData, setFormData }: InputGroupProps) => {
           className="w-full"
           labelId="demo-simple-select-helper-label2"
           id="demo-simple-select-helper"
-          value={formData?.is_active}
+          value={formData.is_active as string}
           label="Trạng thái"
           disabled={false}
           onChange={(e) => onChangeData("is_active", e.target.value)}

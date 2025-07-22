@@ -9,6 +9,7 @@ import { ScreenReq } from "@/interfaces/screening.interface";
 import { MovieType } from "@/interfaces/movie.interface";
 import { RoomType } from "@/interfaces/room.interface";
 import dataScreen from "@/utils/redux/selectors/screenSelector";
+import { useConfirm } from "@/hooks/contexts/useConfirm";
 export type MovieOptionsType = {
   // đây là kiểu dữu liệu của select/option movie
   label: string;
@@ -21,6 +22,7 @@ const AddForm = ({
   movies: MovieType[];
   rooms: RoomType[];
 }) => {
+  const confirm = useConfirm();
   const dispatch = useDispatch<AppDispatch>();
   const { filter } = useSelector(dataScreen);
   const [formData, setFormData] = useState<ScreenReq>({
@@ -29,7 +31,7 @@ const AddForm = ({
     id_movie: "",
     time_start: "",
     date: "",
-    showtype: "1",
+    showtype: 1,
     price: "",
   });
   const listOptionMovies: MovieOptionsType[] = movies.map((item) => {
@@ -56,9 +58,11 @@ const AddForm = ({
       return;
     }
 
-    const confirmAdd = confirm("Bạn có muốn thêm Suất chiếu mới?"); //thông báo
-    if (!confirmAdd) return; // nếu hủy thì k có gì hết
-
+    const confirmAdd = await confirm({
+      title: "Bạn có muốn thêm suất này?",
+      content: "Hành động này sẽ không thể hoàn tác",
+    }); //thông báo
+    if (!confirmAdd) return;
     try {
       /*nếu ok thì dispatch action thêm dữ liệu với formdata. Lưu ý nếu muốn lưu mọi thứ từ formdata mà k cần thay đổi gì thì chỉ cần addScreen(formdata), còn nếu muons thay đổi 1 chút như là muốn giá của suất là dang số (nếu be yêu càn price phải là số) thì 
       addScreen({
@@ -94,8 +98,7 @@ const AddForm = ({
         id_movie: "",
         time_start: "",
         date: "",
-        showtype: "",
-        status: "",
+        showtype: 1,
         price: "",
       });
     } catch (err) {

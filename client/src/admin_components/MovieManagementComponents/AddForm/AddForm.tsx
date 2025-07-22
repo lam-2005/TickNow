@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/utils/redux/store";
 import { addMovie, fetchMovies } from "@/utils/redux/slices/movieSlice";
@@ -7,6 +7,7 @@ import { MovieReq } from "@/interfaces/movie.interface";
 import { toast } from "react-toastify";
 import InputGroup from "./InputGroup";
 import Genre from "@/interfaces/genre.interface";
+import { useConfirm } from "@/hooks/contexts/useConfirm";
 
 type AddFormProps = {
   genre: Genre[];
@@ -17,24 +18,43 @@ export type GenreType = {
 };
 const AddForm = ({ genre }: AddFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
+  const confirm = useConfirm();
+  const [error, setError] = useState<string>("");
 
   const [formData, setFormData] = useState<MovieReq>({
     name: "",
     release_date: "",
     nation: "",
-    language: 1, // 1: Phụ Đề, 2: Lồng Tiếng
+    language: "",
     duration: "",
     age: "",
     director: "",
     actor: "",
-    status: 1,
     genre: [],
     trailer: "",
     image: null,
     banner: null,
     description: "",
   });
+  useEffect(() => {
+    if (formData.release_date) {
+      const currentDate = new Date();
+      const releaseDate = new Date(formData.release_date);
 
+      if (
+        releaseDate.getFullYear() < currentDate.getFullYear() ||
+        (releaseDate.getFullYear() === currentDate.getFullYear() &&
+          releaseDate.getMonth() < currentDate.getMonth()) ||
+        (releaseDate.getFullYear() === currentDate.getFullYear() &&
+          releaseDate.getMonth() === currentDate.getMonth() &&
+          releaseDate.getDate() < currentDate.getDate())
+      ) {
+        setError("Ngày công chiếu không được trước ngày hiện tại.");
+      } else {
+        setError("");
+      }
+    }
+  }, [formData.release_date]);
   const listOptionGenre: GenreType[] = genre.map((item) => {
     return {
       label: item.name,
@@ -48,17 +68,23 @@ const AddForm = ({ genre }: AddFormProps) => {
     if (
       !formData.name ||
       !formData.release_date ||
-      !formData.status ||
       !formData.duration ||
       !formData.age ||
       !formData.genre ||
-      !formData.trailer
+      !formData.trailer ||
+      error ||
+      !formData.image ||
+      !formData.banner ||
+      !formData.director
     ) {
-      toast.warning("Vui lòng nhập đầy đủ thông tin bắt buộc!");
+      toast.warning("Vui lòng nhập đầy đủ và đúng thông tin bắt buộc!");
       return;
     }
 
-    const confirmAdd = confirm("Bạn có muốn thêm phim này?");
+    const confirmAdd = await confirm({
+      title: "Bạn có muốn thêm phim này?",
+      content: "Hành động này sẽ không thể hoàn tác",
+    });
     if (!confirmAdd) return;
 
     try {
@@ -74,12 +100,11 @@ const AddForm = ({ genre }: AddFormProps) => {
         name: "",
         release_date: "",
         nation: "",
-        language: 1,
+        language: "",
         duration: "",
         age: "",
         director: "",
         actor: "",
-        status: 1,
         genre: [],
         trailer: "",
         image: null,
@@ -96,6 +121,7 @@ const AddForm = ({ genre }: AddFormProps) => {
     <>
       <div className="space-y-5 px-5 flex-1 overflow-x-hidden overflow-y-auto">
         <InputGroup
+          error={error}
           formData={formData}
           setFormData={setFormData}
           listOptionGenre={listOptionGenre}

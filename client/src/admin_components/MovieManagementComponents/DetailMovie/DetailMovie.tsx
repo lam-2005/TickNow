@@ -13,14 +13,17 @@ type Props = {
 const MovieDetail = ({ movie, onClose }: Props) => {
   return (
     <PopupContainer title="Chi Tiết Phim" closeForm={onClose}>
-      <div className="space-y-5 px-6 flex-1 overflow-y-auto pb-5 max-h-[75vh]">
+      <div className="space-y-5 px-6 flex-1 overflow-y-auto pb-5">
         <div className="flex flex-col md:flex-row gap-6">
           <Image
-            src={`${env.IMG_API_URL}/movie/${movie.image}`}
+            src={
+              `${env.IMG_API_URL}/movie/${movie.image}` || "/movies/default.png"
+            }
             alt="Poster"
             width={240}
             height={320}
-            className="rounded shadow object-cover"
+            className="rounded-lg shadow object-cover "
+            style={{ height: "320px", width: "240px", objectFit: "contain" }}
           />
           <div className="text-sm text-gray-700 space-y-1">
             <h2 className="text-xl font-semibold text-gray-800 mb-2">
@@ -31,21 +34,17 @@ const MovieDetail = ({ movie, onClose }: Props) => {
               {new Date(movie.release_date).toLocaleDateString("vi-VN")}
             </p>
             <p>
-              <strong>Đạo diễn:</strong> {movie.director}
+              <strong>Đạo diễn:</strong> {movie.director || "Đang cập nhật"}
             </p>
             <p>
-              <strong>Diễn viên:</strong> {movie.actor}
+              <strong>Diễn viên:</strong> {movie.actor || "Đang cập nhật"}
             </p>
             <p>
-              <strong>Ngôn ngữ:</strong>{" "}
-              {Number(movie.language) === 1
-                ? "Phụ Đề"
-                : Number(movie.language) === 2
-                ? "Lồng Tiếng"
-                : "Chưa Xác Định"}
+              <strong>Ngôn ngữ:</strong> {movie.language || "Đang cập nhật"}
             </p>
             <p>
-              <strong>Thời lượng:</strong> {movie.duration} phút
+              <strong>Thời lượng:</strong> {movie.duration || "Đang cập nhật"}{" "}
+              phút
             </p>
             <p>
               <strong>Độ tuổi:</strong> {movie.age}+
@@ -62,14 +61,29 @@ const MovieDetail = ({ movie, onClose }: Props) => {
               <strong>Thể loại:</strong>{" "}
               {Array.isArray(movie.genre)
                 ? movie.genre.map((g) => g.name).join(", ")
-                : "Không rõ"}
+                : "Đang cập nhật"}
             </p>
             <p>
               <strong>Đánh giá:</strong> {movie.star ?? "Chưa có"}
             </p>
             <p className="whitespace-pre-line">
-              <strong>Mô tả:</strong> {movie.description}
+              <strong>Mô tả:</strong> {movie.description || "Đang cập nhật"}
             </p>
+          </div>
+        </div>
+        <div className="space-y-2">
+          <p className="font-bold">Trailer</p>
+          <div className="flex-1 flex gap-5 justify-end max-lg:hidden w-full">
+            <iframe
+              className={`rounded-2xl aspect-[16/9] w-full`}
+              src={`${movie.trailer}?autoplay=1&enablejsapi=1`}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer;  encrypted-media;"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+              loading="lazy"
+            ></iframe>
           </div>
         </div>
       </div>

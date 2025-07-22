@@ -8,7 +8,7 @@ import { getRoomData } from "@/services/room.service";
 
 const getCinema = async () => {
   const res = (await getCinemaList()) as any;
-  return res.cinema;
+  return res.data.cinema;
 };
 const RoomManagement = () => {
   const rooms = getRoomData(1, 5);

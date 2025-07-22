@@ -136,8 +136,20 @@ const ScreenList = ({
       title: "Trạng Thái",
       render: (row: Screening) => (
         <Status
-          title={row.status === 1 ? "Đang hoạt động" : "Ngưng hoạt Động"} // tên của status
-          color={row.status === 1 ? "success" : "error"} // màu của status
+          title={
+            row.status === 1
+              ? "Đang chiếu"
+              : row.status === 2
+              ? "Sắp chiếu"
+              : "Ngưng chiếu"
+          } // tên của status
+          color={
+            row.status === 1
+              ? "success"
+              : row.status === 2
+              ? "warning"
+              : "error"
+          } // màu của status
         />
       ),
     },

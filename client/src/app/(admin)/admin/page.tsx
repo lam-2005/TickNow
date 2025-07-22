@@ -64,7 +64,7 @@ const Dashboard = () => {
           </div>
           <Table
             column={col}
-            data={[{ _id: 1, movie: "Phim 1", ticket: "5", total: "1000000" }]}
+            data={[{ _id: 1, movie: "Rạp 1", ticket: "5", total: "1000000" }]}
           />
         </div>
       </div>

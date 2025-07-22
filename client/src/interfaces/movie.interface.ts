@@ -30,9 +30,9 @@ export type MovieReq = {
   director: string;
   actor: string;
   trailer: string;
-  image: File | null;
-  banner: File | null;
+  image: File | null | string;
+  banner: File | null | string;
   language: number | string;
   genre: string[];
-  status: string | number;
+  status?: string | number;
 };
