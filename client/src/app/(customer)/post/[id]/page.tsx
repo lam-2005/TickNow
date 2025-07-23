@@ -1,6 +1,7 @@
 import { PostType } from "@/interfaces/post.interface";
 import { getPostList } from "@/services/post.service";
-import Image from "next/image";
+
+import CopyBtn from "./CopyBtn";
 
 export default async function PostDetailPage({
   params,
@@ -28,24 +29,14 @@ export default async function PostDetailPage({
             Từ {formatDate(post.start_day)} đến {formatDate(post.end_day)}
           </p>
 
-          <div className="mb-4 leading-relaxed whitespace-pre-line">
+          {post.voucher && <CopyBtn code={post.voucher} />}
+
+          <div className="mb-4 mt-2">
             <div
               className=""
               dangerouslySetInnerHTML={{ __html: post.content || "" }}
             />
           </div>
-
-          {post.image && (
-            <div className="mt-8 flex justify-center">
-              <Image
-                src={post.image}
-                alt={post.title}
-                width={800}
-                height={500}
-                className="rounded-xl shadow-md"
-              />
-            </div>
-          )}
         </div>
       )}
     </div>

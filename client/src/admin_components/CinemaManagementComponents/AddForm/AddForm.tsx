@@ -40,9 +40,9 @@ const AddCinemaForm = ({
   const handleAddCinema = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const { name, image, status, id_location, deatil_location } = formData;
+    const { name, status, id_location, deatil_location } = formData;
 
-    if (!name || !image || !status || !id_location || !deatil_location) {
+    if (!name || !status || !id_location || !deatil_location) {
       toast.warning("Vui lòng nhập đầy đủ thông tin rạp chiếu!");
       return;
     }

@@ -17,19 +17,26 @@ import Status from "../StatusUI/Status";
 import { toast } from "react-toastify";
 import UpdateFormContainer from "./UpdateForm/UpdateFormContainer";
 import DetailPost from "./DetailPost/DetailPost";
+import { Voucher } from "@/interfaces/vouchers.interface";
 type InitDataType = {
   posts: PostType[];
   total: number;
   currentPage: number;
   totalPages: number;
 };
-const PostList = ({ initData }: { initData: InitDataType }) => {
+const PostList = ({
+  initData,
+  voucherList,
+}: {
+  initData: InitDataType;
+  voucherList: Voucher[];
+}) => {
   const dispatch = useDispatch<AppDispatch>();
   const isFirstLoad = useRef(true);
   const [showInfo, setShowInfo] = useState<boolean>(false);
   const [openUpdateForm, setOpenUpdateForm] = useState<boolean>(false);
   const [idPost, setIdPost] = useState("");
-
+  const vouchers = voucherList.map((voucher) => voucher.code);
   // lay selector
   const { currentPage, loading, data, error, total, totalPages, filter } =
     useSelector(postSelector);
@@ -153,6 +160,7 @@ const PostList = ({ initData }: { initData: InitDataType }) => {
       )}
       {openUpdateForm && idPost && (
         <UpdateFormContainer
+          voucherList={vouchers}
           id={idPost}
           closeForm={() => setOpenUpdateForm(false)}
         />

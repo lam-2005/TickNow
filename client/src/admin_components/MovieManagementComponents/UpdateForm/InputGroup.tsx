@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { MovieReq } from "@/interfaces/movie.interface";
 import Button from "@mui/material/Button";
-import { FaCloudUploadAlt } from "react-icons/fa";
+import { FaCloudUploadAlt, FaRegTrashAlt } from "react-icons/fa";
 import { styled } from "@mui/material/styles";
 import { GenreType } from "../AddForm/AddForm";
 import TextField from "@mui/material/TextField";
@@ -28,11 +28,11 @@ const InputGroupMovie = ({
     null
   );
   useEffect(() => {
-    if (formData.image) {
-      setPreviewImage(formData.image as string);
+    if (formData.image && typeof formData.image === "string") {
+      setPreviewImage(formData.image);
     }
-    if (formData.banner) {
-      setPreviewImageBanner(formData.banner as string);
+    if (formData.banner && typeof formData.banner === "string") {
+      setPreviewImageBanner(formData.banner);
     }
   }, [formData.image, formData.banner]);
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,7 +43,6 @@ const InputGroupMovie = ({
       setFormData({ ...formData, image: file });
     }
   };
-  console.log(previewImage);
 
   const handleImageBannerChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -268,12 +267,30 @@ const InputGroupMovie = ({
           />
         </Button>
         {previewImage && formData.image && (
-          <Image
-            alt="Ảnh phim"
-            src={`${env.IMG_API_URL}/movie/${previewImage}` || ""}
-            width={300}
-            height={300}
-          />
+          <div className="mt-3 relative w-[300px] h-[200px] z-10">
+            <Image
+              alt="cinema image"
+              src={`${
+                typeof formData.image === "string"
+                  ? `${env.IMG_API_URL}/movie/${formData.image}`
+                  : previewImage || ""
+              }`}
+              width={300}
+              height={300}
+              style={{ objectFit: "cover", width: "300px", height: "200px" }}
+              className="rounded-md"
+            />
+
+            <div
+              onClick={() => {
+                setPreviewImage(null);
+                setFormData({ ...formData, image: "" });
+              }}
+              className="absolute top-0 right-0 -translate-x-2.5 translate-y-2.5 p-2 z-11 text-error cursor-pointer bg-white rounded-md"
+            >
+              <FaRegTrashAlt />
+            </div>
+          </div>
         )}
       </div>
 
@@ -296,12 +313,30 @@ const InputGroupMovie = ({
           />
         </Button>
         {previewImageBanner && formData.banner && (
-          <Image
-            alt="Ảnh phim"
-            src={`${env.IMG_API_URL}/banner/${previewImageBanner}` || ""}
-            width={300}
-            height={300}
-          />
+          <div className="mt-3 relative w-[300px] h-[200px] z-10">
+            <Image
+              alt="cinema image"
+              src={`${
+                typeof formData.banner === "string"
+                  ? `${env.IMG_API_URL}/banner/${formData.banner}`
+                  : previewImageBanner || ""
+              }`}
+              width={300}
+              height={300}
+              style={{ objectFit: "cover", width: "300px", height: "200px" }}
+              className="rounded-md"
+            />
+
+            <div
+              onClick={() => {
+                setPreviewImageBanner(null);
+                setFormData({ ...formData, banner: "" });
+              }}
+              className="absolute top-0 right-0 -translate-x-2.5 translate-y-2.5 p-2 z-11 text-error cursor-pointer bg-white rounded-md"
+            >
+              <FaRegTrashAlt />
+            </div>
+          </div>
         )}
       </div>
 

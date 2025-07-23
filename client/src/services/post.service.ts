@@ -16,6 +16,7 @@ const addPostAPI = async (req: DataPostReq) => {
     form.append("content", req.content);
     form.append("start_day", req.start_day);
     form.append("end_day", req.end_day);
+    form.append("voucher", req.voucher || "");
     if (req.image) form.append("image", req.image);
 
     const res = await api.post("/post/add", form, {
@@ -36,6 +37,7 @@ const updatePostAPI = async (id: string, req: DataPostReq) => {
     form.append("content", req.content);
     form.append("start_day", req.start_day);
     form.append("end_day", req.end_day);
+    form.append("voucher", req.voucher || "");
     if (req.status !== undefined) form.append("status", req.status.toString());
     if (req.image) form.append("image", req.image);
 

@@ -8,15 +8,18 @@ import { getPostList } from "@/services/post.service";
 import InputGroup from "./InputGroup";
 import postSelector from "@/utils/redux/selectors/postSelector";
 import { fetchPosts, updatePost } from "@/utils/redux/slices/postSlice";
+import { useConfirm } from "@/hooks/contexts/useConfirm";
 
 type UpdateFormProps = {
   id: string;
   closeForm: () => void;
+  voucherList: string[];
 };
-const UpdateForm = ({ id, closeForm }: UpdateFormProps) => {
+const UpdateForm = ({ id, closeForm, voucherList }: UpdateFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const { currentPage, filter } = useSelector(postSelector);
   const { rowsPerPage } = usePanigation(currentPage);
+  const confirm = useConfirm();
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState<DataPostReq>({
     image: null,
@@ -25,7 +28,24 @@ const UpdateForm = ({ id, closeForm }: UpdateFormProps) => {
     title: "",
     content: "",
     status: 2,
+    voucher: "",
   });
+  const [errors, setErrors] = useState("");
+  useEffect(() => {
+    setErrors("");
+    const currentDate = new Date(formData.start_day);
+    const endDate = new Date(formData.end_day);
+    if (currentDate >= endDate) {
+      setErrors("Ngày bắt đầu không được lớn hơn hoặc bằng ngày kết thúc");
+      return;
+    }
+    if (formData.end_day && !formData.start_day) {
+      setErrors("Vui lòng nhập ngày bắt đầu trước khi nhập ngày kết thúc");
+    }
+    if (formData.start_day && !formData.end_day) {
+      setErrors("Vui lòng nhập ngày kết thúc");
+    }
+  }, [formData.start_day, formData.end_day]);
   useEffect(() => {
     const getPostDetail = async (id: string) => {
       try {
@@ -38,6 +58,7 @@ const UpdateForm = ({ id, closeForm }: UpdateFormProps) => {
           title: data?.title || "",
           content: data?.content || "",
           status: data?.status || 2,
+          voucher: data?.voucher || "",
         });
       } catch (error) {
         console.error("Failed to fetch post detail", error);
@@ -53,7 +74,10 @@ const UpdateForm = ({ id, closeForm }: UpdateFormProps) => {
 
   const handleUpdatePost = async (id: string) => {
     try {
-      const sure = confirm("Bạn có muốn cập nhật phòng này?");
+      const sure = await confirm({
+        title: "Bạn có muốn cập nhật bài viết này?",
+        content: "Hành động này sẽ không thể hoàn tác",
+      });
       if (sure) {
         await dispatch(updatePost({ id, data: formData })).unwrap();
 
@@ -78,7 +102,12 @@ const UpdateForm = ({ id, closeForm }: UpdateFormProps) => {
   return (
     <>
       <div className="space-y-5 px-5 flex-1 overflow-x-hidden overflow-y-auto">
-        <InputGroup formData={formData} setFormData={setFormData} />
+        <InputGroup
+          voucherList={voucherList}
+          formData={formData}
+          setFormData={setFormData}
+          errors={errors}
+        />
       </div>
       <div className="flex justify-end p-5 w-full bg-background-card rounded-2xl">
         <button className="btn" onClick={() => handleUpdatePost(id)}>

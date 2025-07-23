@@ -8,6 +8,7 @@ import {
   fetchVouchers,
   updateVoucher,
 } from "@/utils/redux/slices/voucherSlice";
+import { useConfirm } from "@/hooks/contexts/useConfirm";
 
 type UpdateFormProps = {
   voucher: Voucher;
@@ -24,6 +25,7 @@ const formatDate = (date: string | null | undefined) => {
 
 const UpdateForm = ({ voucher, closeForm }: UpdateFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
+  const confirm = useConfirm();
   const [formData, setFormData] = useState<VoucherReq>({
     code: voucher.code,
     discount_type: voucher.discount_type,
@@ -57,7 +59,10 @@ const UpdateForm = ({ voucher, closeForm }: UpdateFormProps) => {
       return;
     }
     try {
-      const sure = confirm("Bạn có muốn cập nhật?");
+      const sure = await confirm({
+        title: "Bạn có muốn cập nhật?",
+        content: "Hành động này sẽ không thể hoàn tác",
+      });
       if (!sure) return;
 
       await dispatch(

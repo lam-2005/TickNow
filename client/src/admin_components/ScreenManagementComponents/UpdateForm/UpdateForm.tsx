@@ -12,6 +12,7 @@ import dataScreen from "@/utils/redux/selectors/screenSelector";
 import usePanigation from "@/hooks/usePanigation";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { useConfirm } from "@/hooks/contexts/useConfirm";
 
 const UpdateForm = ({
   id,
@@ -25,6 +26,7 @@ const UpdateForm = ({
   closeForm: () => void;
 }) => {
   const [loading, setLoading] = useState(true);
+  const confirm = useConfirm();
   const [formData, setFormData] = useState<ScreenReq>({
     id_room: "",
     id_movie: "",
@@ -81,11 +83,13 @@ const UpdateForm = ({
 
     getScreengDetail(id);
   }, [id]);
-  console.log(formData.status);
 
   const handleUpdateScreening = async (id: string) => {
     try {
-      const sure = confirm("Bạn có muốn cập nhật phòng này?");
+      const sure = await confirm({
+        title: "Bạn có muốn cập nhật suất này?",
+        content: "Hành động này sẽ không thể hoàn tác",
+      });
       if (sure) {
         await dispatch(updateScreen({ id, data: formData })).unwrap();
         toast.success("Cập nhật suất thành công!");

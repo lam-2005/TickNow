@@ -5,6 +5,7 @@ import { LocationOptionsType } from "./AddForm";
 import Button from "@mui/material/Button";
 import Image from "next/image";
 import { styled } from "@mui/material/styles";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 type Props = {
   formData: CinemaReq;
@@ -70,12 +71,26 @@ const InputGroupCinema = ({
           />
         </Button>
         {preview && formData.image && (
-          <Image
-            alt="cinema image"
-            src={preview || ""}
-            width={300}
-            height={300}
-          />
+          <div className="mt-3 relative w-[300px] h-[200px] z-10">
+            <Image
+              alt="cinema image"
+              src={preview || ""}
+              width={300}
+              height={300}
+              style={{ objectFit: "cover", width: "300px", height: "200px" }}
+              className="rounded-md"
+            />
+
+            <div
+              onClick={() => {
+                setPreview(null);
+                setFormData({ ...formData, image: null });
+              }}
+              className="absolute top-0 right-0 -translate-x-2.5 translate-y-2.5 p-2 z-11 text-error cursor-pointer bg-white rounded-md"
+            >
+              <FaRegTrashAlt />
+            </div>
+          </div>
         )}
       </div>
 

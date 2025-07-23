@@ -4,7 +4,8 @@ import { Screening } from "./screening.interface";
 import { UserType } from "./user.interface";
 
 export interface Ticket {
-  _id: string; // ID của vé (MongoDB ObjectId)
+  _id: string | number; // ID của vé (MongoDB ObjectId)
+  [key: string]: any; // Allow string, number, and string[] types
   id_user: string; // ID người dùng đặt vé
   id_screening: string; // ID suất chiếu
   price: number; // Giá vé

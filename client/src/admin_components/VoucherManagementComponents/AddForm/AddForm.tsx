@@ -14,7 +14,7 @@ const initDefault = {
   code: "",
   discount_type: 0,
   user_count: 0,
-  max_users: 0,
+  max_users: "",
   start_date: "",
   end_date: "",
   is_active: "true",

@@ -14,6 +14,7 @@ import { RoomType } from "./room.interface";
 
 /// Dữ liệu data lấy về
 export interface Screening {
+  [key: string]: any; // Cho phép các thuộc tính khác
   _id: string; // MongoDB ObjectId dạng string
   id_room: string;
   id_movie: string;

@@ -43,14 +43,6 @@ const TicketList = ({ initData }: { initData: InitDataType }) => {
       isFirstLoad.current = false;
       return;
     }
-    dispatch(fetchTicket({ page, limit: rowsPerPage }));
-  }, [dispatch, page, rowsPerPage]);
-
-  useEffect(() => {
-    if (isFirstLoad.current) {
-      isFirstLoad.current = false;
-      return;
-    }
     if (page <= totalPages) {
       dispatch(
         fetchTicket({
@@ -100,7 +92,7 @@ const TicketList = ({ initData }: { initData: InitDataType }) => {
             <ActionButton
               label="Xem vé"
               bgColor="success"
-              onClick={() => handleShowDetail(row._id)}
+              onClick={() => handleShowDetail(row._id as string)}
             />
             <ActionButton label="Hủy vé" bgColor="error" onClick={() => null} />
           </div>

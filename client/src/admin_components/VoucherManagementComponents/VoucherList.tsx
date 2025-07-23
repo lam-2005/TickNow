@@ -14,6 +14,7 @@ import {
   fetchVouchers,
   setInitialVouchers,
 } from "@/utils/redux/slices/voucherSlice";
+import Status from "../StatusUI/Status";
 
 type InitDataType = {
   vouchers: Voucher[];
@@ -36,64 +37,84 @@ const VoucherList = ({ initData }: { initData: InitDataType }) => {
   );
 
   useEffect(() => {
-      dispatch(setInitialVouchers(initData));
-    }, [dispatch, initData]);
-  
-    useEffect(() => {
-      if (isFirstLoad.current) {
-        isFirstLoad.current = false;
-        return;
-      }
-      if (page <= totalPages) {
-        dispatch(
-          fetchVouchers({
-            limit: rowsPerPage,
-            page: page,
-            code: filter.code,
-            timeStart: filter.timeStart,
-            timeEnd: filter.timeEnd,
-            status: filter.status,
-          })
-        );
-      } else {
-        dispatch(
-          fetchVouchers({
-            limit: rowsPerPage,
-            page: totalPages,
-            code: filter.code,
-            timeStart: filter.timeStart,
-            timeEnd: filter.timeEnd,
-            status: filter.status,
-          })
-        );
-      }
-    }, [
-      dispatch,
-      page,
-      rowsPerPage,
-      totalPages,
-      filter.code,
-      filter.timeStart,
-      filter.timeEnd,
-      filter.status,
-    ]);
+    dispatch(setInitialVouchers(initData));
+  }, [dispatch, initData]);
+
+  useEffect(() => {
+    if (isFirstLoad.current) {
+      isFirstLoad.current = false;
+      return;
+    }
+    if (page <= totalPages) {
+      dispatch(
+        fetchVouchers({
+          limit: rowsPerPage,
+          page: page,
+          code: filter.code,
+          timeStart: filter.timeStart,
+          timeEnd: filter.timeEnd,
+          status: filter.status,
+        })
+      );
+    } else {
+      dispatch(
+        fetchVouchers({
+          limit: rowsPerPage,
+          page: totalPages,
+          code: filter.code,
+          timeStart: filter.timeStart,
+          timeEnd: filter.timeEnd,
+          status: filter.status,
+        })
+      );
+    }
+  }, [
+    dispatch,
+    page,
+    rowsPerPage,
+    totalPages,
+    filter.code,
+    filter.timeStart,
+    filter.timeEnd,
+    filter.status,
+  ]);
 
   const columns: Column<Voucher>[] = [
     { key: "code", title: "Mã code" },
     { key: "discount_type", title: "Mức giảm (%)" },
-    { key: "max_users", title: "Số lượng tối đa" },
+    {
+      key: "max_users",
+      title: "Số lượng tối đa",
+      render(row) {
+        return <p>{row?.max_users || "Không giới hạn"}</p>;
+      },
+    },
     {
       key: "start_date",
       title: "Ngày bắt đầu",
       render(row) {
-        return <p>{row?.start_date ? row?.start_date.slice(0, 10) : ""}</p>;
+        return (
+          <p>{row?.start_date ? row?.start_date.slice(0, 10) : "Không có"}</p>
+        );
       },
     },
     {
       key: "end_date",
       title: "Ngày kết thúc",
       render(row) {
-        return <p>{row?.end_date ? row?.end_date.slice(0, 10) : ""}</p>;
+        return <p>{row?.end_date ? row?.end_date.slice(0, 10) : "Không có"}</p>;
+      },
+    },
+    {
+      key: "is_active",
+      title: "Trạng thái",
+      render(row) {
+        return (
+          <Status
+            title={!row.is_active ? "Ngưng hoạt động" : "Đang hoạt động"} // tên của status
+            color={!row.is_active ? "error" : "success"} // màu của status
+          />
+        );
       },
     },
     {

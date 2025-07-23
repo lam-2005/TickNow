@@ -5,7 +5,10 @@ import Pagination from "@/admin_components/Table/Pagination";
 import { ReviewType } from "@/interfaces/rating.interface";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/utils/redux/store";
-import { fetchRatings, setInitialRatings } from "@/utils/redux/slices/ratingSlice";
+import {
+  fetchRatings,
+  setInitialRatings,
+} from "@/utils/redux/slices/ratingSlice";
 import usePanigation from "@/hooks/usePanigation";
 import dataRating from "@/utils/redux/selectors/ratingSeletor";
 
@@ -20,21 +23,12 @@ const RatingList = ({ initData }: { initData: InitDataType }) => {
   const dispatch = useDispatch<AppDispatch>();
   const isFirstLoad = useRef(true);
 
-  const {
-    ratings,
-    total,
-    currentPage,
-    totalPages,
-    loading,
-    error,
-  } = useSelector(dataRating);
+  const { ratings, total, currentPage, totalPages, loading, error } =
+    useSelector(dataRating);
 
-  const {
-    page,
-    changePage,
-    changeRowPerPage,
-    rowsPerPage,
-  } = usePanigation(initData.currentPage);
+  const { page, changePage, changeRowPerPage, rowsPerPage } = usePanigation(
+    initData.currentPage
+  );
 
   useEffect(() => {
     dispatch(
@@ -64,10 +58,10 @@ const RatingList = ({ initData }: { initData: InitDataType }) => {
     { key: "userName", title: "Tên Người Dùng" },
     { key: "score", title: "Điểm" },
     {
-      key: "date",
+      key: "updatedAt",
       title: "Ngày Đánh Giá",
       render: (row: ReviewType) => {
-        const date = new Date(row.date);
+        const date = new Date(row.updatedAt);
         return !isNaN(date.getTime())
           ? date.toLocaleDateString("vi-VN")
           : "Chưa xác định";
@@ -89,7 +83,10 @@ const RatingList = ({ initData }: { initData: InitDataType }) => {
     <>
       <Table
         column={columns}
-        data={ratings.map((r) => ({ ...r, id: r._id }))}
+        data={ratings.map((rating) => ({
+          ...rating,
+          _id: rating._id || "", // Ensure _id exists
+        }))}
         currentPage={currentPage}
         rowsPerPage={rowsPerPage}
       />

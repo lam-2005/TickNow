@@ -9,6 +9,7 @@ import { fetchRooms, updateRoom } from "@/utils/redux/slices/roomSlice";
 import { toast } from "react-toastify";
 import dataRoom from "@/utils/redux/selectors/roomSelector";
 import usePanigation from "@/hooks/usePanigation";
+import { useConfirm } from "@/hooks/contexts/useConfirm";
 export type CinemaType = {
   label: string;
   id: string;
@@ -22,6 +23,7 @@ const UpdateForm = ({ cinemas, closeForm, info }: UpdateFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const { currentPage, filter } = useSelector(dataRoom);
   const { rowsPerPage } = usePanigation(currentPage);
+  const confirm = useConfirm();
   const [formData, setFormData] = useState<DataRoomReq>({
     id_cinema: info.id_cinema,
     column: String(info.diagram.column),
@@ -60,7 +62,10 @@ const UpdateForm = ({ cinemas, closeForm, info }: UpdateFormProps) => {
       return;
     }
     try {
-      const sure = confirm("Bạn có muốn cập nhật phòng này?");
+      const sure = await confirm({
+        title: "Bạn có muốn cập nhật phòng này?",
+        content: "Hành động này sẽ không thể hoàn tác",
+      });
       if (sure) {
         await dispatch(updateRoom({ id, data: dataRequest })).unwrap();
 

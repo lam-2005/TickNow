@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import dataCinema from "@/utils/redux/selectors/selectorCinema";
 import usePanigation from "@/hooks/usePanigation";
 import { toast } from "react-toastify";
+import { useConfirm } from "@/hooks/contexts/useConfirm";
 
 const UpdateForm = ({
   id,
@@ -22,7 +23,7 @@ const UpdateForm = ({
   const dispatch = useDispatch<AppDispatch>();
   const { currentPage, filter } = useSelector(dataCinema);
   const { rowsPerPage } = usePanigation(currentPage);
-
+  const confirm = useConfirm();
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState<CinemaReq>({
     name: "",
@@ -36,7 +37,7 @@ const UpdateForm = ({
         const data = await getCinemaDetail(id);
         setFormData({
           name: data.name || "",
-          image: data.image || null,
+          image: data.image || "",
           status: data.status,
         });
       } catch (error) {
@@ -52,9 +53,16 @@ const UpdateForm = ({
 
   const handleUpdateCinema = async (id: string) => {
     try {
-      const confirmUpdate = confirm("Bạn có muốn cập nhật rạp này?");
+      const confirmUpdate = await confirm({
+        title: "Bạn có muốn cập nhật rạp này?",
+        content: "Hành động này sẽ không thể hoàn tác",
+      });
       if (!confirmUpdate) return;
-      await dispatch(updateCinema({ id: id, data: formData })).unwrap();
+      const dataToUpdate = {
+        ...formData,
+        image: formData.image ? formData.image : "",
+      };
+      await dispatch(updateCinema({ id: id, data: dataToUpdate })).unwrap();
       toast.success("Cập nhật rạp thành công!");
 
       await dispatch(

@@ -3,19 +3,20 @@ import AddPostBtn from "@/admin_components/PostManagenmentComponents/AddForm/But
 import SearchPost from "@/admin_components/PostManagenmentComponents/FilterPost/SearchPost";
 import PostList from "@/admin_components/PostManagenmentComponents/PostList";
 import { getPost } from "@/services/post.service";
+import { getVoucherList } from "@/services/vouchers.service";
 import React, { Suspense } from "react";
 
 const PostManagenment = async () => {
   const posts = await getPost(1, 5);
-
+  const vouchers = await getVoucherList("?active=true");
   return (
     <div className="card">
       <HeadingCard title="Quản Lý Bài viết">
-        <AddPostBtn />
+        <AddPostBtn vouchers={vouchers.voucher} />
       </HeadingCard>
       <SearchPost />
       <Suspense fallback={<p className="text-center">Đang tải dữ liệu...</p>}>
-        <PostList initData={posts} />
+        <PostList initData={posts} voucherList={vouchers.voucher} />
       </Suspense>
     </div>
   );

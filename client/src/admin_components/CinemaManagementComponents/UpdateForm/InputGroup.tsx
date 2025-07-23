@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import Image from "next/image";
 import env from "@/configs/environment";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 type InputGroupProps = {
   formData: CinemaReq;
@@ -31,8 +32,8 @@ const InputGroup = ({ formData, setFormData }: InputGroupProps) => {
   const [preview, setPreview] = useState<string | null>(null);
 
   useEffect(() => {
-    if (formData.image) {
-      setPreview(formData.image as string);
+    if (formData.image && typeof formData.image === "string") {
+      setPreview(formData.image);
     }
   }, [formData.image]);
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,17 +67,36 @@ const InputGroup = ({ formData, setFormData }: InputGroupProps) => {
           Hình ảnh rạp
           <VisuallyHiddenInput
             type="file"
+            accept="image/*"
             onChange={handleFileChange}
-            multiple
           />
         </Button>
+
         {preview && formData.image && (
-          <Image
-            alt="cinema image"
-            src={`${env.IMG_API_URL}/cinema/${preview}` || ""}
-            width={300}
-            height={300}
-          />
+          <div className="mt-3 relative w-[300px] h-[200px] z-10">
+            <Image
+              alt="cinema image"
+              src={`${
+                typeof formData.image === "string"
+                  ? `${env.IMG_API_URL}/cinema/${formData.image}`
+                  : preview || ""
+              }`}
+              width={300}
+              height={300}
+              style={{ objectFit: "cover", width: "300px", height: "200px" }}
+              className="rounded-md"
+            />
+
+            <div
+              onClick={() => {
+                setPreview(null);
+                setFormData({ ...formData, image: "" });
+              }}
+              className="absolute top-0 right-0 -translate-x-2.5 translate-y-2.5 p-2 z-11 text-error cursor-pointer bg-white rounded-md"
+            >
+              <FaRegTrashAlt />
+            </div>
+          </div>
         )}
       </div>
       {/* <div>

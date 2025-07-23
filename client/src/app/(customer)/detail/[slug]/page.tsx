@@ -3,7 +3,7 @@ import MovieInfo from "@/components/DetailPageComponents/MovieInfo";
 import ShowtimeSelect from "@/components/DetailPageComponents/ShowtimeUI/ShowtimeSelect";
 import { getLocationList } from "@/services/location.service";
 import { getMovieList } from "@/services/movie.service";
-import { getScreeningList } from "@/services/screening.service";
+import { getRateList } from "@/services/rate.service";
 import { getIdFromSlug } from "@/utils/convertSlug";
 import React from "react";
 
@@ -13,18 +13,7 @@ const Movie = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
   const res = await getMovieList(`/${id}`);
   const movie = res?.data.movie;
-  // dữ liệu suất
-  const fetchShowtimes = async () => {
-    try {
-      const res = await getScreeningList();
-      return res.data.result;
-    } catch (error) {
-      console.error("Lỗi khi tải suất chiếu:", error);
-    }
-  };
-  const showtimes = await fetchShowtimes();
-
-  // dữ liệu rạp
+  const rates = await getRateList(`/movie/${id}`);
 
   const fetchLocation = async () => {
     try {
@@ -40,11 +29,8 @@ const Movie = async ({ params }: { params: Promise<{ slug: string }> }) => {
     <div className="transition-all">
       <MovieInfo movie={movie} />
       <div className="container mt-10 space-y-10">
-        <ShowtimeSelect
-          listData={{ showtimes: showtimes, locations: locations }}
-          slug={id}
-        />
-        <CommentContainer />
+        <ShowtimeSelect listData={{ locations: locations }} slug={id} />
+        <CommentContainer rate={rates?.data} movie={movie} />
       </div>
     </div>
   );

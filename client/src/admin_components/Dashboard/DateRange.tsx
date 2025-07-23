@@ -1,25 +1,55 @@
 // components/DateRangePicker.jsx
 "use client";
-import React, { useState } from "react";
+import { TextField } from "@mui/material";
+import React from "react";
 
-export default function DateRangePicker() {
-  const [startDate, setStartDate] = useState("2024-04-01");
-  const [endDate, setEndDate] = useState("2024-05-15");
-
+export default function DateRangePicker({
+  startDate,
+  setStartDate,
+  endDate,
+  setEndDate,
+  errors,
+}: {
+  startDate: string;
+  setStartDate: (value: string) => void;
+  endDate: string;
+  setEndDate: (value: string) => void;
+  errors: string;
+}) {
   return (
-    <div className="w-fit items-center border border-gray-300 rounded-md px-3 py-1 bg-white text-sm space-x-2">
-      <input
+    <div className="flex items-start gap-2">
+      <span className="text-gray-500 inline-block">Từ</span>
+      <TextField
+        className=""
+        size="small"
         type="date"
+        required
+        error={errors ? true : false}
+        helperText={errors}
+        id="outlined-required"
+        // label="Ngày bắt đầu"
         value={startDate}
-        onChange={(e) => setStartDate(e.target.value)}
-        className="bg-transparent outline-none text-gray-800 appearance-none w-[120px]"
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setStartDate(e.target.value)
+        }
+        placeholder="Nhập ngày bắt đầu"
+        InputLabelProps={{ shrink: true }}
       />
-      <span className="text-gray-500">→</span>
-      <input
+      <span className="text-gray-500 inline-block">Đến</span>
+
+      <TextField
+        className=""
+        size="small"
         type="date"
+        required
+        id="outlined-required"
+        error={errors ? true : false}
         value={endDate}
-        onChange={(e) => setEndDate(e.target.value)}
-        className="bg-transparent outline-none text-gray-800 appearance-none w-[120px]"
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setEndDate(e.target.value)
+        }
+        placeholder="Nhập ngày kết thúc"
+        InputLabelProps={{ shrink: true }}
       />
     </div>
   );

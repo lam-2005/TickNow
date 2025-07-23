@@ -40,7 +40,7 @@ const Showtimelist = ({ listFilter }: ShowtimeProps) => {
     try {
       setLoading(true);
       const res = await getMovieList(
-        `/schedue?date=${date}&movie=${movie}&cinema=${cinema}&status=1`
+        `/schedue?date=${date}&movie=${movie}&cinema=${cinema}`
       );
       setDataShowtime(res?.data.data);
     } catch (error) {

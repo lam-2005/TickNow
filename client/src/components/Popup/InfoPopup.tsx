@@ -58,7 +58,13 @@ const InfoPopup = ({
                   {info.age}+
                 </span>
               </div>
-              <ItemInfo title="Công chiếu:" content={info.release_date} />
+              <ItemInfo
+                title="Công chiếu:"
+                content={new Date(info.release_date).toLocaleDateString(
+                  "vi-VN",
+                  { day: "2-digit", month: "2-digit", year: "numeric" }
+                )}
+              />
               <ItemInfo
                 title="Thể loại:"
                 content={info.genre.map((g) => g.name).join(", ")}

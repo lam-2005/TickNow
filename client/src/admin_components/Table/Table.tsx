@@ -7,18 +7,22 @@ export interface Column<T> {
   render?: (row: T) => React.ReactNode;
 }
 
-const Table = <T extends { _id: string | number }>({
+const Table = <
+  T extends { _id: string | number; [key: string]: string | number }
+>({
   column,
   data,
   currentPage,
   rowsPerPage,
   className,
+  id,
 }: {
   column: Column<T>[];
   data: T[];
   currentPage?: number;
   rowsPerPage?: number;
   className?: string;
+  id?: string;
 }) => {
   return (
     <>
@@ -39,7 +43,7 @@ const Table = <T extends { _id: string | number }>({
         "
         >
           {data.map((row, index) => (
-            <tr key={row._id} className="">
+            <tr key={row?._id || row[`${id}`]} className="">
               <td>
                 {currentPage && rowsPerPage
                   ? (currentPage - 1) * rowsPerPage + index + 1

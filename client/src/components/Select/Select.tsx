@@ -52,7 +52,7 @@ export const SelectComponent = <T,>({
           className="text-white rounded-full bg-background-card text-center w-full"
           MenuProps={{
             PaperProps: {
-              className: "bg-background-card text-white rounded-xl ",
+              className: "bg-background-card text-white rounded-xl h-70",
             },
           }}
           sx={{

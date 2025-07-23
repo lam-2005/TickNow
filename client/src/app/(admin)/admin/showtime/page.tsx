@@ -8,7 +8,7 @@ import FilterScreening from "@/admin_components/ScreenManagementComponents/Filte
 import { getScreenData } from "@/services/screening.service";
 
 const getMovie = async () => {
-  const res = await getMovieList();
+  const res = await getMovieList("?status=1&status=2");
   return res.data.movie;
 };
 const getRoomList = async () => {

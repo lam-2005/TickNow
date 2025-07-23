@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/utils/redux/store";
 import { fetchVouchers, setFilter } from "@/utils/redux/slices/voucherSlice";
 import dataVoucher from "@/utils/redux/selectors/selectorVoucher";
+import { TextField } from "@mui/material";
 
 const FilterItem = ({
   title,
@@ -25,9 +26,24 @@ const FilterItem = ({
 const FilterPopup = ({ closeForm }: { closeForm: () => void }) => {
   const dispatch = useDispatch<AppDispatch>();
   const [code, setCode] = useState<string>("");
-  const [timeStart, setTimeStart] = useState<string>("");
-  const [timeEnd, setTimeEnd] = useState<string>("");
   const [status, setStatus] = useState<string[]>([]);
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+
+  const [error, setError] = useState(""); // kiểm lỗi
+
+  useEffect(() => {
+    setError("");
+
+    if (fromDate && toDate) {
+      const current = new Date(fromDate);
+      const end = new Date(toDate);
+      if (current > end) {
+        setError("Ngày bắt đầu không được lớn hơn ngày kết thúc");
+        return;
+      }
+    }
+  }, [fromDate, toDate]);
 
   const { filter } = useSelector(dataVoucher);
 
@@ -41,11 +57,13 @@ const FilterPopup = ({ closeForm }: { closeForm: () => void }) => {
 
   useEffect(() => {
     setCode(filter.code ?? "");
-    setTimeStart(filter.timeStart ?? "");
-    setTimeEnd(filter.timeEnd ?? "");
+    setFromDate(filter.timeStart ?? "");
+    setToDate(filter.timeEnd ?? "");
 
     if (filter.status) {
-      setStatus(filter.status.split(",").map((s) => s));
+      setStatus(
+        typeof filter.status === "string" ? filter.status.split(",") : []
+      );
     } else {
       setStatus([]);
     }
@@ -57,16 +75,16 @@ const FilterPopup = ({ closeForm }: { closeForm: () => void }) => {
         limit: 5,
         page: 1,
         code,
-        timeStart,
-        timeEnd,
+        timeStart: fromDate,
+        timeEnd: toDate,
         status: status.join(","),
       })
     );
     dispatch(
       setFilter({
         code,
-        timeStart,
-        timeEnd,
+        timeStart: fromDate,
+        timeEnd: toDate,
         status: status.join(","),
       })
     );
@@ -86,24 +104,32 @@ const FilterPopup = ({ closeForm }: { closeForm: () => void }) => {
             className="border border-foreground p-2 rounded-md"
           />
         </div>
-        <div className="flex flex-col gap-2">
-          <label className="font-bold text-lg">Ngày bắt đầu:</label>
-          <input
+        <div className="flex gap-10">
+          <TextField
+            className="w-full"
             type="date"
-            value={timeStart}
-            onChange={(e) => setTimeStart(e.target.value)}
+            required
+            error={error ? true : false}
+            helperText={error}
+            id="outlined-required"
+            label="Từ"
+            value={fromDate}
+            onChange={(e) => setFromDate(e.target.value)}
             placeholder="Nhập ngày bắt đầu"
-            className="border border-foreground p-2 rounded-md"
+            InputLabelProps={{ shrink: true }}
           />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label className="font-bold text-lg">Ngày kết thúc:</label>
-          <input
+
+          <TextField
+            className="w-full"
             type="date"
-            value={timeEnd}
-            onChange={(e) => setTimeEnd(e.target.value)}
+            required
+            id="outlined-required"
+            error={error ? true : false}
+            label="Đến"
+            value={toDate}
+            onChange={(e) => setToDate(e.target.value)}
             placeholder="Nhập ngày kết thúc"
-            className="border border-foreground p-2 rounded-md"
+            InputLabelProps={{ shrink: true }}
           />
         </div>
         <div className="flex flex-col gap-2">

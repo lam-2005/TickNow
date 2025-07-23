@@ -1,10 +1,7 @@
 "use client";
 import SelectContainer, { SelectComponent } from "@/components/Select/Select";
 import { Location } from "@/interfaces/cinema.interface";
-import {
-  CinemaShowtimeType,
-  Screening,
-} from "@/interfaces/screening.interface";
+import { CinemaShowtimeType } from "@/interfaces/screening.interface";
 import { getMovieList } from "@/services/movie.service";
 import React, { useEffect, useState } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
@@ -14,7 +11,6 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 
 type ListDataSelect = {
-  showtimes: Screening[];
   locations: Location[];
 };
 
@@ -23,26 +19,32 @@ type ShowtimeSelectTypes = {
   slug: string;
 };
 const ShowtimeSelect = ({ listData, slug }: ShowtimeSelectTypes) => {
-  const { showtimes, locations } = listData;
+  const { locations } = listData;
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+  function getNext7DaysWithLabels() {
+    const days = [];
+    const today = new Date();
 
-  const getDate: { value: string; label: string }[] = [
-    ...new Set(showtimes.map((item) => item.date)),
-  ].map((date) => {
-    const d = new Date(date as string);
-    const weekday = d.toLocaleDateString("vi-VN", { weekday: "long" });
-    const day = d.getDate().toString().padStart(2, "0");
-    const month = (d.getMonth() + 1).toString().padStart(2, "0");
-    const year = d.getFullYear();
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(today);
+      d.setDate(today.getDate() + i);
 
-    const label = `${weekday}, ${day}/${month}/${year}`;
-    return {
-      value: d.toISOString().split("T")[0],
-      label: label,
-    };
-  });
+      const weekday = d.toLocaleDateString("vi-VN", { weekday: "long" });
+      const day = d.getDate().toString().padStart(2, "0");
+      const month = (d.getMonth() + 1).toString().padStart(2, "0");
+      const year = d.getFullYear();
+
+      const label = `${weekday}, ${day}/${month}/${year}`;
+      const value = d.toISOString().split("T")[0];
+
+      days.push({ value, label });
+    }
+
+    return days;
+  }
+  const getDate = getNext7DaysWithLabels();
   const getDateParams = searchParams.get("date") || getDate[0].value;
   const getLocationParams = searchParams.get("location") || locations[0]._id;
   const [selectedDate, setSelectedDate] = useState(getDateParams);

@@ -22,7 +22,7 @@ export type voucherManagementState = ReduxInitStateDefaultType & {
     code: string;
     timeStart: string;
     timeEnd: string;
-    status: string;
+    status: string | boolean;
   };
 };
 
@@ -98,7 +98,7 @@ export const fetchVouchers = createAsyncThunk(
       code?: string;
       timeStart?: string;
       timeEnd?: string;
-      status?: string;
+      status?: string | boolean;
     },
     thunkAPI
   ) => {
@@ -109,7 +109,7 @@ export const fetchVouchers = createAsyncThunk(
         code,
         timeStart,
         timeEnd,
-        status
+        status?.toString()
       );
       return data;
     } catch (error) {
@@ -132,7 +132,7 @@ export const createVoucher = createAsyncThunk(
 
 export const updateVoucher = createAsyncThunk(
   "voucherManagement/updateVoucher",
-  async ({ id, data }: { id: string, data: VoucherReq }, thunkAPI) => {
+  async ({ id, data }: { id: string; data: VoucherReq }, thunkAPI) => {
     try {
       const res = await updateVoucherService(id, data);
       return res;

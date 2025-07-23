@@ -1,4 +1,5 @@
 export interface MovieType {
+  [key: string]: any; // Cho phép các thuộc tính khác
   _id: string;
   name: string;
   release_date: string;

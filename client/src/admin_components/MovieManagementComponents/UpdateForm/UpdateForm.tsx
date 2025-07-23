@@ -28,7 +28,7 @@ const UpdateForm = ({ data, onCancel, genre }: Props) => {
       id: String(item._id),
     };
   });
-  const { currentPage } = useSelector(dataMovie);
+  const { currentPage, filter } = useSelector(dataMovie);
   const { rowsPerPage } = usePanigation(currentPage);
 
   const date = new Date(data.release_date);
@@ -81,14 +81,22 @@ const UpdateForm = ({ data, onCancel, genre }: Props) => {
       ).unwrap();
 
       toast.success("Cập nhật phim thành công!");
-      await dispatch(fetchMovies({ page: currentPage, limit: rowsPerPage }));
+      await dispatch(
+        fetchMovies({
+          page: currentPage,
+          limit: rowsPerPage,
+          date: filter.date,
+          genre: filter.genre,
+          star: filter.star,
+          status: filter.status,
+        })
+      );
       onCancel();
     } catch (err) {
       console.error("Lỗi Cập nhật phim:", err);
       toast.error("Cập nhật phim thất bại!");
     }
   };
-  console.log(formData);
 
   return (
     <form className="flex flex-col w-3.5xl h-full overflow-y-auto">

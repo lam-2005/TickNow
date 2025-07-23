@@ -1,4 +1,5 @@
 export type RoomType = {
+  [key: string]: any; // Cho phép các thuộc tính khác
   _id: string;
   cinema?: string;
   code_room: string;

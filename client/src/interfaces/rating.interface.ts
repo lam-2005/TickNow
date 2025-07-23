@@ -1,9 +1,10 @@
 export interface ReviewType {
-  _id: number | string; 
-  id_movie: string;        
+  _id: number | string;
+  id_movie: string;
   movieName: string;
-  userName:string;    
-  score: number;        
-  date: string;         
-  comment: string;      
+  userName: string;
+  score: number;
+  date: string;
+  comment: string;
+  updatedAt: string;
 }

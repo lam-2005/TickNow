@@ -14,7 +14,7 @@ export const ratingAPI = async (data: {
   score: number;
   comment: string;
   movie: string;
-  ticket: string;
+  ticket: string | number;
 }) => {
   try {
     const res = await api.post("/rate/update-rate", data);
@@ -26,7 +26,7 @@ export const ratingAPI = async (data: {
 
 export const getRateData = async (page: number, limit: number) => {
   const res = await getRateList(`?page=${page}&limit=${limit}`);
-  const ratings: ReviewType[] = res?.data.rate || [];
+  const ratings: ReviewType[] = res?.data.data || [];
 
   // Lấy danh sách phim gồm id và tên
   const movieMap = new Map<string, string>();

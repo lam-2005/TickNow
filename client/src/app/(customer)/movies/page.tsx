@@ -2,14 +2,9 @@ import { MovieType } from "@/interfaces/movie.interface";
 import { getMovieList } from "@/services/movie.service";
 import MovieList from "./MoviePageContainer/MovieList";
 import BackgroundPage from "@/components/BackgroundPage/BackgroundPage";
-import { Screening } from "@/interfaces/screening.interface";
-import { getScreeningList } from "@/services/screening.service";
 import { getCinemaList } from "@/services/cinema.service";
 import FilterMovie from "./MoviePageContainer/FilterMovie";
-const getListDateShowtime = async () => {
-  const res = await getScreeningList();
-  return res?.data.result;
-};
+
 const getListCinema = async () => {
   const res = await getCinemaList();
   return res?.data.cinema;
@@ -26,7 +21,7 @@ const MovieSection = async ({
   }>;
 }) => {
   const { status, cinema, date } = await searchParams;
-  const [resMovieShowing, showtimes, cinemas] = await Promise.all([
+  const [resMovieShowing, cinemas] = await Promise.all([
     getMovieList(
       `${
         status && status === "dang-chieu"
@@ -36,25 +31,31 @@ const MovieSection = async ({
           : `/filter?status=1&date=${date || ""}&cinema=${cinema || ""}`
       }`
     ),
-    getListDateShowtime(),
     getListCinema(),
   ]);
 
-  const getDate = [
-    ...new Set(showtimes.map((item: Screening) => item.date)),
-  ].map((date) => {
-    const d = new Date(date as string);
-    const weekday = d.toLocaleDateString("vi-VN", { weekday: "long" });
-    const day = d.getDate().toString().padStart(2, "0");
-    const month = (d.getMonth() + 1).toString().padStart(2, "0");
-    const year = d.getFullYear();
+  function getNext7DaysWithLabels() {
+    const days = [];
+    const today = new Date();
 
-    const label = `${weekday}, ${day}/${month}/${year}`;
-    return {
-      value: d.toISOString().split("T")[0],
-      label: label,
-    };
-  });
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(today);
+      d.setDate(today.getDate() + i);
+
+      const weekday = d.toLocaleDateString("vi-VN", { weekday: "long" });
+      const day = d.getDate().toString().padStart(2, "0");
+      const month = (d.getMonth() + 1).toString().padStart(2, "0");
+      const year = d.getFullYear();
+
+      const label = `${weekday}, ${day}/${month}/${year}`;
+      const value = d.toISOString().split("T")[0];
+
+      days.push({ value, label });
+    }
+
+    return days;
+  }
+  const getDate = getNext7DaysWithLabels();
   const movies: MovieType[] = resMovieShowing?.data.movie;
 
   return (

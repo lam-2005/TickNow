@@ -1,4 +1,5 @@
 export type PostType = {
+  [key: string]: any; // Cho phép các thuộc tính khác
   _id: string;
   id_user: string;
   title: string;
@@ -8,6 +9,7 @@ export type PostType = {
   status: number | string;
   image: string;
   nameUser: string;
+  voucher?: string | null; // id voucher
 };
 
 export type DataPostReq = {
@@ -17,4 +19,5 @@ export type DataPostReq = {
   title: string;
   content: string;
   status?: number | string;
+  voucher?: string; // id voucher
 };

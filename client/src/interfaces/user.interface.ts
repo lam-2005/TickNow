@@ -1,9 +1,10 @@
 export interface UserType {
+  [key: string]: any;
   _id: string;
   name: string;
   phone: string;
   email: string;
-  year: number |string;
+  year: number | string;
   status: boolean; // 1: active, 0: inactive
   role: boolean;
 }
@@ -12,7 +13,7 @@ export type LoginType = {
   password: string;
 };
 
-export type UserReq={
+export type UserReq = {
   name: string;
   phone: string;
   email: string;
@@ -21,4 +22,4 @@ export type UserReq={
   confirmPassword: string;
   status?: boolean; // Optional for update
   role?: boolean; // Optional for update
-}
+};

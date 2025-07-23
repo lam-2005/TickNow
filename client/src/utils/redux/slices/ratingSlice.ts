@@ -62,9 +62,11 @@ export const fetchRatings = createAsyncThunk(
         params.append("end_day", date);
       }
 
-      const res = await rateService.getRateList(`?${params.toString()}`);
+      const res = await rateService.getRateList(
+        `?${params.toString()}&sortField=updatedAt`
+      );
       return {
-        ratings: res?.data.rate,
+        ratings: res?.data.data,
         total: res?.data.pagination.total,
         currentPage: res?.data.pagination.page,
         totalPages: res?.data.pagination.totalPages,

@@ -1,4 +1,5 @@
 export interface CinemaRes {
+  [key: string]: any; // Cho phép các thuộc tính khác
   _id: string;
   name: string;
   image: string;
@@ -41,6 +42,7 @@ export interface Location {
 }
 
 export interface Cinema {
+  [key: string]: any; // Cho phép các thuộc tính khác
   _id: string;
   name: string;
   image: string;

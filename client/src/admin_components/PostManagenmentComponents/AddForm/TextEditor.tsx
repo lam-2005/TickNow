@@ -34,6 +34,15 @@ const TextEditor = ({
         config={{
           placeholderText: "Nhập nội dung bài viết...",
           imagePaste: true,
+          imageInsertButtons: ["imageByURL"], // chỉ cho phép chèn ảnh từ URL
+          imageUpload: false, // không cho phép upload ảnh lên server
+          imageDefaultWidth: 0, // không ép chiều rộng mặc định
+          htmlAllowedTags: [".*"], // cho phép mọi thẻ HTML
+          htmlAllowedAttrs: [".*"], // cho phép mọi thuộc tính (bao gồm src)
+          htmlRemoveTags: [], // không xóa thẻ HTML nào
+          htmlRemoveAttributes: [], // không xóa thuộc tính nào
+          pasteAllowLocalImages: true, // cho phép dán ảnh nội bộ (nếu cần)
+          pastePlain: false, // giữ nguyên định dạng HTML khi dán
         }}
       />
     </div>

@@ -16,6 +16,7 @@ import usePanigation from "@/hooks/usePanigation";
 import UpdateFormContainer from "./UpdateForm/UpdateFormContainer";
 import { toast } from "react-toastify";
 import Status from "../StatusUI/Status";
+import { useConfirm } from "@/hooks/contexts/useConfirm";
 
 type InitDataType = {
   users: UserType[];
@@ -29,7 +30,7 @@ const UserList = ({ initData }: { initData: Promise<InitDataType> }) => {
   const isFirstLoad = useRef(true);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
-
+  const confirm = useConfirm();
   const initialData = use(initData);
 
   const { users, total, currentPage, totalPages, loading, error, filter } =
@@ -71,7 +72,10 @@ const UserList = ({ initData }: { initData: Promise<InitDataType> }) => {
 
   const handleUpdate = async (id: string, data: UserReq) => {
     try {
-      const sure = confirm("Bạn có muốn cập nhật người dùng này?");
+      const sure = await confirm({
+        title: "Bạn có muốn cập nhật người dùng này?",
+        content: "Hành động này sẽ không thể hoàn tác",
+      });
       if (!sure) return;
       await dispatch(updateUser({ id, data })).unwrap();
       toast.success("Cập nhật người dùng thành công!");

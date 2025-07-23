@@ -52,7 +52,7 @@ export const getVouchers = async (
   }
 
   if (status) {
-    queries += `&status=${status}`;
+    queries += `&active=${status}`;
   }
 
   const res = await getVoucherList(queries);

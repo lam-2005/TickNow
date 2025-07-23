@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/utils/redux/store";
 import { addMovie, fetchMovies } from "@/utils/redux/slices/movieSlice";
 import { MovieReq } from "@/interfaces/movie.interface";
@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import InputGroup from "./InputGroup";
 import Genre from "@/interfaces/genre.interface";
 import { useConfirm } from "@/hooks/contexts/useConfirm";
+import dataMovie from "@/utils/redux/selectors/movieSlector";
 
 type AddFormProps = {
   genre: Genre[];
@@ -18,6 +19,7 @@ export type GenreType = {
 };
 const AddForm = ({ genre }: AddFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
+  const { filter } = useSelector(dataMovie);
   const confirm = useConfirm();
   const [error, setError] = useState<string>("");
 
@@ -92,7 +94,16 @@ const AddForm = ({ genre }: AddFormProps) => {
         addMovie({ ...formData, duration: Number(formData.duration) })
       ).unwrap();
 
-      await dispatch(fetchMovies({ page: 1, limit: 5 }));
+      await dispatch(
+        fetchMovies({
+          page: 1,
+          limit: 5,
+          date: filter.date,
+          genre: filter.genre,
+          star: filter.star,
+          status: filter.status,
+        })
+      ).unwrap();
       toast.success("Thêm phim thành công!");
 
       // Reset form

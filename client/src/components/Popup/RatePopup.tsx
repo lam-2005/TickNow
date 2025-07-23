@@ -67,6 +67,7 @@ const RatePopup = ({
         ticket: detailTicket?.ticket._id || "",
       });
       toast.success("Cảm ơn bạn đã đánh giá!");
+      onClose();
     } catch (error) {
       toast.error(`Có lỗi xảy ra khi Đánh giá ${error}`);
       console.error(error);
