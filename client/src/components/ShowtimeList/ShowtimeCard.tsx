@@ -25,8 +25,8 @@ const ShowtimeCard = ({
   const day = dateFormat.getDate().toString().padStart(2, "0");
   const month = (dateFormat.getMonth() + 1).toString().padStart(2, "0");
   const year = dateFormat.getFullYear();
-
   const formattedDate = `${day}/${month}/${year}`;
+
   return (
     <>
       {trailerPopup && (
@@ -37,40 +37,50 @@ const ShowtimeCard = ({
         />
       )}
       {infoPopup && <InfoPopup info={data} onClose={closeInfo} />}
-      <div className="flex gap-7.5 h-fit bg-background-card p-4 pb-8  container w-[80%] rounded-xl">
-        <div className="relative max-w-[227px] w-full aspect-[2/3] max-h-[340px] ">
+
+      <div
+        className="flex flex-col lg:flex-row gap-6 bg-background-card p-4 pb-8 
+                   w-[95%] max-w-[1080px] mx-auto rounded-xl"
+      >
+        {/* Image */}
+        <div className="relative w-full max-w-[250px] mx-auto lg:mx-0 aspect-[2/3]">
           <Image
             fill
             src={`${env.IMG_API_URL}/movie/${data.image}`}
             alt="Phim"
-            sizes="300px"
+            sizes="(max-width: 768px) 100vw, 250px"
             loading="lazy"
-            className="object-cover rounded-[10px] "
+            className="object-cover rounded-[10px]"
           />
-          <div className=" flex absolute bottom-0 translate-y-1/2 w-full justify-evenly z-10">
+          <div className="flex absolute bottom-0 translate-y-1/2 w-full justify-evenly z-10">
             <ButtonPlay nameMovie={data.name} trailer={data.trailer} />
             <ButtonInfo info={data} />
           </div>
         </div>
-        <div className="space-y-[10px] flex-1">
-          <h1>{data.name}</h1>
-          <div className="space-y-[5px]">
-            <div className="flex gap-2.5">
-              <p className="w-[100px] ">Ngày chiếu</p>
+
+        {/* Text + Children */}
+        <div className="flex-1 space-y-2.5 mt-5 lg:mt-0">
+          <h1 className="text-xl font-bold">{data.name}</h1>
+
+          <div className="space-y-1">
+            <div className="flex flex-wrap gap-2 text-sm">
+              <p className="min-w-[100px] font-medium">Ngày chiếu:</p>
               <p>
                 <strong>{formattedDate}</strong>
               </p>
             </div>
-            <div className="flex gap-2.5">
-              <p className="w-[100px] ">Thời lượng</p>
+
+            <div className="flex flex-wrap gap-2 text-sm">
+              <p className="min-w-[100px] font-medium">Thời lượng:</p>
               <p>
                 <strong>{data.duration} phút</strong>
               </p>
             </div>
           </div>
-          <div className="space-y-1.25 ">
-            <p className=" ">{title || ""}</p>
-            <div className="space-y-7.5 relative ">{children}</div>
+
+          <div className="space-y-2 mt-2">
+            {title && <p className="font-medium">{title}</p>}
+            <div className="relative space-y-4">{children}</div>
           </div>
         </div>
       </div>
