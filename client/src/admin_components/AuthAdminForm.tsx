@@ -2,7 +2,6 @@
 import { useAuth } from "@/hooks/contexts/useAuth";
 import useTouched from "@/hooks/useTouched";
 import validateForm from "@/utils/validate";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
@@ -136,12 +135,6 @@ const AuthAdminForm = () => {
           Đăng nhập
         </button>
       </div>
-      <Link
-        href="/admin/forget-password"
-        className="flex mt-4 justify-end text-primary"
-      >
-        Quên mật khẩu?
-      </Link>
     </form>
   );
 };

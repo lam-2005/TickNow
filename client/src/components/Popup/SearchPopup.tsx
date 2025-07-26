@@ -7,6 +7,7 @@ import Link from "next/link";
 import { FiSearch } from "react-icons/fi";
 import { FaStar } from "react-icons/fa6";
 import convertSlug from "@/utils/convertSlug";
+import LoadingSpin from "../LoadingAPI/LoadingSpin";
 
 const SearchPopup = ({ className }: { className: string }) => {
   const [searchText, setSearchText] = useState("");
@@ -38,6 +39,7 @@ const SearchPopup = ({ className }: { className: string }) => {
 
     return () => clearTimeout(timer);
   }, [searchText]);
+
   const fetchMovies = async () => {
     setLoading(true);
     try {
@@ -51,7 +53,10 @@ const SearchPopup = ({ className }: { className: string }) => {
       setLoading(false);
     }
   };
-
+  const handleCloseSearchbox = () => {
+    setOpenSearchbox(false);
+    setSearchText("");
+  };
   return (
     <>
       {openSearchbox && (
@@ -76,7 +81,7 @@ const SearchPopup = ({ className }: { className: string }) => {
         {openSearchbox && (
           <div className="scroll-bar absolute bg-background-card top-[calc(100%_+_22px)] right-0 min-w-[350px] w-fit rounded-lg after:w-5 after:h-5 after:bg-inherit after:absolute after:top-0 after:rotate-45 after:-translate-y-1/2 after:right-5 ">
             {loading ? (
-              <p className="w-full h-full text-center p-5">Đang tải...</p>
+              <LoadingSpin />
             ) : results && !searchText ? (
               <>
                 <div className="text-foreground p-3">PHIM ĐANG CHIẾU</div>
@@ -85,7 +90,7 @@ const SearchPopup = ({ className }: { className: string }) => {
                     <ItemSearch
                       key={movie._id}
                       movie={movie}
-                      onClose={() => setOpenSearchbox(false)}
+                      onClose={handleCloseSearchbox}
                     />
                   ))}
                 </div>
@@ -128,6 +133,7 @@ const ItemSearch = ({
       onClick={onClose}
       href={`/detail/${slugName}-${movie._id}`}
       className="flex gap-4 hover:bg-neutral-600 p-3"
+      title={movie.name}
     >
       <div className="relative min-w-[70px] w-[70px] h-[105px]">
         <Image
@@ -143,15 +149,19 @@ const ItemSearch = ({
         <div className="font-bold text-foreground text-base line-clamp-1">
           {movie.name}
         </div>
-        <div className="text-subtitle text-sm">
+        <div className="text-subtitle text-sm line-clamp-2">
           {movie.genre.map((item) => item.name).join(", ")}
         </div>
-        <div className="flex gap-1">
-          <FaStar className="text-yellow-500 text-xl" />{" "}
-          <span className="text-sm font-bold self-center leading-0">
-            {movie.star || ""}
-          </span>
-        </div>
+        {movie.star ? (
+          <div className="flex gap-1">
+            <FaStar className="text-yellow-500 text-xl" />{" "}
+            <span className="text-sm font-bold self-center leading-0">
+              {movie.star}
+            </span>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </Link>
   );

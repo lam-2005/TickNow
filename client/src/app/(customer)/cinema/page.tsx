@@ -4,6 +4,22 @@ import BackgroundPage from "@/components/BackgroundPage/BackgroundPage";
 import FilterCinema from "@/components/CinemaComponent/FilterCinema";
 import CinemaList from "@/components/CinemaComponent/CinemaList";
 import { getLocationList } from "@/services/location.service";
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Hệ thống Rạp chiếu phim",
+  description:
+    "Khám phá hệ thống rạp chiếu phim trên toàn quốc với TickNow. Dễ dàng tìm rạp theo khu vực, địa điểm và đặt vé nhanh chóng, tiện lợi.",
+  keywords: [
+    "rạp chiếu phim",
+    "TickNow",
+    "đặt vé xem phim",
+    "rạp phim gần đây",
+    "cinema",
+    "địa điểm xem phim",
+    "FPT Polytechnic",
+  ],
+  authors: [{ name: "Nhóm sinh viên FPT Polytechnic HCM" }],
+};
 
 const getLocation = async () => {
   try {

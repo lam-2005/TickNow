@@ -1,6 +1,6 @@
 import React from "react";
 import CustomSlider from "../CustomSlider/CustomSlider";
-const SkeletonLoading = () => (
+export const SkeletonLoading = () => (
   <div className="w-full group animate-pulse">
     <div className="relative w-full aspect-[7/4] rounded-2xl overflow-hidden bg-loading"></div>
     <div className="px-2 mt-2 flex-column gap-[5px]">

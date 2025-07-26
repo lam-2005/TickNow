@@ -6,6 +6,10 @@ import { getMovieList } from "@/services/movie.service";
 import { getRoom } from "@/services/room.service";
 import FilterScreening from "@/admin_components/ScreenManagementComponents/FilterScreening/FIlterScreening";
 import { getScreenData } from "@/services/screening.service";
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Quản lí suất chiếu",
+};
 
 const getMovie = async () => {
   const res = await getMovieList("?status=1&status=2");

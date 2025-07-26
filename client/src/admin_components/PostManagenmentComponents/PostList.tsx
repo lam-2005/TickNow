@@ -151,7 +151,6 @@ const PostList = ({
   if (loading) return <p className="text-center">Đang tải dữ liệu...</p>;
 
   if (error) return <p className="text-center text-red-500">{error}</p>;
-  if (data.length === 0) return <p className="text-center">Không có dữ liệu</p>;
 
   return (
     <>

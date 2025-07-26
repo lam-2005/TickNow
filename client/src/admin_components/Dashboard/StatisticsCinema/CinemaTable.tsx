@@ -39,7 +39,6 @@ const CinemaTable = ({
   const cinemaNames = tableDataChart.map((item) => item.cinemaName);
   const revenues = tableDataChart.map((item) => item.totalRevenue);
 
-  // Validate ngày
   const validateDates = (): string => {
     if (startDate && endDate) {
       const start = new Date(startDate);
@@ -56,16 +55,19 @@ const CinemaTable = ({
     const error = validateDates();
     setErrors(error);
     if (!error) {
-      changePage(1); // Reset về trang 1 khi ngày hợp lệ thay đổi
+      changePage(1);
     }
   }, [startDate, endDate]);
 
   useEffect(() => {
     const fetchChartData = async () => {
-      if (errors || !startDate || !endDate) return;
+      if (errors || (startDate && !endDate) || (!startDate && endDate)) return;
       setLoadingChart(true);
       try {
-        const res = await getDashboardData(
+        let res;
+        if (!startDate && !endDate)
+          res = await getDashboardData(`/cinema?start=&end=`);
+        res = await getDashboardData(
           `/cinema?start=${startDate}&end=${endDate}`
         );
         setTableDataChart(res.data);
@@ -81,10 +83,15 @@ const CinemaTable = ({
 
   useEffect(() => {
     const fetchTableData = async () => {
-      if (errors || !startDate || !endDate) return;
+      if (errors || (startDate && !endDate) || (!startDate && endDate)) return;
       setLoading(true);
       try {
-        const res = await getDashboardData(
+        let res;
+        if (!startDate && !endDate)
+          res = await getDashboardData(
+            `/cinema?start=&end=&page=${page}&limit=${rowsPerPage}`
+          );
+        res = await getDashboardData(
           `/cinema?start=${startDate}&end=${endDate}&page=${page}&limit=${rowsPerPage}`
         );
         setTableData(res.data);
@@ -135,7 +142,7 @@ const CinemaTable = ({
               height={350}
               series={[
                 {
-                  data: ticketCounts,
+                  data: loadingChart ? [] : ticketCounts,
                   label: "Số vé bán ra",
                   color: "#007bff",
                 },
@@ -163,7 +170,7 @@ const CinemaTable = ({
               height={350}
               series={[
                 {
-                  data: revenues,
+                  data: loadingChart ? [] : revenues,
                   label: "Doanh thu",
                   color: "#e91224",
                 },
@@ -186,8 +193,8 @@ const CinemaTable = ({
       </div>
 
       {loading ? (
-        <div className="text-center mt-5">Loading...</div>
-      ) : tableData.length > 0 ? (
+        <div className="text-center mt-5">Đang tải dữu liệu...</div>
+      ) : (
         <Table
           column={columns}
           data={tableData}
@@ -195,8 +202,6 @@ const CinemaTable = ({
           currentPage={page}
           rowsPerPage={rowsPerPage}
         />
-      ) : (
-        <p className="text-center">Không có dữ liệu</p>
       )}
 
       {tableData.length >= rowsPerPage && (

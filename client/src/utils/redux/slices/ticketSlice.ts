@@ -12,6 +12,11 @@ export type RoomManagementState = ReduxInitStateDefaultType & {
   totalPages: number;
   errorAddData: string | null;
   errorUpdateData: string | null;
+  filter: {
+    movieId: string;
+    date: string;
+    type: string;
+  };
 };
 const initialState: RoomManagementState = {
   data: [],
@@ -20,15 +25,34 @@ const initialState: RoomManagementState = {
   totalPages: 1,
   errorAddData: null,
   errorUpdateData: null,
-
+  filter: {
+    movieId: "",
+    date: "",
+    type: "",
+  },
   ...reduxInitStateDefault,
 };
 
 export const fetchTicket = createAsyncThunk(
   "ticket/fetchTicket",
-  async ({ page, limit }: { page: number; limit: number }, thunkAPI) => {
+  async (
+    {
+      page,
+      limit,
+      movieId = "",
+      date = "",
+      type = "",
+    }: {
+      page: number;
+      limit: number;
+      movieId?: string;
+      date?: string;
+      type?: string;
+    },
+    thunkAPI
+  ) => {
     try {
-      const res = await getTicketData(page, limit);
+      const res = await getTicketData(page, limit, movieId, date, type);
       return res;
     } catch {
       return thunkAPI.rejectWithValue("Không thể tải danh sách vé.");
@@ -43,6 +67,10 @@ const ticketSlice = createSlice({
     setInitialTicket(state, action) {
       return { ...state, ...action.payload };
     },
+    setFilter: (state, action) => {
+      // dùng ddeeer lưu giá trị lọc
+      state.filter = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -55,6 +83,9 @@ const ticketSlice = createSlice({
         state.total = action.payload.total;
         state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.totalPages;
+        state.filter.movieId = action.payload.movieId;
+        state.filter.date = action.payload.date;
+        state.filter.type = action.payload.type;
         state.loading = false;
         state.error = null;
       })

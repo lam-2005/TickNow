@@ -42,24 +42,32 @@ const Table = <
           className="[&_tr]:bg-[#fdfdfd] [&_tr]:even:bg-[#f0f0f0] [&_tr]:hover:bg-[#f0f0f0]
         "
         >
-          {data.map((row, index) => (
-            <tr key={row?._id || row[`${id}`]} className="">
-              <td>
-                {currentPage && rowsPerPage
-                  ? (currentPage - 1) * rowsPerPage + index + 1
-                  : index + 1}
-              </td>
-              {column.map((col) => (
-                <td key={col.title} className="">
-                  {col.render
-                    ? col.render(row)
-                    : col.key
-                    ? (row[col.key] as React.ReactNode)
-                    : null}
+          {data.length > 0 ? (
+            data.map((row, index) => (
+              <tr key={row?._id || row[`${id}`]} className="">
+                <td>
+                  {currentPage && rowsPerPage
+                    ? (currentPage - 1) * rowsPerPage + index + 1
+                    : index + 1}
                 </td>
-              ))}
+                {column.map((col) => (
+                  <td key={col.title} className="">
+                    {col.render
+                      ? col.render(row)
+                      : col.key
+                      ? (row[col.key] as React.ReactNode)
+                      : null}
+                  </td>
+                ))}
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={column.length + 1}>
+                <p className="text-center">Không có dữ liệu</p>
+              </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
       <div className="w-full h-px bg-border-container"></div>

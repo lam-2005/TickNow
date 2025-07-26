@@ -1,4 +1,4 @@
-import Chart from "@/admin_components/Dashboard/Chart";
+import Overview from "@/admin_components/Dashboard/Overview/Overview";
 import StatisticsCard from "@/admin_components/Dashboard/StatisticsCard";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 
@@ -13,7 +13,6 @@ const Dashboard = async () => {
   const day = String(today.getDate()).padStart(2, "0");
 
   const formattedDate = `${year}-${month}-${day}`;
-  const formattedMonth = `T${today.getMonth() + 1}/${year}`;
   const [getTicketDate, getTicketMonth, getTicketYear, getUserMonth] =
     await Promise.all([
       getDashboardData(`/revenue?type=day&value=${formattedDate}`),
@@ -21,10 +20,6 @@ const Dashboard = async () => {
       getDashboardData(`/revenueYear?year=${year}`),
       getDashboardData(`/newUser?type=month&value=${formattedDate}`),
     ]);
-  const xLabels = getTicketYear.map((item: { month: string }) => item.month);
-  const yLabels = getTicketYear.map(
-    (item: { totalRevenue: number }) => item.totalRevenue
-  );
 
   return (
     <div className="card">
@@ -43,7 +38,7 @@ const Dashboard = async () => {
         />
         <StatisticsCard
           content={getUserMonth.count || 0}
-          title={`Khách hàng mới (${formattedMonth})`}
+          title={`Khách hàng mới (${month}/${year})`}
           color="success"
         />
         <StatisticsCard
@@ -56,7 +51,7 @@ const Dashboard = async () => {
           color="warning"
         />
         <StatisticsCard
-          title="Tổng doanh thu (T7/2025)"
+          title={`Tổng doanh thu (${month}/${year})`}
           content={
             `${getTicketMonth.totalRevenue.toLocaleString("vi-VN")} VNĐ` ||
             "0 VNĐ"
@@ -65,11 +60,7 @@ const Dashboard = async () => {
         />
       </div>
       <div>
-        <Chart
-          title="Doanh thu theo tháng"
-          xLabels={xLabels}
-          yLabels={yLabels}
-        />
+        <Overview data={getTicketYear} />
       </div>
       {/* <div className="flex gap-5">
         <div className="flex-1 space-y-2.5">

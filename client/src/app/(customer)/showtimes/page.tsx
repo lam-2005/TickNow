@@ -1,8 +1,13 @@
 import Showtimelist from "@/components/ShowtimeList/Showtimelist";
 import { getCinemaList } from "@/services/cinema.service";
 import { getMovieList } from "@/services/movie.service";
+import { Metadata } from "next";
 import React from "react";
-
+export const metadata: Metadata = {
+  title: "Lịch Chiếu Phim",
+  description:
+    "Xem lịch chiếu phim tại các rạp trên toàn quốc. Dễ dàng tìm kiếm phim đang chiếu và sắp chiếu theo rạp, ngày và giờ.",
+};
 const getListCinema = async () => {
   const res = await getCinemaList();
   return res?.data.cinema;
@@ -20,7 +25,7 @@ const Showtimes = async () => {
   function getNext7DaysWithLabels() {
     const days = [];
     const today = new Date();
-
+    today.setHours(today.getHours() + 7);
     for (let i = 0; i < 7; i++) {
       const d = new Date(today);
       d.setDate(today.getDate() + i);

@@ -8,6 +8,8 @@ import { SampleArrow } from "../CustomSlider/Arrow";
 import Slider from "react-slick";
 import Button from "../Button/Button";
 import { FaStar } from "react-icons/fa";
+import Link from "next/link";
+import convertSlug from "@/utils/convertSlug";
 
 const SliderList = ({ data }: { data: Promise<MovieType[]> }) => {
   const getMovie = use(data);
@@ -119,22 +121,24 @@ const SliderList = ({ data }: { data: Promise<MovieType[]> }) => {
                   aria-hidden="true"
                 ></span>
                 <span className="text-white flex items-center">
-                  <strong>{item.star}</strong>/5
+                  <strong>{item.star.toFixed(1)}</strong>/5.0
                   <FaStar className="text-xl text-yellow-400 ml-1" />
                 </span>
               </div>
               <p
-                title="Phim"
+                title={item.description}
                 className="text-white line-clamp-5 text-justify font-medium max-lg:hidden
                 "
               >
                 {item.description}
               </p>
               <div className="flex gap-5">
-                <Button
-                  title="Đặt vé ngay"
-                  className="text-xl font-semibold lg:w-[200px] relative"
-                />
+                <Link href={`/detail/${convertSlug(item.name)}-${item._id}`}>
+                  <Button
+                    title="Đặt vé ngay"
+                    className="text-xl font-semibold lg:w-[200px] relative"
+                  />
+                </Link>
                 <Button
                   title="Xem trailer"
                   className="text-xl  bg-transparent border-1 border-white lg:hidden"

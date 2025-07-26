@@ -8,13 +8,24 @@ const getTicketList = async (param: string = "") => {
     catchingError(error, "Lấy dữ liệu thất bại!");
   }
 };
-export const getTicketData = async (page: number, limit: number) => {
-  const res = await getTicketList(`?page=${page}&limit=${limit}`);
+export const getTicketData = async (
+  page: number,
+  limit: number,
+  movieId: string = "",
+  date: string = "",
+  type: string = ""
+) => {
+  const res = await getTicketList(
+    `?page=${page}&limit=${limit}&movieId=${movieId}&date=${date}&type=${type}`
+  );
   return {
     ticket: res?.data.tickets,
     total: res?.data.pagination.total,
     currentPage: res?.data.pagination.page,
     totalPages: res?.data.pagination.totalPages,
+    movieId,
+    date,
+    type,
   };
 };
 interface CheckoutResponse {
@@ -52,4 +63,11 @@ const getTicketUserList = async (param?: string, token?: string) => {
     catchingError(error, "Lấy dữ liệu thất bại!");
   }
 };
-export { getTicketList, getTicketUserList };
+const cancelTicketAPI = async (id: string) => {
+  try {
+    await api.post(`ticket/cancel/${id}`, {});
+  } catch (error) {
+    catchingError(error, "Lấy dữ liệu thất bại!");
+  }
+};
+export { getTicketList, getTicketUserList, cancelTicketAPI };

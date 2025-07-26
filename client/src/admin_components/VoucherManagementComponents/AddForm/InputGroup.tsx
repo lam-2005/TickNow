@@ -63,6 +63,12 @@ const InputGroup = ({ formData, setFormData, errors }: InputGroupProps) => {
           onChange={(e) => onChangeData("start_date", e.target.value)}
           placeholder="Nhập ngày bắt đầu"
           InputLabelProps={{ shrink: true }}
+          inputProps={{
+            onClick: (e) => {
+              // Thủ thuật gọi showPicker nếu trình duyệt hỗ trợ
+              (e.currentTarget as HTMLInputElement).showPicker?.();
+            },
+          }}
         />
       </div>
 
@@ -77,6 +83,12 @@ const InputGroup = ({ formData, setFormData, errors }: InputGroupProps) => {
         onChange={(e) => onChangeData("end_date", e.target.value)}
         placeholder="Nhập ngày kết thúc"
         InputLabelProps={{ shrink: true }}
+        inputProps={{
+          onClick: (e) => {
+            // Thủ thuật gọi showPicker nếu trình duyệt hỗ trợ
+            (e.currentTarget as HTMLInputElement).showPicker?.();
+          },
+        }}
       />
 
       <div>

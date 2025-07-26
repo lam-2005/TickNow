@@ -1,7 +1,31 @@
 import { PostType } from "@/interfaces/post.interface";
 import { getPostList } from "@/services/post.service";
-
 import CopyBtn from "./CopyBtn";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const res = await getPostList(`/${id}`);
+  const post: PostType = res?.data;
+
+  if (!post) {
+    return {
+      title: "Không tìm thấy khuyến mãi",
+      description: "Bài viết không tồn tại hoặc đã bị xóa.",
+    };
+  }
+
+  return {
+    title: `${post.title}`,
+    description:
+      post?.description ||
+      "Thông tin chi tiết về chương trình khuyến mãi tại TickNow.",
+  };
+}
 
 export default async function PostDetailPage({
   params,
@@ -33,7 +57,7 @@ export default async function PostDetailPage({
 
           <div className="mb-4 mt-2">
             <div
-              className=""
+              className="[&_.fr-fic]:mx-auto [&_.fr-fic]:block"
               dangerouslySetInnerHTML={{ __html: post.content || "" }}
             />
           </div>

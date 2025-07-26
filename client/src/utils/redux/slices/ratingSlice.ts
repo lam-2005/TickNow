@@ -13,7 +13,8 @@ type RatingState = {
   filter: {
     movie: string;
     score: string;
-    date: string;
+    start_day: string;
+    end_day: string;
   };
 };
 
@@ -27,7 +28,8 @@ const initialState: RatingState = {
   filter: {
     movie: "",
     score: "",
-    date: "",
+    start_day: "",
+    end_day: "",
   },
 };
 
@@ -39,13 +41,15 @@ export const fetchRatings = createAsyncThunk(
       limit,
       movie,
       score,
-      date,
+      start_day,
+      end_day,
     }: {
       page: number;
       limit: number;
       movie?: string;
       score?: string;
-      date?: string;
+      start_day?: string;
+      end_day?: string;
     },
     thunkAPI
   ) => {
@@ -57,11 +61,12 @@ export const fetchRatings = createAsyncThunk(
 
       if (movie) params.append("movie", movie);
       if (score) params.append("score", score);
-      if (date) {
-        params.append("start_day", date);
-        params.append("end_day", date);
+      if (start_day) {
+        params.append("start_day", start_day);
       }
-
+      if (end_day) {
+        params.append("end_day", end_day);
+      }
       const res = await rateService.getRateList(
         `?${params.toString()}&sortField=updatedAt`
       );
@@ -85,14 +90,7 @@ const ratingSlice = createSlice({
     setInitialRatings(state, action: PayloadAction<RatingState>) {
       Object.assign(state, action.payload);
     },
-    setFilter(
-      state,
-      action: PayloadAction<{
-        movie: string;
-        score: string;
-        date: string;
-      }>
-    ) {
+    setFilter(state, action) {
       state.filter = action.payload;
     },
   },

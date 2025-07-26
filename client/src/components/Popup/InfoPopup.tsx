@@ -1,9 +1,12 @@
+"use client";
 import { MovieType } from "@/interfaces/movie.interface";
-import React from "react";
+import React, { useState } from "react";
 import Button from "../Button/Button";
 import Image from "next/image";
 import PopupContainer from "./PopupContainer";
 import env from "@/configs/environment";
+import Link from "next/link";
+import convertSlug from "@/utils/convertSlug";
 
 export const ItemInfo = ({
   title,
@@ -33,6 +36,7 @@ const InfoPopup = ({
   info: MovieType;
   onClose: () => void;
 }) => {
+  const [showFullDescription, setShowFullDescription] = useState(false);
   return (
     <PopupContainer onClose={onClose}>
       <div className="w-full space-y-5 ">
@@ -83,15 +87,40 @@ const InfoPopup = ({
                 content={info.language || "Đang cập nhật"}
               />
             </div>
-            <Button title="Đặt vé ngay" />
+            <Link href={`/detail/${convertSlug(info.name)}-${info._id}`}>
+              <Button title="Đặt vé ngay" />
+            </Link>
           </div>
         </div>
-        <p
-          className="line-clamp-5 text-justify"
-          title={info.description || "Đang cập nhật"}
-        >
-          {info.description || "Đang cập nhật"}
-        </p>
+        <div className="">
+          <p
+            className={`${
+              showFullDescription ? "" : "line-clamp-5"
+            } text-white`}
+          >
+            {info.description || "Đang cập nhật"}
+          </p>
+
+          {!showFullDescription && info.description.length > 500 ? (
+            <button
+              onClick={() => setShowFullDescription(true)}
+              className="text-primary underline text-sm mt-1 block"
+            >
+              Xem thêm
+            </button>
+          ) : (
+            ""
+          )}
+
+          {showFullDescription && (
+            <button
+              onClick={() => setShowFullDescription(false)}
+              className="text-primary underline text-sm mt-1 block"
+            >
+              Thu gọn
+            </button>
+          )}
+        </div>
       </div>
     </PopupContainer>
   );

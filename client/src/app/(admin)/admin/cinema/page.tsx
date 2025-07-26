@@ -5,6 +5,10 @@ import AddCinemaBtn from "@/admin_components/CinemaManagementComponents/AddForm/
 import FilterCinema from "@/admin_components/CinemaManagementComponents/FilterCinema/FIlterCinema";
 import { getCinemaData } from "@/services/cinema.service";
 import { getLocationList } from "@/services/location.service";
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Quản lí rạp",
+};
 
 const getLocations = async () => {
   const res = await getLocationList();
@@ -13,7 +17,7 @@ const getLocations = async () => {
 
 const CinemaManagement = async () => {
   const initData = await getCinemaData(1, 5);
-  const locations = await getLocations(); 
+  const locations = await getLocations();
 
   return (
     <div className="card">

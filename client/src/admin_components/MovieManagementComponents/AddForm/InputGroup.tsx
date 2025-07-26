@@ -113,6 +113,12 @@ const InputGroupMovie = ({
             setFormData({ ...formData, release_date: e.target.value })
           }
           InputLabelProps={{ shrink: true }}
+          inputProps={{
+            onClick: (e) => {
+              // Thủ thuật gọi showPicker nếu trình duyệt hỗ trợ
+              (e.currentTarget as HTMLInputElement).showPicker?.();
+            },
+          }}
         />
       </div>
 

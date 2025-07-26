@@ -14,11 +14,13 @@ const OfferList = ({ data }: { data: Promise<PostType[]> }) => {
       slidesToShow={4}
       slidesToScroll={4}
     >
-      {getMovie.map((item) => (
-        <div className="px-2 " key={item._id}>
-          <Offer data={item} />
-        </div>
-      ))}
+      {getMovie
+        .filter((item) => new Date(item.end_day) > new Date())
+        .map((item) => (
+          <div className="px-2 " key={item._id}>
+            <Offer data={item} />
+          </div>
+        ))}
     </CustomSlider>
   );
 };

@@ -175,7 +175,17 @@ const FilterPopup = ({
     );
     closeForm();
   };
-
+  const handleReset = () => {
+    setIdMovie([]);
+    setStatus([]);
+    setShowtype([]);
+    setFromDate("");
+    setToDate("");
+    setDateRange([]);
+    setError("");
+    setTimeStart("");
+    setTimeEnd("");
+  };
   return (
     <PopupContainer title="Bộ lọc" closeForm={closeForm}>
       <div className="p-5 space-y-5 overflow-hidden overflow-y-auto">
@@ -263,6 +273,12 @@ const FilterPopup = ({
               onChange={(e) => setFromDate(e.target.value)}
               placeholder="Nhập ngày bắt đầu"
               InputLabelProps={{ shrink: true }}
+              inputProps={{
+                onClick: (e) => {
+                  // Thủ thuật gọi showPicker nếu trình duyệt hỗ trợ
+                  (e.currentTarget as HTMLInputElement).showPicker?.();
+                },
+              }}
             />
 
             <TextField
@@ -276,6 +292,12 @@ const FilterPopup = ({
               onChange={(e) => setToDate(e.target.value)}
               placeholder="Nhập ngày kết thúc"
               InputLabelProps={{ shrink: true }}
+              inputProps={{
+                onClick: (e) => {
+                  // Thủ thuật gọi showPicker nếu trình duyệt hỗ trợ
+                  (e.currentTarget as HTMLInputElement).showPicker?.();
+                },
+              }}
             />
           </div>
         </div>
@@ -307,7 +329,13 @@ const FilterPopup = ({
           </div>
         </div>
       </div>
-      <div className="flex justify-end p-5 w-full bg-background-card rounded-2xl">
+      <div className="flex justify-end p-5 w-full gap-4 bg-background-card rounded-2xl">
+        <button
+          className="btn border border-gray-400 text-gray-700 bg-white hover:bg-gray-100"
+          onClick={handleReset}
+        >
+          Đặt lại bộ lọc
+        </button>
         <button className="btn" onClick={handleFilter}>
           Lọc
         </button>

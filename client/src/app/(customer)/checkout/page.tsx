@@ -1,7 +1,10 @@
 import Payment from "@/components/BookingPageComponents/Payment/Payment";
 import Ticket from "@/components/Movie/Ticket";
+import { Metadata } from "next";
 import React from "react";
-
+export const metadata: Metadata = {
+  title: "Thanh toán",
+};
 const PaymentPage = () => {
   return (
     <div className="flex gap-5 mt-10 container">

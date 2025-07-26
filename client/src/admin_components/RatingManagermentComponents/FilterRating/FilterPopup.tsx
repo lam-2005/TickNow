@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/utils/redux/store";
 import { fetchRatings, setFilter } from "@/utils/redux/slices/ratingSlice";
 import dataRating from "@/utils/redux/selectors/ratingSeletor";
+import { Autocomplete, TextField } from "@mui/material";
 
 const RatingFilterPopup = ({
   closeForm,
@@ -17,12 +18,29 @@ const RatingFilterPopup = ({
   const { filter } = useSelector(dataRating);
   const [score, setScore] = useState("");
   const [movie, setMovie] = useState("");
-  const [date, setDate] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+
+  const [error, setError] = useState(""); // kiểm lỗi
+
+  useEffect(() => {
+    setError("");
+
+    if (fromDate && toDate) {
+      const current = new Date(fromDate);
+      const end = new Date(toDate);
+      if (current > end) {
+        setError("Ngày bắt đầu không được lớn hơn ngày kết thúc");
+        return;
+      }
+    }
+  }, [fromDate, toDate]);
 
   useEffect(() => {
     setScore(filter.score || "");
     setMovie(filter.movie || "");
-    setDate(filter.date || "");
+    setFromDate(filter.start_day || "");
+    setToDate(filter.end_day || "");
   }, [filter]);
 
   const handleFilter = () => {
@@ -32,36 +50,46 @@ const RatingFilterPopup = ({
         limit: 5,
         score,
         movie,
-        date,
+        start_day: fromDate,
+        end_day: toDate,
       })
     );
     dispatch(
       setFilter({
         score,
         movie,
-        date,
+        start_day: fromDate,
+        end_day: toDate,
       })
     );
     closeForm();
   };
-
+  const handleReset = () => {
+    setScore("");
+    setMovie("");
+    setFromDate("");
+    setToDate("");
+  };
+  const handleMovieChange = (value: { id: string; name: string } | null) => {
+    setMovie(value ? value.id : "");
+  };
   return (
     <PopupContainer title="Bộ lọc" closeForm={closeForm}>
       <div className="p-5 space-y-5">
         <div className="flex gap-4 flex-col">
           <h1 className="text-xl font-bold">Chọn phim:</h1>
-          <select
-            value={movie}
-            onChange={(e) => setMovie(e.target.value)}
-            className="border border-gray-300 rounded-md p-2 w-fit"
-          >
-            <option value="">-- Tất cả --</option>
-            {movies.map((m) => (
-              <option key={m.id} value={m.id}>
-                {m.name}
-              </option>
-            ))}
-          </select>
+          <Autocomplete
+            id="checkboxes-tags-demo"
+            className="w-full"
+            options={movies}
+            disableCloseOnSelect
+            getOptionLabel={(option) => option.name}
+            value={movies.find((option) => option.id === movie) || null}
+            onChange={(_, values) => handleMovieChange(values)}
+            renderInput={(params) => (
+              <TextField {...params} label="Chọn Phim" placeholder="Phim" />
+            )}
+          />
         </div>
 
         <div className="flex gap-4 flex-col">
@@ -81,16 +109,56 @@ const RatingFilterPopup = ({
 
         <div className="flex gap-4 flex-col">
           <h1 className="text-xl font-bold">Ngày đánh giá:</h1>
-          <input
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className="border border-gray-300 rounded-md p-2 w-fit"
-          />
+          <div className="flex gap-10">
+            <TextField
+              className="w-full"
+              type="date"
+              required
+              error={error ? true : false}
+              helperText={error}
+              id="outlined-required"
+              label="Từ"
+              value={fromDate}
+              onChange={(e) => setFromDate(e.target.value)}
+              placeholder="Nhập ngày bắt đầu"
+              InputLabelProps={{ shrink: true }}
+              inputProps={{
+                onClick: (e) => {
+                  // Thủ thuật gọi showPicker nếu trình duyệt hỗ trợ
+                  (e.currentTarget as HTMLInputElement).showPicker?.();
+                },
+              }}
+            />
+
+            <TextField
+              className="w-full"
+              type="date"
+              required
+              id="outlined-required"
+              error={error ? true : false}
+              label="Đến"
+              value={toDate}
+              onChange={(e) => setToDate(e.target.value)}
+              placeholder="Nhập ngày kết thúc"
+              InputLabelProps={{ shrink: true }}
+              inputProps={{
+                onClick: (e) => {
+                  // Thủ thuật gọi showPicker nếu trình duyệt hỗ trợ
+                  (e.currentTarget as HTMLInputElement).showPicker?.();
+                },
+              }}
+            />
+          </div>
         </div>
       </div>
 
-      <div className="flex justify-end p-5 w-full bg-background-card rounded-2xl">
+      <div className="flex justify-end p-5 w-full gap-4 bg-background-card rounded-2xl">
+        <button
+          className="btn border border-gray-400 text-gray-700 bg-white hover:bg-gray-100"
+          onClick={handleReset}
+        >
+          Đặt lại bộ lọc
+        </button>
         <button className="btn" onClick={handleFilter}>
           Lọc
         </button>

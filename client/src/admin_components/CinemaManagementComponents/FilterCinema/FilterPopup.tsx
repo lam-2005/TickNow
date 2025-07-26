@@ -11,8 +11,16 @@ import { fetchCinema, setFilterCinema } from "@/utils/redux/slices/cinemaSlice";
 import { LocationRes } from "@/interfaces/cinema.interface";
 import cinemaSelector from "@/utils/redux/selectors/selectorCinema";
 
-const FilterItem = ({ title, className }: { title: string; className?: string }) => (
-  <div className={`border-1 border-foreground text-foreground flex-center w-fit px-2 py-1 transition-colors rounded-md hover:bg-primary hover:text-white hover:border-transparent cursor-pointer ${className}`}>
+const FilterItem = ({
+  title,
+  className,
+}: {
+  title: string;
+  className?: string;
+}) => (
+  <div
+    className={`border-1 border-foreground text-foreground flex-center w-fit px-2 py-1 transition-colors rounded-md hover:bg-primary hover:text-white hover:border-transparent cursor-pointer ${className}`}
+  >
     {title}
   </div>
 );
@@ -54,7 +62,7 @@ const FilterPopup = ({
     dispatch(
       fetchCinema({
         page: 1,
-        limit: 10,
+        limit: 5,
         name,
         location: selectedLocations.join(","),
         status,
@@ -69,7 +77,11 @@ const FilterPopup = ({
     );
     closeForm();
   };
-
+  const handleReset = () => {
+    setName("");
+    setSelectedLocations([]);
+    setStatus("");
+  };
   return (
     <PopupContainer title="Bộ lọc rạp chiếu" closeForm={closeForm}>
       <div className="p-5 space-y-5 overflow-hidden overflow-y-auto">
@@ -112,7 +124,11 @@ const FilterPopup = ({
               );
             }}
             renderInput={(params) => (
-              <TextField {...params} label="Chọn khu vực" placeholder="Khu vực" />
+              <TextField
+                {...params}
+                label="Chọn khu vực"
+                placeholder="Khu vực"
+              />
             )}
           />
         </div>
@@ -121,9 +137,16 @@ const FilterPopup = ({
           <label className="font-bold text-lg">Trạng thái:</label>
           <div className="flex gap-4 flex-wrap">
             {["1", "2"].map((stt) => (
-              <button key={stt} onClick={() => setStatus(status === stt ? "" : stt)}>
+              <button
+                key={stt}
+                onClick={() => setStatus(status === stt ? "" : stt)}
+              >
                 <FilterItem
-                  className={status === stt ? "bg-primary text-white border-transparent" : ""}
+                  className={
+                    status === stt
+                      ? "bg-primary text-white border-transparent"
+                      : ""
+                  }
                   title={stt === "1" ? "Không hoạt động" : "Hoạt động"}
                 />
               </button>
@@ -132,7 +155,13 @@ const FilterPopup = ({
         </div>
       </div>
 
-      <div className="flex justify-end p-5 w-full bg-background-card rounded-2xl">
+      <div className="flex justify-end p-5 w-full gap-4 bg-background-card rounded-2xl">
+        <button
+          className="btn border border-gray-400 text-gray-700 bg-white hover:bg-gray-100"
+          onClick={handleReset}
+        >
+          Đặt lại bộ lọc
+        </button>
         <button className="btn" onClick={handleFilter}>
           Lọc
         </button>

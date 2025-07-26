@@ -34,6 +34,12 @@ export default function DateRangePicker({
         }
         placeholder="Nhập ngày bắt đầu"
         InputLabelProps={{ shrink: true }}
+        inputProps={{
+          onClick: (e) => {
+            // Thủ thuật gọi showPicker nếu trình duyệt hỗ trợ
+            (e.currentTarget as HTMLInputElement).showPicker?.();
+          },
+        }}
       />
       <span className="text-gray-500 inline-block">Đến</span>
 
@@ -50,6 +56,12 @@ export default function DateRangePicker({
         }
         placeholder="Nhập ngày kết thúc"
         InputLabelProps={{ shrink: true }}
+        inputProps={{
+          onClick: (e) => {
+            // Thủ thuật gọi showPicker nếu trình duyệt hỗ trợ
+            (e.currentTarget as HTMLInputElement).showPicker?.();
+          },
+        }}
       />
     </div>
   );

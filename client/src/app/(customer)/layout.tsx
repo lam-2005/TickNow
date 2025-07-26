@@ -22,8 +22,27 @@ const oswald = Oswald({
 });
 
 export const metadata: Metadata = {
-  title: "TickNow - Website đặt vé xem phim",
-  description: "Website đặt vé xem phim",
+  title: {
+    default: "TickNow - Website đặt vé xem phim",
+    template: "%s | TickNow",
+  },
+  description:
+    "TickNow là nền tảng đặt vé xem phim trực tuyến hiện đại, cho phép bạn dễ dàng tìm kiếm, chọn rạp và đặt vé nhanh chóng.",
+  keywords: [
+    "TickNow",
+    "đặt vé phim",
+    "mua vé xem phim",
+    "rạp chiếu phim",
+    "phim đang chiếu",
+    "phim sắp chiếu",
+    "lịch chiếu phim",
+  ],
+  authors: [{ name: "TickNow Team" }],
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+  },
 };
 
 export default async function RootLayout({

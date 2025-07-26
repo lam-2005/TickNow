@@ -1,4 +1,3 @@
-import env from "@/configs/environment";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -6,11 +5,9 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "http",
-        hostname: `${env.HOSTNAME}`,
-        port: env.PORT,
+        protocol: "https",
+        hostname: "ticknow-be.onrender.com",
         pathname: "/images/**",
-        search: "",
       },
     ],
   },

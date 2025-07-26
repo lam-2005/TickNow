@@ -14,6 +14,9 @@ import {
 } from "@/utils/redux/slices/ticketSlice";
 import Status from "../StatusUI/Status";
 import DetailTicket from "./DetailTicket/DetailTicket";
+import { cancelTicketAPI } from "@/services/ticket.service";
+import { toast } from "react-toastify";
+import { useConfirm } from "@/hooks/contexts/useConfirm";
 
 type InitDataType = {
   ticket: Ticket[];
@@ -27,8 +30,8 @@ const TicketList = ({ initData }: { initData: InitDataType }) => {
   const isFirstLoad = useRef(true);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState("");
-
-  const { data, total, currentPage, totalPages, loading, error } =
+  const confirm = useConfirm();
+  const { data, total, currentPage, totalPages, loading, error, filter } =
     useSelector(dataTicket);
   const { page, changePage, changeRowPerPage, rowsPerPage } = usePanigation(
     initData.currentPage
@@ -48,6 +51,9 @@ const TicketList = ({ initData }: { initData: InitDataType }) => {
         fetchTicket({
           limit: rowsPerPage,
           page: page,
+          date: filter.date,
+          movieId: filter.movieId,
+          type: filter.type,
         })
       );
     } else {
@@ -55,10 +61,21 @@ const TicketList = ({ initData }: { initData: InitDataType }) => {
         fetchTicket({
           limit: rowsPerPage,
           page: totalPages,
+          date: filter.date,
+          movieId: filter.movieId,
+          type: filter.type,
         })
       );
     }
-  }, [dispatch, rowsPerPage, page, totalPages]);
+  }, [
+    dispatch,
+    rowsPerPage,
+    page,
+    totalPages,
+    filter.date,
+    filter.movieId,
+    filter.type,
+  ]);
 
   const col: Column<Ticket>[] = [
     { key: "userName", title: "Tên khách hàng" },
@@ -79,8 +96,16 @@ const TicketList = ({ initData }: { initData: InitDataType }) => {
       title: "Trạng thái",
       render: (row) => (
         <Status
-          title={`${row.type === 1 ? "Thanh toán thất bại" : "Đã thanh toán"}`}
-          color={`${row.type === 1 ? "error" : "success"}`}
+          title={`${
+            row.type === 1
+              ? "Thanh toán thất bại"
+              : row.type === 2
+              ? "Đã thanh toán"
+              : "Đã hủy"
+          }`}
+          color={`${
+            row.type === 1 ? "error" : row.type === 2 ? "success" : "error"
+          }`}
         />
       ),
     },
@@ -94,7 +119,21 @@ const TicketList = ({ initData }: { initData: InitDataType }) => {
               bgColor="success"
               onClick={() => handleShowDetail(row._id as string)}
             />
-            <ActionButton label="Hủy vé" bgColor="error" onClick={() => null} />
+            {row.type === 3 ? (
+              <ActionButton
+                label="Hủy vé"
+                bgColor="error"
+                className="brightness-70 cursor-not-allowed! text-nowrap"
+                onClick={() => toast.info("Vé này đã bị hủy")}
+              />
+            ) : (
+              <ActionButton
+                label="Hủy vé"
+                bgColor="error"
+                className="text-nowrap!"
+                onClick={() => handleCancelTicket(row._id as string)}
+              />
+            )}
           </div>
         );
       },
@@ -105,7 +144,19 @@ const TicketList = ({ initData }: { initData: InitDataType }) => {
     setSelectedTicket(id);
     setIsEditOpen(true);
   };
-
+  const handleCancelTicket = async (id: string) => {
+    try {
+      const ok = await confirm({
+        title: "Bạn có muốn hủy vé này",
+        content: "Hành động này sẽ không thể hoàn tác",
+      });
+      if (!ok) return;
+      await cancelTicketAPI(id);
+      toast.success("Hủy vé thành công");
+    } catch (error) {
+      toast.error(`Hủy vé thất bại: ${error}`);
+    }
+  };
   if (loading) return <p className="text-center">Đang tải dữ liệu...</p>;
   if (error) return <p className="text-red-500 text-center">{error}</p>;
 
@@ -123,7 +174,7 @@ const TicketList = ({ initData }: { initData: InitDataType }) => {
         currentPage={currentPage}
         rowsPerPage={rowsPerPage}
       />
-      {
+      {total >= rowsPerPage && ( // nếu tổng số item trong data >= số limit mới có phần trang ví dụ tổng item là 4, limit là 5 thì k hiện còn lớn hon là hiện
         <Pagination
           currentPage={currentPage}
           total={total}
@@ -132,7 +183,7 @@ const TicketList = ({ initData }: { initData: InitDataType }) => {
           setPage={changePage}
           setRowPerPage={changeRowPerPage}
         />
-      }
+      )}
     </>
   );
 };

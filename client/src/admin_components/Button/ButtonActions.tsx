@@ -28,7 +28,7 @@ const ActionButton: React.FC<ActionButtonProps> = ({
   }
   return (
     <button
-      className={`px-3 py-1 ${colorBtn} text-white rounded hover:brightness-70 transition-all duration-200 cursor-pointer ${className}`}
+      className={`px-3 py-1 text-nowrap ${colorBtn} text-white rounded hover:brightness-70 transition-all duration-200 cursor-pointer ${className}`}
       onClick={handleClick}
     >
       {label}

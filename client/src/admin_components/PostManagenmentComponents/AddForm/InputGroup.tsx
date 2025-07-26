@@ -105,6 +105,12 @@ const InputGroup = ({
             }
             placeholder="Nhập ngày bắt đầu"
             InputLabelProps={{ shrink: true }}
+            inputProps={{
+              onClick: (e) => {
+                // Thủ thuật gọi showPicker nếu trình duyệt hỗ trợ
+                (e.currentTarget as HTMLInputElement).showPicker?.();
+              },
+            }}
           />
 
           <TextField
@@ -120,6 +126,12 @@ const InputGroup = ({
             }
             placeholder="Nhập ngày kết thúc"
             InputLabelProps={{ shrink: true }}
+            inputProps={{
+              onClick: (e) => {
+                // Thủ thuật gọi showPicker nếu trình duyệt hỗ trợ
+                (e.currentTarget as HTMLInputElement).showPicker?.();
+              },
+            }}
           />
         </div>
         <div>

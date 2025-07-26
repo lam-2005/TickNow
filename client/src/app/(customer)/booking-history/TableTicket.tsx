@@ -45,24 +45,30 @@ const TableTicket = ({
     setIdTickket(id);
     openTicket();
   };
+  const getNewData = async () => {
+    try {
+      setLoading(true);
+      const res = await getTicketUserList(`?page=${page}&limit=5`, token);
+      setNewData(res?.data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const getNewData = async () => {
-      try {
-        setLoading(true);
-        const res = await getTicketUserList(`?page=${page}&limit=5`, token);
-        setNewData(res?.data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
     getNewData();
   }, [page]);
   return (
     <>
       {ticketPopup && <TicketInfo onClose={closeTicket} idTicket={idTicket} />}
-      {ratingPopup && <RatePopup idTicket={idTicket} onClose={closeRating} />}
+      {ratingPopup && (
+        <RatePopup
+          idTicket={idTicket}
+          onClose={closeRating}
+          onRated={getNewData}
+        />
+      )}
       <table border={0} className="w-full">
         <thead className="[&_th]:text-center [&_th]:py-2 [&_th]:px-4 [&_th]:text-sm [&_th]:font-semibold border-1 border-primary">
           <tr className="bg-primary text-white">
@@ -110,7 +116,9 @@ const TableTicket = ({
                       Đã thanh toán
                     </p>
                   ) : (
-                    "Thanh toán thất bại"
+                    <p className="text-red-500 font-bold w-fit mx-auto rounded-full px-2.5 py-0.5 bg-red-300">
+                      Đã bị hủy
+                    </p>
                   )}
                 </td>
                 <td className="py-2">

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Button from "../Button/Button";
 import { ButtonInfo, ButtonPlay } from "../Button/ButtonOfItemMovie";
@@ -20,6 +20,11 @@ const Movie = ({
   info: MovieType;
   textColor?: string;
 }) => {
+  const [posterSrc, setPosterSrc] = useState(
+    info?.image
+      ? `${env.IMG_API_URL}/movie/${info.image}`
+      : "/movies/default-movie.webp"
+  );
   const router = useRouter();
   const { trailerPopup, infoPopup, closeInfo, closeTrailer } = usePopup();
   const slugName = convertSlug(info.name);
@@ -43,15 +48,13 @@ const Movie = ({
             <div className="w-full h-full relative rounded-xl overflow-hidden bg-loading">
               <Image
                 fill
-                src={
-                  `${env.IMG_API_URL}/movie/${info.image}` ||
-                  "/movies/default.png"
-                }
-                alt="Phim"
+                src={posterSrc}
+                alt={info.name}
                 sizes="300px"
                 loading="lazy"
                 className="object-cover 
             group-hover:scale-110 transition-transform duration-300 "
+                onError={() => setPosterSrc("/movies/default-movie.webp")}
               />
             </div>
           </Link>

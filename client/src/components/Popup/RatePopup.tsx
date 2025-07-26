@@ -10,6 +10,7 @@ import env from "@/configs/environment";
 import { ratingAPI } from "@/services/rate.service";
 import { toast } from "react-toastify";
 import { getTicketList } from "@/services/ticket.service";
+import LoadingSpin from "../LoadingAPI/LoadingSpin";
 const labels: { [index: string]: string } = {
   0: "Chưa đánh giá",
   0.5: "Rất tệ",
@@ -30,9 +31,11 @@ function getLabelText(value: number) {
 const RatePopup = ({
   idTicket,
   onClose,
+  onRated,
 }: {
   idTicket: string;
   onClose: () => void;
+  onRated: () => void;
 }) => {
   const [value, setValue] = React.useState<number | null>(0);
   const [comment, setComment] = useState("");
@@ -59,6 +62,10 @@ const RatePopup = ({
   }, [idTicket]);
 
   const handleRating = async () => {
+    if (!value) {
+      toast.warn("Vui lòng chọn đánh giá!");
+      return;
+    }
     try {
       await ratingAPI({
         comment,
@@ -68,6 +75,7 @@ const RatePopup = ({
       });
       toast.success("Cảm ơn bạn đã đánh giá!");
       onClose();
+      onRated();
     } catch (error) {
       toast.error(`Có lỗi xảy ra khi Đánh giá ${error}`);
       console.error(error);
@@ -76,69 +84,8 @@ const RatePopup = ({
 
   return (
     <PopupContainer onClose={onClose}>
-      {loading ? (
-        <div className="w-full space-y-5 ">
-          <div className="flex gap-7.5">
-            <div className="relative max-w-[220px] w-full h-full aspect-[2/3] animate-pulse bg-loading overflow-hidden rounded-[10px]"></div>
-            <div className="flex-1 flex-column justify-between items-start">
-              <div className="space-y-2.5 w-full">
-                <div className="flex items-center gap-2.5 w-60 h-10 rounded-xl animate-pulse bg-loading"></div>
-                <div className="flex gap-5">
-                  <span className="text-lg font-bold">Đánh giá:</span>
-                  <div className="flex items-center gap-2.5">
-                    <Box
-                      sx={{
-                        width: "100%",
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Rating
-                        name="hover-feedback"
-                        value={value}
-                        precision={0.5}
-                        getLabelText={getLabelText}
-                        onChange={(event, newValue) => {
-                          setValue(newValue);
-                        }}
-                        onChangeActive={(event, newHover) => {
-                          setHover(newHover);
-                        }}
-                        icon={
-                          <div className="text-yellow-400 mr-1">
-                            <FaStar className="text-2xl" />
-                          </div>
-                        }
-                        emptyIcon={
-                          <div className="text-yellow-400 mr-1">
-                            <FaRegStar className="text-2xl" />
-                          </div>
-                        }
-                      />
-                      {value !== null && (
-                        <Box sx={{ ml: 2, textWrap: "nowrap" }}>
-                          {labels[hover !== -1 ? hover : value]}
-                        </Box>
-                      )}
-                    </Box>
-                  </div>
-                </div>
-                <div className="flex-column w-full gap-2.5">
-                  <span className="text-lg font-bold">Bình luận:</span>
-                  <textarea
-                    name=""
-                    id=""
-                    placeholder="Nhập bình luận của bạn"
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                    className="border border-gray-300 p-2 w-full h-24 "
-                  ></textarea>
-                </div>
-              </div>
-              <div className="flex justify-end bg-loading animate-pulse w-30 h-15 rounded-full"></div>
-            </div>
-          </div>
-        </div>
+      {loading || !detailTicket ? (
+        <LoadingSpin />
       ) : (
         <div className="w-full space-y-5 ">
           <div className="flex gap-7.5">
@@ -146,7 +93,7 @@ const RatePopup = ({
               <Image
                 fill
                 src={`${env.IMG_API_URL}/movie/${detailTicket?.movie.image}`}
-                alt="Phim"
+                alt={`${detailTicket?.movie.name}` || "Ảnh phim"}
                 sizes="300px"
                 loading="lazy"
                 className="object-cover"

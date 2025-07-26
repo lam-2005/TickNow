@@ -72,8 +72,14 @@ const Payment = () => {
     const startDate = new Date(voucher.start_date);
     const endDate = new Date(voucher.end_date || "");
 
-    if (now < startDate || now > endDate) {
-      toast.info("Mã giảm giá hết hạn!");
+    if (now < startDate) {
+      toast.error("Mã giảm giá không hợp lệ!");
+      setDiscountValue(0);
+      return;
+    }
+
+    if (now > endDate) {
+      toast.info("Mã giảm giá đã hết hạn!");
       setDiscountValue(0);
       return;
     }
@@ -86,6 +92,7 @@ const Payment = () => {
 
     setDiscountValue(voucher.discount_type);
     setIdVoucher(voucher._id);
+    setDiscountCode("");
     toast.success(`Áp dụng thành công! Giảm ${voucher.discount_type}%`);
   };
 

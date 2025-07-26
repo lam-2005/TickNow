@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import React from "react";
 import { MovieType } from "@/interfaces/movie.interface";
 import env from "@/configs/environment";
@@ -24,6 +24,7 @@ const MovieDetail = ({ movie, onClose }: Props) => {
             height={320}
             className="rounded-lg shadow object-cover "
             style={{ height: "320px", width: "240px", objectFit: "contain" }}
+            loading="lazy"
           />
           <div className="text-sm text-gray-700 space-y-1">
             <h2 className="text-xl font-semibold text-gray-800 mb-2">

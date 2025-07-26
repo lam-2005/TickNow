@@ -1,9 +1,13 @@
-"use server";
 import ProfileInfo from "@/components/ProfilePage/ProfileInfo";
 import { userInfoAPI } from "@/services/user.service";
+import { Metadata } from "next";
 import { cookies } from "next/headers";
 import Link from "next/link";
-
+export const metadata: Metadata = {
+  title: "Thông tin cá nhân",
+  description:
+    "Quản lý thông tin cá nhân, tài khoản và lịch sử đặt vé của bạn tại TickNow.",
+};
 const Profile = async () => {
   const cookieStore = cookies();
   const token = (await cookieStore).get("token")?.value || "";

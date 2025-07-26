@@ -1,8 +1,11 @@
 import Button from "@/components/Button/Button";
+import { Metadata } from "next";
 import Link from "next/link";
 import React from "react";
 import { FaCheck } from "react-icons/fa6";
-
+export const metadata: Metadata = {
+  title: "Đặt vé thành công",
+};
 const BookingSuccessful = () => {
   return (
     <div className="mt-10 space-y-10">

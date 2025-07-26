@@ -4,6 +4,28 @@ import MovieList from "./MoviePageContainer/MovieList";
 import BackgroundPage from "@/components/BackgroundPage/BackgroundPage";
 import { getCinemaList } from "@/services/cinema.service";
 import FilterMovie from "./MoviePageContainer/FilterMovie";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    status?: string;
+  }>;
+}): Promise<Metadata> {
+  const { status } = await searchParams;
+
+  const isShowing = status === "dang-chieu" || !status;
+  const title = isShowing ? "Phim đang chiếu tại rạp" : "Phim sắp chiếu";
+  const description = isShowing
+    ? "Khám phá các bộ phim đang chiếu mới nhất tại hệ thống rạp TickNow. Đặt vé nhanh chóng và tiện lợi."
+    : "Xem trước các bộ phim sắp được công chiếu tại rạp. Đặt lịch và theo dõi ngay tại TickNow.";
+
+  return {
+    title,
+    description,
+  };
+}
 
 const getListCinema = async () => {
   const res = await getCinemaList();
@@ -37,7 +59,7 @@ const MovieSection = async ({
   function getNext7DaysWithLabels() {
     const days = [];
     const today = new Date();
-
+    today.setHours(today.getHours() + 7);
     for (let i = 0; i < 7; i++) {
       const d = new Date(today);
       d.setDate(today.getDate() + i);

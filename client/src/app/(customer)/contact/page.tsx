@@ -80,7 +80,7 @@ const ContactPage = () => {
 
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:1001/contact", {
+      const res = await fetch("https://ticknow-be.onrender.com/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

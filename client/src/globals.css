@@ -183,3 +183,6 @@ html[data-theme="dark"] {
     background: #ffffff;
   }
 }
+.slick-track {
+  margin-left: 0 !important;
+}

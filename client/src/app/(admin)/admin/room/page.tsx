@@ -5,6 +5,10 @@ import { getCinemaList } from "@/services/cinema.service";
 import AddRoomBtn from "@/admin_components/RoomManagementComponents/AddForm/ButtonOpenForm";
 import FIlterRoom from "@/admin_components/RoomManagementComponents/FilterRoom/FIlterRoom";
 import { getRoomData } from "@/services/room.service";
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Quản lí phòng",
+};
 
 const getCinema = async () => {
   const res = (await getCinemaList()) as any;

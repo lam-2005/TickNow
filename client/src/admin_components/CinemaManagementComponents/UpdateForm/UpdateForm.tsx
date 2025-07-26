@@ -10,6 +10,7 @@ import dataCinema from "@/utils/redux/selectors/selectorCinema";
 import usePanigation from "@/hooks/usePanigation";
 import { toast } from "react-toastify";
 import { useConfirm } from "@/hooks/contexts/useConfirm";
+import LoadingSpin from "@/components/LoadingAPI/LoadingSpin";
 
 const UpdateForm = ({
   id,
@@ -37,7 +38,7 @@ const UpdateForm = ({
         const data = await getCinemaDetail(id);
         setFormData({
           name: data.name || "",
-          image: data.image || "",
+          image: data.image ?? "",
           status: data.status,
         });
       } catch (error) {
@@ -60,7 +61,7 @@ const UpdateForm = ({
       if (!confirmUpdate) return;
       const dataToUpdate = {
         ...formData,
-        image: formData.image ? formData.image : "",
+        image: formData.image ?? "",
       };
       await dispatch(updateCinema({ id: id, data: dataToUpdate })).unwrap();
       toast.success("Cập nhật rạp thành công!");
@@ -82,7 +83,7 @@ const UpdateForm = ({
     }
   };
 
-  if (loading) return <p className="text-center p-5">Đang tải...</p>;
+  if (loading) return <LoadingSpin />;
 
   return (
     <>

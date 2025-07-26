@@ -5,6 +5,10 @@ import PostList from "@/admin_components/PostManagenmentComponents/PostList";
 import { getPost } from "@/services/post.service";
 import { getVoucherList } from "@/services/vouchers.service";
 import React, { Suspense } from "react";
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Quản lí bài viết",
+};
 
 const PostManagenment = async () => {
   const posts = await getPost(1, 5);

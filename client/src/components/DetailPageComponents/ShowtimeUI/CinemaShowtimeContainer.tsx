@@ -13,6 +13,7 @@ import {
   TicketTypeLocalStorage,
 } from "@/utils/saveTicket";
 import { useSearchParams } from "next/navigation";
+import LoadingSpin from "@/components/LoadingAPI/LoadingSpin";
 type Props = {
   data: CinemaShowtimeType[];
   loading: boolean;
@@ -107,9 +108,9 @@ const CinemaShowtimeContainer = ({ data, loading }: Props) => {
   return (
     <>
       {loading ? (
-        <p className=" text-center p-5 rounded-[10px]">
-          Đang tải dữ liêu suất chiếu...
-        </p>
+        <div className="flex gap-4 items-center justify-center">
+          <LoadingSpin className="size-6!" /> <p>Đang tải dữ liệu rạp</p>
+        </div>
       ) : data.length === 0 ? (
         <p className="bg-background-card text-center p-5 rounded-[10px] max-w-[1000px] w-full mx-auto">
           Hiện không có rạp nào
@@ -130,7 +131,9 @@ const CinemaShowtimeContainer = ({ data, loading }: Props) => {
         </div>
       )}
       {idShowtime && loadingShowtime && (
-        <p className="text-center">Đang tải phòng...</p>
+        <div className="flex gap-4 items-center justify-center">
+          <LoadingSpin className="size-6!" /> <p>Đang tải phòng</p>
+        </div>
       )}
       {idShowtime && !loadingShowtime && (
         <div

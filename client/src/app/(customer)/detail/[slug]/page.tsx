@@ -6,6 +6,32 @@ import { getMovieList } from "@/services/movie.service";
 import { getRateList } from "@/services/rate.service";
 import { getIdFromSlug } from "@/utils/convertSlug";
 import React from "react";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const id = getIdFromSlug(slug);
+  const res = await getMovieList(`/${id}`);
+  const movie = res?.data?.movie;
+
+  if (!movie) {
+    return {
+      title: "Không tìm thấy phim",
+      description: "Trang phim không tồn tại hoặc đã bị xoá.",
+    };
+  }
+
+  return {
+    title: `${movie.name} - Thông tin & lịch chiếu`,
+    description:
+      movie.description?.slice(0, 150) ||
+      "Xem thông tin chi tiết và lịch chiếu của bộ phim.",
+  };
+}
 
 const Movie = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;

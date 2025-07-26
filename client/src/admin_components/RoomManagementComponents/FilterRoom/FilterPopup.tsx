@@ -73,6 +73,10 @@ const FilterPopup = ({
 
     closeForm();
   };
+  const handleReset = () => {
+    setIdCinemas([]);
+    setStatus([]);
+  };
   return (
     <PopupContainer title="Bộ lọc" closeForm={closeForm}>
       <div className="p-5 space-y-5">
@@ -121,7 +125,13 @@ const FilterPopup = ({
           </div>
         </div>
       </div>
-      <div className="flex justify-end p-5 w-full bg-background-card rounded-2xl">
+      <div className="flex justify-end p-5 w-full gap-4 bg-background-card rounded-2xl">
+        <button
+          className="btn border border-gray-400 text-gray-700 bg-white hover:bg-gray-100"
+          onClick={handleReset}
+        >
+          Đặt lại bộ lọc
+        </button>
         <button className="btn" onClick={handleFilter}>
           Lọc
         </button>

@@ -6,28 +6,38 @@ const Chart = ({
   children,
   xLabels,
   yLabels,
+  yearSelected,
+  loading,
+  subtitle,
 }: {
-  title: string;
+  title: string | React.ReactNode;
   children?: React.ReactNode;
   xLabels?: string[];
   yLabels?: number[];
+  yearSelected?: number;
+  loading?: boolean;
+  subtitle?: React.ReactNode;
 }) => {
-  const year = new Date().getFullYear();
   return (
     <div>
-      <p className="text-center text-xl font-bold">{title}</p>
+      {typeof title === "string" ? (
+        <p className="text-center text-xl font-bold">{title}</p>
+      ) : (
+        title
+      )}
+      {subtitle}
       {children || (
         <LineChart
           localeText={{
             loading: "Đang tải dữ liệu...",
             noData: "Không có dữ liệu",
           }}
-          loading={yLabels?.length === 0}
+          loading={loading}
           height={400}
           series={[
             {
               curve: "linear",
-              data: yLabels,
+              data: loading ? [] : yLabels,
               label: "Doanh thu",
               color: "#e91224",
             },
@@ -36,7 +46,7 @@ const Chart = ({
             {
               scaleType: "band",
               data: xLabels,
-              label: `Tháng (${year})`,
+              label: `Tháng (${yearSelected})`,
             },
           ]}
           yAxis={[{ width: 90, label: "Doanh thu (VNĐ)" }]}

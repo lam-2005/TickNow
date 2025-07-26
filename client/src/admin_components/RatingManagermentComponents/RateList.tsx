@@ -39,7 +39,8 @@ const RatingList = ({ initData }: { initData: InitDataType }) => {
         filter: {
           movie: "",
           score: "",
-          date: "",
+          start_day: "",
+          end_day: "",
         },
       })
     );

@@ -35,12 +35,10 @@ const MovieTable = ({
   const [endDate, setEndDate] = useState("");
   const [errors, setErrors] = useState("");
 
-  // Dữ liệu biểu đồ
   const ticketCounts = tableDataChart.map((item) => item.ticketCount);
   const movieNames = tableDataChart.map((item) => item.movieName);
   const revenues = tableDataChart.map((item) => item.totalRevenue);
 
-  // Hàm kiểm tra ngày và trả lỗi nếu có
   const validateDates = (): string => {
     if (startDate && endDate) {
       const start = new Date(startDate);
@@ -53,19 +51,20 @@ const MovieTable = ({
     return "";
   };
 
-  // Cập nhật lỗi khi ngày thay đổi
   useEffect(() => {
     const errorMessage = validateDates();
     setErrors(errorMessage);
   }, [startDate, endDate]);
 
-  // Gọi API dữ liệu biểu đồ
   useEffect(() => {
     const fetchChartData = async () => {
-      if (errors || !startDate || !endDate) return;
+      if (errors || (startDate && !endDate) || (!startDate && endDate)) return;
       setLoadingChart(true);
       try {
-        const res = await getDashboardData(
+        let res;
+        if (!startDate && !endDate)
+          res = await getDashboardData(`/movieDay?start=&end=`);
+        res = await getDashboardData(
           `/movieDay?start=${startDate}&end=${endDate}`
         );
         setTableDataChart(res.data);
@@ -79,13 +78,18 @@ const MovieTable = ({
     fetchChartData();
   }, [startDate, endDate, errors]);
 
-  // Gọi API dữ liệu bảng
   useEffect(() => {
     const fetchTableData = async () => {
-      if (errors || !startDate || !endDate) return;
+      if (errors || (startDate && !endDate) || (!startDate && endDate)) return;
       setLoading(true);
       try {
-        const res = await getDashboardData(
+        let res;
+        if (!startDate && !endDate)
+          res = await getDashboardData(
+            `/movieDay?start=&end=&page=${page}&limit=${rowsPerPage}`
+          );
+
+        res = await getDashboardData(
           `/movieDay?start=${startDate}&end=${endDate}&page=${page}&limit=${rowsPerPage}`
         );
         setTableData(res.data);
@@ -137,7 +141,11 @@ const MovieTable = ({
               loading={loadingChart}
               height={350}
               series={[
-                { data: ticketCounts, label: "Số vé bán ra", color: "#007bff" },
+                {
+                  data: loadingChart ? [] : ticketCounts,
+                  label: "Số vé bán ra",
+                  color: "#007bff",
+                },
               ]}
               xAxis={[
                 {
@@ -161,7 +169,11 @@ const MovieTable = ({
               loading={loadingChart}
               height={350}
               series={[
-                { data: revenues, label: "Doanh thu", color: "#e91224" },
+                {
+                  data: loadingChart ? [] : revenues,
+                  label: "Doanh thu",
+                  color: "#e91224",
+                },
               ]}
               xAxis={[
                 {

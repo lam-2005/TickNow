@@ -1,4 +1,5 @@
 import PopupContainer from "@/admin_components/PopupContainer";
+import LoadingSpin from "@/components/LoadingAPI/LoadingSpin";
 import { PostType } from "@/interfaces/post.interface";
 import { getPostList } from "@/services/post.service";
 import React, { useEffect, useState } from "react";
@@ -27,16 +28,23 @@ const DetailPost = ({
 
     getPostDetail(id);
   }, [id]);
-  if (loading) return <p>Loading...</p>;
+
   return (
     <PopupContainer
       closeForm={closeForm}
       title={getInfo?.title || "Thông tin bài viết"}
     >
-      <div className="px-5 pb-5 overflow-y-auto overflow-x-hidden">
-        {" "}
-        <div dangerouslySetInnerHTML={{ __html: getInfo?.content || "" }} />
-      </div>
+      {loading ? (
+        <LoadingSpin />
+      ) : (
+        <div className="px-5 pb-5 overflow-y-auto overflow-x-hidden">
+          {" "}
+          <div
+            className="[&_.fr-fic]:mx-auto [&_.fr-fic]:block"
+            dangerouslySetInnerHTML={{ __html: getInfo?.content || "" }}
+          />
+        </div>
+      )}
     </PopupContainer>
   );
 };

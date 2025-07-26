@@ -4,10 +4,14 @@ import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
 import { userInfoAPI } from "@/services/user.service";
 import { cookies } from "next/headers";
 import React from "react";
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Thông tin cá nhân",
+};
 
 const ProfileUser = async () => {
-  const cookieStore = cookies()
-  const tokenAdmin = (await cookieStore).get("tokenAdmin")?.value || ""
+  const cookieStore = cookies();
+  const tokenAdmin = (await cookieStore).get("tokenAdmin")?.value || "";
   let userInfo = null;
   if (tokenAdmin) {
     try {
@@ -20,7 +24,6 @@ const ProfileUser = async () => {
   if (!userInfo) {
     alert("Có lỗi khi lấy thông tin người dùng!");
   }
-
 
   return (
     <div className="card">

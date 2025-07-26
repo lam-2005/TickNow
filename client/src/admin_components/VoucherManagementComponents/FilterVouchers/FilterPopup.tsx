@@ -6,6 +6,7 @@ import { AppDispatch } from "@/utils/redux/store";
 import { fetchVouchers, setFilter } from "@/utils/redux/slices/voucherSlice";
 import dataVoucher from "@/utils/redux/selectors/selectorVoucher";
 import { TextField } from "@mui/material";
+import { toast } from "react-toastify";
 
 const FilterItem = ({
   title,
@@ -70,6 +71,10 @@ const FilterPopup = ({ closeForm }: { closeForm: () => void }) => {
   }, [filter]);
 
   const handleFilter = () => {
+    if (error) {
+      toast.error(error);
+      return;
+    }
     dispatch(
       fetchVouchers({
         limit: 5,
@@ -90,7 +95,13 @@ const FilterPopup = ({ closeForm }: { closeForm: () => void }) => {
     );
     closeForm();
   };
-
+  const handleReset = () => {
+    setCode("");
+    setStatus([]);
+    setFromDate("");
+    setToDate("");
+    setError("");
+  };
   return (
     <PopupContainer title="Bộ lọc Voucher" closeForm={closeForm}>
       <div className="p-5 space-y-5 overflow-y-scroll">
@@ -117,6 +128,12 @@ const FilterPopup = ({ closeForm }: { closeForm: () => void }) => {
             onChange={(e) => setFromDate(e.target.value)}
             placeholder="Nhập ngày bắt đầu"
             InputLabelProps={{ shrink: true }}
+            inputProps={{
+              onClick: (e) => {
+                // Thủ thuật gọi showPicker nếu trình duyệt hỗ trợ
+                (e.currentTarget as HTMLInputElement).showPicker?.();
+              },
+            }}
           />
 
           <TextField
@@ -130,6 +147,12 @@ const FilterPopup = ({ closeForm }: { closeForm: () => void }) => {
             onChange={(e) => setToDate(e.target.value)}
             placeholder="Nhập ngày kết thúc"
             InputLabelProps={{ shrink: true }}
+            inputProps={{
+              onClick: (e) => {
+                // Thủ thuật gọi showPicker nếu trình duyệt hỗ trợ
+                (e.currentTarget as HTMLInputElement).showPicker?.();
+              },
+            }}
           />
         </div>
         <div className="flex flex-col gap-2">
@@ -150,7 +173,13 @@ const FilterPopup = ({ closeForm }: { closeForm: () => void }) => {
           </div>
         </div>
       </div>
-      <div className="flex justify-end p-5 w-full bg-background-card rounded-2xl">
+      <div className="flex justify-end p-5 gap-4 w-full bg-background-card rounded-2xl">
+        <button
+          className="btn border border-gray-400 text-gray-700 bg-white hover:bg-gray-100"
+          onClick={handleReset}
+        >
+          Đặt lại bộ lọc
+        </button>
         <button className="btn" onClick={handleFilter}>
           Lọc
         </button>

@@ -1,7 +1,11 @@
 import Button from "@/components/Button/Button";
+import { Metadata } from "next";
 import Link from "next/link";
 import React from "react";
 import { IoCloseSharp } from "react-icons/io5";
+export const metadata: Metadata = {
+  title: "Đặt vé thất bại",
+};
 
 const BookingFailed = () => {
   return (

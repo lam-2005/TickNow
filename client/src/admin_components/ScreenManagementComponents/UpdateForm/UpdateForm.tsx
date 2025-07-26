@@ -115,7 +115,12 @@ const UpdateForm = ({
     }
   };
 
-  if (loading) return <p className="text-center p-5">Đang tải...</p>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-60">
+        <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
   return (
     <>
       <div className="space-y-5 px-5 flex-1 overflow-x-hidden overflow-y-auto">

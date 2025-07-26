@@ -5,6 +5,10 @@ import AddMovieBtn from "@/admin_components/MovieManagementComponents/AddForm/Bu
 import * as movieService from "@/services/movie.service";
 import { getGenreList } from "@/services/genre.service";
 import FilterMovie from "@/admin_components/MovieManagementComponents/FilterMovie/FilterMovie";
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Quản lí phim",
+};
 
 const getGerne = async () => {
   const res = await getGenreList();

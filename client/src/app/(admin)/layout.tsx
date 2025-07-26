@@ -20,8 +20,10 @@ const oswald = Oswald({
 });
 
 export const metadata: Metadata = {
-  title: "TickNow - Website đặt vé xem phim",
-  description: "Website đặt vé xem phim",
+  title: {
+    default: "Trang quản trị | TickNow",
+    template: "%s | Quản trị TickNow",
+  },
 };
 
 export default async function RootLayout({

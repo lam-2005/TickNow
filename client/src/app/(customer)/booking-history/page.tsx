@@ -2,7 +2,10 @@ import Link from "next/link";
 import TableTicket from "./TableTicket";
 import { getTicketUserList } from "@/services/ticket.service";
 import { cookies } from "next/headers";
-
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Lịch sử đặt vé",
+};
 const Profile = async () => {
   const tokenStore = cookies();
   const token = (await tokenStore).get("token")?.value || "";
