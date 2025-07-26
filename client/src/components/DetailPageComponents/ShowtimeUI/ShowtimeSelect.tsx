@@ -95,7 +95,7 @@ const ShowtimeSelect = ({ listData, slug }: ShowtimeSelectTypes) => {
   };
   return (
     <>
-      <div className="flex-column items-center gap-7.5">
+      <div className="flex-column items-center gap-7.5 max-sm:gap-2">
         <h1>Lịch chiếu phim</h1>
         <SelectContainer>
           <SelectComponent

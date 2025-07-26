@@ -3,8 +3,8 @@ import AddVoucherBtn from "@/admin_components/VoucherManagementComponents/AddFor
 import FilterVouchers from "@/admin_components/VoucherManagementComponents/FilterVouchers/FilterVouchers";
 import VoucherList from "@/admin_components/VoucherManagementComponents/VoucherList";
 import { getVouchers } from "@/services/vouchers.service";
-import { Metadata } from "next";
 import React, { Suspense } from "react";
+import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Quản lí mã khuyến mãi",
 };

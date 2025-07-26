@@ -52,9 +52,7 @@ const CinemaPage = async ({
   return (
     <>
       <BackgroundPage image="background_cinema.webp" title="Rạp chiếu">
-        <div className=" absolute z-20 bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2">
-          <FilterCinema locations={locationList} />
-        </div>
+        <FilterCinema locations={locationList} />
       </BackgroundPage>
 
       <CinemaList cinemas={cinemas} />

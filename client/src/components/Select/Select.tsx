@@ -5,6 +5,7 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import React from "react";
 import { BiChevronDown } from "react-icons/bi";
+
 type SelectProps<T> = {
   leftIcon: React.ReactNode;
   data: T[];
@@ -32,19 +33,30 @@ export const SelectComponent = <T,>({
   };
 
   return (
-    <FormControl className="w-[330px] h-full justify-center">
-      <div className="flex items-center px-5">
-        {leftIcon}
+    <FormControl
+      className="bg-background-card max-sm:rounded-full 
+  max-sm:w-[300px]!
+  lg:w-[300px]
+  md:w-[240px]
+  sm:w-[200px]
+ h-full
+     "
+    >
+      <div className="flex items-center px-3 ">
+        <div className="mr-2">{leftIcon}</div>
 
         <Select
           value={selected}
           onChange={handleChange}
           displayEmpty
+          style={{
+            textAlign: "center",
+          }}
           IconComponent={(props) => (
             <BiChevronDown
               {...props}
               style={{
-                fontSize: "36px",
+                fontSize: "1.75rem",
                 color: "white",
               }}
             />
@@ -52,7 +64,8 @@ export const SelectComponent = <T,>({
           className="text-white rounded-full bg-background-card text-center w-full"
           MenuProps={{
             PaperProps: {
-              className: "bg-background-card text-white rounded-xl h-70",
+              className:
+                "bg-background-card text-white rounded-xl max-h-[280px]",
             },
           }}
           sx={{
@@ -86,7 +99,7 @@ export const SelectContainer = ({
   children: React.ReactNode;
 }) => {
   return (
-    <div className="h-[80px] bg-background-card rounded-[100px] w-fit flex shadow-foreground items-center [&>div]:not-first:border-l-1 [&>div]:not-first:border-foreground ">
+    <div className="flex gap-3 p-3 max-sm:p-1 bg-background-card rounded-[100px] w-fit shadow-foreground items-center justify-start sm:[&>div]:not-first:border-l-1 sm:[&>div]:not-first:border-foreground max-sm:flex-col max-sm:bg-transparent">
       {children}
     </div>
   );

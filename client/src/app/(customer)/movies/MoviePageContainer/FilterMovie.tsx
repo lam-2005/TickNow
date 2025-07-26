@@ -37,7 +37,7 @@ const FilterMovie = ({ cinemas, showtimes }: FilterMovierops) => {
   return (
     <SelectContainer>
       <SelectComponent
-        leftIcon={<FaCalendarAlt className="text-foreground" size={20} />}
+        leftIcon={<FaCalendarAlt className="text-foreground" />}
         getLabel={(item) => item.label}
         data={showtimes}
         defaultValue={selectedDate}
@@ -46,7 +46,7 @@ const FilterMovie = ({ cinemas, showtimes }: FilterMovierops) => {
         placeholder="Chọn ngày chiếu"
       />
       <SelectComponent
-        leftIcon={<RiMapPin2Fill className="text-foreground" size={20} />}
+        leftIcon={<RiMapPin2Fill className="text-foreground" />}
         getLabel={(item) => item.name}
         data={cinemas}
         defaultValue={selectedCinema}

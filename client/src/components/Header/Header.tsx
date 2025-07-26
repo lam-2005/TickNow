@@ -43,7 +43,7 @@ const Header = () => {
     pathname === "/" || pathname.startsWith("/detail");
 
   const headerClass = isTransparentHeader
-    ? "min-[480px]:bg-gradient-to-b from-[rgba(0,0,0,.7)] via-[rgba(0,0,0,.2)] to-transparent absolute z-1000 top-0 max-[480px]:sticky max-[480px]:bg-background-card min-[480px]:[&_.color-icon]:text-white"
+    ? "sm:bg-gradient-to-b from-[rgba(0,0,0,.7)] via-[rgba(0,0,0,.2)] to-transparent absolute z-1000 top-0 max-sm:bg-background-card sm:[&_.color-icon]:text-white max-sm:sticky"
     : "bg-background-card sticky z-1000 top-0";
 
   const textColorClass = isTransparentHeader ? "text-white" : "text-foreground";
@@ -111,7 +111,7 @@ const Header = () => {
         <div className="flex gap-5 max-sm:gap-3 items-center">
           <SearchPopup className={searchFormClass} />
           {user ? (
-            <div className="relative group">
+            <div className="relative group max-lg:hidden cursor-pointer">
               <div className="flex-column items-center gap-1">
                 <div className="flex-center">
                   <FaUserCircle className="text-3xl" />

@@ -54,7 +54,10 @@ const SeatDiagram = ({
   return (
     <div className="space-y-5 mt-8">
       {layout.map((item) => (
-        <div key={Object.keys(item)[0]} className="flex gap-5">
+        <div
+          key={Object.keys(item)[0]}
+          className="flex gap-2 sm:gap-3 md:gap-4 lg:gap-5"
+        >
           {item[Object.keys(item)[0]].map((i, index) => {
             const seatSelected = selectedSeat[Object.keys(item)[0]]?.includes(
               i as number

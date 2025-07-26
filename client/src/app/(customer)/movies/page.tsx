@@ -84,15 +84,13 @@ const MovieSection = async ({
     <>
       <BackgroundPage image="background_movie.webp" title="Phim chiếu rạp">
         {status !== "sap-chieu" && (
-          <div className=" absolute z-20 bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2">
-            <FilterMovie cinemas={cinemas} showtimes={getDate} />
-          </div>
+          <FilterMovie cinemas={cinemas} showtimes={getDate} />
         )}
       </BackgroundPage>
       {movies.length > 0 ? (
         <MovieList data={movies} />
       ) : (
-        <p className="text-center bg-background-card rounded-2xl container p-5 mt-20 w-4/5">
+        <p className="text-center bg-background-card rounded-2xl container p-5 mt-20 max-sm:mt-5 w-4/5">
           Không có phim nào được chiếu
         </p>
       )}

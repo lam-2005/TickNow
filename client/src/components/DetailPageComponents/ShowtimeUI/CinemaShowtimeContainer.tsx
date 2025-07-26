@@ -116,7 +116,7 @@ const CinemaShowtimeContainer = ({ data, loading }: Props) => {
           Hiện không có rạp nào
         </p>
       ) : (
-        <div className="flex-column items-center gap-7.5">
+        <div className="flex-column items-center gap-7.5 max-sm:gap-2">
           <h1>Danh sách rạp</h1>
           <div className="flex-column gap-10 max-w-[1000px] w-full">
             {data.map((cinema) => (
@@ -137,7 +137,7 @@ const CinemaShowtimeContainer = ({ data, loading }: Props) => {
       )}
       {idShowtime && !loadingShowtime && (
         <div
-          className="flex-column items-center gap-7.5"
+          className="flex-column items-center gap-7.5 max-sm:gap-2"
           ref={bookingSectionRef}
         >
           <h2>Chọn ghế - Phòng {dataShowtime?.room.code_room}</h2>

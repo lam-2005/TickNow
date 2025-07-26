@@ -5,11 +5,12 @@ import React from "react";
 const Loading = () => {
   return (
     <>
-      <BackgroundPage image="background_movie.webp" title="Lịch chiếu phim">
-        <div className=" absolute z-20 bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2"></div>
-      </BackgroundPage>
+      <BackgroundPage
+        image="background_movie.webp"
+        title="Lịch chiếu phim"
+      ></BackgroundPage>
 
-      <LoadingSkeleton className="mt-20" />
+      <LoadingSkeleton className="mt-20 max-sm:mt-5" />
     </>
   );
 };

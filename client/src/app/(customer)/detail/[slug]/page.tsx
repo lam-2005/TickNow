@@ -54,7 +54,7 @@ const Movie = async ({ params }: { params: Promise<{ slug: string }> }) => {
   return (
     <div className="transition-all">
       <MovieInfo movie={movie} />
-      <div className="container mt-10 space-y-10">
+      <div className="container mt-10 max-sm:mt-5 space-y-10 max-sm:space-y-5">
         <ShowtimeSelect listData={{ locations: locations }} slug={id} />
         <CommentContainer rate={rates?.data} movie={movie} />
       </div>

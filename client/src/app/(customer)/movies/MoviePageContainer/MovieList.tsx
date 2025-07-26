@@ -31,12 +31,12 @@ const MovieList = ({ data }: { data: MovieType[] }) => {
   };
   return (
     <>
-      <div className="container space-y-10 mt-20">
-        <div className="flex justify-between">
+      <div className="container space-y-10 mt-20 max-sm:mt-5">
+        <div className="flex justify-between flex-wrap gap-4">
           <div className="flex gap-5">
             <h1
               onClick={() => handleChangeStatus(1)}
-              className={`cursor-pointer font-bold uppercase text-3xl text-foreground border-b-4 ${
+              className={`cursor-pointer font-bold uppercase text-3xl text-foreground border-b-4 max-md:text-2xl max-sm:text-lg ${
                 getStatusParams === "" || getStatusParams === "dang-chieu"
                   ? "text-primary border-red-600"
                   : "text-foreground border-transparent"
@@ -46,7 +46,7 @@ const MovieList = ({ data }: { data: MovieType[] }) => {
             </h1>
             <h1
               onClick={() => handleChangeStatus(2)}
-              className={`cursor-pointer font-bold uppercase text-3xl text-foreground border-b-4 ${
+              className={`cursor-pointer font-bold uppercase text-3xl text-foreground border-b-4 max-md:text-2xl max-sm:text-lg ${
                 getStatusParams === "sap-chieu"
                   ? "text-primary border-red-600"
                   : "text-foreground border-transparent"
@@ -57,7 +57,7 @@ const MovieList = ({ data }: { data: MovieType[] }) => {
           </div>
           <button
             onClick={handleSortMovie}
-            className="group flex rounded-[5px] items-center gap-2 border-2 border-white py-2.5 px-5 hover:border-primary hover:text-primary transition-colors text-foreground"
+            className="group flex rounded-[5px] items-center gap-2 border-2 border-white py-2.5 px-5 hover:border-primary hover:text-primary transition-colors text-foreground max-md:text-sm max-sm:text-xs text-nowrap"
           >
             {sortOrder ? (
               <>
@@ -70,7 +70,7 @@ const MovieList = ({ data }: { data: MovieType[] }) => {
             )}
           </button>
         </div>
-        <div className="grid grid-cols-5 gap-5">
+        <div className="grid grid-cols-5 gap-5 max-sm:grid-cols-2 max-md:grid-cols-2 max-lg:grid-cols-3 max-xl:grid-cols-5">
           {sortedMovies.map((movie) => (
             <Movie key={movie._id} info={movie} />
           ))}

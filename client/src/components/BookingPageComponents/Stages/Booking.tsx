@@ -16,11 +16,11 @@ const Booking = ({
 }) => {
   return (
     <div className="flex-column items-center">
-      <div className="w-4/5 h-[148px] relative">
+      <div className=" h-[100px] lg:h-[150px] w-full max-sm:h-[80px] relative">
         <Image
           src={"/screen.webp"}
           fill
-          sizes="1280"
+          sizes="1280px"
           alt=""
           className="object-contain"
           priority

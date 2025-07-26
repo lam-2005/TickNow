@@ -1,26 +1,23 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { ItemInfo } from "../Popup/InfoPopup";
 import Image from "next/image";
 import { getTicket, TicketTypeLocalStorage } from "@/utils/saveTicket";
+import { ItemInfo } from "../Popup/InfoPopup";
 import env from "@/configs/environment";
 
 const Ticket = () => {
   const [ticket, setTicket] = useState<TicketTypeLocalStorage | null>(null);
 
   useEffect(() => {
-    // Load ticket khi component mount
     const storedTicket = getTicket();
     setTicket(storedTicket);
 
-    // Lắng nghe custom event 'ticket-updated'
     const handleTicketUpdated = () => {
       const updatedTicket = getTicket();
       setTicket(updatedTicket);
     };
 
     window.addEventListener("ticket-updated", handleTicketUpdated);
-
     return () => {
       window.removeEventListener("ticket-updated", handleTicketUpdated);
     };
@@ -46,26 +43,34 @@ const Ticket = () => {
   };
 
   return (
-    <div className="w-full space-y-5 ">
-      <div className="flex gap-7.5">
-        <div className="relative max-w-[235px] w-full h-full aspect-[2/3] bg-amber-500 overflow-hidden rounded-[10px]">
-          <Image
-            fill
-            src={`${env.IMG_API_URL}/movie/${ticket?.movie.image}`}
-            alt="Phim"
-            sizes="300px"
-            loading="lazy"
-            className="object-cover"
-          />
+    <div className="w-full space-y-5">
+      <div className="flex flex-col md:flex-row gap-5">
+        {/* Poster */}
+        <div className="relative w-full md:max-w-[235px] aspect-[2/3] bg-gray-300 overflow-hidden rounded-[10px] mx-auto md:mx-0 max-md:hidden">
+          {ticket?.movie.image && (
+            <Image
+              fill
+              src={`${env.IMG_API_URL}/movie/${ticket.movie.image}`}
+              alt="Poster phim"
+              sizes="300px"
+              loading="lazy"
+              className="object-cover"
+            />
+          )}
         </div>
-        <div className="flex-1 flex-column justify-between gap-5 items-start">
-          <div className="space-y-2.5 w-full">
-            <div className="flex items-center gap-2.5 ">
-              <h2 className="capitalize">{ticket?.movie.name}</h2>
-              <span className="bg-primary py-0.5 px-2 rounded-[5px] font-semibold italic text-white">
+
+        {/* Thông tin vé */}
+        <div className="flex-1 flex flex-col justify-between gap-5">
+          <div className="space-y-2.5">
+            <div className="flex items-center gap-2.5">
+              <h2 className="text-xl font-semibold capitalize">
+                {ticket?.movie.name}
+              </h2>
+              <span className="bg-primary py-0.5 px-2 rounded-[5px] font-semibold italic text-white text-sm">
                 18+
               </span>
             </div>
+
             <ItemInfo
               title="Rạp chiếu:"
               content={`${ticket?.screening?.cinema || ""} (${
@@ -78,7 +83,7 @@ const Ticket = () => {
             />
             <ItemInfo
               title="Phòng chiếu:"
-              content={(ticket?.screening?.room as string) || ""}
+              content={ticket?.screening?.room as string}
             />
             <ItemInfo
               title="Ngày chiếu:"
@@ -99,21 +104,17 @@ const Ticket = () => {
               content={
                 ticket?.screening?.screeningInfo.showtype === 1
                   ? "Phụ đề"
-                  : "Lông tiếng"
+                  : "Lồng tiếng"
               }
             />
-            <ItemInfo
-              title="Ghế:"
-              content={ticket?.seats ? ticket?.seats.join(",") : ""}
-            />
+            <ItemInfo title="Ghế:" content={ticket?.seats?.join(", ") || ""} />
           </div>
-          <h2>
+
+          {/* Tổng giá */}
+          <h2 className="text-lg md:text-xl font-semibold">
             Tổng giá vé:{" "}
-            <span className="text-2xl text-primary">
-              {ticket?.total !== 0
-                ? ticket?.total.toLocaleString("vi-Vn")
-                : ticket?.price.toLocaleString("vi-Vn") || 0}{" "}
-              ₫
+            <span className="text-primary text-2xl">
+              {(ticket?.total || ticket?.price || 0).toLocaleString("vi-VN")} ₫
             </span>
           </h2>
         </div>

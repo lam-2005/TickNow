@@ -8,6 +8,7 @@ import ChangePasswordPopup from "../Popup/ChangePasswordPopup";
 import { updateUserAPI } from "@/services/user.service";
 import { toast } from "react-toastify";
 import { useAuth } from "@/hooks/contexts/useAuth";
+
 export type DataEditProfileReq = {
   name?: string;
   phone?: string;
@@ -15,9 +16,9 @@ export type DataEditProfileReq = {
   password?: string;
   newPassword?: string;
   confirmPassword?: string;
-
   retypePassword?: string;
 };
+
 const ProfileInfo = ({ info, token }: { info: UserType; token: string }) => {
   const { setUser } = useAuth();
   const [infoUser, setInfoUser] = useState(info);
@@ -28,6 +29,7 @@ const ProfileInfo = ({ info, token }: { info: UserType; token: string }) => {
     month: "2-digit",
     year: "numeric",
   });
+
   const focusRef = useRef<HTMLInputElement>(null);
   const { touched, touchedPhone, touchedFullName, touchedDateOfBirth } =
     useTouched();
@@ -38,28 +40,31 @@ const ProfileInfo = ({ info, token }: { info: UserType; token: string }) => {
     phone: info?.phone || "",
     year: formattedDateData || "",
   });
+
   const errors = validateForm({
     name: formdata.name,
     phone: formdata.phone,
     year: formdata.year?.toString(),
   });
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormdata({
       ...formdata,
       [e.target.name]: e.target.value,
     });
   };
+
   useEffect(() => {
     if (editProfile) {
       focusRef.current?.focus();
     }
   }, [editProfile]);
+
   const handleEditProfile = async () => {
     try {
       await updateUserAPI(info._id, formdata);
       toast.success("Chỉnh sửa thành công");
       setEditProfile(false);
-
       localStorage.setItem("user", JSON.stringify(formdata?.name) || "");
       const newName = localStorage.getItem("user") || "";
       setUser({ name: JSON.parse(newName), token: token });
@@ -74,9 +79,11 @@ const ProfileInfo = ({ info, token }: { info: UserType; token: string }) => {
       console.error(error);
     }
   };
+
   return (
     <>
-      <div className="grid grid-cols-[repeat(2,minmax(0,360px))] gap-x-10 gap-y-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-5 sm:gap-x-10 max-w-[500px] w-full">
+        {/* Họ và tên */}
         <div className="space-y-2.5">
           <span className="block">Họ và tên</span>
           {editProfile ? (
@@ -84,7 +91,7 @@ const ProfileInfo = ({ info, token }: { info: UserType; token: string }) => {
               <input
                 onBlur={touchedFullName}
                 ref={focusRef}
-                className={`max-w-[360px] w-full border px-5 py-2.5 focus:border-foreground outline-none transition-all ${
+                className={`w-full border px-5 py-2.5 focus:border-foreground outline-none transition-all ${
                   touched.name && errors.name
                     ? "border-red-500 focus:border-red-500"
                     : "border-stone-500 focus:border-foreground"
@@ -102,24 +109,28 @@ const ProfileInfo = ({ info, token }: { info: UserType; token: string }) => {
               )}
             </>
           ) : (
-            <div className="max-w-[360px] w-full bg-background-card rounded-[5px] px-5 py-2.5 text-gray-400">
+            <div className="w-full bg-background-card rounded-[5px] px-5 py-2.5 text-gray-400">
               {infoUser?.name}
             </div>
           )}
         </div>
+
+        {/* Email */}
         <div className="space-y-2.5">
           <span className="block">Email</span>
-          <div className="max-w-[360px] w-full bg-background-card rounded-[5px] px-5 py-2.5 text-gray-400">
+          <div className="w-full bg-background-card rounded-[5px] px-5 py-2.5 text-gray-400">
             {infoUser?.email}
           </div>
         </div>
+
+        {/* Số điện thoại */}
         <div className="space-y-2.5">
           <span className="block">Số điện thoại</span>
           {editProfile ? (
             <>
               <input
                 onBlur={touchedPhone}
-                className={`max-w-[360px] w-full border px-5 py-2.5 focus:border-foreground outline-none transition-all ${
+                className={`w-full border px-5 py-2.5 focus:border-foreground outline-none transition-all ${
                   touched.phone && errors.phone
                     ? "border-red-500 focus:border-red-500"
                     : "border-stone-500 focus:border-foreground"
@@ -137,20 +148,22 @@ const ProfileInfo = ({ info, token }: { info: UserType; token: string }) => {
               )}
             </>
           ) : (
-            <div className="max-w-[360px] w-full bg-background-card rounded-[5px] px-5 py-2.5 text-gray-400">
+            <div className="w-full bg-background-card rounded-[5px] px-5 py-2.5 text-gray-400">
               {infoUser?.phone || "Chưa có số điện thoại"}
             </div>
           )}
         </div>
+
+        {/* Năm sinh */}
         <div className="space-y-2.5">
           <span className="block">Năm sinh</span>
           {editProfile ? (
             <>
               <input
                 onBlur={touchedDateOfBirth}
-                className={`max-w-[360px] w-fit border border-stone-500 px-5 py-2.5 focus:border-foreground outline-none transition-all bg-transparent appearance-none [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:cursor-pointer ${
+                className={`w-full border border-stone-500 px-5 py-2.5 focus:border-foreground outline-none transition-all bg-transparent appearance-none [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:cursor-pointer ${
                   touched.year && errors.year
-                    ? "border-red-500! focus:border-red-500"
+                    ? "border-red-500 focus:border-red-500"
                     : "border-stone-500 focus:border-foreground"
                 }`}
                 name="year"
@@ -165,16 +178,20 @@ const ProfileInfo = ({ info, token }: { info: UserType; token: string }) => {
               )}
             </>
           ) : (
-            <div className="max-w-[360px] w-full bg-background-card rounded-[5px] px-5 py-2.5 text-gray-400">
+            <div className="w-full bg-background-card rounded-[5px] px-5 py-2.5 text-gray-400">
               {formattedDateDisplay}
             </div>
           )}
         </div>
+
+        {/* Popup đổi mật khẩu */}
         {editPass && (
           <ChangePasswordPopup info={info} onClose={() => setEditPass(false)} />
         )}
       </div>
-      <div className="flex gap-5 mt-6">
+
+      {/* Nút thao tác */}
+      <div className="flex flex-col sm:flex-row gap-3 mt-6">
         {!editProfile && (
           <Button
             onClick={() => setEditPass(true)}

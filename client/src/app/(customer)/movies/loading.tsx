@@ -10,7 +10,7 @@ const Loading = () => {
         image="background_movie.webp"
         title="Phim chiếu rạp"
       ></BackgroundPage>
-      <div className="grid container grid-cols-5 gap-5 mt-20">
+      <div className="grid container grid-cols-5 gap-5 mt-20 max-sm:mt-5">
         <SkeletonLoading />
         <SkeletonLoading />
         <SkeletonLoading />

@@ -13,17 +13,21 @@ const Profile = async () => {
   const dataTicket = res?.data;
 
   return (
-    <div className="container flex-column items-center mt-10 gap-10">
+    <div className="container flex-column items-center mt-10 gap-10 max-sm:gap-4 max-sm:mt-5">
       <h2>Thông tin cá nhân</h2>
-      <div className="space-x-10">
-        <Link href={"/profile"}>
-          <button className="[&.active]:bg-primary [&.active]:border-transparent [&.active]:text-white py-2.5 px-5 rounded-[100px] font-bold hover:bg-primary hover:text-white hover:border-transparent transition-colors duration-300 border-1 border-foreground text-sm">
-            Tài khoản của tôi
-          </button>
+      <div className="flex flex-wrap gap-3 sm:gap-x-10 justify-center">
+        <Link
+          href={"/profile"}
+          className="active [&.active]:bg-primary [&.active]:border-transparent [&.active]:text-white py-2.5 px-5 rounded-[100px] font-bold hover:bg-primary hover:text-white hover:border-transparent transition-colors duration-300 border-1 border-foreground text-sm"
+        >
+          Tài khoản của tôi
         </Link>
-        <button className="active [&.active]:bg-primary [&.active]:border-transparent [&.active]:text-white py-2.5 px-5 rounded-[100px] font-bold hover:bg-primary hover:text-white hover:border-transparent transition-colors duration-300 border-1 border-foreground text-sm">
+        <Link
+          href={"/booking-history"}
+          className="py-2.5 px-5 rounded-[100px] font-bold hover:bg-primary hover:text-white hover:border-transparent transition-colors duration-300 border-1 border-foreground text-sm"
+        >
           Lịch sử đặt vé
-        </button>
+        </Link>
       </div>
       <TableTicket data={dataTicket} token={token} />
     </div>

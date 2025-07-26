@@ -17,9 +17,14 @@ const Seat = ({
     <button
       onClick={() => onClick(seatName)}
       disabled={seatSelected}
-      className={`size-7.5 text-foreground flex-center cursor-pointer rounded-[5px] text-sm font-bold transition-all duration-200 ${
-        seatName === "" ? seatRemoveStyle : ""
-      } 
+      className={`
+    w-[22px] aspect-square     
+    sm:w-[26px]                  
+    md:w-[30px]                  
+    lg:w-[34px]   
+        text-foreground flex-center cursor-pointer rounded-[5px] text-sm font-bold transition-all duration-200 ${
+          seatName === "" ? seatRemoveStyle : ""
+        } 
       select-none bg-white hover:text-background hover:bg-primary
       disabled:bg-stone-600 disabled:cursor-not-allowed disabled:hover:text-foreground ${className}`}
     >

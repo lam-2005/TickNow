@@ -16,9 +16,7 @@ const DetailTicket = () => {
       const updatedTicket = getTicket();
       setTicket(updatedTicket);
     };
-
     window.addEventListener("ticket-updated", handleTicketUpdated);
-
     return () => {
       window.removeEventListener("ticket-updated", handleTicketUpdated);
     };
@@ -39,7 +37,6 @@ const DetailTicket = () => {
     const dd = String(date.getDate()).padStart(2, "0");
     const mm = String(date.getMonth() + 1).padStart(2, "0");
     const yy = String(date.getFullYear());
-
     return `${dayOfWeek}, ${dd}/${mm}/${yy}`;
   };
 
@@ -50,11 +47,12 @@ const DetailTicket = () => {
     }
     router.push("/checkout");
   };
-  // if (!ticket) return null;
+
   return (
-    <div className="bg-background-card p-5 w-full rounded-[10px] flex justify-between mt-5">
-      <div className="space-y-2.5">
-        <h2>{ticket?.movie.name || ""}</h2>
+    <div className="bg-background-card p-5 w-full rounded-[10px] flex flex-col gap-5 md:flex-row md:justify-between mt-5">
+      {/* Left section */}
+      <div className="space-y-2.5 text-sm md:text-base">
+        <h2 className="text-lg font-semibold">{ticket?.movie.name || ""}</h2>
         <p>
           <strong>
             {ticket?.screening?.cinema || ""} (
@@ -74,22 +72,22 @@ const DetailTicket = () => {
           <strong>{ticket?.seats ? ticket?.seats.join(",") : ""}</strong>
         </p>
       </div>
-      <div className="flex-column gap-5 items-end">
-        <div className="flex-1 flex-column items-end">
-          <div className="text-lg flex gap-[5px]">
-            Thời gian giữ ghế:{" "}
+
+      {/* Right section */}
+      <div className="flex flex-col gap-4 items-end justify-between text-right">
+        <div className="text-sm sm:text-base space-y-1">
+          <div className="flex gap-1 items-center">
+            <span className="">Thời gian giữ ghế:</span>
             <span className="text-primary text-xl font-bold">5:00</span>
           </div>
-          <div className="flex gap-[5px]">
-            <p className="text-lg">Tổng cộng:</p>
+          <div className="flex gap-1 items-center">
+            <span className="">Tổng cộng:</span>
             <span className="text-primary font-bold text-2xl">
-              {ticket?.price.toLocaleString("vi-Vn") || 0} ₫
+              {ticket?.price.toLocaleString("vi-VN") || 0} ₫
             </span>
           </div>
         </div>
-        <div className="flex gap-5 ">
-          <Button title="Thanh toán" onClick={handleRedirectCheckoutPage} />
-        </div>
+        <Button title="Thanh toán" onClick={handleRedirectCheckoutPage} />
       </div>
     </div>
   );

@@ -30,7 +30,7 @@ const FilterShowtime = ({
   return (
     <SelectContainer>
       <SelectComponent
-        leftIcon={<FaCalendarAlt className="text-foreground" size={20} />}
+        leftIcon={<FaCalendarAlt className="text-foreground" />}
         getLabel={(item) => item.label}
         data={showtimes}
         defaultValue={selectedDate}
@@ -38,7 +38,7 @@ const FilterShowtime = ({
         onChange={(date) => setSelectedDate(date)}
       />{" "}
       <SelectComponent
-        leftIcon={<BiSolidMoviePlay className="text-foreground" size={20} />}
+        leftIcon={<BiSolidMoviePlay className="text-foreground" />}
         getLabel={(item) => item.name}
         data={movies}
         defaultValue={selectedMovie}
@@ -47,7 +47,7 @@ const FilterShowtime = ({
         placeholder="Chọn phim"
       />{" "}
       <SelectComponent
-        leftIcon={<RiMapPin2Fill className="text-foreground" size={20} />}
+        leftIcon={<RiMapPin2Fill className="text-foreground" />}
         getLabel={(item) => item.name}
         data={cinemas}
         defaultValue={selectedCinema}

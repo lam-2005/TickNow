@@ -56,21 +56,19 @@ const Showtimelist = ({ listFilter }: ShowtimeProps) => {
   return (
     <>
       <BackgroundPage image="background_movie.webp" title="Lịch chiếu phim">
-        <div className=" absolute z-20 bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2">
-          <FilterShowtime
-            cinemas={cinemas}
-            movies={movies}
-            showtimes={showtimes}
-            selectedCinema={selectedCinema}
-            selectedDate={selectedDate}
-            selectedMovie={selectedMovie}
-            setSelectedMovie={setSelectedMovie}
-            setSelectedCinema={setSelectedCinema}
-            setSelectedDate={setSelectedDate}
-          />
-        </div>
+        <FilterShowtime
+          cinemas={cinemas}
+          movies={movies}
+          showtimes={showtimes}
+          selectedCinema={selectedCinema}
+          selectedDate={selectedDate}
+          selectedMovie={selectedMovie}
+          setSelectedMovie={setSelectedMovie}
+          setSelectedCinema={setSelectedCinema}
+          setSelectedDate={setSelectedDate}
+        />
       </BackgroundPage>
-      <div className="flex-column gap-7.5 mt-20">
+      <div className="flex-column gap-7.5 mt-20 max-sm:mt-5">
         {loading ? (
           <LoadingSkeleton />
         ) : dataShowtime && dataShowtime.length > 0 ? (

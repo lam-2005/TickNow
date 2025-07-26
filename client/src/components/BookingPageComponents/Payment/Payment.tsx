@@ -125,8 +125,9 @@ const Payment = () => {
   };
 
   return (
-    <div className="flex-column items-center bg-background-card flex-1 p-5 rounded-[10px] gap-5">
-      <h2>Thanh toán</h2>
+    <div className="flex flex-col bg-background-card p-5 rounded-[10px] gap-5 w-full">
+      <h2 className="text-xl font-semibold">Thanh toán</h2>
+
       <div className="space-y-[15px] w-full">
         <p>Phương thức thanh toán</p>
         <div className="space-y-[10px]">
@@ -142,58 +143,46 @@ const Payment = () => {
             </div>
             <span>payOS</span>
           </div>
-          {/* <div className="w-full border-2 border-foreground flex gap-2.5 items-center py-2.5 px-[15px] rounded-[5px] hover:border-primary transition-colors duration-300">
-            <div className="size-7.5 bg-amber-200 rounded-[5px] relative overflow-hidden">
-              {" "}
-              <Image
-                src={"/logo/momo.webp"}
-                alt="momo-logo"
-                fill
-                sizes="30px"
-                className="object-cover"
-              />
-            </div>
-            <span>Momo</span>
-          </div> */}
         </div>
       </div>
 
-      <div className="w-full flex gap-2.5 items-center">
+      <div className="w-full flex flex-col sm:flex-row gap-2.5 items-center">
         <input
           type="text"
           value={discountCode}
           onChange={(e) => setDiscountCode(e.target.value)}
           placeholder="Mã giảm giá"
-          className="border-1 border-gray-400 rounded-[5px] focus:border-foreground outline-none w-full px-4 py-2 transition-colors duration-300"
+          className="border border-gray-400 rounded-[5px] focus:border-foreground outline-none w-full px-4 py-2 transition-colors duration-300"
         />
         <button
           onClick={handleApplyDiscount}
-          className="bg-primary text-white rounded-[5px] px-4 py-2 text-nowrap disabled:brightness-50"
+          className="bg-primary text-white rounded-[5px] px-4 py-2 text-nowrap disabled:brightness-50 w-full sm:w-auto"
           disabled={discountCode.trim() === ""}
         >
           Áp dụng
         </button>
       </div>
+
       <div className="w-full space-y-[15px]">
         <p>Chi phí</p>
-        <div className="space-y-[5px]">
-          <div className="w-full flex justify-between">
+        <div className="space-y-[5px] text-sm">
+          <div className="flex justify-between">
             <span>Thanh toán</span>
             <strong>
               {ticket?.price ? ticket?.price.toLocaleString("vi-Vn") : 0} ₫
             </strong>
           </div>
-          <div className="w-full flex justify-between">
+          <div className="flex justify-between">
             <span>Ưu đãi</span>
             <strong>
               {priceDiscount ? priceDiscount.toLocaleString("vi-VN") : 0} ₫
             </strong>
           </div>
-          <div className="w-full flex justify-between">
+          <div className="flex justify-between">
             <span>Phí</span>
             <strong>0 ₫</strong>
           </div>
-          <div className="w-full flex justify-between">
+          <div className="flex justify-between text-base font-bold">
             <span>Tổng cộng</span>
             <strong>
               {totalPrice.toLocaleString("vi-VN") ||
@@ -208,7 +197,12 @@ const Payment = () => {
             className="w-full"
             onClick={handleCheckout}
           />
-          <Button title="Quay lại" btnSecondary onClick={() => router.back()} />
+          <Button
+            title="Quay lại"
+            btnSecondary
+            onClick={() => router.back()}
+            className="w-full"
+          />
         </div>
       </div>
     </div>
