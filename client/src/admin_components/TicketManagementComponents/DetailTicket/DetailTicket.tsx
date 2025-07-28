@@ -32,7 +32,7 @@ const DetailTicket = ({
 
     getPostDetail(id);
   }, [id]);
-  const formatDate = new Date(getInfo?.ticket.updatedAt ?? "");
+  const formatDate = new Date(getInfo?.screening.date ?? "");
   const newDate = formatDate.toLocaleDateString("vi-VN");
   return (
     <PopupContainer title="Chi tiết vé" closeForm={closeForm}>
