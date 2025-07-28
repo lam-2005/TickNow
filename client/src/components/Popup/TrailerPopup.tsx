@@ -13,7 +13,7 @@ const TrailerPopup = ({
   return (
     <PopupContainer onClose={onClose}>
       <h2>{name}</h2>
-      <div className="flex-1 flex gap-5 justify-end max-lg:hidden w-full">
+      <div className="flex-1 flex gap-5 justify-end w-full">
         <iframe
           className={`rounded-2xl aspect-[16/9] w-full`}
           src={`${url}?autoplay=1&enablejsapi=1`}

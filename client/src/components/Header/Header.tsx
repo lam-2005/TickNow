@@ -49,11 +49,11 @@ const Header = () => {
   const textColorClass = isTransparentHeader ? "text-white" : "text-foreground";
 
   const searchFormClass = `group w-full max-w-2xs py-2 flex items-center bg-transparent shadow-foreground/50 focus-within:shadow-foreground/90  z-1000
-    border-1 dark:border-[rgba(255,255,255,.5)] backdrop-blur-[1.75px] transition-all duration-500 relative
+    border-1 border-[rgba(255,255,255,.5)] backdrop-blur-[1.75px] transition-all duration-500 relative
     ${
       isTransparentHeader
-        ? "min-[480px]:border-[rgba(255,255,255,.5)] min-[480px]:focus-within:border-white min-[480px]:[&_button_span]:text-white min-[480px]:[&>span]:bg-white min-[480px]:[&>input]:text-white border-transparent"
-        : "border-transparent focus-within:border-transparent z-1000 min-[480px]:border-[rgba(255,255,255,.5)] min-[480px]:focus-within:border-white "
+        ? "min-[480px]:border-[rgba(255,255,255,.5)] min-[480px]:focus-within:border-white min-[480px]:[&_button_span]:text-white min-[480px]:[&>span]:bg-white min-[480px]:[&>input]:text-white border-[rgba(255,255,255,.5)] "
+        : "border-[rgba(255,255,255,.5)] focus-within:border-transparent z-1000 min-[480px]:border-[rgba(255,255,255,.5)] min-[480px]:focus-within:border-white "
     }`;
 
   return (

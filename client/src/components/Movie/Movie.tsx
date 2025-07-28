@@ -51,10 +51,11 @@ const Movie = ({
                 src={posterSrc}
                 alt={info.name}
                 sizes="300px"
-                loading="lazy"
+                loading={!info[0] ? "lazy" : "eager"}
                 className="object-cover 
             group-hover:scale-110 transition-transform duration-300 "
                 onError={() => setPosterSrc("/movies/default-movie.webp")}
+                priority={info[0]}
               />
             </div>
           </Link>

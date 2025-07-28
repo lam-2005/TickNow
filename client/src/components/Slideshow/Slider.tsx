@@ -10,9 +10,12 @@ import Button from "../Button/Button";
 import { FaStar } from "react-icons/fa";
 import Link from "next/link";
 import convertSlug from "@/utils/convertSlug";
+import TrailerPopup from "../Popup/TrailerPopup";
+import usePopup from "@/hooks/usePopup";
 
 const SliderList = ({ data }: { data: Promise<MovieType[]> }) => {
   const getMovie = use(data);
+  const { closeTrailer, openTrailer, trailerPopup } = usePopup();
   const [fade, setFade] = useState<boolean>(false);
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   useEffect(() => {
@@ -83,85 +86,97 @@ const SliderList = ({ data }: { data: Promise<MovieType[]> }) => {
     ),
   };
   return (
-    <Slider {...settings} lazyLoad="ondemand" fade={fade}>
-      {getMovie.map((item: MovieType, i: number) => (
-        <div
-          key={item._id}
-          className="relative w-full h-full max-h-screen aspect-[16/9]"
-        >
-          <div className="w-full h-full relative">
-            <Image
-              src={`${env.IMG_API_URL}/banner/${item.banner}`}
-              alt=""
-              fill
-              sizes="100vw"
-              className="object-cover"
-              loading={i !== 0 ? "lazy" : undefined}
-              priority={i === 0}
-            />
-          </div>
-          <div className="w-full h-full absolute top-0 left-0 brightness-40 backdrop-blur-[0px] z-1"></div>
-          <div className="container absolute left-1/2 lg:-translate-y-1/2 lg:top-9/20 -translate-x-1/2 z-2 flex items-center max-lg:bottom-10">
-            <div className="lg:w-[40%] flex flex-col items-start gap-4 max-md:gap-2">
-              <h1 className="line-clamp-2" title="Phim">
-                {item.name}
-              </h1>
-              <div className="flex items-center gap-2.5 text-white ">
-                <span className="bg-primary py-0.5 px-2 rounded-[5px] font-semibold italic text-white">
-                  {item.age}+
-                </span>
-                <span
-                  className="w-px h-3.5 bg-subtitle block"
-                  aria-hidden="true"
-                ></span>
+    <>
+      <Slider {...settings} lazyLoad="ondemand" fade={fade}>
+        {getMovie.map((item: MovieType, i: number) => (
+          <div key={item._id}>
+            {trailerPopup && (
+              <TrailerPopup
+                name={item.name}
+                url={item.trailer}
+                onClose={closeTrailer}
+              />
+            )}
 
-                <span className="text-white">{item.duration} phút</span>
-                <span
-                  className="w-px h-3.5 bg-subtitle block"
-                  aria-hidden="true"
-                ></span>
-                <span className="text-white flex items-center">
-                  <strong>{item.star.toFixed(1)}</strong>/5.0
-                  <FaStar className="text-xl text-yellow-400 ml-1" />
-                </span>
-              </div>
-              <p
-                title={item.description}
-                className="text-white line-clamp-5 text-justify font-medium max-lg:hidden
-                "
-              >
-                {item.description}
-              </p>
-              <div className="flex gap-5">
-                <Link href={`/detail/${convertSlug(item.name)}-${item._id}`}>
-                  <Button
-                    title="Đặt vé ngay"
-                    className="text-xl font-semibold lg:w-[200px] relative"
-                  />
-                </Link>
-                <Button
-                  title="Xem trailer"
-                  className="text-xl  bg-transparent border-1 border-white lg:hidden"
+            <div className="relative w-full h-full max-h-screen aspect-[16/9]">
+              <div className="w-full h-full relative">
+                <Image
+                  src={`${env.IMG_API_URL}/banner/${item.banner}`}
+                  alt=""
+                  fill
+                  sizes="100vw"
+                  className="object-cover"
+                  loading={i !== 0 ? "lazy" : undefined}
+                  priority={i === 0}
                 />
               </div>
-            </div>
-            <div className="flex-1 flex gap-5 justify-end max-lg:hidden">
-              <iframe
-                id={`iframe-${i}`}
-                className={`rounded-2xl aspect-[16/9] lg:w-[450px] xl:w-[560px] `}
-                src={`${item.trailer}?autoplay=1&enablejsapi=1`}
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer;  encrypted-media;"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-                loading="lazy"
-              ></iframe>
+              <div className="w-full h-full absolute top-0 left-0 brightness-40 backdrop-blur-[0px] z-1"></div>
+              <div className="container absolute left-1/2 lg:-translate-y-1/2 lg:top-9/20 -translate-x-1/2 z-2 flex items-center max-lg:bottom-10">
+                <div className="lg:w-[40%] flex flex-col items-start gap-4 max-md:gap-2">
+                  <h1 className="line-clamp-2" title="Phim">
+                    {item.name}
+                  </h1>
+                  <div className="flex items-center gap-2.5 text-white ">
+                    <span className="bg-primary py-0.5 px-2 rounded-[5px] font-semibold italic text-white">
+                      {item.age}+
+                    </span>
+                    <span
+                      className="w-px h-3.5 bg-subtitle block"
+                      aria-hidden="true"
+                    ></span>
+
+                    <span className="text-white">{item.duration} phút</span>
+                    <span
+                      className="w-px h-3.5 bg-subtitle block"
+                      aria-hidden="true"
+                    ></span>
+                    <span className="text-white flex items-center">
+                      <strong>{item.star.toFixed(1)}</strong>/5.0
+                      <FaStar className="text-xl text-yellow-400 ml-1" />
+                    </span>
+                  </div>
+                  <p
+                    title={item.description}
+                    className="text-white line-clamp-5 text-justify font-medium max-lg:hidden
+                    "
+                  >
+                    {item.description}
+                  </p>
+                  <div className="flex gap-5 items-center">
+                    <Link
+                      href={`/detail/${convertSlug(item.name)}-${item._id}`}
+                    >
+                      <Button
+                        title="Đặt vé ngay"
+                        className="text-xl font-semibold lg:w-[200px] relative"
+                      />
+                    </Link>
+                    <Button
+                      title="Xem trailer"
+                      onClick={openTrailer}
+                      className="text-xl  bg-transparent border-1 border-white lg:hidden"
+                    />
+                  </div>
+                </div>
+                <div className="flex-1 flex gap-5 justify-end max-lg:hidden">
+                  <iframe
+                    id={`iframe-${i}`}
+                    className={`rounded-2xl aspect-[16/9] lg:w-[450px] xl:w-[560px] `}
+                    src={`${item.trailer}?autoplay=1&enablejsapi=1`}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer;  encrypted-media;"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                    loading="lazy"
+                  ></iframe>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
-    </Slider>
+        ))}
+      </Slider>
+    </>
   );
 };
 

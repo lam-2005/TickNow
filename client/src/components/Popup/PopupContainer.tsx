@@ -15,7 +15,7 @@ const PopupContainer = ({
         className="w-full h-full bg-[rgba(0,0,0,0.7)] backdrop-blur-xs"
         onClick={onClose}
       ></div>
-      <div className="max-w-[880px] absolute top-1/2 left-1/2 -translate-1/2 w-full flex-column items-center gap-2.5 p-5 rounded-[10px] bg-background-card">
+      <div className="max-w-[880px] max-h-[80%] absolute top-1/2 left-1/2 -translate-1/2 w-full flex-column items-center gap-2.5 p-5 rounded-[10px] bg-background-card overflow-y-auto overflow-x-hidden">
         <button
           className="absolute top-0 right-0 translate-y-5 -translate-x-5"
           onClick={onClose}

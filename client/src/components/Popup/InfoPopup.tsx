@@ -18,10 +18,12 @@ export const ItemInfo = ({
   className?: string;
 }) => {
   return (
-    <div className="flex gap-7.5 w-full">
-      <div className="flex-1 text-nowrap">{title}</div>
+    <div className="flex gap-4 text-sm md:text-base w-full">
+      <div className="w-[100px] text-nowrap font-medium text-gray-300">
+        {title}
+      </div>
       <strong
-        className={`flex-4 block text-foreground text-justify ${className}`}
+        className={`flex-1 block text-foreground text-justify ${className}`}
       >
         {content}
       </strong>
@@ -37,28 +39,33 @@ const InfoPopup = ({
   onClose: () => void;
 }) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
+
   return (
     <PopupContainer onClose={onClose}>
-      <div className="w-full space-y-5 ">
-        <div className="flex gap-7.5">
-          <div className="relative max-w-[220px] w-full h-full aspect-[2/3] bg-amber-500 overflow-hidden rounded-[10px]">
+      <div className="w-full space-y-5 text-white px-2 sm:px-0">
+        {/* Responsive Layout */}
+        <div className="flex flex-col md:flex-row gap-6">
+          {/* Image */}
+          <div className="relative w-full md:max-w-[220px] aspect-[2/3] mx-auto md:mx-0 max-md:hidden rounded-xl overflow-hidden bg-gray-200">
             <Image
               fill
               src={
-                `${env.IMG_API_URL}/movie/${info.image}` ||
-                "/movies/default.png"
+                info.image
+                  ? `${env.IMG_API_URL}/movie/${info.image}`
+                  : "/movies/default.png"
               }
-              alt="Phim"
-              sizes="300px"
-              loading="lazy"
+              alt={info.name}
+              sizes="(max-width: 768px) 100vw, 220px"
               className="object-cover"
             />
           </div>
-          <div className="flex-1 flex-column justify-between items-start">
-            <div className="space-y-2.5 w-full">
-              <div className="flex items-center gap-2.5">
-                <h2>{info.name}</h2>
-                <span className="bg-primary py-0.5 px-2 rounded-[5px] font-semibold italic text-white">
+
+          {/* Info */}
+          <div className="flex-1 flex flex-col justify-between items-start space-y-5 mt-5 md:mt-0">
+            <div className="space-y-3 w-full">
+              <div className="flex items-center gap-3 flex-wrap">
+                <h2 className="text-lg md:text-xl font-bold">{info.name}</h2>
+                <span className="bg-primary py-0.5 px-2 rounded-md text-xs font-semibold italic text-white">
                   {info.age}+
                 </span>
               </div>
@@ -80,44 +87,40 @@ const InfoPopup = ({
               />
               <ItemInfo
                 title="Diễn viên:"
-                content={info?.actor || "Đang cập nhật"}
+                content={info.actor || "Đang cập nhật"}
               />
               <ItemInfo
-                title="Ngôn ngữ"
+                title="Ngôn ngữ:"
                 content={info.language || "Đang cập nhật"}
               />
             </div>
-            <Link href={`/detail/${convertSlug(info.name)}-${info._id}`}>
-              <Button title="Đặt vé ngay" />
+
+            <Link
+              href={`/detail/${convertSlug(info.name)}-${info._id}`}
+              className="w-full sm:w-auto"
+            >
+              <Button title="Đặt vé ngay" className="w-full sm:w-auto" />
             </Link>
           </div>
         </div>
-        <div className="">
+
+        {/* Mô tả phim */}
+        <div className="text-sm leading-relaxed">
           <p
             className={`${
-              showFullDescription ? "" : "line-clamp-5"
-            } text-white`}
+              showFullDescription ? "" : "line-clamp-5 md:line-clamp-3"
+            }`}
           >
             {info.description || "Đang cập nhật"}
           </p>
 
-          {!showFullDescription && info.description.length > 500 ? (
+          {/* Toggle "Xem thêm / Thu gọn" */}
+          {info.description && info.description.length > 300 && (
             <button
-              onClick={() => setShowFullDescription(true)}
-              className="text-primary underline text-sm mt-1 block"
+              onClick={() => setShowFullDescription(!showFullDescription)}
+              className="text-primary underline text-sm mt-2 block"
             >
-              Xem thêm
-            </button>
-          ) : (
-            ""
-          )}
-
-          {showFullDescription && (
-            <button
-              onClick={() => setShowFullDescription(false)}
-              className="text-primary underline text-sm mt-1 block"
-            >
-              Thu gọn
+              {showFullDescription ? "Thu gọn" : "Xem thêm"}
             </button>
           )}
         </div>

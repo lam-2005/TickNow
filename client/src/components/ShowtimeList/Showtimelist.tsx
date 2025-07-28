@@ -25,7 +25,7 @@ const Showtimelist = ({ listFilter }: ShowtimeProps) => {
   const [selectedDate, setSelectedDate] = useState(showtimes[0].value);
   const [selectedMovie, setSelectedMovie] = useState("");
   const [selectedCinema, setSelectedCinema] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [dataShowtime, setDataShowtime] = useState<
     {
       film: MovieType;
@@ -37,8 +37,8 @@ const Showtimelist = ({ listFilter }: ShowtimeProps) => {
     movie: string,
     cinema: string
   ) => {
+    setLoading(true);
     try {
-      setLoading(true);
       const res = await getMovieList(
         `/schedue?date=${date}&movie=${movie}&cinema=${cinema}`
       );
