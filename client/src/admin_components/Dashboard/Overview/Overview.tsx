@@ -1,11 +1,16 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Chart from "../Chart";
 import { getDashboardData } from "@/services/dashboard.service";
 import dayjs, { Dayjs } from "dayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dynamic from "next/dynamic";
+const Chart = dynamic(() => import("../Chart"), {
+  ssr: false,
+  loading: () => <p className="text-center">Đang tải biểu đồ...</p>,
+});
+
 const Overview = ({
   data,
 }: {

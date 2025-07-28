@@ -1,8 +1,15 @@
-import Overview from "@/admin_components/Dashboard/Overview/Overview";
+// import Overview from "@/admin_components/Dashboard/Overview/Overview";
 import StatisticsCard from "@/admin_components/Dashboard/StatisticsCard";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
-
 import { getDashboardData } from "@/services/dashboard.service";
+import dynamic from "next/dynamic";
+const Overview = dynamic(
+  () => import("@/admin_components/Dashboard/Overview/Overview"),
+  {
+    ssr: false,
+    loading: () => <p>Đang tải biểu đồ...</p>,
+  }
+);
 
 import React from "react";
 const Dashboard = async () => {
@@ -62,32 +69,6 @@ const Dashboard = async () => {
       <div>
         <Overview data={getTicketYear} />
       </div>
-      {/* <div className="flex gap-5">
-        <div className="flex-1 space-y-2.5">
-          <div className="flex justify-between items-center">
-            <p className="font-bold text-xl">Doanh thu theo phim</p>
-            <Link href={"/admin/dashboard/movie"} className="text-primary">
-              Xem tất cả
-            </Link>
-          </div>
-          <Table
-            column={col}
-            data={[{ _id: 1, movie: "Phim 1", ticket: "5", total: "1000000" }]}
-          />
-        </div>
-        <div className="flex-1 space-y-2.5">
-          <div className="flex justify-between items-center">
-            <p className="font-bold text-xl">Doanh thu theo rạp</p>
-            <Link href={"/admin/dashboard/cinema"} className="text-primary">
-              Xem tất cả
-            </Link>
-          </div>
-          <Table
-            column={col}
-            data={[{ _id: 1, movie: "Rạp 1", ticket: "5", total: "1000000" }]}
-          />
-        </div>
-      </div> */}
     </div>
   );
 };

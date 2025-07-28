@@ -4,10 +4,13 @@ import Pagination from "@/admin_components/Table/Pagination";
 import Table, { Column } from "@/admin_components/Table/Table";
 import usePanigation from "@/hooks/usePanigation";
 import { getDashboardData } from "@/services/dashboard.service";
-import Chart from "../Chart";
 import { BarChart } from "@mui/x-charts/BarChart";
 import DateRangePicker from "../DateRange";
-
+import dynamic from "next/dynamic";
+const Chart = dynamic(() => import("../Chart"), {
+  ssr: false,
+  loading: () => <p className="text-center">Đang tải biểu đồ...</p>,
+});
 type DataType = {
   _id: number;
   movieName: string;
@@ -193,7 +196,7 @@ const MovieTable = ({
       </div>
 
       {loading ? (
-        <div className="text-center mt-5">Loading...</div>
+        <div className="text-center mt-5">Đang tải dữ liệu...</div>
       ) : (
         <Table
           column={columns}
