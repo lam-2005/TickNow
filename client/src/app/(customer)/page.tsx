@@ -32,7 +32,7 @@ const getMovieComingSoon = async () => {
 
 const getOfferList = async () => {
   try {
-    const res = await getPostList(`?limit=8&?status=2`);
+    const res = await getPostList(`?limit=8&status=2`);
     return res?.data?.post;
   } catch (error) {
     console.error("Fetch offers failed:", error);
