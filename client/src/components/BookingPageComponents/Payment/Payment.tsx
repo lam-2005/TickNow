@@ -3,7 +3,7 @@ import Button from "@/components/Button/Button";
 import { useAuth } from "@/hooks/contexts/useAuth";
 import { Voucher } from "@/interfaces/vouchers.interface";
 import { checkoutTicket } from "@/services/ticket.service";
-import { getVoucherList } from "@/services/vouchers.service";
+import { checkVoucherAPI } from "@/services/vouchers.service";
 import {
   getTicket,
   saveTicket,
@@ -19,10 +19,8 @@ const Payment = () => {
   const [discountCode, setDiscountCode] = useState("");
   const router = useRouter();
   const [discountValue, setDiscountValue] = useState(0);
-  const [loading, setLoading] = useState(false);
   const { user } = useAuth();
-  const [vouchers, setVouchers] = useState<Voucher[]>([]);
-  const [idVoucher, setIdVoucher] = useState("");
+  const [voucher, setVoucher] = useState<Voucher | null>(null);
   useEffect(() => {
     // Load ticket khi component mount
     const storedTicket = getTicket();
@@ -41,59 +39,17 @@ const Payment = () => {
     };
   }, []);
 
-  useEffect(() => {
-    setLoading(true);
-    const fetchVouchers = async () => {
-      try {
-        const res = await getVoucherList();
-        const data = res.voucher;
-        setVouchers(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Failed to fetch vouchers", error);
-        setLoading(false);
-      }
-    };
-    fetchVouchers();
-  }, []);
-  if (loading) console.log("đang tải...");
-
-  const handleApplyDiscount = () => {
-    const voucher = vouchers.find(
-      (v) => v.code.toLowerCase().trim() === discountCode.toLowerCase()
-    );
-    if (!voucher) {
-      toast.error("Mã giảm giá không hợp lệ!");
-      setDiscountValue(0);
-      return;
+  const handleApplyDiscount = async () => {
+    try {
+      const res = await checkVoucherAPI(user?.token as string, discountCode);
+      const voucherData = res?.data;
+      setVoucher(voucherData);
+      setDiscountValue(voucherData?.discount_type || 0);
+      toast.success(`Áp dụng thành công! Giảm ${voucherData?.discount_type}%`);
+    } catch (error) {
+      toast.error(`${error}`);
+      console.error(error);
     }
-
-    const now = new Date();
-    const startDate = new Date(voucher.start_date);
-    const endDate = new Date(voucher.end_date || "");
-
-    if (now < startDate) {
-      toast.error("Mã giảm giá không hợp lệ!");
-      setDiscountValue(0);
-      return;
-    }
-
-    if (now > endDate) {
-      toast.info("Mã giảm giá đã hết hạn!");
-      setDiscountValue(0);
-      return;
-    }
-
-    if (voucher.user_count >= voucher.max_users) {
-      toast.info("Mã giảm giá đã hết lượt sử dụng!");
-      setDiscountValue(0);
-      return;
-    }
-
-    setDiscountValue(voucher.discount_type);
-    setIdVoucher(voucher._id);
-    setDiscountCode("");
-    toast.success(`Áp dụng thành công! Giảm ${voucher.discount_type}%`);
   };
 
   const priceDiscount = (ticket?.price || 0) * (discountValue / 100);
@@ -114,7 +70,7 @@ const Payment = () => {
       const res = await checkoutTicket(user.token, {
         price: ticket?.total || "",
         screening: ticket?.screening?.screeningInfo._id || "",
-        voucher: idVoucher,
+        voucher: voucher?._id,
         seat: ticket?.seats || [],
       });
 

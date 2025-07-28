@@ -18,12 +18,14 @@ const getGerne = async () => {
 const MovieManagement = async () => {
   const movieData = movieService.getMovieData(1, 5);
   const genres = getGerne();
+  const movies = await movieService.getMovieList();
+
   return (
     <div className="card">
       <HeadingCard title="Quản Lý Phim">
         <AddMovieBtn genre={genres} />
       </HeadingCard>
-      <FilterMovie data={genres} />
+      <FilterMovie data={genres} movies={movies.data.movie} />
       <Suspense fallback={<p className="text-center">Đang tải dữ liệu...</p>}>
         <MovieList initData={movieData} genre={genres} />
       </Suspense>

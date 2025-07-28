@@ -53,24 +53,9 @@ const PostList = ({
       isFirstLoad.current = false;
       return;
     }
-    if (page <= totalPages) {
-      dispatch(
-        fetchPosts({
-          limit: rowsPerPage,
-          page: page,
-          title: filter.title,
-        })
-      );
-    } else {
-      dispatch(
-        fetchPosts({
-          limit: rowsPerPage,
-          page: totalPages,
-          title: filter.title,
-        })
-      );
-    }
-  }, [dispatch, rowsPerPage, page, totalPages, filter.title]);
+
+    dispatch(fetchPosts({ limit: rowsPerPage, page, title: filter.title }));
+  }, [dispatch, rowsPerPage, page]);
 
   // table
   const col: Column<PostType>[] = [

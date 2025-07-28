@@ -15,7 +15,7 @@ const AddVoucherBtn = () => {
           title="Thêm voucher"
           closeForm={() => setOpenForm(false)}
         >
-          <AddForm closeForm={() => setOpenForm(false)} />
+          <AddForm />
         </PopupContainer>
       )}
     </>

@@ -2,8 +2,9 @@
 import React, { useState } from "react";
 import { FaFilter } from "react-icons/fa6";
 import FilterPopup from "./FilterPopup";
+import { Voucher } from "@/interfaces/vouchers.interface";
 
-const FilterVouchers = () => {
+const FilterVouchers = ({ voucher }: { voucher: Voucher[] }) => {
   const [openPopup, setOpenPopup] = useState(false);
 
   return (
@@ -16,7 +17,7 @@ const FilterVouchers = () => {
         Bộ lọc
       </button>
       {openPopup && (
-        <FilterPopup closeForm={() => setOpenPopup(false)} />
+        <FilterPopup closeForm={() => setOpenPopup(false)} voucher={voucher} />
       )}
     </>
   );

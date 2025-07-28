@@ -72,6 +72,7 @@ const MovieList = ({
           status: "",
           date: "",
           star: "",
+          name: "",
         },
       })
     );
@@ -94,6 +95,7 @@ const MovieList = ({
         genre: filter.genre,
         date: filter.date,
         star: filter.star,
+        name: filter.name,
       };
       dispatch(fetchMovies(payload));
     };
@@ -108,6 +110,7 @@ const MovieList = ({
     filter.status,
     filter.date,
     filter.genre,
+    filter.name,
   ]);
 
   const handleOpenDetail = (movie: MovieType) => {

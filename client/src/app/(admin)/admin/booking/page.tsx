@@ -11,11 +11,12 @@ export const metadata: Metadata = {
 
 const TicketManagement = async () => {
   const res = await ticketService.getTicketData(1, 5);
+
   const movieData = await getMovieList("?status=1&status=2");
   const movies = movieData.data.movie;
   return (
     <div className="card">
-      <HeadingCard title="Quản Lý Vé">{/* <AddScreenBtn /> */}</HeadingCard>
+      <HeadingCard title="Quản Lý Vé"></HeadingCard>
       <FilterTicket movies={movies} />
       <Suspense fallback={<p className="text-center">Đang tải dữ liệu...</p>}>
         <TicketList initData={res} />

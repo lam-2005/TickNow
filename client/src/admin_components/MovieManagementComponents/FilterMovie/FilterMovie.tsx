@@ -3,8 +3,15 @@ import React, { useEffect, useState } from "react";
 import { FaFilter } from "react-icons/fa6";
 import FilterPopup from "./FilterPopup";
 import Genre from "@/interfaces/genre.interface";
+import { MovieType } from "@/interfaces/movie.interface";
 
-const FilterMovie = ({ data }: { data: Promise<Genre[]> }) => {
+const FilterMovie = ({
+  data,
+  movies,
+}: {
+  data: Promise<Genre[]>;
+  movies: MovieType[];
+}) => {
   const [openPopup, setOpenPopup] = useState(false);
   const [genres, setGenres] = useState<Genre[]>([]);
 
@@ -22,7 +29,11 @@ const FilterMovie = ({ data }: { data: Promise<Genre[]> }) => {
         Bộ lọc
       </button>
       {openPopup && (
-        <FilterPopup data={genres} closeForm={() => setOpenPopup(false)} />
+        <FilterPopup
+          data={genres}
+          closeForm={() => setOpenPopup(false)}
+          movies={movies}
+        />
       )}
     </>
   );

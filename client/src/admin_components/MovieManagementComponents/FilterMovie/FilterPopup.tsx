@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/utils/redux/store";
 import { fetchMovies, setFilter } from "@/utils/redux/slices/movieSlice";
 import dataMovie from "@/utils/redux/selectors/movieSlector";
+import { Autocomplete, TextField } from "@mui/material";
+import { MovieType } from "@/interfaces/movie.interface";
 
 const FilterItem = ({
   title,
@@ -26,13 +28,16 @@ const FilterItem = ({
 const FilterPopup = ({
   closeForm,
   data,
+  movies,
 }: {
   closeForm: () => void;
   data: Genre[];
+  movies: MovieType[];
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { filter } = useSelector(dataMovie);
 
+  const [name, setName] = useState("");
   const [idGenres, setIdGenres] = useState<string[]>([]);
   const [status, setStatus] = useState<number[]>([]);
   const [date, setDate] = useState<string>("");
@@ -43,6 +48,7 @@ const FilterPopup = ({
     setStatus(filter.status ? filter.status.split(",").map(Number) : []);
     setDate(filter.date || "");
     setStar(filter.star || "");
+    setName(filter.name || "");
   }, [filter]);
 
   const toggleGenre = (id: string) => {
@@ -68,6 +74,7 @@ const FilterPopup = ({
         status: statusStr,
         date,
         star,
+        name,
       })
     );
     dispatch(
@@ -76,6 +83,7 @@ const FilterPopup = ({
         status: statusStr,
         date,
         star,
+        name,
       })
     );
     closeForm();
@@ -85,10 +93,44 @@ const FilterPopup = ({
     setStar("");
     setDate("");
     setStatus([]);
+    setName("");
   };
+
   return (
     <PopupContainer title="Bộ lọc" closeForm={closeForm}>
       <div className="p-5 space-y-5 overflow-x-hidden overflow-y-auto">
+        <div className="flex gap-4 flex-col">
+          <h1 className="text-xl font-bold">Chọn phim:</h1>
+          <div className="flex flex-wrap gap-4">
+            <Autocomplete
+              freeSolo
+              className="w-full"
+              options={movies}
+              getOptionLabel={(option) =>
+                typeof option === "string" ? option : option.name
+              }
+              value={name}
+              onInputChange={(_, value) => setName(value)}
+              onChange={(_, value) => {
+                if (typeof value === "string") {
+                  setName(value);
+                } else if (value) {
+                  setName(value.name);
+                } else {
+                  setName("");
+                }
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Tìm Phim"
+                  placeholder="Nhập từ khóa"
+                />
+              )}
+            />
+          </div>
+        </div>
+
         <div className="flex flex-col gap-4">
           <h1 className="text-xl font-bold">Chọn thể loại:</h1>
           <div className="flex flex-wrap gap-4">

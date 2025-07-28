@@ -204,14 +204,16 @@ const MovieTable = ({
         />
       )}
 
-      <Pagination
-        currentPage={page}
-        total={pagination.total}
-        totalPages={totalPages}
-        rowPerPage={rowsPerPage}
-        setPage={changePage}
-        setRowPerPage={changeRowPerPage}
-      />
+      {tableData.length >= rowsPerPage && (
+        <Pagination
+          currentPage={page}
+          total={pagination.total}
+          totalPages={totalPages}
+          rowPerPage={rowsPerPage}
+          setPage={changePage}
+          setRowPerPage={changeRowPerPage}
+        />
+      )}
     </>
   );
 };

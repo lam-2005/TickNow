@@ -8,7 +8,7 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import { AppDispatch } from "@/utils/redux/store";
 import { fetchCinema, setFilterCinema } from "@/utils/redux/slices/cinemaSlice";
-import { LocationRes } from "@/interfaces/cinema.interface";
+import { Cinema, LocationRes } from "@/interfaces/cinema.interface";
 import cinemaSelector from "@/utils/redux/selectors/selectorCinema";
 
 const FilterItem = ({
@@ -31,9 +31,11 @@ const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const FilterPopup = ({
   locations,
   closeForm,
+  cinemas,
 }: {
   locations: LocationRes[];
   closeForm: () => void;
+  cinemas: Cinema[];
 }) => {
   const listLocationOptions = locations.map((item) => ({
     label: item.name,
@@ -87,13 +89,34 @@ const FilterPopup = ({
       <div className="p-5 space-y-5 overflow-hidden overflow-y-auto">
         <div className="flex flex-col gap-2">
           <label className="font-bold text-lg">Tên rạp:</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Nhập tên rạp"
-            className="border border-foreground p-2 rounded-md"
-          />
+          <div className="flex flex-wrap gap-4">
+            <Autocomplete
+              freeSolo
+              className="w-full"
+              options={cinemas}
+              getOptionLabel={(option) =>
+                typeof option === "string" ? option : option.name
+              }
+              value={name}
+              onInputChange={(_, value) => setName(value)}
+              onChange={(_, value) => {
+                if (typeof value === "string") {
+                  setName(value);
+                } else if (value) {
+                  setName(value.name);
+                } else {
+                  setName("");
+                }
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Tìm Rạp"
+                  placeholder="Nhập từ khóa"
+                />
+              )}
+            />
+          </div>
         </div>
 
         <div className="flex flex-col gap-2">

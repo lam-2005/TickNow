@@ -29,10 +29,10 @@ const TicketList = ({ initData }: { initData: InitDataType }) => {
   const dispatch = useDispatch<AppDispatch>();
   const isFirstLoad = useRef(true);
   const [isEditOpen, setIsEditOpen] = useState(false);
-  const [selectedTicket, setSelectedTicket] = useState("");
   const confirm = useConfirm();
   const { data, total, currentPage, totalPages, loading, error, filter } =
     useSelector(dataTicket);
+  const [selectedTicket, setSelectedTicket] = useState("");
   const { page, changePage, changeRowPerPage, rowsPerPage } = usePanigation(
     initData.currentPage
   );
@@ -145,14 +145,23 @@ const TicketList = ({ initData }: { initData: InitDataType }) => {
     setIsEditOpen(true);
   };
   const handleCancelTicket = async (id: string) => {
+    const ok = await confirm({
+      title: "Bạn có muốn hủy vé này",
+      content: "Hành động này sẽ không thể hoàn tác",
+    });
+    if (!ok) return;
     try {
-      const ok = await confirm({
-        title: "Bạn có muốn hủy vé này",
-        content: "Hành động này sẽ không thể hoàn tác",
-      });
-      if (!ok) return;
       await cancelTicketAPI(id);
       toast.success("Hủy vé thành công");
+      await dispatch(
+        fetchTicket({
+          limit: rowsPerPage,
+          page: currentPage,
+          date: filter.date,
+          movieId: filter.movieId,
+          type: filter.type,
+        })
+      );
     } catch (error) {
       toast.error(`Hủy vé thất bại: ${error}`);
     }

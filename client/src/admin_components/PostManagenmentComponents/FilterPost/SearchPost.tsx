@@ -7,15 +7,16 @@ import { fetchPosts, setFilter } from "@/utils/redux/slices/postSlice";
 const SearchPost = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [searchText, setSearchText] = useState("");
-  // const [debouncedSearch, setDebouncedSearch] = useState("");
+
   useEffect(() => {
     const handler = setTimeout(() => {
-      dispatch(setFilter({ title: searchText }));
-      dispatch(fetchPosts({ page: 1, limit: 5, title: searchText }));
+      const keyword = searchText.trim();
+      dispatch(setFilter({ title: keyword }));
+      dispatch(fetchPosts({ page: 1, limit: 5, title: keyword }));
     }, 400);
 
     return () => clearTimeout(handler);
-  }, [searchText]);
+  }, [searchText, dispatch]);
 
   return (
     <div>

@@ -111,7 +111,7 @@ const VoucherList = ({ initData }: { initData: InitDataType }) => {
       render(row) {
         return (
           <Status
-            title={!row.is_active ? "Ngưng hoạt động" : "Đang hoạt động"} // tên của status
+            title={!row.is_active ? "Không hoạt động" : "Đang hoạt động"} // tên của status
             color={!row.is_active ? "error" : "success"} // màu của status
           />
         );

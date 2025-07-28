@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import InputGroup from "./InputGroup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/utils/redux/store";
 import { toast } from "react-toastify";
 import { Voucher, VoucherReq } from "@/interfaces/vouchers.interface";
@@ -9,6 +9,8 @@ import {
   updateVoucher,
 } from "@/utils/redux/slices/voucherSlice";
 import { useConfirm } from "@/hooks/contexts/useConfirm";
+import dataVoucherSelector from "@/utils/redux/selectors/selectorVoucher";
+import usePanigation from "@/hooks/usePanigation";
 
 type UpdateFormProps = {
   voucher: Voucher;
@@ -26,6 +28,8 @@ const formatDate = (date: string | null | undefined) => {
 const UpdateForm = ({ voucher, closeForm }: UpdateFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const confirm = useConfirm();
+  const { currentPage, filter } = useSelector(dataVoucherSelector);
+  const { rowsPerPage } = usePanigation(currentPage);
   const [formData, setFormData] = useState<VoucherReq>({
     code: voucher.code,
     discount_type: voucher.discount_type,
@@ -38,14 +42,38 @@ const UpdateForm = ({ voucher, closeForm }: UpdateFormProps) => {
   const [errors, setErrors] = React.useState("");
   React.useEffect(() => {
     setErrors("");
-    const currentDate = new Date(formData.start_date);
-    const endDate = new Date(formData.end_date);
-    if (currentDate >= endDate) {
-      setErrors("Ngày bắt đầu không được lớn hơn hoặc bằng ngày kết thúc");
-      return;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const start = new Date(formData.start_date);
+    const end = new Date(formData.end_date);
+    start.setHours(0, 0, 0, 0);
+    end.setHours(0, 0, 0, 0);
+
+    if (formData.start_date && formData.end_date) {
+      if (start >= end) {
+        setErrors("Ngày bắt đầu không được lớn hơn hoặc bằng ngày kết thúc");
+        return;
+      }
     }
+
     if (formData.end_date && !formData.start_date) {
       setErrors("Vui lòng nhập ngày bắt đầu trước khi nhập ngày kết thúc");
+      return;
+    }
+
+    if (formData.start_date && formData.end_date) {
+      const activeStatus = today >= start && today <= end ? "true" : "false";
+      setFormData((prev) => ({
+        ...prev,
+        is_active: activeStatus,
+      }));
+    } else if (formData.start_date && !formData.end_date) {
+      const activeStatus = today >= start ? "true" : "false";
+      setFormData((prev) => ({
+        ...prev,
+        is_active: activeStatus,
+      }));
     }
   }, [formData.start_date, formData.end_date]);
   const handleUpdate = async (e: React.FormEvent) => {
@@ -70,7 +98,16 @@ const UpdateForm = ({ voucher, closeForm }: UpdateFormProps) => {
       ).unwrap();
       toast.success("Cập nhật voucher thành công!");
 
-      dispatch(fetchVouchers({ limit: 5, page: 1 }));
+      await dispatch(
+        fetchVouchers({
+          page: currentPage,
+          limit: rowsPerPage,
+          code: filter.code,
+          status: filter.status,
+          timeEnd: filter.timeEnd,
+          timeStart: filter.timeStart,
+        })
+      );
       closeForm();
     } catch (err) {
       toast.error(`Cập nhật voucher thất bại: ${err}`);

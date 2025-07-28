@@ -17,6 +17,7 @@ type MovieState = ReduxInitStateDefaultType & {
     genre: string;
     date: string;
     star: string;
+    name: string;
   };
 };
 
@@ -33,6 +34,7 @@ const initialState: MovieState = {
     genre: "",
     date: "",
     star: "",
+    name: "",
   },
 };
 
@@ -46,6 +48,7 @@ export const fetchMovies = createAsyncThunk(
       status = "",
       date = "",
       star = "",
+      name = "",
     }: {
       page: number;
       limit: number;
@@ -53,6 +56,7 @@ export const fetchMovies = createAsyncThunk(
       status?: string;
       date?: string;
       star?: string;
+      name?: string;
     },
     thunkAPI
   ) => {
@@ -64,7 +68,7 @@ export const fetchMovies = createAsyncThunk(
       if (status) query.append("status", status);
       if (date) query.append("date", date);
       if (star) query.append("star", star);
-
+      if (name) query.append("name", name);
       const res = await movieService.getMovieList(`?${query.toString()}`);
 
       return {
@@ -76,6 +80,7 @@ export const fetchMovies = createAsyncThunk(
         status: status,
         date: date,
         star: star,
+        name,
       };
     } catch (error) {
       console.error("Không thể tải danh sách phim:", error);
@@ -128,6 +133,7 @@ const movieSlice = createSlice({
         status: "",
         date: "",
         star: "",
+        name: "",
       };
     },
     setFilter: (state, action) => {
@@ -150,6 +156,7 @@ const movieSlice = createSlice({
         state.filter.status = action.payload.status;
         state.filter.date = action.payload.date;
         state.filter.star = action.payload.star;
+        state.filter.name = action.payload.name;
       })
       .addCase(fetchMovies.rejected, (state, action) => {
         state.loading = false;

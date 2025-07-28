@@ -2,9 +2,15 @@
 import React, { useState } from "react";
 import { FaFilter } from "react-icons/fa6";
 import FilterPopup from "./FilterPopup";
-import { LocationRes } from "@/interfaces/cinema.interface";
+import { Cinema, LocationRes } from "@/interfaces/cinema.interface";
 
-const FilterCinema = ({ locations }: { locations: LocationRes[] }) => {
+const FilterCinema = ({
+  locations,
+  cinemas,
+}: {
+  locations: LocationRes[];
+  cinemas: Cinema[];
+}) => {
   const [openPopup, setOpenPopup] = useState(false);
 
   return (
@@ -18,7 +24,8 @@ const FilterCinema = ({ locations }: { locations: LocationRes[] }) => {
       </button>
       {openPopup && (
         <FilterPopup
-          locations={locations} 
+          cinemas={cinemas}
+          locations={locations}
           closeForm={() => setOpenPopup(false)}
         />
       )}

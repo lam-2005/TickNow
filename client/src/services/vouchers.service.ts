@@ -7,7 +7,7 @@ const getVoucherList = async (param: string = "") => {
     const res = await api.get(`/voucher${param}`);
     return res.data;
   } catch (error) {
-    catchingError(error, "Lỗi khi lấy dữ liệu rạp!");
+    catchingError(error, "Lỗi khi lấy dữ liệu voucher!");
   }
 };
 
@@ -26,6 +26,22 @@ const updateVoucherService = async (id: string, data: VoucherReq) => {
     return res;
   } catch (error) {
     catchingError(error, "Cập nhật voucher thất bại!");
+  }
+};
+
+const checkVoucherAPI = async (token: string, code: string) => {
+  try {
+    return await api.post(
+      `/voucher/check`,
+      { code },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  } catch (error) {
+    catchingError(error, "Lỗi khi lấy dữ liệu voucher!");
   }
 };
 
@@ -68,4 +84,9 @@ export const getVouchers = async (
   };
 };
 
-export { getVoucherList, createVoucherService, updateVoucherService };
+export {
+  getVoucherList,
+  createVoucherService,
+  updateVoucherService,
+  checkVoucherAPI,
+};

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import InputGroup from "./InputGroup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/utils/redux/store";
 import { toast } from "react-toastify";
 import { VoucherReq } from "@/interfaces/vouchers.interface";
@@ -9,6 +9,7 @@ import {
   fetchVouchers,
 } from "@/utils/redux/slices/voucherSlice";
 import { useConfirm } from "@/hooks/contexts/useConfirm";
+import dataVoucherSelector from "@/utils/redux/selectors/selectorVoucher";
 
 const initDefault = {
   code: "",
@@ -20,23 +21,50 @@ const initDefault = {
   is_active: "true",
 };
 
-const AddForm = ({ closeForm }: { closeForm: () => void }) => {
+const AddForm = () => {
   const confirm = useConfirm();
   const dispatch = useDispatch<AppDispatch>();
+  const { filter } = useSelector(dataVoucherSelector);
   const [formData, setFormData] = useState<VoucherReq>(initDefault);
   const [errors, setErrors] = React.useState("");
   React.useEffect(() => {
     setErrors("");
-    const currentDate = new Date(formData.start_date);
-    const endDate = new Date(formData.end_date);
-    if (currentDate >= endDate) {
-      setErrors("Ngày bắt đầu không được lớn hơn hoặc bằng ngày kết thúc");
-      return;
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const start = new Date(formData.start_date);
+    const end = new Date(formData.end_date);
+    start.setHours(0, 0, 0, 0);
+    end.setHours(0, 0, 0, 0);
+
+    if (formData.start_date && formData.end_date) {
+      if (start >= end) {
+        setErrors("Ngày bắt đầu không được lớn hơn hoặc bằng ngày kết thúc");
+        return;
+      }
     }
+
     if (formData.end_date && !formData.start_date) {
       setErrors("Vui lòng nhập ngày bắt đầu trước khi nhập ngày kết thúc");
+      return;
+    }
+
+    if (formData.start_date && formData.end_date) {
+      const activeStatus = today >= start && today <= end ? "true" : "false";
+      setFormData((prev) => ({
+        ...prev,
+        is_active: activeStatus,
+      }));
+    } else if (formData.start_date && !formData.end_date) {
+      const activeStatus = today >= start ? "true" : "false";
+      setFormData((prev) => ({
+        ...prev,
+        is_active: activeStatus,
+      }));
     }
   }, [formData.start_date, formData.end_date]);
+
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.code || !formData.discount_type || errors) {
@@ -47,13 +75,12 @@ const AddForm = ({ closeForm }: { closeForm: () => void }) => {
       toast.warning("Vui lòng nhập số lượng tối đa hoặc ngày bắt đầu!");
       return;
     }
+    const sure = await confirm({
+      title: "Bạn có muốn thêm?",
+      content: "Hành động này sẽ không thể hoàn tác",
+    });
+    if (!sure) return;
     try {
-      const sure = await confirm({
-        title: "Bạn có muốn thêm?",
-        content: "Hành động này sẽ không thể hoàn tác",
-      });
-      if (!sure) return;
-
       await dispatch(
         createVoucher({
           data: {
@@ -63,14 +90,21 @@ const AddForm = ({ closeForm }: { closeForm: () => void }) => {
         })
       ).unwrap();
       toast.success("Thêm voucher thành công!");
-      dispatch(fetchVouchers({ limit: 5, page: 1 }));
+      await dispatch(
+        fetchVouchers({
+          limit: 5,
+          page: 1,
+          code: filter.code,
+          status: filter.status,
+          timeEnd: filter.timeEnd,
+          timeStart: filter.timeStart,
+        })
+      );
       setFormData(initDefault);
     } catch (err) {
       toast.error(`Thêm voucher thất bại: ${err}`);
       console.error(err);
     }
-
-    closeForm();
   };
 
   return (

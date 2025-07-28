@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/utils/redux/store";
 import { fetchVouchers, setFilter } from "@/utils/redux/slices/voucherSlice";
 import dataVoucher from "@/utils/redux/selectors/selectorVoucher";
-import { TextField } from "@mui/material";
+import { Autocomplete, TextField } from "@mui/material";
 import { toast } from "react-toastify";
+import { Voucher } from "@/interfaces/vouchers.interface";
 
 const FilterItem = ({
   title,
@@ -24,7 +25,13 @@ const FilterItem = ({
   );
 };
 
-const FilterPopup = ({ closeForm }: { closeForm: () => void }) => {
+const FilterPopup = ({
+  closeForm,
+  voucher,
+}: {
+  closeForm: () => void;
+  voucher: Voucher[];
+}) => {
   const dispatch = useDispatch<AppDispatch>();
   const [code, setCode] = useState<string>("");
   const [status, setStatus] = useState<string[]>([]);
@@ -107,12 +114,31 @@ const FilterPopup = ({ closeForm }: { closeForm: () => void }) => {
       <div className="p-5 space-y-5 overflow-y-scroll">
         <div className="flex flex-col gap-2">
           <label className="font-bold text-lg">Tên mã code:</label>
-          <input
-            type="text"
+          <Autocomplete
+            freeSolo
+            className="w-full"
+            options={voucher}
+            getOptionLabel={(option) =>
+              typeof option === "string" ? option : option.code
+            }
             value={code}
-            onChange={(e) => setCode(e.target.value)}
-            placeholder="Nhập mã code"
-            className="border border-foreground p-2 rounded-md"
+            onInputChange={(_, value) => setCode(value)}
+            onChange={(_, value) => {
+              if (typeof value === "string") {
+                setCode(value);
+              } else if (value) {
+                setCode(value.code);
+              } else {
+                setCode("");
+              }
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Tìm Mã"
+                placeholder="Nhập từ khóa"
+              />
+            )}
           />
         </div>
         <div className="flex gap-10">

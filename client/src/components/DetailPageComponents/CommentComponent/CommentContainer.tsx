@@ -41,7 +41,7 @@ const CommentContainer: React.FC<CommentContainerProps> = ({ rate, movie }) => {
 
   return (
     <div className="bg-background-card p-5 rounded-[10px]">
-      <h2 className="text-2xl font-semibold mb-2">Bình luận từ người xem</h2>
+      <h2 className="text-2xl font-semibold mb-2 ">Bình luận từ người xem</h2>
 
       {hasData ? (
         <div className="w-full">

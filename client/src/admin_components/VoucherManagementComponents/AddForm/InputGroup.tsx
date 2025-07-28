@@ -1,8 +1,8 @@
 import TextField from "@mui/material/TextField";
 import React from "react";
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
+// import InputLabel from "@mui/material/InputLabel";
+// import Select from "@mui/material/Select";
+// import MenuItem from "@mui/material/MenuItem";
 import { VoucherReq } from "@/interfaces/vouchers.interface";
 
 type InputGroupProps = {
@@ -23,7 +23,7 @@ const InputGroup = ({ formData, setFormData, errors }: InputGroupProps) => {
         required
         id="outlined-required"
         label="Mã code"
-        defaultValue={formData?.code}
+        value={formData?.code}
         onChange={(e) => onChangeData("code", e.target.value)}
         placeholder="Nhập mã code"
       />
@@ -34,7 +34,7 @@ const InputGroup = ({ formData, setFormData, errors }: InputGroupProps) => {
         required
         id="outlined-required"
         label="Mức giảm (%)"
-        defaultValue={formData?.discount_type}
+        value={formData?.discount_type}
         onChange={(e) => onChangeData("discount_type", e.target.value)}
         placeholder="Nhập mức giảm (%)"
       />
@@ -45,7 +45,7 @@ const InputGroup = ({ formData, setFormData, errors }: InputGroupProps) => {
         required
         id="outlined-required"
         label="Số lượng tối đa"
-        defaultValue={formData?.max_users}
+        value={formData?.max_users}
         onChange={(e) => onChangeData("max_users", e.target.value)}
         placeholder="Nhập số lượng tối đa"
       />
@@ -59,7 +59,7 @@ const InputGroup = ({ formData, setFormData, errors }: InputGroupProps) => {
           helperText={errors}
           id="outlined-required"
           label="Ngày bắt đầu"
-          defaultValue={formData?.start_date}
+          value={formData?.start_date}
           onChange={(e) => onChangeData("start_date", e.target.value)}
           placeholder="Nhập ngày bắt đầu"
           InputLabelProps={{ shrink: true }}
@@ -79,7 +79,7 @@ const InputGroup = ({ formData, setFormData, errors }: InputGroupProps) => {
         id="outlined-required"
         error={errors ? true : false}
         label="Ngày kết thúc"
-        defaultValue={formData?.end_date}
+        value={formData?.end_date}
         onChange={(e) => onChangeData("end_date", e.target.value)}
         placeholder="Nhập ngày kết thúc"
         InputLabelProps={{ shrink: true }}
@@ -91,7 +91,7 @@ const InputGroup = ({ formData, setFormData, errors }: InputGroupProps) => {
         }}
       />
 
-      <div>
+      {/* <div>
         <InputLabel id="demo-simple-select-helper-label2 mt-8">
           Trạng thái
         </InputLabel>
@@ -107,7 +107,7 @@ const InputGroup = ({ formData, setFormData, errors }: InputGroupProps) => {
           <MenuItem value={"true"}>Hoạt động</MenuItem>
           <MenuItem value={"false"}>Không hoạt động</MenuItem>
         </Select>
-      </div>
+      </div> */}
     </div>
   );
 };
