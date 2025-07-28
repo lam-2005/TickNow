@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 };
 const getOfferList = async () => {
   try {
-    const res = await getPostList();
+    const res = await getPostList("?status=2");
     return res?.data?.post;
   } catch (error) {
     console.error("Fetch offers failed:", error);
