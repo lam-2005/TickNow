@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 const PostManagenment = async () => {
   const posts = await getPost(1, 5);
-  const vouchers = await getVoucherList("?active=true");
+  const vouchers = await getVoucherList();
   return (
     <div className="card">
       <HeadingCard title="Quản Lý Bài viết">
