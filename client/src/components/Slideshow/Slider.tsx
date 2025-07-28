@@ -78,7 +78,7 @@ const SliderList = ({ data }: { data: Promise<MovieType[]> }) => {
     prevArrow: (
       <SampleArrow
         type={1}
-        styleBtn="absolute top-1/2 left-0 z-800 translate-x-[10px] [&_span]:text-5xl -translate-y-1/2 [&_span]:max-[730px]:text-3xl [&_span]:max-sm:text-2xl max-[670px]:translate-x-[-5px] lg:hidden [&_span]:text-white"
+        styleBtn="absolute top-1/2 left-0 z-800 translate-x-[10px] [&_span]:text-5xl -translate-y-1/2 [&_span]:max-[730px]:text-3xl [&_span]:max-sm:text-2xl max-[670px]:translate-x-[-5px] lg:hidden [&_span]:text-white max-sm:left-1"
       />
     ),
   };

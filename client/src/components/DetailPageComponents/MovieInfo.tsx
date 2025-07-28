@@ -160,7 +160,7 @@ const MovieInfo = ({ movie }: { movie: MovieType }) => {
         </div>
 
         {/* Desktop Layout */}
-        <div className="hidden sm:flex flex-row gap-5 sm:gap-[25px]">
+        <div className="hidden sm:flex flex-row gap-5 sm:gap-[25px] px-5">
           <div className="relative w-full max-w-[180px] sm:max-w-[204px] max-h-[306px] aspect-[2/3] mx-auto sm:mx-0">
             <Image
               src={posterSrc}
