@@ -1,15 +1,8 @@
-// import Overview from "@/admin_components/Dashboard/Overview/Overview";
+import Overview from "@/admin_components/Dashboard/Overview/Overview";
 import StatisticsCard from "@/admin_components/Dashboard/StatisticsCard";
 import HeadingCard from "@/admin_components/HeadingCard/HeadingCard";
+
 import { getDashboardData } from "@/services/dashboard.service";
-import dynamic from "next/dynamic";
-const Overview = dynamic(
-  () => import("@/admin_components/Dashboard/Overview/Overview"),
-  {
-    ssr: false,
-    loading: () => <p>Đang tải biểu đồ...</p>,
-  }
-);
 
 import React from "react";
 const Dashboard = async () => {
