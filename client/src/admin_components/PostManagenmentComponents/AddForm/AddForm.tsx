@@ -77,6 +77,8 @@ const AddForm = ({ vouchers }: { vouchers: Voucher[] }) => {
       console.error(err);
     }
   };
+  console.log(formData);
+
   return (
     <>
       <div className="space-y-5 px-5 flex-1 overflow-x-hidden overflow-y-auto">

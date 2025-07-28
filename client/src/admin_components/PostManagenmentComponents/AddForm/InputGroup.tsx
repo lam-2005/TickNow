@@ -3,8 +3,8 @@ import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import TextEditor from "./TextEditor";
 import { DataPostReq } from "@/interfaces/post.interface";
-import { TextField } from "@mui/material";
-import { useState } from "react";
+import { Autocomplete, TextField } from "@mui/material";
+import React, { useState } from "react";
 import Image from "next/image";
 import { FaRegTrashAlt } from "react-icons/fa";
 
@@ -40,6 +40,7 @@ const InputGroup = ({
       setFormData({ ...formData, image: file });
     }
   };
+
   return (
     <div className="flex gap-5 items-center pt-2 min-w-[500px]">
       <div className="space-y-5">
@@ -138,22 +139,22 @@ const InputGroup = ({
           <label className="block mb-1 text-sm font-medium">
             Mã giảm giá (nếu có)
           </label>
-          <select
-            name="voucher"
-            id="voucher"
-            value={formData.voucher}
-            onChange={(e) =>
-              setFormData({ ...formData, voucher: e.target.value })
+          <Autocomplete
+            id="checkboxes-tags-demo"
+            className="w-full"
+            options={voucherList}
+            disableCloseOnSelect
+            getOptionLabel={(option) => option}
+            value={
+              voucherList.find((option) => option === formData.voucher) || null
             }
-            className="w-full border border-gray-300 rounded-md px-4 py-3 text-base"
-          >
-            <option value="">Chọn mã giảm giá</option>
-            {voucherList.map((voucher) => (
-              <option key={voucher} value={voucher}>
-                {voucher}
-              </option>
-            ))}
-          </select>
+            onChange={(event, newValue) => {
+              setFormData({ ...formData, voucher: newValue || "" });
+            }}
+            renderInput={(params) => (
+              <TextField {...params} label="Chọn Mã" placeholder="Mã" />
+            )}
+          />
         </div>
         <div>
           <label className="block mb-1 text-sm font-medium">
