@@ -18,13 +18,13 @@ const Profile = async () => {
       <div className="flex flex-wrap gap-3 sm:gap-x-10 justify-center">
         <Link
           href={"/profile"}
-          className="active [&.active]:bg-primary [&.active]:border-transparent [&.active]:text-white py-2.5 px-5 rounded-[100px] font-bold hover:bg-primary hover:text-white hover:border-transparent transition-colors duration-300 border-1 border-foreground text-sm"
+          className=" py-2.5 px-5 rounded-[100px] font-bold hover:bg-primary hover:text-white hover:border-transparent transition-colors duration-300 border-1 border-foreground text-sm"
         >
           Tài khoản của tôi
         </Link>
         <Link
           href={"/booking-history"}
-          className="py-2.5 px-5 rounded-[100px] font-bold hover:bg-primary hover:text-white hover:border-transparent transition-colors duration-300 border-1 border-foreground text-sm"
+          className="active [&.active]:bg-primary [&.active]:border-transparent [&.active]:text-white py-2.5 px-5 rounded-[100px] font-bold hover:bg-primary hover:text-white hover:border-transparent transition-colors duration-300 border-1 border-foreground text-sm"
         >
           Lịch sử đặt vé
         </Link>
