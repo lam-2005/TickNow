@@ -52,10 +52,6 @@ const footerLink: FooterLinkType[] = [
     title: "hỗ trợ khách hàng",
     children: [
       {
-        url: "/#",
-        name: "Góp ý",
-      },
-      {
         url: "/faqs",
         name: "Hỏi đáp",
       },

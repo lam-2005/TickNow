@@ -35,9 +35,9 @@ const contactInfo = () => (
     <p>NHÓM SINH VIÊN TICKNOW</p>
     <p>Trường Cao đẳng FPT Polytechnic Hồ Chí Minh</p>
     <p>Địa chỉ: Công viên phần mềm Quang Trung, Quận 12, TP.HCM</p>
-    <p>Email: support@ticknow.vn</p>
-    <p>Website: www.ticknow.vn</p>
-    <p>Hotline-Zalo: 0833703639</p>
+    <p>Email: trangioi04122005@gmail.com</p>
+    <p>Website: www.ticknow.xyz</p>
+    <p>Hotline-Zalo: 0375837534</p>
   </div>
 );
 

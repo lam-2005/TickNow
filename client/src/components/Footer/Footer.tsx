@@ -57,6 +57,12 @@ const Footer = () => {
           <p>
             <strong>ĐỊA CHỈ:</strong> FPT POLYTECHNIC HỒ CHÍ MINH
           </p>
+          <p>
+            <strong>EMAIL LIÊN HỆ:</strong> trangioi04122005@gmail.com
+          </p>
+          <p>
+            <strong>HOTLINE:</strong> 0375837534
+          </p>
         </div>
       </div>
     </footer>

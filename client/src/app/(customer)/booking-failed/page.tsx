@@ -28,8 +28,9 @@ const BookingFailed = () => {
           </p>
           <p>
             Vui lòng gởi thông tin giao dịch lỗi về email{" "}
-            <span className="text-primary">abcde@gmail.com</span> hoặc qua số
-            điện thoại <span className="text-primary">0123456789</span>
+            <span className="text-primary">trangioi04122005@gmail.com</span>{" "}
+            hoặc qua số điện thoại{" "}
+            <span className="text-primary">0375837534</span>
           </p>
         </div>
         <div className="flex gap-7.5">

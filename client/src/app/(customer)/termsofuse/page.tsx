@@ -158,8 +158,8 @@ const termsOfUse = () => {
             <br />
             Trường Cao đẳng FPT Polytechnic Hồ Chí Minh <br />
             Địa chỉ: Công viên phần mềm Quang Trung, Quận 12, TP.HCM <br />
-            Email: contact@ticknow.vn <br />
-            Hotline/Zalo: 0833703639
+            Email: trangioi04122005@gmail.com <br />
+            Hotline/Zalo: 0375837534
           </p>
         </>,
       ])}

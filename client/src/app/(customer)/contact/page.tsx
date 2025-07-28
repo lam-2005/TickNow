@@ -120,7 +120,7 @@ const ContactPage = () => {
             <div>
               <h4 className="font-semibold">Hotline</h4>
               <p className="text-foreground">
-                1900 1234 (8:00 - 22:00, hàng ngày)
+                0375837534 (8:00 - 22:00, hàng ngày)
               </p>
             </div>
           </div>
@@ -128,7 +128,7 @@ const ContactPage = () => {
             <FaEnvelope className="text-primary mt-1" />
             <div>
               <h4 className="font-semibold">Email hỗ trợ</h4>
-              <p className="text-foreground">support@ticknow.vn</p>
+              <p className="text-foreground">trangioi04122005@gmail.com</p>
             </div>
           </div>
           <div className="flex items-start gap-4">
