@@ -46,7 +46,7 @@ const ShowtimeCard = ({
         <div className="relative w-full max-w-[250px] mx-auto lg:mx-0 aspect-[2/3]">
           <Image
             fill
-            src={`${env.IMG_API_URL}/movie/${data.image}`}
+            src={`${env.IMG_API_URL}${data.image}`}
             alt="Phim"
             sizes="(max-width: 768px) 100vw, 250px"
             loading="lazy"

@@ -44,7 +44,7 @@ const DetailTicket = ({
             <div className="relative max-w-[235px] min-h-50 w-full h-full aspect-[2/3] bg-amber-500 overflow-hidden rounded-[10px]">
               <Image
                 fill
-                src={`${env.IMG_API_URL}/movie/${getInfo?.movie.image}`}
+                src={`${env.IMG_API_URL}${getInfo?.movie.image}`}
                 alt="Phim"
                 sizes="300px"
                 loading="lazy"

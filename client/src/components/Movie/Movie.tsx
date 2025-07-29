@@ -22,7 +22,7 @@ const Movie = ({
 }) => {
   const [posterSrc, setPosterSrc] = useState(
     info?.image
-      ? `${env.IMG_API_URL}/movie/${info.image}`
+      ? `${env.IMG_API_URL}${info.image}`
       : "/movies/default-movie.webp"
   );
   const router = useRouter();

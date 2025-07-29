@@ -44,7 +44,7 @@ const SliderList = ({ data }: { data: Promise<MovieType[]> }) => {
           "
         >
           <Image
-            src={`${env.IMG_API_URL}/banner/${item.banner}`}
+            src={`${env.IMG_API_URL}${item.banner}`}
             alt=""
             fill
             priority
@@ -101,7 +101,7 @@ const SliderList = ({ data }: { data: Promise<MovieType[]> }) => {
             <div className="relative w-full h-full max-h-screen aspect-[16/9]">
               <div className="w-full h-full relative">
                 <Image
-                  src={`${env.IMG_API_URL}/banner/${item.banner}`}
+                  src={`${env.IMG_API_URL}${item.banner}`}
                   alt=""
                   fill
                   sizes="100vw"

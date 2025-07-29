@@ -51,7 +51,7 @@ const InfoPopup = ({
               fill
               src={
                 info.image
-                  ? `${env.IMG_API_URL}/movie/${info.image}`
+                  ? `${env.IMG_API_URL}${info.image}`
                   : "/movies/default.png"
               }
               alt={info.name}

@@ -272,7 +272,7 @@ const InputGroupMovie = ({
               alt="cinema image"
               src={`${
                 typeof formData.image === "string"
-                  ? `${env.IMG_API_URL}/movie/${formData.image}`
+                  ? `${env.IMG_API_URL}${formData.image}`
                   : previewImage || ""
               }`}
               width={300}
@@ -318,7 +318,7 @@ const InputGroupMovie = ({
               alt="cinema image"
               src={`${
                 typeof formData.banner === "string"
-                  ? `${env.IMG_API_URL}/banner/${formData.banner}`
+                  ? `${env.IMG_API_URL}${formData.banner}`
                   : previewImageBanner || ""
               }`}
               width={300}

@@ -6,8 +6,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "ticknow-be.onrender.com",
-        pathname: "/images/**",
+        hostname: "res.cloudinary.com",
+        pathname: "/dmgfdx9ft/image/upload/**",
       },
     ],
   },

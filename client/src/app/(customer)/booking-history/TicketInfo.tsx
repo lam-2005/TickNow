@@ -81,7 +81,7 @@ const TicketInfo = ({
             <div className="relative max-w-[235px] w-full h-full aspect-[2/3] bg-amber-500 overflow-hidden rounded-[10px]">
               <Image
                 fill
-                src={`${env.IMG_API_URL}/movie/${detailTicket?.movie.image}`}
+                src={`${env.IMG_API_URL}${detailTicket?.movie.image}`}
                 alt="Phim"
                 sizes="300px"
                 loading="lazy"

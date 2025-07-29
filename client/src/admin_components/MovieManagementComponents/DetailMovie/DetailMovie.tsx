@@ -16,9 +16,7 @@ const MovieDetail = ({ movie, onClose }: Props) => {
       <div className="space-y-5 px-6 flex-1 overflow-y-auto pb-5">
         <div className="flex flex-col md:flex-row gap-6">
           <Image
-            src={
-              `${env.IMG_API_URL}/movie/${movie.image}` || "/movies/default.png"
-            }
+            src={`${env.IMG_API_URL}${movie.image}` || "/movies/default.png"}
             alt="Poster"
             width={240}
             height={320}

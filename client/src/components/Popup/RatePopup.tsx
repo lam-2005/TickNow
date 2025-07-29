@@ -92,7 +92,7 @@ const RatePopup = ({
             <div className="relative max-w-[220px] w-full h-full aspect-[2/3] overflow-hidden rounded-[10px]">
               <Image
                 fill
-                src={`${env.IMG_API_URL}/movie/${detailTicket?.movie.image}`}
+                src={`${env.IMG_API_URL}${detailTicket?.movie.image}`}
                 alt={`${detailTicket?.movie.name}` || "Ảnh phim"}
                 sizes="300px"
                 loading="lazy"

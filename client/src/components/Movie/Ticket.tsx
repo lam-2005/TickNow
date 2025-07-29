@@ -50,7 +50,7 @@ const Ticket = () => {
           {ticket?.movie.image && (
             <Image
               fill
-              src={`${env.IMG_API_URL}/movie/${ticket.movie.image}`}
+              src={`${env.IMG_API_URL}${ticket.movie.image}`}
               alt="Poster phim"
               sizes="300px"
               loading="lazy"

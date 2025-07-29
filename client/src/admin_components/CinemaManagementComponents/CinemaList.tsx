@@ -119,7 +119,7 @@ const CinemaList = ({
         row?.image ? (
           <div>
             <Image
-              src={`${env.IMG_API_URL}/cinema/${row?.image}`}
+              src={`${env.IMG_API_URL}${row?.image}`}
               height={70}
               width={100}
               alt=""
@@ -134,8 +134,8 @@ const CinemaList = ({
       title: "Trạng Thái",
       render: (row) => (
         <Status
-          title={row.status === 2 ? "Đang hoạt động" : "Ngưng hoạt Động"} 
-          color={row.status === 2 ? "success" : "error"} 
+          title={row.status === 2 ? "Đang hoạt động" : "Ngưng hoạt Động"}
+          color={row.status === 2 ? "success" : "error"}
         />
       ),
     },

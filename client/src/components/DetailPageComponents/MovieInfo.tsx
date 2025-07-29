@@ -12,12 +12,12 @@ const MovieInfo = ({ movie }: { movie: MovieType }) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [bannerSrc, setBannerSrc] = useState(
     movie?.banner
-      ? `${env.IMG_API_URL}/banner/${movie.banner}`
+      ? `${env.IMG_API_URL}${movie.banner}`
       : "/banner/default-banner.webp"
   );
   const [posterSrc, setPosterSrc] = useState(
     movie?.image
-      ? `${env.IMG_API_URL}/movie/${movie.image}`
+      ? `${env.IMG_API_URL}${movie.image}`
       : "/movies/default-movie.webp"
   );
 

@@ -15,7 +15,7 @@ const Offer = ({ data }: { data: PostType }) => {
         <Image
           src={`${
             data.image
-              ? `${env.IMG_API_URL}/post/${data.image}`
+              ? `${env.IMG_API_URL}${data.image}`
               : "/offers/defaultPost.webp"
           } `}
           fill

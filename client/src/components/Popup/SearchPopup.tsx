@@ -138,7 +138,7 @@ const ItemSearch = ({
       <div className="relative min-w-[70px] w-[70px] h-[105px]">
         <Image
           alt=""
-          src={`${env.IMG_API_URL}/movie/${movie.image}`}
+          src={`${env.IMG_API_URL}${movie.image}`}
           fill
           sizes="100px"
           loading="lazy"

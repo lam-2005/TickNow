@@ -78,7 +78,7 @@ const InputGroup = ({ formData, setFormData }: InputGroupProps) => {
               alt="cinema image"
               src={`${
                 typeof formData.image === "string"
-                  ? `${env.IMG_API_URL}/cinema/${formData.image}`
+                  ? `${env.IMG_API_URL}${formData.image}`
                   : preview || ""
               }`}
               width={300}
