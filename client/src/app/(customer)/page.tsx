@@ -87,7 +87,7 @@ export default function Home() {
         <article>
           <div className="container flex flex-col py-10">
             <div className="flex justify-between items-center mb-5 px-2">
-              <h2 className="self-start uppercase">Khuyến Mãi</h2>
+              <h2 className="self-start uppercase">Tin Tức & Khuyến Mãi</h2>
               <Link
                 href={"/post"}
                 className="hover:text-primary transition-colors duration-500"

@@ -17,7 +17,7 @@ const OfferLoading = () => {
       xl={3}
       lg={2}
       md={2}
-      sm={1}
+      sm={2}
     >
       <div className="px-2">
         <SkeletonLoading />

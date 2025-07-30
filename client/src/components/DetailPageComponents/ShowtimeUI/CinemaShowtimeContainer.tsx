@@ -14,6 +14,7 @@ import {
 } from "@/utils/saveTicket";
 import { useSearchParams } from "next/navigation";
 import LoadingSpin from "@/components/LoadingAPI/LoadingSpin";
+import socket from "@/configs/socket.config";
 type Props = {
   data: CinemaShowtimeType[];
   loading: boolean;
@@ -104,6 +105,24 @@ const CinemaShowtimeContainer = ({ data, loading }: Props) => {
       setIdShowtime(id);
     }
   };
+  useEffect(() => {
+    if (dataShowtime) {
+      socket.emit("join_room", dataShowtime.room._id);
+      console.log("Joined room:", dataShowtime.room._id);
+    }
+
+    // Lắng nghe sự kiện cập nhật vé
+    socket.on("room_data_changed", ({ id_screening: updatedId }) => {
+      console.log(updatedId);
+
+      if (updatedId === dataShowtime?._id) {
+        console.log("📡 Có ghế mới được đặt! Đang tải lại...");
+      }
+    });
+    return () => {
+      socket.off("room_data_changed");
+    };
+  }, [dataShowtime?.room._id, dataShowtime?._id]);
 
   return (
     <>
