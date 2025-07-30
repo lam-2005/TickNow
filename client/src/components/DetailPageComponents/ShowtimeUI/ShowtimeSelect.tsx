@@ -26,7 +26,6 @@ const ShowtimeSelect = ({ listData, slug }: ShowtimeSelectTypes) => {
   function getNext7DaysWithLabels() {
     const days = [];
     const today = new Date();
-
     for (let i = 0; i < 7; i++) {
       const d = new Date(today);
       d.setDate(today.getDate() + i);
@@ -37,7 +36,7 @@ const ShowtimeSelect = ({ listData, slug }: ShowtimeSelectTypes) => {
       const year = d.getFullYear();
 
       const label = `${weekday}, ${day}/${month}/${year}`;
-      const value = d.toISOString().split("T")[0];
+      const value = `${year}-${month}-${day}`;
 
       days.push({ value, label });
     }

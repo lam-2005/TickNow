@@ -20,13 +20,6 @@ const SeatDiagram = ({
 }) => {
   const { layout, selectedSeat } = handleBooking(roomLayout);
   const [selecting, setSelecting] = useState<string[]>([]);
-  // const [ticket, setTicket] = useState<TicketTypeLocalStorage | null>(null);
-
-  // useEffect(() => {
-  //   const storedTicket = getTicket();
-  //   setTicket(storedTicket);
-  // }, []);
-
   const handleSeatClick = (seatName: string) => {
     if (!seatName) return;
     setSelecting((prev) =>
@@ -47,7 +40,6 @@ const SeatDiagram = ({
           : 0,
       };
       saveTicket(updatedTicket);
-      // setTicket(updatedTicket);
     }
   }, [selecting]);
 
