@@ -106,22 +106,33 @@ const CinemaShowtimeContainer = ({ data, loading }: Props) => {
     }
   };
   useEffect(() => {
-    if (dataShowtime) {
-      socket.emit("join_room", dataShowtime.room._id);
-      console.log("Joined room:", dataShowtime.room._id);
-    }
+    const screeningId = dataShowtime?._id;
+    const roomId = dataShowtime?.room?._id;
 
-    // Lắng nghe sự kiện cập nhật vé
-    socket.on("room_data_changed", ({ id_screening: updatedId }) => {
-      console.log(updatedId);
+    if (!screeningId || !roomId) return;
 
-      if (updatedId === dataShowtime?._id) {
-        console.log("📡 Có ghế mới được đặt! Đang tải lại...");
-        fetchShowtimes();
+    // 1. Join socket room
+    socket.emit("join_room", roomId);
+    console.log("✅ Đã vào room:", roomId);
+
+    // 2. Lắng nghe cập nhật từ server
+    const handleRoomDataChanged = ({
+      id_screening,
+    }: {
+      id_screening: string;
+    }) => {
+      console.log("📡 Nhận sự kiện room_data_changed:", id_screening);
+      if (id_screening === screeningId) {
+        console.log("🎟 Có ghế mới được đặt! Fetch lại...");
+        fetchShowtimes(); // hoặc gọi lại API ghế/suất chiếu
       }
-    });
+    };
+
+    socket.on("room_data_changed", handleRoomDataChanged);
+
+    // 3. Cleanup khi component unmount hoặc dataShowtime thay đổi
     return () => {
-      socket.off("room_data_changed");
+      socket.off("room_data_changed", handleRoomDataChanged);
     };
   }, [dataShowtime?.room._id, dataShowtime?._id]);
 
