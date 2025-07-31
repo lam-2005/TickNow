@@ -117,6 +117,7 @@ const VoucherList = ({ initData }: { initData: InitDataType }) => {
         );
       },
     },
+    { key: "user_count", title: "Đã sử dụng" },
     {
       title: "Thao tác",
       render: (row) => (

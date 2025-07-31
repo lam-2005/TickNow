@@ -208,7 +208,7 @@ const CinemaTable = ({
         />
       )}
 
-      {tableData.length >= rowsPerPage && (
+      {
         <Pagination
           currentPage={page}
           total={pagination.total}
@@ -217,7 +217,7 @@ const CinemaTable = ({
           setPage={changePage}
           setRowPerPage={changeRowPerPage}
         />
-      )}
+      }
     </>
   );
 };
