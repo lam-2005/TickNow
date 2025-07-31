@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import UpdateFormContainer from "./UpdateForm/UpdateFormContainer";
 import DetailPost from "./DetailPost/DetailPost";
 import { Voucher } from "@/interfaces/vouchers.interface";
+import { useConfirm } from "@/hooks/contexts/useConfirm";
 type InitDataType = {
   posts: PostType[];
   total: number;
@@ -32,6 +33,7 @@ const PostList = ({
   voucherList: Voucher[];
 }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const confirm = useConfirm();
   const isFirstLoad = useRef(true);
   const [showInfo, setShowInfo] = useState<boolean>(false);
   const [openUpdateForm, setOpenUpdateForm] = useState<boolean>(false);
@@ -123,7 +125,10 @@ const PostList = ({
   ];
   const handleDeletePost = async (id: string) => {
     try {
-      const sure = confirm("Bạn có muốn xóa bài viết này?");
+      const sure = await confirm({
+        title: "Bạn có muốn xóa bài viết này?",
+        content: "Hành động này sẽ không thể hoàn tác",
+      });
       if (sure) {
         await dispatch(deletePost(id));
         await dispatch(
