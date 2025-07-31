@@ -82,7 +82,7 @@ const ProfileInfo = ({ info, token }: { info: UserType; token: string }) => {
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-5 sm:gap-x-10 max-w-[500px] w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-5 sm:gap-x-10 max-w-[1000px] w-full">
         {/* Họ và tên */}
         <div className="space-y-2.5">
           <span className="block">Họ và tên</span>

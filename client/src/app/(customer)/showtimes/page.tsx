@@ -21,7 +21,6 @@ const Showtimes = async () => {
     getListCinema(),
     getListMovie(),
   ]);
-
   function getNext7DaysWithLabels() {
     const days = [];
     const today = new Date();

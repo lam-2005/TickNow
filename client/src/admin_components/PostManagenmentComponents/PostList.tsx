@@ -73,7 +73,22 @@ const PostList = ({
         );
       },
     },
-
+    {
+      key: "start_day",
+      title: "Ngày bắt đầu",
+      render(row) {
+        const date = new Date(row.start_day);
+        return <p>{date.toLocaleDateString("vi-VN")}</p>;
+      },
+    },
+    {
+      key: "start_day",
+      title: "Ngày kết thúc",
+      render(row) {
+        const date = new Date(row.end_day);
+        return <p>{date.toLocaleDateString("vi-VN")}</p>;
+      },
+    },
     {
       key: "status",
       title: "Trạng thái",

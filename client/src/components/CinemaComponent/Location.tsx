@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { Cinema } from "@/interfaces/cinema.interface";
+import env from "@/configs/environment";
 
 interface Props {
   data: Cinema;
@@ -12,7 +13,7 @@ const LocationItem = ({ data }: Props) => {
       {/* Phần ảnh nền */}
       <div className="relative w-full h-40">
         <Image
-          src="/images.jpg"
+          src={`${env.IMG_API_URL}${data.image}` || "/images.jpg"}
           alt={`Ảnh rạp ${data.name}`}
           fill
           priority

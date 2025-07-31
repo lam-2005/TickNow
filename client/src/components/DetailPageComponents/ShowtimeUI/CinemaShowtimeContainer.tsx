@@ -42,22 +42,22 @@ const CinemaShowtimeContainer = ({ data, loading }: Props) => {
   }, [getDateParams]);
 
   // dung fcasi id showtime để tải dữ liệu
+  const fetchShowtimes = async () => {
+    if (!idShowtime) return;
+
+    setLoadingShowtime(true);
+    try {
+      const res = await getScreeningList(`/${idShowtime}`);
+      setDataShowtime(res?.data);
+
+      // Cập nhật thông tin phòng chiếu vào vé
+    } catch (err) {
+      console.error("Lỗi khi lấy suất chiếu", err);
+    } finally {
+      setLoadingShowtime(false);
+    }
+  };
   useEffect(() => {
-    const fetchShowtimes = async () => {
-      if (!idShowtime) return;
-
-      setLoadingShowtime(true);
-      try {
-        const res = await getScreeningList(`/${idShowtime}`);
-        setDataShowtime(res?.data);
-
-        // Cập nhật thông tin phòng chiếu vào vé
-      } catch (err) {
-        console.error("Lỗi khi lấy suất chiếu", err);
-      } finally {
-        setLoadingShowtime(false);
-      }
-    };
     fetchShowtimes();
   }, [idShowtime]);
 
@@ -117,6 +117,7 @@ const CinemaShowtimeContainer = ({ data, loading }: Props) => {
 
       if (updatedId === dataShowtime?._id) {
         console.log("📡 Có ghế mới được đặt! Đang tải lại...");
+        fetchShowtimes();
       }
     });
     return () => {
