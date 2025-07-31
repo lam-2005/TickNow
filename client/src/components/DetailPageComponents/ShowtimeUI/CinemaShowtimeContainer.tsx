@@ -128,7 +128,12 @@ const CinemaShowtimeContainer = ({ data, loading }: Props) => {
       }
     };
 
-    socket.on("room_data_changed", handleRoomDataChanged);
+    socket.on("room_data_changed", (payload) => {
+      console.log("🔥 Nhận được sự kiện room_data_changed:", payload);
+      if (payload.id_screening === screeningId) {
+        fetchShowtimes();
+      }
+    });
 
     // 3. Cleanup khi component unmount hoặc dataShowtime thay đổi
     return () => {
