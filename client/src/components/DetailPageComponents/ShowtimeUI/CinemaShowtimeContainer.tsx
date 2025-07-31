@@ -106,14 +106,9 @@ const CinemaShowtimeContainer = ({ data, loading }: Props) => {
     }
   };
   useEffect(() => {
-    const screeningId = dataShowtime?._id;
-    const roomId = dataShowtime?.room?._id;
-
-    if (!screeningId || !roomId) return;
-
-    // 1. Join socket room
-    socket.emit("join_room", roomId);
-    console.log("✅ Đã vào room:", roomId);
+    if (!dataShowtime) return;
+    socket.emit("join_room", dataShowtime.room._id);
+    console.log("Joined room:", dataShowtime.room._id);
 
     // 2. Lắng nghe cập nhật từ server
     const handleRoomDataChanged = ({
@@ -122,24 +117,19 @@ const CinemaShowtimeContainer = ({ data, loading }: Props) => {
       id_screening: string;
     }) => {
       console.log("📡 Nhận sự kiện room_data_changed:", id_screening);
-      if (id_screening === screeningId) {
+      if (id_screening === dataShowtime?._id) {
         console.log("🎟 Có ghế mới được đặt! Fetch lại...");
         fetchShowtimes(); // hoặc gọi lại API ghế/suất chiếu
       }
     };
 
-    socket.on("room_data_changed", (payload) => {
-      console.log("🔥 Nhận được sự kiện room_data_changed:", payload);
-      if (payload.id_screening === screeningId) {
-        fetchShowtimes();
-      }
-    });
+    socket.on("room_data_changed", handleRoomDataChanged);
 
     // 3. Cleanup khi component unmount hoặc dataShowtime thay đổi
     return () => {
       socket.off("room_data_changed", handleRoomDataChanged);
     };
-  }, [dataShowtime?.room._id, dataShowtime?._id]);
+  }, [dataShowtime?.room._id, dataShowtime?._id, dataShowtime]);
 
   return (
     <>
