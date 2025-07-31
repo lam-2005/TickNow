@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Image from "next/image";
 import { Cinema } from "@/interfaces/cinema.interface";
 import env from "@/configs/environment";
@@ -8,17 +9,21 @@ interface Props {
 }
 
 const LocationItem = ({ data }: Props) => {
+  const [posterSrc, setPosterSrc] = useState(
+    data?.image ? `${env.IMG_API_URL}${data.image}` : "/images.jpg"
+  );
   return (
     <div className="w-full bg-background-card rounded-md shadow-md overflow-hidden">
       {/* Phần ảnh nền */}
       <div className="relative w-full h-40">
         <Image
-          src={`${env.IMG_API_URL}${data.image}` || "/images.jpg"}
+          src={posterSrc}
           alt={`Ảnh rạp ${data.name}`}
           fill
           priority
           className="object-cover"
           sizes="400px"
+          onError={() => setPosterSrc("/images.jpg")}
         />
       </div>
 
