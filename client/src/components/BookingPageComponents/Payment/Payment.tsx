@@ -10,6 +10,7 @@ import {
   TicketTypeLocalStorage,
 } from "@/utils/saveTicket";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -40,12 +41,17 @@ const Payment = () => {
   }, []);
 
   const handleApplyDiscount = async () => {
+    if (!user?.token) {
+      toast.warning("Vui lòng đăng nhập để thanh toán");
+      return;
+    }
     try {
       const res = await checkVoucherAPI(user?.token as string, discountCode);
       const voucherData = res?.data;
       setVoucher(voucherData);
       setDiscountValue(voucherData?.discount_type || 0);
       toast.success(`Áp dụng thành công! Giảm ${voucherData?.discount_type}%`);
+      setDiscountCode("");
     } catch (error) {
       toast.error(`${error}`);
       console.error(error);
@@ -101,22 +107,30 @@ const Payment = () => {
           </div>
         </div>
       </div>
+      <div className="flex-column gap-2">
+        <div className="w-full flex flex-col sm:flex-row gap-2.5 items-center">
+          <input
+            type="text"
+            value={discountCode}
+            onChange={(e) => setDiscountCode(e.target.value)}
+            placeholder="Mã giảm giá"
+            className="border border-gray-400 rounded-[5px] focus:border-foreground outline-none w-full px-4 py-2 transition-colors duration-300"
+          />
+          <button
+            onClick={handleApplyDiscount}
+            className="bg-primary text-white rounded-[5px] px-4 py-2 text-nowrap disabled:brightness-50 w-full sm:w-auto"
+            disabled={discountCode.trim() === ""}
+          >
+            Áp dụng
+          </button>
+        </div>
 
-      <div className="w-full flex flex-col sm:flex-row gap-2.5 items-center">
-        <input
-          type="text"
-          value={discountCode}
-          onChange={(e) => setDiscountCode(e.target.value)}
-          placeholder="Mã giảm giá"
-          className="border border-gray-400 rounded-[5px] focus:border-foreground outline-none w-full px-4 py-2 transition-colors duration-300"
-        />
-        <button
-          onClick={handleApplyDiscount}
-          className="bg-primary text-white rounded-[5px] px-4 py-2 text-nowrap disabled:brightness-50 w-full sm:w-auto"
-          disabled={discountCode.trim() === ""}
-        >
-          Áp dụng
-        </button>
+        <div className="flex gap-1">
+          <p>Bạn muốn tìm mã giảm giá?</p>
+          <Link href={"/post"} className="text-primary">
+            Xem tại đây
+          </Link>
+        </div>
       </div>
 
       <div className="w-full space-y-[15px]">

@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 
 const SignUpForm = ({ setOpenForm }: { setOpenForm: () => void }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] =
     useState<boolean>(false);
   const {
@@ -43,6 +44,7 @@ const SignUpForm = ({ setOpenForm }: { setOpenForm: () => void }) => {
   const errors = validateSignup(formData);
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     if (
       !formData.email ||
       !formData.password ||
@@ -60,6 +62,8 @@ const SignUpForm = ({ setOpenForm }: { setOpenForm: () => void }) => {
       setOpenForm();
     } catch (error) {
       toast.error(`Đăng ký thất bại: ${error}`);
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -147,7 +151,7 @@ const SignUpForm = ({ setOpenForm }: { setOpenForm: () => void }) => {
           </Input>
         </div>
         <Button
-          title="Đăng ký"
+          title={loading ? "Đang xử lí..." : "Đăng ký"}
           className="w-full uppercase"
           disabled={
             errors.email ||
@@ -155,7 +159,8 @@ const SignUpForm = ({ setOpenForm }: { setOpenForm: () => void }) => {
             errors.name ||
             errors.confirmPassword ||
             errors.phone ||
-            errors.dateOfBirth
+            errors.dateOfBirth ||
+            loading
               ? true
               : false
           }

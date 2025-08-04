@@ -9,8 +9,10 @@ import { forgetPassAPI } from "@/services/user.service";
 const ResetPasswordForm = ({ setOpenForm }: { setOpenForm: () => void }) => {
   const { touched, touchedEmail } = useTouched();
   const [email, setEmail] = useState<string>("");
+  const [loading, setLoading] = useState(false);
   const errors = validateForm({ email });
   const handleForrgetPass = async () => {
+    setLoading(true);
     if (!email) {
       toast.warning("Vui lòng nhập email của bạn");
       return;
@@ -21,6 +23,8 @@ const ResetPasswordForm = ({ setOpenForm }: { setOpenForm: () => void }) => {
     } catch (error) {
       toast.error(`Không thể gửi email: ${error}`);
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -47,9 +51,9 @@ const ResetPasswordForm = ({ setOpenForm }: { setOpenForm: () => void }) => {
           />
         </div>
         <Button
-          title="Gửi email khôi phục"
+          title={loading ? "Đang gửi..." : "Gửi email khôi phục"}
           className="w-full uppercase"
-          disabled={errors.email ? true : false}
+          disabled={errors.email || loading ? true : false}
           onClick={handleForrgetPass}
         />
       </form>

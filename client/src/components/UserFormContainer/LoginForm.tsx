@@ -7,6 +7,7 @@ import validateForm from "@/utils/validate";
 import { toast } from "react-toastify";
 import { useAuth } from "@/hooks/contexts/useAuth";
 import { useRouter } from "next/navigation";
+import Loading from "./Loading";
 const LoginForm = ({
   closeForm,
   setOpenForm,
@@ -17,6 +18,7 @@ const LoginForm = ({
   closeForm: () => void;
 }) => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const { touched, touchedEmail, touchedPassword } = useTouched();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [formData, setFormData] = useState<{ email: string; password: string }>(
@@ -32,6 +34,7 @@ const LoginForm = ({
   });
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     if (!formData.email || !formData.password) {
       toast.warning("Vui lòng nhập đầu đủ thông tin!");
       return;
@@ -62,11 +65,13 @@ const LoginForm = ({
     } catch (err) {
       toast.error(`Đăng nhập thất bại: ${err}`);
       console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
-
   return (
     <>
+      {loading && <Loading title="Đang đăng nhập..." />}
       <h2 className="text-2xl font-semibold">Đăng nhập vào TichNow</h2>
       <form action="" className="w-full space-y-5 mt-6" onSubmit={handleLogin}>
         <div className="space-y-5">
@@ -104,9 +109,9 @@ const LoginForm = ({
           </Input>
         </div>
         <Button
-          title="Đăng nhập"
+          title={loading ? "Đang đăng nhập..." : "Đăng nhập"}
           className="w-full uppercase"
-          disabled={errors.email || errors.password ? true : false}
+          disabled={errors.email || errors.password || loading ? true : false}
         />
       </form>
       <div className="text-foreground text-center space-y-1 mt-5 ">
