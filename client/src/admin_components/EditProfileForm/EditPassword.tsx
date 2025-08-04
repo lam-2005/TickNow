@@ -194,7 +194,7 @@ const EditPassword = ({ Info }: { Info: UserType }) => {
             ? true
             : false
         }
-        className="btn self-start disabled:brightness-40 disabled:cursor-not-allowed"
+        className="btn self-start disabled:brightness-70 disabled:cursor-not-allowed"
         onClick={handleEditPass}
       >
         {pending ? "Đang xử lí..." : "Xác nhận"}
