@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { UserType } from "@/interfaces/user.interface";
 const EditPassword = ({ Info }: { Info: UserType }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [pending, setPending] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] =
     useState<boolean>(false);
@@ -39,6 +40,15 @@ const EditPassword = ({ Info }: { Info: UserType }) => {
     });
   };
   const handleEditPass = async () => {
+    setPending(true);
+    if (
+      !formdata.password ||
+      !formdata.newPassword ||
+      !formdata.confirmPassword
+    ) {
+      toast.warning("Vui lòng nhập đầu đủ thông tin!");
+      return;
+    }
     try {
       await updateUserAPI(Info._id, {
         retypePassword: formdata.password,
@@ -56,6 +66,8 @@ const EditPassword = ({ Info }: { Info: UserType }) => {
     } catch (error) {
       toast.error(`Đổi mật khẩu thất bại: ${error}`);
       console.error(error);
+    } finally {
+      setPending(false);
     }
   };
 
@@ -177,14 +189,15 @@ const EditPassword = ({ Info }: { Info: UserType }) => {
           errors.confirmPassword ||
           !formdata.password ||
           !formdata.confirmPassword ||
-          !formdata.newPassword
+          !formdata.newPassword ||
+          pending
             ? true
             : false
         }
         className="btn self-start disabled:brightness-50 disabled:cursor-not-allowed"
         onClick={handleEditPass}
       >
-        Đổi mật khẩu
+        {pending ? "Đang xử lí" : "Xác nhận"}
       </button>
     </div>
   );

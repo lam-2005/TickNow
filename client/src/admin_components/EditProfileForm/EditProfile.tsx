@@ -19,7 +19,7 @@ const EditProfile = ({
   const { setAdmin } = useAuth();
   const { touched, touchedPhone, touchedFullName, touchedDateOfBirth } =
     useTouched();
-
+  const [pending, setPending] = useState(false);
   const date = new Date(infoAdmin?.year);
   const formattedDateData = date.toISOString().split("T")[0];
   const formattedDateDisplay = date.toLocaleDateString("vi-vn", {
@@ -51,6 +51,11 @@ const EditProfile = ({
     });
   };
   const handleEditProfile = async () => {
+    setPending(true);
+    if (!formData.name || !formData.phone || !formData.year) {
+      toast.warning("Vui lòng nhập đầu đủ thông tin!");
+      return;
+    }
     try {
       await updateUserAPI(Info._id, formData);
       toast.success("chỉnh sửa thành công");
@@ -68,6 +73,8 @@ const EditProfile = ({
     } catch (error) {
       toast.error("chỉnh sửa thất bại");
       console.error(error);
+    } finally {
+      setPending(false);
     }
   };
 
@@ -165,10 +172,10 @@ const EditProfile = ({
         <div className="flex gap-5 ">
           <button
             className="btn disabled:brightness-50 disabled:cursor-not-allowed"
-            disabled={errors.name || errors.phone ? true : false}
+            disabled={errors.name || errors.phone || pending ? true : false}
             onClick={handleEditProfile}
           >
-            Lưu thay đổi
+            {pending ? "Đang lưu..." : "Lưu thay đổi"}
           </button>
           <button
             className="btn  bg-error "
