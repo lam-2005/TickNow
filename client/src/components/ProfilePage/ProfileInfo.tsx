@@ -213,7 +213,13 @@ const ProfileInfo = ({ info, token }: { info: UserType; token: string }) => {
               title={pending ? "Đang lưu..." : "Lưu thay đổi"}
               className="[&_span]:text-sm disabled:brightness-50 disabled:cursor-not-allowed cursor-pointer"
               disabled={
-                errors.name || errors.phone || formdata.year || pending
+                errors.name ||
+                errors.phone ||
+                errors.year ||
+                pending ||
+                !formdata.name ||
+                !formdata.phone ||
+                !formdata.year
                   ? true
                   : false
               }

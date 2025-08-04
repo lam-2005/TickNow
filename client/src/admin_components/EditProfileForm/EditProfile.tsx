@@ -172,7 +172,17 @@ const EditProfile = ({
         <div className="flex gap-5 ">
           <button
             className="btn disabled:brightness-50 disabled:cursor-not-allowed"
-            disabled={errors.name || errors.phone || pending ? true : false}
+            disabled={
+              errors.name ||
+              errors.phone ||
+              errors.year ||
+              pending ||
+              !formData.name ||
+              !formData.phone ||
+              !formData.year
+                ? true
+                : false
+            }
             onClick={handleEditProfile}
           >
             {pending ? "Đang lưu..." : "Lưu thay đổi"}

@@ -197,7 +197,7 @@ const EditPassword = ({ Info }: { Info: UserType }) => {
         className="btn self-start disabled:brightness-50 disabled:cursor-not-allowed"
         onClick={handleEditPass}
       >
-        {pending ? "Đang xử lí" : "Xác nhận"}
+        {pending ? "Đang xử lí..." : "Xác nhận"}
       </button>
     </div>
   );

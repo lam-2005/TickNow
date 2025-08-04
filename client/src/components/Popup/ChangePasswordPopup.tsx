@@ -205,7 +205,7 @@ const ChangePasswordPopup = ({ onClose, info }: Props) => {
                 ? true
                 : false
             }
-            title={pending ? "Đang xử lí" : "Xác nhận"}
+            title={pending ? "Đang xử lí..." : "Xác nhận"}
             className="w-full"
           />
         </form>
