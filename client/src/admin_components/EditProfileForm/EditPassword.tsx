@@ -80,7 +80,7 @@ const EditPassword = ({ Info }: { Info: UserType }) => {
     <div className="flex-column gap-5">
       <div>
         <HeadingCard title="Đổi mật khẩu" />
-        <div className="space-y-2.5">
+        <div className="space-y-2.5 mt-4">
           <div className="flex text-lg items-start">
             <span className="font-bold flex-2/10">Mật khẩu hiện tại:</span>
             <div className="relative flex-column gap-2 w-full ">
@@ -194,7 +194,7 @@ const EditPassword = ({ Info }: { Info: UserType }) => {
             ? true
             : false
         }
-        className="btn self-start disabled:brightness-50 disabled:cursor-not-allowed"
+        className="btn self-start disabled:brightness-40 disabled:cursor-not-allowed"
         onClick={handleEditPass}
       >
         {pending ? "Đang xử lí..." : "Xác nhận"}

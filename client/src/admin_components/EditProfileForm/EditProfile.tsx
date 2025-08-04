@@ -171,7 +171,7 @@ const EditProfile = ({
       {isEditing ? (
         <div className="flex gap-5 ">
           <button
-            className="btn disabled:brightness-50 disabled:cursor-not-allowed"
+            className="btn disabled:brightness-40 disabled:cursor-not-allowed"
             disabled={
               errors.name ||
               errors.phone ||

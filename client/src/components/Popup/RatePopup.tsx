@@ -41,6 +41,7 @@ const RatePopup = ({
   const [comment, setComment] = useState("");
   const [hover, setHover] = React.useState(-1);
   const [loading, setLoading] = useState(false);
+  const [pending, setPending] = useState(false);
   const [detailTicket, setDetailTickket] = useState<TicketDetail | null>(null);
   useEffect(() => {
     const getDetailTicket = async () => {
@@ -66,6 +67,7 @@ const RatePopup = ({
       toast.warn("Vui lòng chọn đánh giá!");
       return;
     }
+    setPending(true);
     try {
       await ratingAPI({
         comment,
@@ -79,6 +81,8 @@ const RatePopup = ({
     } catch (error) {
       toast.error(`Có lỗi xảy ra khi Đánh giá ${error}`);
       console.error(error);
+    } finally {
+      setPending(false);
     }
   };
 
@@ -157,7 +161,11 @@ const RatePopup = ({
                 </div>
               </div>
               <div className="flex justify-end">
-                <Button title="Đánh giá" onClick={handleRating} />
+                <Button
+                  title={pending ? "Đang gửi..." : "Đánh giá"}
+                  disabled={pending}
+                  onClick={handleRating}
+                />
               </div>
             </div>
           </div>
