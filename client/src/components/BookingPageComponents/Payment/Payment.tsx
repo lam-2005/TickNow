@@ -47,7 +47,7 @@ const Payment = () => {
       toast.warning("Vui lòng đăng nhập để thanh toán");
       return;
     }
-    setLoading(true);
+
     try {
       const res = await checkVoucherAPI(user?.token as string, discountCode);
       const voucherData = res?.data;
@@ -58,8 +58,6 @@ const Payment = () => {
     } catch (error) {
       toast.error(`${error}`);
       console.error(error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -77,6 +75,7 @@ const Payment = () => {
       toast.warning("Vui lòng đăng nhập để thanh toán");
       return;
     }
+    setLoading(true);
     try {
       const res = await checkoutTicket(user.token, {
         price: ticket?.total || "",
@@ -88,6 +87,8 @@ const Payment = () => {
       if (res) router.push(res?.payUrl);
     } catch (error) {
       toast.error(`Thanh toán không thành công: ${error}`);
+    } finally {
+      setLoading(false);
     }
   };
 
