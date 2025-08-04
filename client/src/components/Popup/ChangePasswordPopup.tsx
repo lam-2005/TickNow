@@ -15,6 +15,7 @@ interface Props {
 
 const ChangePasswordPopup = ({ onClose, info }: Props) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [pending, setPending] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] =
     useState<boolean>(false);
@@ -43,6 +44,15 @@ const ChangePasswordPopup = ({ onClose, info }: Props) => {
   };
 
   const handleEditPass = async () => {
+    setPending(true);
+    if (
+      !formdata.password ||
+      !formdata.newPassword ||
+      !formdata.confirmPassword
+    ) {
+      toast.warning("Vui lòng nhập đầu đủ thông tin!");
+      return;
+    }
     try {
       await updateUserAPI(info._id, {
         retypePassword: formdata.password,
@@ -58,6 +68,8 @@ const ChangePasswordPopup = ({ onClose, info }: Props) => {
     } catch (error) {
       toast.error(`Đổi mật khẩu thất bại: ${error}`);
       console.error(error);
+    } finally {
+      setPending(false);
     }
   };
 
@@ -188,11 +200,12 @@ const ChangePasswordPopup = ({ onClose, info }: Props) => {
               errors.confirmPassword ||
               !formdata.password ||
               !formdata.confirmPassword ||
-              !formdata.newPassword
+              !formdata.newPassword ||
+              pending
                 ? true
                 : false
             }
-            title="Xác nhận"
+            title={pending ? "Đang xử lí" : "Xác nhận"}
             className="w-full"
           />
         </form>

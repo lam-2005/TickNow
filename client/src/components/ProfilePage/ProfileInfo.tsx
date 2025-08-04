@@ -22,6 +22,7 @@ export type DataEditProfileReq = {
 const ProfileInfo = ({ info, token }: { info: UserType; token: string }) => {
   const { setUser } = useAuth();
   const [infoUser, setInfoUser] = useState(info);
+  const [pending, setPending] = useState(false);
   const date = new Date(infoUser?.year);
   const formattedDateData = date.toISOString().split("T")[0];
   const formattedDateDisplay = date.toLocaleDateString("vi-vn", {
@@ -61,6 +62,11 @@ const ProfileInfo = ({ info, token }: { info: UserType; token: string }) => {
   }, [editProfile]);
 
   const handleEditProfile = async () => {
+    setPending(true);
+    if (!formdata.name || !formdata.phone || !formdata.year) {
+      toast.warning("Vui lòng nhập đầu đủ thông tin!");
+      return;
+    }
     try {
       await updateUserAPI(info._id, formdata);
       toast.success("Chỉnh sửa thành công");
@@ -77,6 +83,8 @@ const ProfileInfo = ({ info, token }: { info: UserType; token: string }) => {
     } catch (error) {
       toast.error(`Chỉnh sửa thất bại ${error}`);
       console.error(error);
+    } finally {
+      setPending(false);
     }
   };
 
@@ -202,9 +210,13 @@ const ProfileInfo = ({ info, token }: { info: UserType; token: string }) => {
         {editProfile ? (
           <>
             <Button
-              title="Lưu thay đổi"
+              title={pending ? "Đang lưu..." : "Lưu thay đổi"}
               className="[&_span]:text-sm disabled:brightness-50 disabled:cursor-not-allowed cursor-pointer"
-              disabled={errors.name || errors.phone ? true : false}
+              disabled={
+                errors.name || errors.phone || formdata.year || pending
+                  ? true
+                  : false
+              }
               onClick={handleEditProfile}
             />
             <Button
