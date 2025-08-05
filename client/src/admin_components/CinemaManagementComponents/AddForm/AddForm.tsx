@@ -101,7 +101,7 @@ const AddCinemaForm = ({
       </div>
       <div className="flex justify-end p-5 w-full bg-green rounded-2xl">
         <button
-          className="btn"
+          className="btn disabled:brightness-70" // thêm class dissable
           onClick={handleAddCinema}
           disabled={loading} // loading = true thì vô hiệu nút
         >

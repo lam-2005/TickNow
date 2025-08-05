@@ -95,7 +95,10 @@ const UpdateForm = ({
         />
       </div>
       <div className="flex justify-end p-5 w-full bg-background-card rounded-2xl">
-        <button className="btn" onClick={() => handleUpdateCinema(id)}>
+        <button
+          className="btn disabled:brightness-70"
+          onClick={() => handleUpdateCinema(id)}
+        >
           Cập nhật
         </button>
       </div>
