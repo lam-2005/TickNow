@@ -21,6 +21,7 @@ const AddCinemaForm = ({
   locations: LocationRes[];
   closeForm: () => void;
 }) => {
+  const [loading, setLoading] = useState(false); // trạng thái loading
   const dispatch = useDispatch<AppDispatch>();
   const { filter } = useSelector(dataCinema);
   const confirm = useConfirm();
@@ -39,7 +40,7 @@ const AddCinemaForm = ({
 
   const handleAddCinema = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setLoading(true); // cho nó load
     const { name, status, id_location, deatil_location } = formData;
 
     if (!name || !status || !id_location || !deatil_location) {
@@ -84,6 +85,8 @@ const AddCinemaForm = ({
     } catch (err) {
       console.error("Lỗi thêm Rạp chiếu:", err);
       toast.error(`Thêm thất bại: ${err}`);
+    } finally {
+      setLoading(false); // dừng load
     }
   };
 
@@ -97,8 +100,12 @@ const AddCinemaForm = ({
         />
       </div>
       <div className="flex justify-end p-5 w-full bg-green rounded-2xl">
-        <button className="btn" onClick={handleAddCinema}>
-          Thêm Rạp Chiếu
+        <button
+          className="btn"
+          onClick={handleAddCinema}
+          disabled={loading} // loading = true thì vô hiệu nút
+        >
+          {loading ? "Đang xử lí.." : " Thêm Rạp Chiếu"}
         </button>
       </div>
     </>
