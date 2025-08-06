@@ -24,6 +24,7 @@ const initDefault = {
 const AddForm = () => {
   const confirm = useConfirm();
   const dispatch = useDispatch<AppDispatch>();
+  const [loading, setLoading] = useState(false);
   const { filter } = useSelector(dataVoucherSelector);
   const [formData, setFormData] = useState<VoucherReq>(initDefault);
   const [errors, setErrors] = React.useState("");
@@ -67,6 +68,7 @@ const AddForm = () => {
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     if (!formData.code || !formData.discount_type || errors) {
       toast.warning("Vui lòng nhập đầy đủ và đúng thông tin!");
       return;
@@ -104,6 +106,8 @@ const AddForm = () => {
     } catch (err) {
       toast.error(`Thêm voucher thất bại: ${err}`);
       console.error(err);
+    } finally {
+      setLoading(false); // dừng load
     }
   };
 
@@ -117,8 +121,9 @@ const AddForm = () => {
         />
       </div>
       <div className="flex justify-end p-5 w-full bg-background-card rounded-2xl">
-        <button className="btn" onClick={handleAdd}>
-          Thêm voucher
+        <button className="btn disabled:brightness-70" onClick={handleAdd}
+          disabled={loading}>
+          {loading ? "Đang xử lí.." : "Thêm Voucher"}
         </button>
       </div>
     </>

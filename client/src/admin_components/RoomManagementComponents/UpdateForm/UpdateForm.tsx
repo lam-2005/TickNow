@@ -21,6 +21,7 @@ type UpdateFormProps = {
 };
 const UpdateForm = ({ cinemas, closeForm, info }: UpdateFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
+  const [loading, setLoading] = useState(false); // trạng thái loading}
   const { currentPage, filter } = useSelector(dataRoom);
   const { rowsPerPage } = usePanigation(currentPage);
   const confirm = useConfirm();
@@ -57,6 +58,7 @@ const UpdateForm = ({ cinemas, closeForm, info }: UpdateFormProps) => {
   };
   const handleUpdateRoom = async (id: string, e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true); // cho nó load
     if (!formData.column || !formData.id_cinema || !formData.row) {
       toast.warning("Vui lòng nhập đầy đủ thông tin!");
       return;
@@ -85,6 +87,8 @@ const UpdateForm = ({ cinemas, closeForm, info }: UpdateFormProps) => {
     } catch (err) {
       toast.error(`Cập nhật phòng thất bại: ${err}`);
       console.error(err);
+    } finally {
+      setLoading(false); // dừng load
     }
   };
 
@@ -99,8 +103,10 @@ const UpdateForm = ({ cinemas, closeForm, info }: UpdateFormProps) => {
         <ShowLayoutRoom formData={formData} setFormData={setFormData} />
       </div>
       <div className="flex justify-end p-5 w-full bg-background-card rounded-2xl">
-        <button className="btn" onClick={(e) => handleUpdateRoom(info._id, e)}>
-          Cập nhật
+        <button className="btn disabled:brightness-70"
+         onClick={(e) => handleUpdateRoom(info._id, e)}
+          disabled={loading}>
+          {loading ? "Đang xử lí.." : "Cập nhật Phòng Chiếu"}
         </button>
       </div>
     </>

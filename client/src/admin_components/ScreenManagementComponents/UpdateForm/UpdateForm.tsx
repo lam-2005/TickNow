@@ -25,7 +25,7 @@ const UpdateForm = ({
   movies: MovieType[];
   closeForm: () => void;
 }) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // trạng thái loading
   const confirm = useConfirm();
   const [formData, setFormData] = useState<ScreenReq>({
     id_room: "",
@@ -85,6 +85,7 @@ const UpdateForm = ({
   }, [id]);
 
   const handleUpdateScreening = async (id: string) => {
+    setLoading(true); // cho nó load
     try {
       const sure = await confirm({
         title: "Bạn có muốn cập nhật suất này?",
@@ -112,6 +113,8 @@ const UpdateForm = ({
     } catch (err) {
       toast.error(`Cập nhật suất thất bại: ${err}`);
       console.error(err);
+    } finally {
+      setLoading(false); // dừng load
     }
   };
 
@@ -132,8 +135,10 @@ const UpdateForm = ({
         />
       </div>
       <div className="flex justify-end p-5 w-full bg-background-card rounded-2xl">
-        <button className="btn" onClick={() => handleUpdateScreening(id)}>
-          Cập nhật
+        <button className="btn disabled:brightness-70"
+         onClick={() => handleUpdateScreening(id)}
+          disabled={loading}>
+          {loading ? "Đang xử lí.." : "Cập nhật Suất Chiếu"}
         </button>
       </div>
     </>

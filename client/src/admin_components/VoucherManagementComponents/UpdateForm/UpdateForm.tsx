@@ -27,6 +27,7 @@ const formatDate = (date: string | null | undefined) => {
 
 const UpdateForm = ({ voucher, closeForm }: UpdateFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
+  const [loading, setLoading] = useState(false);
   const confirm = useConfirm();
   const { currentPage, filter } = useSelector(dataVoucherSelector);
   const { rowsPerPage } = usePanigation(currentPage);
@@ -78,6 +79,7 @@ const UpdateForm = ({ voucher, closeForm }: UpdateFormProps) => {
   }, [formData.start_date, formData.end_date]);
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     if (!formData.code || !formData.discount_type || errors) {
       toast.warning("Vui lòng nhập đầy đủ và đúng thông tin!");
       return;
@@ -112,6 +114,8 @@ const UpdateForm = ({ voucher, closeForm }: UpdateFormProps) => {
     } catch (err) {
       toast.error(`Cập nhật voucher thất bại: ${err}`);
       console.error(err);
+    } finally {
+      setLoading(false); // dừng load
     }
   };
 
@@ -125,8 +129,10 @@ const UpdateForm = ({ voucher, closeForm }: UpdateFormProps) => {
         />
       </div>
       <div className="flex justify-end p-5 w-full bg-background-card rounded-2xl">
-        <button className="btn" onClick={handleUpdate}>
-          Cập nhật
+        <button className="btn disabled:brightness-70"
+         onClick={handleUpdate}
+          disabled={loading}>
+         {loading ? "Đang xử lí.." : "Cập nhật Voucher"}
         </button>
       </div>
     </>

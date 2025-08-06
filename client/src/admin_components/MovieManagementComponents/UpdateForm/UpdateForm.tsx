@@ -20,6 +20,7 @@ type Props = {
 };
 
 const UpdateForm = ({ data, onCancel, genre }: Props) => {
+  const [loading, setLoading] = useState(false); // trạng thái loading
   const dispatch = useDispatch<AppDispatch>();
   const confirm = useConfirm();
   const listOptionGenre: GenreType[] = genre.map((item) => {
@@ -52,6 +53,7 @@ const UpdateForm = ({ data, onCancel, genre }: Props) => {
 
   const handleSubmit = async (id: string, e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true); // cho nó load
     if (
       !formData.name ||
       !formData.release_date ||
@@ -95,6 +97,8 @@ const UpdateForm = ({ data, onCancel, genre }: Props) => {
     } catch (err) {
       console.error("Lỗi Cập nhật phim:", err);
       toast.error("Cập nhật phim thất bại!");
+    } finally {
+      setLoading(false); // dừng load
     }
   };
 
@@ -112,9 +116,10 @@ const UpdateForm = ({ data, onCancel, genre }: Props) => {
           onClick={(e) => {
             handleSubmit(data._id, e);
           }}
-          className="btn bg-success text-white"
+          className="btn  disabled:brightness-70 bg-success text-white"
+          disabled={loading} // loading = true thì vô hiệu nút
         >
-          Cập nhật
+          {loading ? "Đang xử lí.." : "Cập nhật Phim"}
         </button>
       </div>
     </form>

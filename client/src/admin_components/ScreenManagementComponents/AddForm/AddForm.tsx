@@ -24,6 +24,7 @@ const AddForm = ({
 }) => {
   const confirm = useConfirm();
   const dispatch = useDispatch<AppDispatch>();
+  const [loading, setLoading] = useState(false); // trạng thái loading
   const { filter } = useSelector(dataScreen);
   const [formData, setFormData] = useState<ScreenReq>({
     // dữ liệu khỏi tạo của form
@@ -58,7 +59,7 @@ const AddForm = ({
 
   const handleAddUser = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setLoading(true); // cho nó load
     if (
       //check nếu k có dwux liệu của 1 trong tất cả các input thì báo
       !formData.id_room ||
@@ -119,6 +120,8 @@ const AddForm = ({
     } catch (err) {
       console.error("Lỗi thêm Suất chiếu:", err);
       toast.error(`Thêm Suất chiếu thất bại: ${err}`);
+    } finally {
+      setLoading(false); // dừng load
     }
   };
 
@@ -135,8 +138,10 @@ const AddForm = ({
       </div>
       <div className="flex justify-end p-5 w-full bg-green rounded-2xl">
         {/* gọi hàm thêm */}
-        <button className="btn" onClick={handleAddUser}>
-          Thêm Suất chiếu
+        <button className="btn disabled:brightness-70" 
+        onClick={handleAddUser}
+          disabled={loading}>
+          {loading ? "Đang xử lí.." : "Thêm Suất Chiếu"}
         </button>
       </div>
     </>

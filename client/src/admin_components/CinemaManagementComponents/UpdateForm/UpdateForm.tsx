@@ -25,7 +25,7 @@ const UpdateForm = ({
   const { currentPage, filter } = useSelector(dataCinema);
   const { rowsPerPage } = usePanigation(currentPage);
   const confirm = useConfirm();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<CinemaReq>({
     name: "",
     image: "",
@@ -53,6 +53,7 @@ const UpdateForm = ({
   }, [id]);
 
   const handleUpdateCinema = async (id: string) => {
+    setLoading(true);
     try {
       const confirmUpdate = await confirm({
         title: "Bạn có muốn cập nhật rạp này?",
@@ -80,6 +81,8 @@ const UpdateForm = ({
     } catch (err) {
       toast.error(`Cập nhật rạp thất bại ${err}`);
       console.error(err);
+    }finally {
+      setLoading(false); // dừng load
     }
   };
 
@@ -98,8 +101,9 @@ const UpdateForm = ({
         <button
           className="btn disabled:brightness-70"
           onClick={() => handleUpdateCinema(id)}
+          disabled={loading} // loading = true thì vô hiệu nút
         >
-          Cập nhật
+          {loading ? "Đang xử lí.." : "Cập nhật Rạp Chiếu"}
         </button>
       </div>
     </>

@@ -19,6 +19,7 @@ type AddFormProps = {
 const AddForm = ({ cinemas }: AddFormProps) => {
   const confirm = useConfirm();
   const dispatch = useDispatch<AppDispatch>();
+  const [loading, setLoading] = useState(false); // trạng thái loading
   const { filter } = useSelector(dataRoom);
   const [formData, setFormData] = useState<DataRoomReq>({
     id_cinema: "",
@@ -49,6 +50,7 @@ const AddForm = ({ cinemas }: AddFormProps) => {
   };
   const handleAddRoom = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true); // cho nó load
     if (!formData.column || !formData.id_cinema || !formData.row) {
       toast.warning("Vui lòng nhập đầy đủ thông tin!");
       return;
@@ -82,6 +84,8 @@ const AddForm = ({ cinemas }: AddFormProps) => {
     } catch (err) {
       toast.error(`Thêm phòng thất bại: ${err}`);
       console.error(err);
+    }finally {
+      setLoading(false); // dừng load
     }
   };
 
@@ -96,8 +100,10 @@ const AddForm = ({ cinemas }: AddFormProps) => {
         <ShowLayoutRoom formData={formData} setFormData={setFormData} />
       </div>
       <div className="flex justify-end p-5 w-full bg-background-card rounded-2xl">
-        <button className="btn" onClick={handleAddRoom}>
-          Thêm phòng
+        <button className="btn disabled:brightness-70"
+         onClick={handleAddRoom}
+          disabled={loading}>
+          {loading ? "Đang xử lí.." : "Thêm Phòng Chiếu"}
         </button>
       </div>
     </>
