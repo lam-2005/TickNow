@@ -49,6 +49,7 @@ const UpdateForm = ({ id, closeForm, voucherList }: UpdateFormProps) => {
   }, [formData.start_day, formData.end_day]);
   useEffect(() => {
     const getPostDetail = async (id: string) => {
+      setLoading(true);
       try {
         const res = await getPostList(`/${id}`);
         const data = res?.data;
