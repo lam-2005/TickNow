@@ -10,6 +10,7 @@ import { useConfirm } from "@/hooks/contexts/useConfirm";
 
 const AddForm = ({ vouchers }: { vouchers: Voucher[] }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<DataPostReq>({
     image: null, //upfile mặc định là null
     start_day: "",
@@ -37,6 +38,7 @@ const AddForm = ({ vouchers }: { vouchers: Voucher[] }) => {
     }
   }, [formData.start_day, formData.end_day]);
   const handleAddPost = async () => {
+    setLoading(true); // cho nó load
     if (
       !formData.start_day ||
       !formData.end_day ||
@@ -75,6 +77,8 @@ const AddForm = ({ vouchers }: { vouchers: Voucher[] }) => {
     } catch (err) {
       toast.error(`Thêm bài thất bại: ${err}`);
       console.error(err);
+    } finally {
+      setLoading(false); // dừng load
     }
   };
   console.log(formData);
@@ -90,8 +94,10 @@ const AddForm = ({ vouchers }: { vouchers: Voucher[] }) => {
         />
       </div>
       <div className="flex justify-end p-5 w-full bg-background-card rounded-2xl">
-        <button className="btn" onClick={handleAddPost}>
-          Thêm bài viết
+        <button className="btn disabled:brightness-70"
+         onClick={handleAddPost}
+          disabled={loading}>
+            {loading ? "Đang xử lí.." : "Thêm bài viết"}
         </button>
       </div>
     </>
