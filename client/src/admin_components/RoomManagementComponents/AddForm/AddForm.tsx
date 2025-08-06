@@ -50,11 +50,11 @@ const AddForm = ({ cinemas }: AddFormProps) => {
   };
   const handleAddRoom = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true); // cho nó load
     if (!formData.column || !formData.id_cinema || !formData.row) {
       toast.warning("Vui lòng nhập đầy đủ thông tin!");
       return;
     }
+    setLoading(true); // cho nó load
     try {
       const sure = await confirm({
         title: "Bạn có muốn thêm phòng này?",
@@ -79,12 +79,13 @@ const AddForm = ({ cinemas }: AddFormProps) => {
         });
         toast.success("Thêm phòng thành công!");
       } else {
+        setLoading(false); // cho nó load
         return;
       }
     } catch (err) {
       toast.error(`Thêm phòng thất bại: ${err}`);
       console.error(err);
-    }finally {
+    } finally {
       setLoading(false); // dừng load
     }
   };
@@ -100,9 +101,11 @@ const AddForm = ({ cinemas }: AddFormProps) => {
         <ShowLayoutRoom formData={formData} setFormData={setFormData} />
       </div>
       <div className="flex justify-end p-5 w-full bg-background-card rounded-2xl">
-        <button className="btn disabled:brightness-70"
-         onClick={handleAddRoom}
-          disabled={loading}>
+        <button
+          className="btn disabled:brightness-70"
+          onClick={handleAddRoom}
+          disabled={loading}
+        >
           {loading ? "Đang xử lí.." : "Thêm Phòng Chiếu"}
         </button>
       </div>

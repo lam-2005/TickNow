@@ -79,7 +79,6 @@ const UpdateForm = ({ voucher, closeForm }: UpdateFormProps) => {
   }, [formData.start_date, formData.end_date]);
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     if (!formData.code || !formData.discount_type || errors) {
       toast.warning("Vui lòng nhập đầy đủ và đúng thông tin!");
       return;
@@ -88,13 +87,13 @@ const UpdateForm = ({ voucher, closeForm }: UpdateFormProps) => {
       toast.warning("Vui lòng nhập số lượng tối đa hoặc ngày bắt đầu!");
       return;
     }
+    const sure = await confirm({
+      title: "Bạn có muốn cập nhật?",
+      content: "Hành động này sẽ không thể hoàn tác",
+    });
+    if (!sure) return;
+    setLoading(true);
     try {
-      const sure = await confirm({
-        title: "Bạn có muốn cập nhật?",
-        content: "Hành động này sẽ không thể hoàn tác",
-      });
-      if (!sure) return;
-
       await dispatch(
         updateVoucher({ id: voucher._id, data: formData })
       ).unwrap();
@@ -129,10 +128,12 @@ const UpdateForm = ({ voucher, closeForm }: UpdateFormProps) => {
         />
       </div>
       <div className="flex justify-end p-5 w-full bg-background-card rounded-2xl">
-        <button className="btn disabled:brightness-70"
-         onClick={handleUpdate}
-          disabled={loading}>
-         {loading ? "Đang xử lí.." : "Cập nhật Voucher"}
+        <button
+          className="btn disabled:brightness-70"
+          onClick={handleUpdate}
+          disabled={loading}
+        >
+          {loading ? "Đang xử lí.." : "Cập nhật Voucher"}
         </button>
       </div>
     </>

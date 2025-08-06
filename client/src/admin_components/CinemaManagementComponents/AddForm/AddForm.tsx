@@ -14,13 +14,7 @@ export type LocationOptionsType = {
   id: string;
 };
 
-const AddCinemaForm = ({
-  locations,
-  closeForm,
-}: {
-  locations: LocationRes[];
-  closeForm: () => void;
-}) => {
+const AddCinemaForm = ({ locations }: { locations: LocationRes[] }) => {
   const [loading, setLoading] = useState(false); // trạng thái loading
   const dispatch = useDispatch<AppDispatch>();
   const { filter } = useSelector(dataCinema);
@@ -40,7 +34,6 @@ const AddCinemaForm = ({
 
   const handleAddCinema = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true); // cho nó load
     const { name, status, id_location, deatil_location } = formData;
 
     if (!name || !status || !id_location || !deatil_location) {
@@ -53,6 +46,7 @@ const AddCinemaForm = ({
       content: "Hành động này sẽ không thể hoàn tác",
     });
     if (!confirmAdd) return;
+    setLoading(true); // cho nó load
 
     try {
       await dispatch(
@@ -81,7 +75,6 @@ const AddCinemaForm = ({
         id_location: "",
         deatil_location: "",
       });
-      closeForm();
     } catch (err) {
       console.error("Lỗi thêm Rạp chiếu:", err);
       toast.error(`Thêm thất bại: ${err}`);

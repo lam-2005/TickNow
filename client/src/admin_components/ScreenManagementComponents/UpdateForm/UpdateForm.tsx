@@ -108,6 +108,7 @@ const UpdateForm = ({
         );
         closeForm();
       } else {
+        setLoading(false);
         return;
       }
     } catch (err) {
@@ -135,9 +136,11 @@ const UpdateForm = ({
         />
       </div>
       <div className="flex justify-end p-5 w-full bg-background-card rounded-2xl">
-        <button className="btn disabled:brightness-70"
-         onClick={() => handleUpdateScreening(id)}
-          disabled={loading}>
+        <button
+          className="btn disabled:brightness-70"
+          onClick={() => handleUpdateScreening(id)}
+          disabled={loading}
+        >
           {loading ? "Đang xử lí.." : "Cập nhật Suất Chiếu"}
         </button>
       </div>

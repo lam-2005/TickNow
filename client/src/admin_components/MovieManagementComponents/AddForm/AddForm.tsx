@@ -66,7 +66,6 @@ const AddForm = ({ genre }: AddFormProps) => {
   });
   const handleAddMovie = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     // Kiểm tra các trường bắt buộc
     if (
       !formData.name ||
@@ -89,6 +88,7 @@ const AddForm = ({ genre }: AddFormProps) => {
       content: "Hành động này sẽ không thể hoàn tác",
     });
     if (!confirmAdd) return;
+    setLoading(true);
 
     try {
       await dispatch(
@@ -126,7 +126,7 @@ const AddForm = ({ genre }: AddFormProps) => {
     } catch (err) {
       console.error("Lỗi thêm phim:", err);
       toast.error("Thêm phim thất bại!");
-    }finally {
+    } finally {
       setLoading(false); // dừng load
     }
   };
@@ -142,9 +142,11 @@ const AddForm = ({ genre }: AddFormProps) => {
         />
       </div>
       <div className="flex justify-end p-5 w-full bg-background-card rounded-2xl">
-        <button className="btn disabled:brightness-70"
-         onClick={handleAddMovie}
-         disabled={loading}>
+        <button
+          className="btn disabled:brightness-70"
+          onClick={handleAddMovie}
+          disabled={loading}
+        >
           {loading ? "Đang xử lí.." : " Thêm Phim"}
         </button>
       </div>

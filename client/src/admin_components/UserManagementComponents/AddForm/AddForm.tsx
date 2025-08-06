@@ -35,7 +35,7 @@ const AddForm = () => {
 
   const handleAddUser = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true); // cho nó load
+
     const { name, email, phone, year, password, confirmPassword } = formData;
 
     if (!name || !email || !phone || !year || !password || !confirmPassword) {
@@ -57,14 +57,13 @@ const AddForm = () => {
       toast.warning("Mật khẩu xác nhận không khớp!");
       return;
     }
-
+    const sure = await confirm({
+      title: "Bạn có muốn thêm người dùng?",
+      content: "Hành động này sẽ không thể hoàn tác",
+    });
+    if (!sure) return;
+    setLoading(true); // cho nó load
     try {
-      const sure = await confirm({
-        title: "Bạn có muốn thêm người dùng?",
-        content: "Hành động này sẽ không thể hoàn tác",
-      });
-      if (!sure) return;
-
       await dispatch(
         addUser({
           ...formData,
@@ -100,9 +99,11 @@ const AddForm = () => {
         <InputGroup formData={formData} setFormData={setFormData} />
       </div>
       <div className="flex justify-end p-5 w-full bg-green rounded-2xl">
-        <button className="btn disabled:brightness-70"
-         onClick={handleAddUser}
-          disabled={loading}>
+        <button
+          className="btn disabled:brightness-70"
+          onClick={handleAddUser}
+          disabled={loading}
+        >
           {loading ? "Đang xử lí.." : "Thêm Người Dùng"}
         </button>
       </div>

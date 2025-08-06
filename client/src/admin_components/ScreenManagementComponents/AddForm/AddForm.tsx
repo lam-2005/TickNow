@@ -59,7 +59,6 @@ const AddForm = ({
 
   const handleAddUser = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true); // cho nó load
     if (
       //check nếu k có dwux liệu của 1 trong tất cả các input thì báo
       !formData.id_room ||
@@ -79,6 +78,7 @@ const AddForm = ({
       content: "Hành động này sẽ không thể hoàn tác",
     }); //thông báo
     if (!confirmAdd) return;
+    setLoading(true); // cho nó load
     try {
       /*nếu ok thì dispatch action thêm dữ liệu với formdata. Lưu ý nếu muốn lưu mọi thứ từ formdata mà k cần thay đổi gì thì chỉ cần addScreen(formdata), còn nếu muons thay đổi 1 chút như là muốn giá của suất là dang số (nếu be yêu càn price phải là số) thì 
       addScreen({
@@ -138,9 +138,11 @@ const AddForm = ({
       </div>
       <div className="flex justify-end p-5 w-full bg-green rounded-2xl">
         {/* gọi hàm thêm */}
-        <button className="btn disabled:brightness-70" 
-        onClick={handleAddUser}
-          disabled={loading}>
+        <button
+          className="btn disabled:brightness-70"
+          onClick={handleAddUser}
+          disabled={loading}
+        >
           {loading ? "Đang xử lí.." : "Thêm Suất Chiếu"}
         </button>
       </div>

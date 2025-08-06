@@ -53,13 +53,13 @@ const UpdateForm = ({
   }, [id]);
 
   const handleUpdateCinema = async (id: string) => {
-    setLoading(true);
     try {
       const confirmUpdate = await confirm({
         title: "Bạn có muốn cập nhật rạp này?",
         content: "Hành động này sẽ không thể hoàn tác",
       });
       if (!confirmUpdate) return;
+      setLoading(true);
       const dataToUpdate = {
         ...formData,
         image: formData.image ?? "",
@@ -81,7 +81,7 @@ const UpdateForm = ({
     } catch (err) {
       toast.error(`Cập nhật rạp thất bại ${err}`);
       console.error(err);
-    }finally {
+    } finally {
       setLoading(false); // dừng load
     }
   };

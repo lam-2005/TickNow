@@ -16,7 +16,7 @@ const AddCinemaBtn = ({ locations }: { locations: LocationRes[] }) => {
           title="Thêm rạp chiếu mới"
           closeForm={() => setOpenForm(false)}
         >
-          <AddCinemaForm locations={locations} closeForm={() => setOpenForm(false)} />
+          <AddCinemaForm locations={locations} />
         </PopupContainer>
       )}
     </>

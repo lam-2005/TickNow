@@ -53,7 +53,6 @@ const UpdateForm = ({ data, onCancel, genre }: Props) => {
 
   const handleSubmit = async (id: string, e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true); // cho nó load
     if (
       !formData.name ||
       !formData.release_date ||
@@ -74,6 +73,7 @@ const UpdateForm = ({ data, onCancel, genre }: Props) => {
       content: "Hành động này sẽ không thể hoàn tác",
     });
     if (!confirmAdd) return;
+    setLoading(true); // cho nó load
     try {
       await dispatch(
         updateMovie({
