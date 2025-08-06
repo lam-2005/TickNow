@@ -53,13 +53,13 @@ const UpdateForm = ({
   }, [id]);
 
   const handleUpdateCinema = async (id: string) => {
+    const confirmUpdate = await confirm({
+      title: "Bạn có muốn cập nhật rạp này?",
+      content: "Hành động này sẽ không thể hoàn tác",
+    });
+    if (!confirmUpdate) return;
+    setLoading(true);
     try {
-      const confirmUpdate = await confirm({
-        title: "Bạn có muốn cập nhật rạp này?",
-        content: "Hành động này sẽ không thể hoàn tác",
-      });
-      if (!confirmUpdate) return;
-      setLoading(true);
       const dataToUpdate = {
         ...formData,
         image: formData.image ?? "",

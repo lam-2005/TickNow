@@ -38,7 +38,6 @@ const AddForm = ({ vouchers }: { vouchers: Voucher[] }) => {
     }
   }, [formData.start_day, formData.end_day]);
   const handleAddPost = async () => {
-    setLoading(true); // cho nó load
     if (
       !formData.start_day ||
       !formData.end_day ||
@@ -48,6 +47,7 @@ const AddForm = ({ vouchers }: { vouchers: Voucher[] }) => {
       toast.warning("Vui lòng nhập đầy đủ thông tin bắt buộc!");
       return;
     }
+    setLoading(true); // cho nó load
     try {
       const sure = await confirm({
         title: "Bạn có muốn thêm bài viết này?",
@@ -72,6 +72,7 @@ const AddForm = ({ vouchers }: { vouchers: Voucher[] }) => {
         });
         toast.success("Thêm bài thành công!");
       } else {
+        setLoading(false);
         return;
       }
     } catch (err) {
@@ -94,10 +95,12 @@ const AddForm = ({ vouchers }: { vouchers: Voucher[] }) => {
         />
       </div>
       <div className="flex justify-end p-5 w-full bg-background-card rounded-2xl">
-        <button className="btn disabled:brightness-70"
-         onClick={handleAddPost}
-          disabled={loading}>
-            {loading ? "Đang xử lí.." : "Thêm bài viết"}
+        <button
+          className="btn disabled:brightness-70"
+          onClick={handleAddPost}
+          disabled={loading}
+        >
+          {loading ? "Đang xử lí.." : "Thêm bài viết"}
         </button>
       </div>
     </>

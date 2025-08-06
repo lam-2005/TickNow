@@ -21,6 +21,7 @@ const UpdateForm = ({ id, closeForm, voucherList }: UpdateFormProps) => {
   const { rowsPerPage } = usePanigation(currentPage);
   const confirm = useConfirm();
   const [loading, setLoading] = useState(false);
+  const [pending, setPending] = useState(false);
   const [formData, setFormData] = useState<DataPostReq>({
     image: null,
     start_day: "",
@@ -78,7 +79,7 @@ const UpdateForm = ({ id, closeForm, voucherList }: UpdateFormProps) => {
     );
 
   const handleUpdatePost = async (id: string) => {
-    setLoading(true); // cho nó load
+    setPending(true); // cho nó load
     try {
       const sure = await confirm({
         title: "Bạn có muốn cập nhật bài viết này?",
@@ -97,13 +98,14 @@ const UpdateForm = ({ id, closeForm, voucherList }: UpdateFormProps) => {
         toast.success("Cập nhật bài viết thành công!");
         closeForm();
       } else {
+        setPending(false);
         return;
       }
     } catch (err) {
       toast.error(`Cập nhật bài viết thất bại: ${err}`);
       console.error(err);
     } finally {
-      setLoading(false); // dừng load
+      setPending(false); // dừng load
     }
   };
 
@@ -118,10 +120,12 @@ const UpdateForm = ({ id, closeForm, voucherList }: UpdateFormProps) => {
         />
       </div>
       <div className="flex justify-end p-5 w-full bg-background-card rounded-2xl">
-        <button className="btn disabled:brightness-70"
-         onClick={() => handleUpdatePost(id)}
-          disabled={loading}>
-          {loading ? "Đang xử lí.." : "Cập nhật bài viết"}
+        <button
+          className="btn disabled:brightness-70"
+          onClick={() => handleUpdatePost(id)}
+          disabled={pending}
+        >
+          {pending ? "Đang xử lí.." : "Cập nhật bài viết"}
         </button>
       </div>
     </>
