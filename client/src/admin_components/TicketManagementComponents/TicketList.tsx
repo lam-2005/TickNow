@@ -79,7 +79,15 @@ const TicketList = ({ initData }: { initData: InitDataType }) => {
 
   const col: Column<Ticket>[] = [
     { key: "userName", title: "Tên khách hàng" },
-    { key: "price", title: "Giá vé" },
+    {
+      key: "price",
+      title: "Giá vé",
+      render: (row) => (
+        <p>
+          {row.price !== undefined ? row.price.toLocaleString("vi-VN") : "N/A"}
+        </p>
+      ),
+    },
     {
       title: "Rạp",
       render: (row) => row.cinema?.name || "Không có",
