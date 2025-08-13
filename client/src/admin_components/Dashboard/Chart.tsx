@@ -14,7 +14,7 @@ const Chart = ({
   children?: React.ReactNode;
   xLabels?: string[];
   yLabels?: number[];
-  yearSelected?: number;
+  yearSelected?: number | string;
   loading?: boolean;
   subtitle?: React.ReactNode;
 }) => {
@@ -46,7 +46,7 @@ const Chart = ({
             {
               scaleType: "band",
               data: xLabels,
-              label: `Tháng (${yearSelected})`,
+              label: `${yearSelected}`,
             },
           ]}
           yAxis={[{ width: 90, label: "Doanh thu (VNĐ)" }]}

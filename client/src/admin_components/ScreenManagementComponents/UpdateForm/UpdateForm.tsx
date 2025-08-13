@@ -26,6 +26,7 @@ const UpdateForm = ({
   closeForm: () => void;
 }) => {
   const [loading, setLoading] = useState(false); // trạng thái loading
+  const [pending, setPending] = useState(false); // trạng thái loading
   const confirm = useConfirm();
   const [formData, setFormData] = useState<ScreenReq>({
     id_room: "",
@@ -51,6 +52,7 @@ const UpdateForm = ({
   // }, [formData.date]);
   useEffect(() => {
     const getScreengDetail = async (id: string) => {
+      setLoading(true);
       try {
         const res = await getScreeningList(`/${id}`);
         const data: DetailScreening = res?.data;
@@ -85,7 +87,7 @@ const UpdateForm = ({
   }, [id]);
 
   const handleUpdateScreening = async (id: string) => {
-    setLoading(true); // cho nó load
+    setPending(true); // cho nó load
     try {
       const sure = await confirm({
         title: "Bạn có muốn cập nhật suất này?",
@@ -108,14 +110,14 @@ const UpdateForm = ({
         );
         closeForm();
       } else {
-        setLoading(false);
+        setPending(false);
         return;
       }
     } catch (err) {
       toast.error(`Cập nhật suất thất bại: ${err}`);
       console.error(err);
     } finally {
-      setLoading(false); // dừng load
+      setPending(false); // dừng load
     }
   };
 
@@ -139,9 +141,9 @@ const UpdateForm = ({
         <button
           className="btn disabled:brightness-70"
           onClick={() => handleUpdateScreening(id)}
-          disabled={loading}
+          disabled={pending}
         >
-          {loading ? "Đang xử lí.." : "Cập nhật Suất Chiếu"}
+          {pending ? "Đang xử lí.." : "Cập nhật Suất Chiếu"}
         </button>
       </div>
     </>

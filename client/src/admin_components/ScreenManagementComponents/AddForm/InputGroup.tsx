@@ -141,27 +141,29 @@ const InputGroup = ({
         </select>
       </div>
 
-      <div>
-        <label className="block mb-1 text-sm font-medium">
-          Chọn phòng <span className="text-red-500">*</span>
-        </label>
-        <select
-          value={formData.id_room}
-          onChange={(e) =>
-            setFormData({ ...formData, id_room: e.target.value })
-          }
-          className="border p-2 rounded w-full"
-          disabled={!selectedCinema}
-        >
-          <option value="">-- Chọn phòng --</option>
-          {selectedCinema &&
-            selectedCinema.rooms.map((room) => (
-              <option key={room._id} value={room._id}>
-                Phòng {room.code_room}
-              </option>
-            ))}
-        </select>
-      </div>
+      {selectedCinema && (
+        <div>
+          <label className="block mb-1 text-sm font-medium">
+            Chọn phòng <span className="text-red-500">*</span>
+          </label>
+          <select
+            value={formData.id_room}
+            onChange={(e) =>
+              setFormData({ ...formData, id_room: e.target.value })
+            }
+            className="border p-2 rounded w-full"
+            disabled={!selectedCinema}
+          >
+            <option value="">-- Chọn phòng --</option>
+            {selectedCinema &&
+              selectedCinema.rooms.map((room) => (
+                <option key={room._id} value={room._id}>
+                  Phòng {room.code_room}
+                </option>
+              ))}
+          </select>
+        </div>
+      )}
     </div>
   );
 };
