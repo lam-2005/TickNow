@@ -16,6 +16,8 @@ export interface Ticket {
   id_voucher: string;
   cinema: Cinema;
   room: { id: string; code: string };
+  movie?: string;
+  updatedAt?: string;
 }
 
 export interface TicketDetail {

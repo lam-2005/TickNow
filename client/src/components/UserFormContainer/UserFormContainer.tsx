@@ -20,8 +20,6 @@ const UserFormContainer = ({
         onClick={setOpenUserFormContainer}
       ></div>
       <div
-        data-aos="slide-left"
-        data-aos-mirror={false}
         className={`fixed  w-[488px] h-screen bg-background-card top-0 right-0 p-7.5 max-[601px]:w-full flex-column items-center overflow-y-auto no-scrollbar`}
       >
         <button

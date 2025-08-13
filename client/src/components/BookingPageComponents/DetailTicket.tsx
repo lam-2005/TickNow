@@ -4,11 +4,13 @@ import Button from "../Button/Button";
 import { useRouter } from "next/navigation";
 import { getTicket, TicketTypeLocalStorage } from "@/utils/saveTicket";
 import { toast } from "react-toastify";
+import { useAuth } from "@/hooks/contexts/useAuth";
 
 const COUNTDOWN_DURATION = 5 * 60; // 5 phút tính bằng giây
 
 const DetailTicket = () => {
   const router = useRouter();
+  const { user } = useAuth();
   const [ticket, setTicket] = useState<TicketTypeLocalStorage | null>(null);
   const [timeLeft, setTimeLeft] = useState<number>(COUNTDOWN_DURATION);
 
@@ -79,6 +81,10 @@ const DetailTicket = () => {
   };
 
   const handleRedirectCheckoutPage = () => {
+    if (!user?.token) {
+      toast.warning("Vui lòng đăng nhập để thanh toán");
+      return;
+    }
     if (ticket?.seats.length === 0) {
       toast.warning("Vui lòng chọn ghế để tiếp tục");
       return;

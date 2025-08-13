@@ -16,6 +16,7 @@ export type RoomManagementState = ReduxInitStateDefaultType & {
     movieId: string;
     date: string;
     type: string;
+    screening: string;
   };
 };
 const initialState: RoomManagementState = {
@@ -29,6 +30,7 @@ const initialState: RoomManagementState = {
     movieId: "",
     date: "",
     type: "",
+    screening: "",
   },
   ...reduxInitStateDefault,
 };
@@ -42,17 +44,26 @@ export const fetchTicket = createAsyncThunk(
       movieId = "",
       date = "",
       type = "",
+      screening = "",
     }: {
       page: number;
       limit: number;
       movieId?: string;
       date?: string;
       type?: string;
+      screening?: string;
     },
     thunkAPI
   ) => {
     try {
-      const res = await getTicketData(page, limit, movieId, date, type);
+      const res = await getTicketData(
+        page,
+        limit,
+        movieId,
+        date,
+        type,
+        screening
+      );
       return res;
     } catch {
       return thunkAPI.rejectWithValue("Không thể tải danh sách vé.");
@@ -86,6 +97,7 @@ const ticketSlice = createSlice({
         state.filter.movieId = action.payload.movieId;
         state.filter.date = action.payload.date;
         state.filter.type = action.payload.type;
+        state.filter.screening = action.payload.screening;
         state.loading = false;
         state.error = null;
       })

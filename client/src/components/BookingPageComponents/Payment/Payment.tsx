@@ -135,7 +135,7 @@ const Payment = () => {
 
           <div className="flex gap-1">
             <p>Bạn muốn tìm mã giảm giá?</p>
-            <Link href={"/post"} className="text-primary">
+            <Link href={"/post"} target="_blank" className="text-primary">
               Xem tại đây
             </Link>
           </div>

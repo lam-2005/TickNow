@@ -13,10 +13,11 @@ export const getTicketData = async (
   limit: number,
   movieId: string = "",
   date: string = "",
-  type: string = ""
+  type: string = "",
+  screening: string = ""
 ) => {
   const res = await getTicketList(
-    `?page=${page}&limit=${limit}&movieId=${movieId}&date=${date}&type=${type}`
+    `?page=${page}&limit=${limit}&movieId=${movieId}&date=${date}&type=${type}&screening=${screening}`
   );
   return {
     ticket: res?.data.tickets,
@@ -26,6 +27,7 @@ export const getTicketData = async (
     movieId,
     date,
     type,
+    screening,
   };
 };
 interface CheckoutResponse {

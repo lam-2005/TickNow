@@ -10,6 +10,8 @@ import { toast } from "react-toastify";
 import dataTicket from "@/utils/redux/selectors/ticketSelector";
 import { fetchTicket } from "@/utils/redux/slices/ticketSlice";
 import { MovieOptionsType } from "@/admin_components/ScreenManagementComponents/AddForm/AddForm";
+import { getTicketList } from "@/services/ticket.service";
+import { Ticket } from "@/interfaces/ticket.interface";
 
 const FilterItem = ({
   title,
@@ -42,13 +44,62 @@ const FilterPopup = ({
       id: item._id,
     };
   });
+  const [idShowtime, setIdShowtime] = useState("");
   const [idMovies, setIdMovie] = useState<string>(""); // nếu lọc nhiêu thì [] con 1 thì cứ ""
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [type, setType] = useState<number[]>([]);
   const [dateRange, setDateRange] = useState<string[]>([]);
   const [error, setError] = useState(""); // kiểm lỗi
+  const [listShowtime, setListShowtime] = useState<Ticket[]>([]);
+  const [pendingListShowtime, setPendingListShowtime] = useState(false);
+  useEffect(() => {
+    const getListShowtime = async () => {
+      setPendingListShowtime(true);
+      setListShowtime([]);
+      // setIdShowtime("");
+      if (dateRange.length === 0) return;
+      try {
+        const res = await getTicketList(`?date=${dateRange.join(",")}`);
+        const result = res?.data.tickets;
+        const newList: Ticket[] = result
+          .reduce((acc: Ticket[], cur: Ticket) => {
+            function getDateOnly(dateStr: string) {
+              return new Date(dateStr).toLocaleDateString("vn-vi");
+            }
 
+            if (
+              !acc.some(
+                (i) =>
+                  i.id_screening === cur.id_screening &&
+                  getDateOnly(i.updatedAt as string) ===
+                    getDateOnly(cur.updatedAt as string)
+              )
+            )
+              acc.push(cur);
+            return acc;
+          }, [])
+          .sort((a: Ticket, b: Ticket) => {
+            // So sánh theo ngày updatedAt
+            const dateA = new Date(a.updatedAt as string).setHours(0, 0, 0, 0);
+            const dateB = new Date(b.updatedAt as string).setHours(0, 0, 0, 0);
+            if (dateA !== dateB) return dateA - dateB;
+
+            // 2️⃣ Ngày giống nhau → so theo giờ chiếu screeningTime
+            const [hourA, minA] = a.screeningTime.split(":").map(Number);
+            const [hourB, minB] = b.screeningTime.split(":").map(Number);
+            return hourA - hourB || minA - minB;
+          });
+
+        setListShowtime(newList);
+      } catch (error) {
+        console.error("Loi lay du lieu", error);
+      } finally {
+        setPendingListShowtime(false);
+      }
+    };
+    getListShowtime();
+  }, [dateRange]);
   useEffect(() => {
     setError("");
 
@@ -79,7 +130,9 @@ const FilterPopup = ({
   const handleMovieChange = (value: MovieOptionsType | null) => {
     setIdMovie(value ? value.id : "");
   };
-
+  const handleShowtimeChange = (value: Ticket | null) => {
+    setIdShowtime(value ? value.id_screening : "");
+  };
   const dispatch = useDispatch<AppDispatch>();
   const { filter } = useSelector(dataTicket);
   const handleGetStatus = (id: number) => {
@@ -90,6 +143,7 @@ const FilterPopup = ({
 
   useEffect(() => {
     setIdMovie(filter.movieId || "");
+    setIdShowtime(filter.screening || "");
     setType(
       filter.type
         ? filter.type
@@ -135,6 +189,7 @@ const FilterPopup = ({
         movieId: idMovies,
         type: type.join(","),
         date: dateRange.join(","),
+        screening: idShowtime,
       })
     );
     dispatch(
@@ -142,6 +197,7 @@ const FilterPopup = ({
         movieId: idMovies,
         type: type.join(","),
         date: dateRange.join(","),
+        screening: idShowtime,
       })
     );
     closeForm();
@@ -153,7 +209,9 @@ const FilterPopup = ({
     setToDate("");
     setDateRange([]);
     setError("");
+    setIdShowtime("");
   };
+
   return (
     <PopupContainer title="Bộ lọc" closeForm={closeForm}>
       <div className="p-5 space-y-5 overflow-hidden overflow-y-auto">
@@ -244,6 +302,56 @@ const FilterPopup = ({
             />
           </div>
         </div>
+        {dateRange.length > 0 && (
+          <div className="flex gap-4 flex-col">
+            <h1 className="text-xl font-bold">Chọn suất:</h1>
+            <div className="flex flex-wrap gap-4">
+              <Autocomplete
+                id="checkboxes-tags-demo"
+                className="w-full"
+                options={listShowtime}
+                loading={pendingListShowtime}
+                disableCloseOnSelect
+                isOptionEqualToValue={(option, value) =>
+                  option._id === value._id
+                }
+                getOptionLabel={(option) => {
+                  const date = new Date(
+                    option.updatedAt as string
+                  ).toLocaleDateString("vi-vn", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                  });
+                  return `${date}, ${option.screeningTime} - ${option.movie}`;
+                }}
+                value={
+                  listShowtime.find(
+                    (option) => option.id_screening === idShowtime
+                  ) || null
+                }
+                renderOption={(props, option) => {
+                  const date = new Date(
+                    option.updatedAt as string
+                  ).toLocaleDateString("vi-vn", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                  });
+                  return (
+                    <li {...props} key={option._id}>
+                      {`${date}, ${option.screeningTime} - ${option.movie}`}
+                    </li>
+                  );
+                }}
+                onChange={(_, values) => handleShowtimeChange(values)}
+                renderInput={(params) => (
+                  <TextField {...params} label="Chọn Suất" placeholder="Suất" />
+                )}
+              />
+            </div>
+          </div>
+        )}
       </div>
       <div className="flex justify-end p-5 w-full bg-background-card rounded-2xl gap-4">
         <button

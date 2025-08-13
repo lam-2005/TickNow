@@ -54,6 +54,7 @@ const TicketList = ({ initData }: { initData: InitDataType }) => {
           date: filter.date,
           movieId: filter.movieId,
           type: filter.type,
+          screening: filter.screening,
         })
       );
     } else {
@@ -64,6 +65,7 @@ const TicketList = ({ initData }: { initData: InitDataType }) => {
           date: filter.date,
           movieId: filter.movieId,
           type: filter.type,
+          screening: filter.screening,
         })
       );
     }
@@ -75,6 +77,7 @@ const TicketList = ({ initData }: { initData: InitDataType }) => {
     filter.date,
     filter.movieId,
     filter.type,
+    filter.screening,
   ]);
 
   const col: Column<Ticket>[] = [
@@ -168,6 +171,7 @@ const TicketList = ({ initData }: { initData: InitDataType }) => {
           date: filter.date,
           movieId: filter.movieId,
           type: filter.type,
+          screening: filter.screening,
         })
       );
     } catch (error) {
