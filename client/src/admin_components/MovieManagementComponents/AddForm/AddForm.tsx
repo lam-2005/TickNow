@@ -125,7 +125,7 @@ const AddForm = ({ genre }: AddFormProps) => {
       });
     } catch (err) {
       console.error("Lỗi thêm phim:", err);
-      toast.error("Thêm phim thất bại!");
+      toast.error(`Thêm phim thất bại! ${err}`);
     } finally {
       setLoading(false); // dừng load
     }

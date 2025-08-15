@@ -96,7 +96,7 @@ const UpdateForm = ({ data, onCancel, genre }: Props) => {
       onCancel();
     } catch (err) {
       console.error("Lỗi Cập nhật phim:", err);
-      toast.error("Cập nhật phim thất bại!");
+      toast.error(`Cập nhật phim thất bại: ${err}`);
     } finally {
       setLoading(false); // dừng load
     }
