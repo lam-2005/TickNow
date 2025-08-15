@@ -136,26 +136,28 @@ const InputGroup = ({
           onChange={(e) => setFormData({ ...formData, price: e.target.value })}
         />
       </div>
-      <div>
-        <label className="block mb-1 text-sm font-medium">
-          Chọn rạp <span className="text-red-500">*</span>
-        </label>
-        <select
-          value={selectedCinemaId}
-          onChange={(e) => {
-            setSelectedCinemaId(e.target.value);
-            setFormData({ ...formData, id_room: "" });
-          }}
-          className="border p-2 rounded w-full"
-        >
-          <option value="">-- Chọn rạp --</option>
-          {getCinema.map((cinema) => (
-            <option key={cinema.id_cinema} value={cinema.id_cinema}>
-              {cinema.cinema_name}
-            </option>
-          ))}
-        </select>
-      </div>
+      {formData.id_movie && formData.time_start && formData.date && (
+        <div>
+          <label className="block mb-1 text-sm font-medium">
+            Chọn rạp <span className="text-red-500">*</span>
+          </label>
+          <select
+            value={selectedCinemaId}
+            onChange={(e) => {
+              setSelectedCinemaId(e.target.value);
+              setFormData({ ...formData, id_room: "" });
+            }}
+            className="border p-2 rounded w-full"
+          >
+            <option value="">-- Chọn rạp --</option>
+            {getCinema.map((cinema) => (
+              <option key={cinema.id_cinema} value={cinema.id_cinema}>
+                {cinema.cinema_name}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
 
       {selectedCinemaId && (
         <div>
