@@ -52,6 +52,8 @@ const MovieTable = ({
   const [display, setDisplay] = useState("1");
   const handleChange = (event: SelectChangeEvent) => {
     setDisplay(event.target.value as string);
+    setStartDate("");
+    setEndDate("");
   };
 
   const condition = useMemo(() => {
