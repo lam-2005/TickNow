@@ -1,12 +1,19 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Pagination from "@/admin_components/Table/Pagination";
 import Table, { Column } from "@/admin_components/Table/Table";
 import usePanigation from "@/hooks/usePanigation";
 import { getDashboardData } from "@/services/dashboard.service";
+// import { LineChart } from "@mui/x-charts/LineChart";
 import { BarChart } from "@mui/x-charts/BarChart";
 import DateRangePicker from "../DateRange";
 import dynamic from "next/dynamic";
+import {
+  FormControl,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 const Chart = dynamic(() => import("../Chart"), {
   ssr: false,
   loading: () => <p className="text-center">Đang tải biểu đồ...</p>,
@@ -42,6 +49,18 @@ const MovieTable = ({
   const movieNames = tableDataChart.map((item) => item.movieName);
   const revenues = tableDataChart.map((item) => item.totalRevenue);
 
+  const [display, setDisplay] = useState("1");
+  const handleChange = (event: SelectChangeEvent) => {
+    setDisplay(event.target.value as string);
+  };
+
+  const condition = useMemo(() => {
+    if (display === "2") return "&month=0";
+    else if (display === "3") return "&month=-1";
+    else if (display === "4") return "&sort=true";
+    else return "";
+  }, [display]);
+
   const validateDates = (): string => {
     if (startDate && endDate) {
       const start = new Date(startDate);
@@ -66,9 +85,9 @@ const MovieTable = ({
       try {
         let res;
         if (!startDate && !endDate)
-          res = await getDashboardData(`/movieDay?start=&end=`);
+          res = await getDashboardData(`/movieDay?start=&end=${condition}`);
         res = await getDashboardData(
-          `/movieDay?start=${startDate}&end=${endDate}`
+          `/movieDay?start=${startDate}&end=${endDate}${condition}`
         );
         setTableDataChart(res.data);
       } catch (err) {
@@ -79,7 +98,7 @@ const MovieTable = ({
     };
 
     fetchChartData();
-  }, [startDate, endDate, errors]);
+  }, [startDate, endDate, errors, display]);
 
   useEffect(() => {
     const fetchTableData = async () => {
@@ -89,11 +108,15 @@ const MovieTable = ({
         let res;
         if (!startDate && !endDate)
           res = await getDashboardData(
-            `/movieDay?start=&end=&page=${page}&limit=${rowsPerPage}`
+            `/movieDay?start=&end=&page=${page}&limit=${
+              display === "4" ? "10" : rowsPerPage
+            }${condition}`
           );
 
         res = await getDashboardData(
-          `/movieDay?start=${startDate}&end=${endDate}&page=${page}&limit=${rowsPerPage}`
+          `/movieDay?start=${startDate}&end=${endDate}&page=${page}&limit=${
+            display === "4" ? "10" : rowsPerPage
+          }${condition}`
         );
         setTableData(res.data);
         setPagination(res.pagination);
@@ -105,7 +128,7 @@ const MovieTable = ({
     };
 
     fetchTableData();
-  }, [page, rowsPerPage, startDate, endDate, errors]);
+  }, [page, rowsPerPage, startDate, endDate, errors, display]);
 
   const columns: Column<DataType>[] = [
     { key: "movieName", title: "Tên phim" },
@@ -124,11 +147,30 @@ const MovieTable = ({
   ];
 
   const totalPages = Math.ceil(pagination.total / pagination.limit);
+  console.log(condition, display);
 
   return (
     <>
+      <div className="flex gap-4">
+        <p>Hiển thị:</p>
+        <FormControl>
+          <Select
+            size="small"
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={display}
+            onChange={handleChange}
+          >
+            <MenuItem value={"1"}>Tất cả phim</MenuItem>
+            <MenuItem value={"2"}>Tháng này</MenuItem>
+            <MenuItem value={"3"}>Tháng trước</MenuItem>
+            <MenuItem value={"4"}>Top 10 doanh thu</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
       <div className="flex gap-5">
         <DateRangePicker
+          display={display}
           errors={errors}
           endDate={endDate}
           setEndDate={setEndDate}
@@ -139,7 +181,7 @@ const MovieTable = ({
 
       <div className="flex gap-5 mt-5">
         <div className="flex-1">
-          <Chart title="Số vé bán ra theo phim">
+          <Chart title="Doanh thu theo phim">
             <BarChart
               loading={loadingChart}
               height={350}
@@ -148,16 +190,32 @@ const MovieTable = ({
                   data: loadingChart ? [] : ticketCounts,
                   label: "Số vé bán ra",
                   color: "#007bff",
+                  yAxisId: "leftAxisId",
+                },
+                {
+                  data: loadingChart ? [] : revenues,
+                  label: "Doanh thu",
+                  color: "#e91224",
+                  yAxisId: "rightAxisId",
                 },
               ]}
               xAxis={[
                 {
                   data: movieNames,
+                  scaleType: "band",
                   tickLabelStyle: { angle: -35 },
-                  height: 70,
+                  height: 50,
                 },
               ]}
-              yAxis={[{ width: 50 }]}
+              yAxis={[
+                { id: "leftAxisId", width: 50, label: "Số vé bán ra" },
+                {
+                  id: "rightAxisId",
+                  position: "right",
+                  width: 90,
+                  label: "Doanh thu (VNĐ)",
+                },
+              ]}
               localeText={{
                 loading: "Đang tải dữ liệu...",
                 noData: "Không có dữ liệu",
@@ -166,7 +224,7 @@ const MovieTable = ({
           </Chart>
         </div>
 
-        <div className="flex-1">
+        {/* <div className="flex-1">
           <Chart title="Doanh thu theo phim">
             <BarChart
               loading={loadingChart}
@@ -192,7 +250,7 @@ const MovieTable = ({
               }}
             />
           </Chart>
-        </div>
+        </div> */}
       </div>
 
       {loading ? (
@@ -207,7 +265,7 @@ const MovieTable = ({
         />
       )}
 
-      {
+      {display !== "4" && (
         <Pagination
           currentPage={page}
           total={pagination.total}
@@ -216,7 +274,7 @@ const MovieTable = ({
           setPage={changePage}
           setRowPerPage={changeRowPerPage}
         />
-      }
+      )}
     </>
   );
 };

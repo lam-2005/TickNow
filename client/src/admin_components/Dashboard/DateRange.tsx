@@ -9,16 +9,40 @@ export default function DateRangePicker({
   endDate,
   setEndDate,
   errors,
+  display,
 }: {
   startDate: string;
   setStartDate: (value: string) => void;
   endDate: string;
   setEndDate: (value: string) => void;
   errors: string;
+  display: string;
 }) {
+  const today = new Date();
+
+  let limitStartDate = "";
+  let limitEndDate = "";
+
+  if (display === "2") {
+    // Tháng này
+    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+    const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    limitStartDate = firstDay.toISOString().split("T")[0];
+    limitEndDate = lastDay.toISOString().split("T")[0];
+  } else if (display === "3") {
+    // Tháng trước
+    const firstDayPrev = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+    const lastDayPrev = new Date(today.getFullYear(), today.getMonth(), 0);
+    limitStartDate = firstDayPrev.toISOString().split("T")[0];
+    limitEndDate = lastDayPrev.toISOString().split("T")[0];
+  } else {
+    // Tất cả các tháng
+    limitStartDate = "";
+    limitEndDate = "";
+  }
   return (
-    <div className="flex items-start gap-2">
-      <span className="text-gray-500 inline-block">Từ</span>
+    <div className="flex items-start gap-4">
+      <span className="text-gray-500 inline-block">Từ:</span>
       <TextField
         className=""
         size="small"
@@ -35,13 +59,15 @@ export default function DateRangePicker({
         placeholder="Nhập ngày bắt đầu"
         InputLabelProps={{ shrink: true }}
         inputProps={{
+          min: limitStartDate,
+          max: limitEndDate,
           onClick: (e) => {
             // Thủ thuật gọi showPicker nếu trình duyệt hỗ trợ
             (e.currentTarget as HTMLInputElement).showPicker?.();
           },
         }}
       />
-      <span className="text-gray-500 inline-block">Đến</span>
+      <span className="text-gray-500 inline-block">Đến:</span>
 
       <TextField
         className=""
@@ -57,6 +83,8 @@ export default function DateRangePicker({
         placeholder="Nhập ngày kết thúc"
         InputLabelProps={{ shrink: true }}
         inputProps={{
+          min: limitStartDate,
+          max: limitEndDate,
           onClick: (e) => {
             // Thủ thuật gọi showPicker nếu trình duyệt hỗ trợ
             (e.currentTarget as HTMLInputElement).showPicker?.();

@@ -140,7 +140,7 @@ const CinemaTable = ({
 
       <div className="flex gap-5 mt-5">
         <div className="flex-1">
-          <Chart title="Số vé bán ra theo rạp">
+          <Chart title="Doanh thu theo rạp">
             <BarChart
               loading={loadingChart}
               height={350}
@@ -148,7 +148,14 @@ const CinemaTable = ({
                 {
                   data: loadingChart ? [] : ticketCounts,
                   label: "Số vé bán ra",
-                  color: "#007bff",
+                  // color: "yellow",
+                  yAxisId: "leftAxisId",
+                },
+                {
+                  data: loadingChart ? [] : revenues,
+                  label: "Doanh thu",
+                  // color: "#e91224",
+                  yAxisId: "rightAxisId",
                 },
               ]}
               xAxis={[
@@ -156,9 +163,18 @@ const CinemaTable = ({
                   data: cinemaNames,
                   tickLabelStyle: { angle: -35 },
                   height: 70,
+                  scaleType: "band",
                 },
               ]}
-              yAxis={[{ width: 50 }]}
+              yAxis={[
+                { id: "leftAxisId", width: 50, label: "Số vé bán ra" },
+                {
+                  id: "rightAxisId",
+                  position: "right",
+                  width: 90,
+                  label: "Doanh thu (VNĐ)",
+                },
+              ]}
               localeText={{
                 loading: "Đang tải dữ liệu...",
                 noData: "Không có dữ liệu",
@@ -166,7 +182,7 @@ const CinemaTable = ({
             />
           </Chart>
         </div>
-
+        {/* 
         <div className="flex-1">
           <Chart title="Doanh thu theo rạp">
             <BarChart
@@ -193,7 +209,7 @@ const CinemaTable = ({
               }}
             />
           </Chart>
-        </div>
+        </div> */}
       </div>
 
       {loading ? (
