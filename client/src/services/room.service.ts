@@ -10,6 +10,21 @@ const getRoom = async (param: string = "") => {
     catchingError(error, "Lấy dữ liệu thất bại");
   }
 };
+
+const getRoomEmpty = async (param: {
+  movie: string;
+  timeStart: string;
+  date: string;
+  cinema: string;
+}) => {
+  try {
+    const res = api.post(`/room/roomempty`, param);
+    return await res;
+  } catch (error) {
+    catchingError(error, "Lấy dữ liệu thất bại");
+  }
+};
+
 const addRoomAPI = async (req: DataRoomReq) => {
   try {
     const res = await api.post("/room/add", req);
@@ -45,4 +60,4 @@ export const getRoomData = async (
     status: status,
   };
 };
-export { getRoom, addRoomAPI, updateRoomAPI };
+export { getRoom, addRoomAPI, updateRoomAPI, getRoomEmpty };
