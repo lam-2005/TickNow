@@ -43,7 +43,7 @@ const ShowtimeCard = ({
                    w-[95%] max-w-[1080px] mx-auto rounded-xl"
       >
         {/* Image */}
-        <div className="relative w-full max-w-[250px] mx-auto lg:mx-0 aspect-[2/3]">
+        <div className="relative w-full max-w-[250px] max-h-[375px] mx-auto lg:mx-0 aspect-[2/3]">
           <Image
             fill
             src={`${env.IMG_API_URL}${data.image}`}
