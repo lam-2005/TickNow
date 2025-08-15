@@ -177,7 +177,7 @@ const InputGroup = ({
           >
             <option value="">-- Chọn phòng --</option>
             {loading ? (
-              <option>Đang tải...</option>
+              <option disabled>Đang tải...</option>
             ) : (
               listRoom
                 .slice()
@@ -190,6 +190,9 @@ const InputGroup = ({
                     Phòng {room.code_room}
                   </option>
                 ))
+            )}
+            {!loading && listRoom.length === 0 && (
+              <option disabled>Không có phòng nào </option>
             )}
           </select>
         </div>
