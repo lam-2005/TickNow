@@ -16,7 +16,7 @@ export default function DateRangePicker({
   endDate: string;
   setEndDate: (value: string) => void;
   errors: string;
-  display: string;
+  display?: string;
 }) {
   const today = new Date();
 
