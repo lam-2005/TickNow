@@ -92,6 +92,31 @@ const ShowtimeSelect = ({ listData, slug }: ShowtimeSelectTypes) => {
     }
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
+  useEffect(() => {
+    if (!("geolocation" in navigator)) return;
+
+    navigator.geolocation.getCurrentPosition(async (pos) => {
+      const { latitude, longitude } = pos.coords;
+
+      // Gọi OpenStreetMap Nominatim (free)
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+      );
+      const data = await res.json();
+      const cityName =
+        data.address.city || data.address.town || data.address.village;
+      console.log("Toạ độ:", latitude, longitude);
+      console.log("Dữ liệu raw từ Nominatim:", data);
+      console.log("Thành phố detect được:", cityName);
+      // So khớp với DB
+      const matched = locations.some((l) => l.name.includes(cityName));
+      console.log(matched);
+
+      // if (matched) {
+      //   setSelectedLocation(matched._id);
+      // }
+    });
+  }, [locations]);
   return (
     <>
       <div className="flex-column items-center gap-7.5 max-sm:gap-2">
