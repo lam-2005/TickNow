@@ -104,20 +104,18 @@ const ShowtimeSelect = ({ listData, slug }: ShowtimeSelectTypes) => {
       );
       const data = await res.json();
       const cityName =
-        data.address.city || data.address.town || data.address.village;
+        data.address.state || data.address.city || data.address.village;
       console.log("Toạ độ:", latitude, longitude);
       console.log("Dữ liệu raw từ Nominatim:", data);
       console.log("Thành phố detect được:", cityName);
       // So khớp với DB
       const matched = locations.find((l) => {
-        return l.name.toLowerCase().includes(cityName.toLowerCase());
+        return cityName.toLowerCase().includes(l.name.toLowerCase());
       });
       console.log(matched);
 
       if (matched) {
         setSelectedLocation(matched._id);
-      } else {
-        console.log(123);
       }
     });
   }, [locations]);
@@ -135,6 +133,7 @@ const ShowtimeSelect = ({ listData, slug }: ShowtimeSelectTypes) => {
             onChange={(date) => changDate(date)}
           />
           <SelectComponent
+            key={selectedLocation}
             leftIcon={<RiMapPin2Fill className="text-foreground" size={20} />}
             getLabel={(item) => item.name}
             data={locations}
