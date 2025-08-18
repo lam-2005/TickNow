@@ -11,6 +11,7 @@ import {
 } from "@/utils/redux/slices/ratingSlice";
 import usePanigation from "@/hooks/usePanigation";
 import dataRating from "@/utils/redux/selectors/ratingSeletor";
+import Status from "../StatusUI/Status";
 
 type InitDataType = {
   ratings: ReviewType[];
@@ -58,6 +59,34 @@ const RatingList = ({ initData }: { initData: InitDataType }) => {
     { key: "movieName", title: "Tên Phim" },
     { key: "userName", title: "Tên Người Dùng" },
     { key: "score", title: "Điểm" },
+    {
+      key: "is_active",
+      title: "Trạng thái",
+      render(row) {
+        return (
+          <Status
+            title={
+              row.is_active === 1
+                ? "Chưa kích hoạt"
+                : row.is_active === 2
+                ? "Kích hoạt"
+                : row.is_active === 3
+                ? "Đã đánh giá"
+                : "Vi pham"
+            }
+            color={
+              row.is_active === 1
+                ? "error"
+                : row.is_active === 2
+                ? "warning"
+                : row.is_active === 3
+                ? "success"
+                : "error"
+            }
+          />
+        );
+      },
+    },
     {
       key: "updatedAt",
       title: "Ngày Đánh Giá",

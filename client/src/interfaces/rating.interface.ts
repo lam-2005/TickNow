@@ -7,4 +7,5 @@ export interface ReviewType {
   date: string;
   comment: string;
   updatedAt: string;
+  is_active: number;
 }
