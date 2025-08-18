@@ -109,12 +109,16 @@ const ShowtimeSelect = ({ listData, slug }: ShowtimeSelectTypes) => {
       console.log("Dữ liệu raw từ Nominatim:", data);
       console.log("Thành phố detect được:", cityName);
       // So khớp với DB
-      const matched = locations.some((l) => l.name.includes(cityName));
+      const matched = locations.find((l) => {
+        return l.name.toLowerCase().includes(cityName.toLowerCase());
+      });
       console.log(matched);
 
-      // if (matched) {
-      //   setSelectedLocation(matched._id);
-      // }
+      if (matched) {
+        setSelectedLocation(matched._id);
+      } else {
+        console.log(123);
+      }
     });
   }, [locations]);
   return (
