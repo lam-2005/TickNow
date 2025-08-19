@@ -51,7 +51,7 @@ const CommentContainer: React.FC<CommentContainerProps> = ({ rate, movie }) => {
             </span>
             <p>
               <span className="text-3xl font-bold">{movie.star}</span>/5.0{" "}
-              <span className="text-sm text-gray-500">
+              <span className="text-sm text-gray-300">
                 ({rate.data.length} Đánh giá)
               </span>
             </p>

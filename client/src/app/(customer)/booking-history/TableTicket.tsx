@@ -7,6 +7,8 @@ import TicketInfo from "./TicketInfo";
 import { toast } from "react-toastify";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { getTicketUserList } from "@/services/ticket.service";
+import Link from "next/link";
+import convertSlug from "@/utils/convertSlug";
 
 const TableTicket = ({
   data,
@@ -107,7 +109,15 @@ const TableTicket = ({
                   <td className="py-2">{item.code}</td>
                   <td className="py-2">{formatDate(item.updatedAt)}</td>
                   <td className="py-2 max-w-[500px]">
-                    <p className="line-clamp-1">{item.movie}</p>
+                    <Link
+                      href={`/detail/${convertSlug(item.movie)}-${
+                        item.id_movie
+                      }`}
+                      className="line-clamp-1 hover:underline hover:text-primary"
+                      title={item.movie}
+                    >
+                      {item.movie}
+                    </Link>
                   </td>
                   <td className="py-2">
                     <button

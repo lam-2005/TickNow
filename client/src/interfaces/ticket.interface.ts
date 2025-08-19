@@ -67,6 +67,7 @@ export type DataTicketUserList = {
     userName: string;
     movie: string;
     status_cmt?: number;
+    id_movie: string;
   }[];
 
   pagination: {

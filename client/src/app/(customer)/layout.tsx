@@ -10,6 +10,7 @@ import { ToastContainer } from "react-toastify";
 import ClearTicketOnRouteChange from "@/components/CLearRouterChange/ClearRouterChange";
 import { cookies } from "next/headers";
 import GoToTopButton from "@/components/Button/GoToTopBtn";
+import ChatbotBtn from "@/components/Button/ChatbotBtn";
 const beVietNamPro = Be_Vietnam_Pro({
   weight: ["300", "700"],
   variable: "--font-be-vietnam-pro-sans",
@@ -65,6 +66,7 @@ export default async function RootLayout({
               <ToastContainer theme="dark" />
               <ClearTicketOnRouteChange />
               <Header />
+              <ChatbotBtn />
               <GoToTopButton />
               <main className="">{children}</main>
               <Footer />
