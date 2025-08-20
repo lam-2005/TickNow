@@ -46,6 +46,7 @@ const ShowtimeSelect = ({ listData, slug }: ShowtimeSelectTypes) => {
   const getDate = getNext7DaysWithLabels();
   const getDateParams = searchParams.get("date") || getDate[0].value;
   const getLocationParams = searchParams.get("location") || locations[0]._id;
+  const getShowtimeParams = searchParams.get("showtime") || "";
   const [selectedDate, setSelectedDate] = useState(getDateParams);
   const [selectedLocation, setSelectedLocation] = useState(getLocationParams);
   const [dataCinemaShowtimes, setDataCinemaShowtimes] = useState<
@@ -94,6 +95,7 @@ const ShowtimeSelect = ({ listData, slug }: ShowtimeSelectTypes) => {
   };
   useEffect(() => {
     if (!("geolocation" in navigator)) return;
+    if (getShowtimeParams && getLocationParams && getDateParams) return;
     navigator.geolocation.getCurrentPosition(async (pos) => {
       const { latitude, longitude } = pos.coords;
       const res = await fetch(
@@ -108,7 +110,7 @@ const ShowtimeSelect = ({ listData, slug }: ShowtimeSelectTypes) => {
         setSelectedLocation(matched._id);
       }
     });
-  }, [locations]);
+  }, []);
   return (
     <>
       <div className="flex-column items-center gap-7.5 max-sm:gap-2">

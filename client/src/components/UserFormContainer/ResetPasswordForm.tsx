@@ -39,6 +39,7 @@ const ResetPasswordForm = ({ setOpenForm }: { setOpenForm: () => void }) => {
         className="w-full space-y-5 mt-6"
         onSubmit={(e) => {
           e.preventDefault();
+          handleForrgetPass();
         }}
       >
         <div className="space-y-5">
@@ -54,7 +55,6 @@ const ResetPasswordForm = ({ setOpenForm }: { setOpenForm: () => void }) => {
           title={loading ? "Đang gửi..." : "Gửi email khôi phục"}
           className="w-full uppercase"
           disabled={errors.email || loading ? true : false}
-          onClick={handleForrgetPass}
         />
       </form>
       <div className="text-subtitle text-center space-y-1 mt-5 ">

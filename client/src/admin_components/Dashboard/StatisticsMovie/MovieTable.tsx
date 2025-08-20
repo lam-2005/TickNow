@@ -149,7 +149,6 @@ const MovieTable = ({
   ];
 
   const totalPages = Math.ceil(pagination.total / pagination.limit);
-  console.log(condition, display);
 
   return (
     <>

@@ -68,7 +68,7 @@ const AuthAdminForm = () => {
       {loading && (
         <Loading title={<p className="text-white">Đang xử lí...</p>} />
       )}
-      <form className="w-full">
+      <form className="w-full" onSubmit={handleLogin} action={""}>
         <div className="flex-column mb-4 gap-2">
           <div className="">
             <label className="block text-foreground mb-2" htmlFor="username">
@@ -137,9 +137,7 @@ const AuthAdminForm = () => {
         <div className="flex items-center justify-between">
           <button
             className="btn w-full flex-center disabled:brightness-50 disabled:cursor-not-allowed"
-            type="button"
             disabled={errors.email || errors.password || loading ? true : false}
-            onClick={handleLogin}
           >
             {loading ? "Đang xử lí..." : "Đăng nhập"}
           </button>

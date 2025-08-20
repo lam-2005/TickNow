@@ -45,7 +45,6 @@ const InputGroup = ({
     };
     getRoomList();
   }, [formData.id_movie, selectedCinemaId, formData.date, formData.time_start]);
-  console.log(listRoom);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 w-3xl gap-4">

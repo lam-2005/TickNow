@@ -77,7 +77,6 @@ const Overview = ({
     (acc, cur) => (acc += cur.totalRevenue),
     0
   );
-  console.log(monthValue?.month());
 
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
