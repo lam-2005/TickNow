@@ -79,7 +79,7 @@ const RatePopup = ({
       onClose();
       onRated();
     } catch (error) {
-      toast.error(`Có lỗi xảy ra khi Đánh giá ${error}`);
+      toast.error(`${error}`);
       console.error(error);
     } finally {
       setPending(false);
