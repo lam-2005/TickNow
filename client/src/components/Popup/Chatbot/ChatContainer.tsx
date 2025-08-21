@@ -3,55 +3,81 @@ import Image from "next/image";
 import React, { useEffect, useRef } from "react";
 import { HiMiniArrowPath } from "react-icons/hi2";
 import { IoMdSend } from "react-icons/io";
+import { FiMinus } from "react-icons/fi";
 import BotMessage from "./BotMessage";
 import UserMessage from "./UserMessage";
-import { FiMinus } from "react-icons/fi";
 import ChatbotBtn from "@/components/Button/ChatbotBtn";
+import ListPrompt from "./ListPrompt";
+
 type MessageType = {
   role: "user" | "bot";
   content: string[];
 };
+
+const INITIAL_BOT_MESSAGE: MessageType = {
+  role: "bot",
+  content: [
+    "Xin chào tôi là trợ lí AI của TickNow",
+    "Tôi có thể giúp gì cho bạn?",
+  ],
+};
+
 const ChatContainer = () => {
+  const [showPrompt, setShowPrompt] = React.useState(true);
   const [hiddenChatbot, setHiddenChatbot] = React.useState(false);
-  const toggleChatbot = () => {
-    setHiddenChatbot((prev) => !prev);
-  };
-  const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const [loading, setLoading] = React.useState(false);
   const [inputMessage, setInputMessage] = React.useState("");
   const [message, setMessage] = React.useState<MessageType[]>([
-    {
-      role: "bot",
-      content: [
-        "Xin chào tôi là trợ lí AI của TickNow",
-        "Tôi có thể giúp gì cho bạn?",
-      ],
-    },
+    INITIAL_BOT_MESSAGE,
   ]);
-  const handleSendMessage = (e: React.FormEvent) => {
-    e.preventDefault();
 
-    if (!inputMessage.trim()) return;
-    setMessage((prev) => [...prev, { role: "user", content: [inputMessage] }]);
-    setInputMessage("");
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
+  // scroll khi có tin nhắn mới
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [message]);
+
+  const toggleChatbot = () => {
+    setHiddenChatbot((prev) => !prev);
+  };
+
+  const fakeBotReply = () => {
     setLoading(true);
     setTimeout(() => {
       setMessage((prev) => [
         ...prev,
-        {
-          role: "bot",
-          content: ["Tôi đã nhận được tin nhắn của bạn"],
-        },
+        { role: "bot", content: ["Tôi đã nhận được tin nhắn của bạn"] },
       ]);
       setLoading(false);
     }, 1000);
   };
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [message]);
+
+  const sendMessage = (content: string) => {
+    if (!content.trim()) return;
+    setMessage((prev) => [...prev, { role: "user", content: [content] }]);
+    setInputMessage("");
+    setShowPrompt(false);
+    fakeBotReply();
+  };
+
+  const handleSendMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+    sendMessage(inputMessage);
+  };
+
+  const handleSelectPrompt = (prompt: string) => {
+    sendMessage(prompt);
+  };
+
+  const handleReset = () => {
+    setMessage([INITIAL_BOT_MESSAGE]);
+    setShowPrompt(true);
+  };
+
   return (
     <>
+      {/* Nút mở chatbot */}
       <div
         onClick={toggleChatbot}
         className={`fixed z-[1999] overflow-hidden h-30 flex-center bottom-30 right-5 translate-x-15 transition-all duration-300 ease-in-out cursor-pointer ${
@@ -62,6 +88,8 @@ const ChatContainer = () => {
       >
         <ChatbotBtn />
       </div>
+
+      {/* Khung chat */}
       <div
         className={`fixed z-[2002] bottom-5 right-5 max-w-[400px] w-full h-[80vh] bg-foreground rounded-lg flex-column text-background transition-all duration-300 ease-in-out ${
           hiddenChatbot
@@ -84,17 +112,7 @@ const ChatContainer = () => {
           <div className="flex items-center gap-1">
             <button
               className="text-2xl text-white p-2 rounded-md hover:bg-black/10"
-              onClick={() => {
-                setMessage([
-                  {
-                    role: "bot",
-                    content: [
-                      "Xin chào tôi là trợ lí AI của TickNow",
-                      "Tôi có thể giúp gì cho bạn?",
-                    ],
-                  },
-                ]);
-              }}
+              onClick={handleReset}
             >
               <HiMiniArrowPath />
             </button>
@@ -106,6 +124,7 @@ const ChatContainer = () => {
             </button>
           </div>
         </div>
+
         <div className="h-full overflow-x-hidden overflow-y-auto flex-column gap-4 p-4">
           {message.map((msg, index) =>
             msg.role === "bot" ? (
@@ -117,18 +136,19 @@ const ChatContainer = () => {
           {loading && (
             <BotMessage
               messages={[
-                <>
-                  <div className="flex flex-row gap-2 p-2.5">
-                    <div className="size-1.5 rounded-full bg-background/50 animate-bounce"></div>
-                    <div className="size-1.5 rounded-full bg-background/50 animate-bounce [animation-delay:-.3s]"></div>
-                    <div className="size-1.5 rounded-full bg-background/50 animate-bounce [animation-delay:-.5s]"></div>
-                  </div>
-                </>,
+                <div className="flex flex-row gap-2 p-2.5" key="loading">
+                  <div className="size-1.5 rounded-full bg-background/50 animate-bounce"></div>
+                  <div className="size-1.5 rounded-full bg-background/50 animate-bounce [animation-delay:-.3s]"></div>
+                  <div className="size-1.5 rounded-full bg-background/50 animate-bounce [animation-delay:-.5s]"></div>
+                </div>,
               ]}
             />
           )}
           <div ref={messagesEndRef} />
         </div>
+
+        {showPrompt && <ListPrompt onSelectPrompt={handleSelectPrompt} />}
+
         <div className="px-4 ">
           <form
             action=""
@@ -143,11 +163,17 @@ const ChatContainer = () => {
               className="w-full px-4 py-2 focus:outline-none outline-none border-none"
             />
             <button
-              className={`p-2.5 text-black text-xl ${
-                !message ? "pointer-events-none opacity-50" : "text-primary"
+              className={`p-2.5 text-xl ${
+                !inputMessage.trim() ? "cursor-default" : ""
               }`}
             >
-              <IoMdSend />
+              <IoMdSend
+                className={`text-black/50 ${
+                  !inputMessage.trim()
+                    ? "pointer-events-none opacity-50"
+                    : "text-primary"
+                }`}
+              />
             </button>
           </form>
         </div>
