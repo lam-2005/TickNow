@@ -41,10 +41,7 @@ const ChatContainer = () => {
         ...prev,
         {
           role: "bot",
-          content: [
-            "Tôi đã nhận được tin nhắn của bạn",
-            "Bạn là cái l gì mà tôi phải trả lời",
-          ],
+          content: ["Tôi đã nhận được tin nhắn của bạn"],
         },
       ]);
       setLoading(false);
