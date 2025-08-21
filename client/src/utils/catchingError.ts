@@ -1,4 +1,14 @@
 import axios from "axios";
+class PlainError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = ""; // Bỏ chữ "Error"
+  }
+
+  toString() {
+    return this.message; // Khi log ra chỉ hiện message
+  }
+}
 const catchingError = (error: unknown, errorMessageDefault?: string) => {
   let errorMessage = errorMessageDefault || "Có lỗi xảy ra!";
   // Kiểm tra nếu là lỗi của axios
@@ -19,6 +29,7 @@ const catchingError = (error: unknown, errorMessageDefault?: string) => {
     // Các lỗi JS runtime khác
     errorMessage = error.message;
   }
-  throw new Error(errorMessage);
+
+  throw new PlainError(errorMessage);
 };
 export default catchingError;

@@ -64,6 +64,8 @@ const LoginForm = ({
       }
     } catch (err) {
       toast.error(`Đăng nhập thất bại: ${err}`);
+      console.log(err);
+
       console.error(err);
     } finally {
       setLoading(false);
