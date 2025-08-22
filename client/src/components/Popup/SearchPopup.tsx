@@ -156,7 +156,7 @@ const ItemSearch = ({
           <div className="flex gap-1">
             <FaStar className="text-yellow-500 text-xl" />{" "}
             <span className="text-sm font-bold self-center leading-0">
-              {movie.star}
+              {movie.star.toFixed(1)}
             </span>
           </div>
         ) : (

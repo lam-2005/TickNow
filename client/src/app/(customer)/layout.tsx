@@ -3,7 +3,6 @@ import { Be_Vietnam_Pro, Oswald } from "next/font/google";
 import "@/globals.css";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
-import ThemeLayout from "@/components/ThemeLayout/ThemeLayout";
 import AppProvider from "@/hooks/contexts/AppProvider";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { ToastContainer } from "react-toastify";
@@ -11,6 +10,7 @@ import ClearTicketOnRouteChange from "@/components/CLearRouterChange/ClearRouter
 import { cookies } from "next/headers";
 import GoToTopButton from "@/components/Button/GoToTopBtn";
 import ChatContainer from "@/components/Popup/Chatbot/ChatContainer";
+import NextTopLoader from "nextjs-toploader";
 const beVietNamPro = Be_Vietnam_Pro({
   weight: ["300", "700"],
   variable: "--font-be-vietnam-pro-sans",
@@ -62,16 +62,14 @@ export default async function RootLayout({
       >
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <AppProvider initToken={token}>
-            <ThemeLayout>
-              <ToastContainer theme="dark" />
-              <ClearTicketOnRouteChange />
-              <Header />
-
-              <ChatContainer />
-              <GoToTopButton />
-              <main className="">{children}</main>
-              <Footer />
-            </ThemeLayout>
+            <NextTopLoader showSpinner={false} color="red" />
+            <ToastContainer theme="dark" />
+            <ClearTicketOnRouteChange />
+            <Header />
+            <ChatContainer />
+            <GoToTopButton />
+            <main className="">{children}</main>
+            <Footer />
           </AppProvider>
         </AppRouterCacheProvider>
       </body>

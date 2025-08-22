@@ -11,7 +11,7 @@ import { FaUser, FaUserCircle } from "react-icons/fa";
 import MenuDropDown from "./MenuDropDown";
 import UserFormContainer from "../UserFormContainer/UserFormContainer";
 import SearchPopup from "../Popup/SearchPopup";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import { toast } from "react-toastify";
 import { useAuth } from "@/hooks/contexts/useAuth";
 import { privateRoute } from "@/middleware";

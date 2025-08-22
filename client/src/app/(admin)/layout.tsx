@@ -6,7 +6,7 @@ import Header from "@/admin_components/Header/Header";
 import AdminProvider from "@/hooks/contexts/AdminProvider";
 import { ToastContainer } from "react-toastify";
 import { cookies } from "next/headers";
-
+import NextTopLoader from "nextjs-toploader";
 const beVietNamPro = Be_Vietnam_Pro({
   weight: ["300", "700"],
   variable: "--font-be-vietnam-pro-sans",
@@ -39,6 +39,7 @@ export default async function RootLayout({
         className={`${beVietNamPro.variable} ${oswald.variable} antialiased `}
       >
         <AdminProvider initAdminToken={tokenAdmin}>
+          <NextTopLoader showSpinner={false} />
           <ToastContainer />
           <Navbar />
 

@@ -4,7 +4,7 @@ import "@/app/(admin)/globals.css";
 import { cookies } from "next/headers";
 import AdminLoginProvider from "@/hooks/contexts/AdminLoginProvider";
 import { ToastContainer } from "react-toastify";
-
+import NextTopLoader from "nextjs-toploader";
 const beVietNamPro = Be_Vietnam_Pro({
   weight: ["300", "700"],
   variable: "--font-be-vietnam-pro-sans",
@@ -35,6 +35,7 @@ export default async function RootLayout({
         className={`${beVietNamPro.variable} ${oswald.variable} antialiased `}
       >
         <AdminLoginProvider initAdminToken={tokenAdmin}>
+          <NextTopLoader showSpinner={false} />
           <ToastContainer />
           <main className="w-full flex-center">{children}</main>
         </AdminLoginProvider>

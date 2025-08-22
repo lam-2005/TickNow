@@ -9,7 +9,7 @@ import { MovieType } from "@/interfaces/movie.interface";
 import { getMovieList } from "@/services/movie.service";
 import LoadingSkeleton from "./LoadingSkeleton";
 import FilterShowtime from "./FilterShowtime";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import convertSlug from "@/utils/convertSlug";
 type FilterShowtimeProps = {
   cinemas: Cinema[];
