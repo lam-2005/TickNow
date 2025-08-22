@@ -3,7 +3,7 @@ import Loading from "@/components/UserFormContainer/Loading";
 import { useAuth } from "@/hooks/contexts/useAuth";
 import useTouched from "@/hooks/useTouched";
 import validateForm from "@/utils/validate";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import React, { useState } from "react";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { toast } from "react-toastify";
