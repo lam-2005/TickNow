@@ -138,6 +138,7 @@ const ScreenList = ({
         );
       },
     },
+    { key: "ticketCount", title: "Đã đặt (Vé)" },
     {
       key: "status",
       title: "Trạng Thái",

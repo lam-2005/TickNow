@@ -9,11 +9,14 @@ import { BarChart } from "@mui/x-charts/BarChart";
 import DateRangePicker from "../DateRange";
 import dynamic from "next/dynamic";
 import {
+  Autocomplete,
   FormControl,
   MenuItem,
   Select,
   SelectChangeEvent,
+  TextField,
 } from "@mui/material";
+import { MovieType } from "@/interfaces/movie.interface";
 const Chart = dynamic(() => import("../Chart"), {
   ssr: false,
   loading: () => <p className="text-center">Đang tải biểu đồ...</p>,
@@ -24,14 +27,23 @@ type DataType = {
   ticketCount: number;
   totalRevenue: number;
 };
-
+function useDebounce<T>(value: T, delay: number = 500): T {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+  useEffect(() => {
+    const handler = setTimeout(() => setDebouncedValue(value), delay);
+    return () => clearTimeout(handler);
+  }, [value, delay]);
+  return debouncedValue;
+}
 const MovieTable = ({
   data,
+  movies,
 }: {
   data: {
     data: DataType[];
     pagination: { total: number; page: number; limit: number };
   };
+  movies: MovieType[];
 }) => {
   const { page, changePage, changeRowPerPage, rowsPerPage } = usePanigation(1);
 
@@ -48,6 +60,9 @@ const MovieTable = ({
   const ticketCounts = tableDataChart.map((item) => item.ticketCount);
   const movieNames = tableDataChart.map((item) => item.movieName);
   const revenues = tableDataChart.map((item) => item.totalRevenue);
+
+  const [name, setName] = useState("");
+  const debouncedName = useDebounce(name, 500);
 
   const [display, setDisplay] = useState("1");
   const handleChange = (event: SelectChangeEvent) => {
@@ -116,7 +131,7 @@ const MovieTable = ({
           );
 
         res = await getDashboardData(
-          `/movieDay?start=${startDate}&end=${endDate}&page=${page}&limit=${
+          `/movieDay?movie=${debouncedName}&start=${startDate}&end=${endDate}&page=${page}&limit=${
             display === "4" ? "10" : rowsPerPage
           }${condition}`
         );
@@ -130,7 +145,7 @@ const MovieTable = ({
     };
 
     fetchTableData();
-  }, [page, rowsPerPage, startDate, endDate, errors, display]);
+  }, [page, rowsPerPage, startDate, endDate, errors, display, debouncedName]);
 
   const columns: Column<DataType>[] = [
     { key: "movieName", title: "Tên phim" },
@@ -252,6 +267,36 @@ const MovieTable = ({
             />
           </Chart>
         </div> */}
+      </div>
+
+      <div className="w-[25%]">
+        <Autocomplete
+          freeSolo
+          size="small"
+          className="w-full"
+          options={movies}
+          getOptionLabel={(option) =>
+            typeof option === "string" ? option : option.name
+          }
+          value={name}
+          onInputChange={(_, value) => setName(value)}
+          onChange={(_, value) => {
+            if (typeof value === "string") {
+              setName(value);
+            } else if (value) {
+              setName(value.name);
+            } else {
+              setName("");
+            }
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Tìm Phim"
+              placeholder="Nhập từ khóa"
+            />
+          )}
+        />
       </div>
 
       {loading ? (

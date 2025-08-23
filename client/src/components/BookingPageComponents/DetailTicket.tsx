@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Button from "../Button/Button";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import { getTicket, TicketTypeLocalStorage } from "@/utils/saveTicket";
 import { toast } from "react-toastify";
 import { useAuth } from "@/hooks/contexts/useAuth";
