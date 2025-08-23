@@ -91,7 +91,7 @@ const ChatContainer = () => {
 
       {/* Khung chat */}
       <div
-        className={`fixed z-[2002] bottom-5 right-5 max-w-[400px] w-full h-[80vh] bg-foreground rounded-lg flex-column text-background transition-all duration-300 ease-in-out ${
+        className={`fixed z-[2002] bottom-5 right-5 max-w-[350px] w-full h-[450px] bg-foreground rounded-lg flex-column text-background transition-all duration-300 ease-in-out ${
           hiddenChatbot
             ? "opacity-100 translate-y-0"
             : "opacity-0 translate-y-5 pointer-events-none"
