@@ -8,6 +8,7 @@ import BotMessage from "./BotMessage";
 import UserMessage from "./UserMessage";
 import ChatbotBtn from "@/components/Button/ChatbotBtn";
 import ListPrompt from "./ListPrompt";
+import { FaSquare } from "react-icons/fa";
 
 type MessageType = {
   role: "user" | "bot";
@@ -32,7 +33,7 @@ const ChatContainer = () => {
   ]);
 
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
-
+  const inputFocusRef = useRef<HTMLInputElement | null>(null);
   // scroll khi có tin nhắn mới
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -42,9 +43,12 @@ const ChatContainer = () => {
     setHiddenChatbot((prev) => !prev);
   };
 
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   const fakeBotReply = () => {
     setLoading(true);
-    setTimeout(() => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => {
       setMessage((prev) => [
         ...prev,
         { role: "bot", content: ["Tôi đã nhận được tin nhắn của bạn"] },
@@ -63,6 +67,8 @@ const ChatContainer = () => {
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading) return;
+    inputFocusRef.current?.focus();
     sendMessage(inputMessage);
   };
 
@@ -71,6 +77,7 @@ const ChatContainer = () => {
   };
 
   const handleReset = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setMessage([INITIAL_BOT_MESSAGE]);
     setShowPrompt(true);
   };
@@ -136,7 +143,7 @@ const ChatContainer = () => {
           {loading && (
             <BotMessage
               messages={[
-                <div className="flex flex-row gap-2 p-2.5" key="loading">
+                <div className="flex flex-row gap-1 p-1.5" key="loading">
                   <div className="size-1.5 rounded-full bg-background/50 animate-bounce"></div>
                   <div className="size-1.5 rounded-full bg-background/50 animate-bounce [animation-delay:-.3s]"></div>
                   <div className="size-1.5 rounded-full bg-background/50 animate-bounce [animation-delay:-.5s]"></div>
@@ -151,11 +158,11 @@ const ChatContainer = () => {
 
         <div className="px-4 ">
           <form
-            action=""
             className="flex w-full bg-black/10 rounded-lg items-center "
             onSubmit={handleSendMessage}
           >
             <input
+              ref={inputFocusRef}
               type="text"
               placeholder="Nhập tin nhắn..."
               value={inputMessage}
@@ -163,17 +170,15 @@ const ChatContainer = () => {
               className="w-full px-4 py-2 focus:outline-none outline-none border-none"
             />
             <button
-              className={`p-2.5 text-xl ${
-                !inputMessage.trim() ? "cursor-default" : ""
-              }`}
+              type="submit"
+              disabled={!inputMessage.trim() || loading}
+              className="group p-2.5 text-xl "
             >
-              <IoMdSend
-                className={`text-black/50 ${
-                  !inputMessage.trim()
-                    ? "pointer-events-none opacity-50"
-                    : "text-primary"
-                }`}
-              />
+              {loading ? (
+                <FaSquare className="text-primary animate-pulse text-lg cursor-wait" />
+              ) : (
+                <IoMdSend className="group-disabled:text-black/50 group-disabled:pointer-events-none group-disabled:opacity-50 text-primary" />
+              )}
             </button>
           </form>
         </div>
