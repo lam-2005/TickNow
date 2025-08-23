@@ -32,15 +32,29 @@ const ChatContainer = () => {
     INITIAL_BOT_MESSAGE,
   ]);
 
+  useEffect(() => {
+    const saved = localStorage.getItem("chatMessages");
+    if (saved) {
+      setMessage(JSON.parse(saved));
+    }
+  }, []);
+
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const inputFocusRef = useRef<HTMLInputElement | null>(null);
-  // scroll khi có tin nhắn mới
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);
 
+  useEffect(() => {
+    localStorage.setItem("chatMessages", JSON.stringify(message));
+  }, [message]);
+
   const toggleChatbot = () => {
     setHiddenChatbot((prev) => !prev);
+    if (!hiddenChatbot) {
+      inputFocusRef.current?.focus();
+    }
   };
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -80,11 +94,11 @@ const ChatContainer = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setMessage([INITIAL_BOT_MESSAGE]);
     setShowPrompt(true);
+    localStorage.removeItem("chatMessages");
   };
 
   return (
     <>
-      {/* Nút mở chatbot */}
       <div
         onClick={toggleChatbot}
         className={`fixed z-[1999] overflow-hidden h-30 flex-center bottom-30 right-5 translate-x-15 transition-all duration-300 ease-in-out cursor-pointer ${
@@ -96,7 +110,6 @@ const ChatContainer = () => {
         <ChatbotBtn />
       </div>
 
-      {/* Khung chat */}
       <div
         className={`fixed z-[2002] bottom-5 right-5 max-w-[350px] w-full h-[450px] bg-foreground rounded-lg flex-column text-background transition-all duration-300 ease-in-out ${
           hiddenChatbot
