@@ -6,13 +6,13 @@ import { getTicket, TicketTypeLocalStorage } from "@/utils/saveTicket";
 import { toast } from "react-toastify";
 import { useAuth } from "@/hooks/contexts/useAuth";
 
-const COUNTDOWN_DURATION = 5 * 60; // 5 phút tính bằng giây
+// const COUNTDOWN_DURATION = 5 * 60; // 5 phút tính bằng giây
 
 const DetailTicket = () => {
   const router = useRouter();
   const { user } = useAuth();
   const [ticket, setTicket] = useState<TicketTypeLocalStorage | null>(null);
-  const [timeLeft, setTimeLeft] = useState<number>(COUNTDOWN_DURATION);
+  // const [timeLeft, setTimeLeft] = useState<number>(COUNTDOWN_DURATION);
 
   useEffect(() => {
     const storedTicket = getTicket();
@@ -30,37 +30,37 @@ const DetailTicket = () => {
   }, []);
 
   // Countdown logic
-  useEffect(() => {
-    if (!ticket) return;
+  // useEffect(() => {
+  //   if (!ticket) return;
 
-    if (!ticket.seats || ticket.seats.length === 0) {
-      setTimeLeft(COUNTDOWN_DURATION); // reset nếu không có ghế
-      return;
-    }
+  //   if (!ticket.seats || ticket.seats.length === 0) {
+  //     setTimeLeft(COUNTDOWN_DURATION); // reset nếu không có ghế
+  //     return;
+  //   }
 
-    const interval = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(interval);
-          // Hết giờ → reload trang
-          toast.error("Hết thời gian giữ ghế, vui lòng chọn lại.");
-          router.refresh();
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
+  //   const interval = setInterval(() => {
+  //     setTimeLeft((prev) => {
+  //       if (prev <= 1) {
+  //         clearInterval(interval);
+  //         // Hết giờ → reload trang
+  //         toast.error("Hết thời gian giữ ghế, vui lòng chọn lại.");
+  //         router.refresh();
+  //         return 0;
+  //       }
+  //       return prev - 1;
+  //     });
+  //   }, 1000);
 
-    return () => clearInterval(interval);
-  }, [ticket, ticket?.seats]);
+  //   return () => clearInterval(interval);
+  // }, [ticket, ticket?.seats]);
 
-  const formatTime = (seconds: number) => {
-    const m = Math.floor(seconds / 60)
-      .toString()
-      .padStart(2, "0");
-    const s = (seconds % 60).toString().padStart(2, "0");
-    return `${m}:${s}`;
-  };
+  // const formatTime = (seconds: number) => {
+  //   const m = Math.floor(seconds / 60)
+  //     .toString()
+  //     .padStart(2, "0");
+  //   const s = (seconds % 60).toString().padStart(2, "0");
+  //   return `${m}:${s}`;
+  // };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -120,12 +120,12 @@ const DetailTicket = () => {
       {/* Right section */}
       <div className="flex flex-col gap-4 items-end justify-between text-right">
         <div className="text-sm sm:text-base space-y-1">
-          <div className="flex gap-1 items-center">
+          {/* <div className="flex gap-1 items-center">
             <span className="">Thời gian giữ ghế:</span>
             <span className="text-primary text-xl font-bold">
               {formatTime(timeLeft)}
             </span>
-          </div>
+          </div> */}
           <div className="flex gap-1 items-center">
             <span className="">Tổng cộng:</span>
             <span className="text-primary font-bold text-2xl">
