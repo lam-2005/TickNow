@@ -70,7 +70,13 @@ const ChatContainer = () => {
       setLoading(false);
     }, 1000);
   };
-
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
   const sendMessage = (content: string) => {
     if (!content.trim()) return;
     setMessage((prev) => [...prev, { role: "user", content: [content] }]);
@@ -91,6 +97,7 @@ const ChatContainer = () => {
   };
 
   const handleReset = () => {
+    inputFocusRef.current?.focus();
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setMessage([INITIAL_BOT_MESSAGE]);
     setShowPrompt(true);
