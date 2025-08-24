@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Seat from "./Seat";
 import handleBooking from "@/utils/handleBooking";
 import {
@@ -18,7 +18,11 @@ const SeatDiagram = ({
     element_selecting: { [key: string]: number[] };
   };
 }) => {
-  const { layout, selectedSeat } = handleBooking(roomLayout);
+  const { layout, selectedSeat } = useMemo(
+    () => handleBooking(roomLayout),
+    [roomLayout]
+  );
+  // const { layout, selectedSeat } = handleBooking(roomLayout);
   const [selecting, setSelecting] = useState<string[]>([]);
   const handleSeatClick = (seatName: string) => {
     if (!seatName) return;

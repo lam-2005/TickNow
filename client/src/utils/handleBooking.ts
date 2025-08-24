@@ -5,7 +5,6 @@ export default function handleBooking(roomLayout: {
   element_selected: { [key: string]: number[] };
   element_selecting: { [key: string]: number[] };
 }) {
-  // const room = roomLayout.diagram;
   const rows = roomLayout.row;
   const columns = roomLayout.column;
   const removedSeat: { [key: string]: number[] } = roomLayout.element_remove;

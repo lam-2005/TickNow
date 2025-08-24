@@ -105,6 +105,7 @@ const CinemaShowtimeContainer = ({ data, loading }: Props) => {
       setIdShowtime(id);
     }
   };
+
   // useEffect(() => {
   //   if (!dataShowtime) return;
   //   socket.emit("join_room", dataShowtime.room._id);

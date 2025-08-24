@@ -3,7 +3,7 @@ import SelectContainer, { SelectComponent } from "@/components/Select/Select";
 import { Location } from "@/interfaces/cinema.interface";
 import { CinemaShowtimeType } from "@/interfaces/screening.interface";
 import { getMovieList } from "@/services/movie.service";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import { RiMapPin2Fill } from "react-icons/ri";
 import CinemaShowtimeContainer from "./CinemaShowtimeContainer";
@@ -43,7 +43,7 @@ const ShowtimeSelect = ({ listData, slug }: ShowtimeSelectTypes) => {
 
     return days;
   }
-  const getDate = getNext7DaysWithLabels();
+  const getDate = useMemo(() => getNext7DaysWithLabels(), []);
   const getDateParams = searchParams.get("date") || getDate[0].value;
   const getLocationParams = searchParams.get("location") || locations[0]._id;
   const getShowtimeParams = searchParams.get("showtime") || "";
