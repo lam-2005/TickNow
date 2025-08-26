@@ -19,10 +19,9 @@ const BotMessage = ({
         {messages.map((message, index) => (
           <div
             key={index}
-            className="text-background text-sm max-w-[90%] w-fit rounded-xl bg-black/10 p-2.5 break-words whitespace-pre-line"
-          >
-            {message}
-          </div>
+            dangerouslySetInnerHTML={{ __html: message }}
+            className="text-background text-sm max-w-[90%] w-fit rounded-xl bg-black/10 p-2.5 break-words whitespace-pre-line [&_a]:text-primary [&_a]:underline"
+          />
         ))}
         {data && data.length > 0 && <MovieList data={data} />}
       </div>
