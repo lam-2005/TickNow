@@ -11,6 +11,7 @@ import ListPrompt from "./ListPrompt";
 import { FaSquare } from "react-icons/fa";
 import { chatBotAPI } from "@/services/movie.service";
 import { MovieType } from "@/interfaces/movie.interface";
+import Loading from "./Loading";
 
 type MessageType = {
   role: "user" | "bot";
@@ -171,17 +172,7 @@ const ChatContainer = () => {
               <UserMessage key={index} messages={msg.message} />
             )
           )}
-          {loading && (
-            <BotMessage
-              messages={[
-                <div className="flex flex-row gap-1 p-1.5" key="loading">
-                  <div className="size-1.5 rounded-full bg-background/50 animate-bounce"></div>
-                  <div className="size-1.5 rounded-full bg-background/50 animate-bounce [animation-delay:-.3s]"></div>
-                  <div className="size-1.5 rounded-full bg-background/50 animate-bounce [animation-delay:-.5s]"></div>
-                </div>,
-              ]}
-            />
-          )}
+          {loading && <Loading />}
           <div ref={messagesEndRef} />
         </div>
 
