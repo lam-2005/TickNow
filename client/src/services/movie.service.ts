@@ -96,3 +96,13 @@ export const updateMovie = async (id: string | number, data: MovieReq) => {
     throw error;
   }
 };
+
+export const chatBotAPI = async (message: string) => {
+  try {
+    const res = await api.post("/chat", { message });
+    return res;
+  } catch (error) {
+    catchingError(error, "Gửi tin nhắn thất bại");
+    throw error;
+  }
+};

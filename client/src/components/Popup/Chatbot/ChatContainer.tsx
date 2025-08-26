@@ -9,15 +9,16 @@ import UserMessage from "./UserMessage";
 import ChatbotBtn from "@/components/Button/ChatbotBtn";
 import ListPrompt from "./ListPrompt";
 import { FaSquare } from "react-icons/fa";
+import { chatBotAPI } from "@/services/movie.service";
 
 type MessageType = {
   role: "user" | "bot";
-  content: string[];
+  message: string[];
 };
 
 const INITIAL_BOT_MESSAGE: MessageType = {
   role: "bot",
-  content: [
+  message: [
     "Xin chào tôi là trợ lí AI của TickNow",
     "Tôi có thể giúp gì cho bạn?",
   ],
@@ -57,32 +58,40 @@ const ChatContainer = () => {
     }
   };
 
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  const fakeBotReply = () => {
+  const fakeBotReply = async (content: string) => {
     setLoading(true);
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(() => {
+    try {
+      const res = await chatBotAPI(content);
+      console.log(res.data);
       setMessage((prev) => [
         ...prev,
-        { role: "bot", content: ["Tôi đã nhận được tin nhắn của bạn"] },
+        {
+          ...res.data,
+          message: [
+            res.data.message ||
+              (res.data.data && "Hiển thị dữ liệu phim") ||
+              "Xin lỗi, tôi chưa hiểu.",
+          ],
+        },
       ]);
+    } catch (error) {
+      console.error(error);
+      setMessage((prev) => [
+        ...prev,
+        { role: "bot", message: ["Đã xảy ra lỗi, vui lòng thử lại."] },
+      ]);
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   };
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
-  const sendMessage = (content: string) => {
+
+  const sendMessage = async (content: string) => {
     if (!content.trim()) return;
-    setMessage((prev) => [...prev, { role: "user", content: [content] }]);
+    setMessage((prev) => [...prev, { role: "user", message: [content] }]);
     setInputMessage("");
     setShowPrompt(false);
-    fakeBotReply();
+
+    await fakeBotReply(content);
   };
 
   const handleSendMessage = (e: React.FormEvent) => {
@@ -98,7 +107,6 @@ const ChatContainer = () => {
 
   const handleReset = () => {
     inputFocusRef.current?.focus();
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setMessage([INITIAL_BOT_MESSAGE]);
     setShowPrompt(true);
     localStorage.removeItem("chatMessages");
@@ -155,9 +163,9 @@ const ChatContainer = () => {
         <div className="h-full overflow-x-hidden overflow-y-auto flex-column gap-4 p-4">
           {message.map((msg, index) =>
             msg.role === "bot" ? (
-              <BotMessage key={index} messages={msg.content} />
+              <BotMessage key={index} messages={msg.message} />
             ) : (
-              <UserMessage key={index} messages={msg.content} />
+              <UserMessage key={index} messages={msg.message} />
             )
           )}
           {loading && (
