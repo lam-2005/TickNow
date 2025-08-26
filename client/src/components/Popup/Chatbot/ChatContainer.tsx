@@ -10,10 +10,12 @@ import ChatbotBtn from "@/components/Button/ChatbotBtn";
 import ListPrompt from "./ListPrompt";
 import { FaSquare } from "react-icons/fa";
 import { chatBotAPI } from "@/services/movie.service";
+import { MovieType } from "@/interfaces/movie.interface";
 
 type MessageType = {
   role: "user" | "bot";
   message: string[];
+  data?: MovieType[];
 };
 
 const INITIAL_BOT_MESSAGE: MessageType = {
@@ -67,11 +69,8 @@ const ChatContainer = () => {
         ...prev,
         {
           ...res.data,
-          message: [
-            res.data.message ||
-              (res.data.data && "Hiển thị dữ liệu phim") ||
-              "Xin lỗi, tôi chưa hiểu.",
-          ],
+          message: [res.data.message || "Xin lỗi, tôi chưa hiểu."],
+          data: res.data.data || [],
         },
       ]);
     } catch (error) {
@@ -126,7 +125,7 @@ const ChatContainer = () => {
       </div>
 
       <div
-        className={`fixed z-[2002] bottom-5 right-5 max-w-[350px] w-full h-[450px] bg-foreground rounded-lg flex-column text-background transition-all duration-300 ease-in-out ${
+        className={`fixed z-[2002] bottom-5 right-5 max-w-[400px] w-full h-[500px] bg-foreground rounded-lg flex-column text-background transition-all duration-300 ease-in-out ${
           hiddenChatbot
             ? "opacity-100 translate-y-0"
             : "opacity-0 translate-y-5 pointer-events-none"
@@ -163,7 +162,11 @@ const ChatContainer = () => {
         <div className="h-full overflow-x-hidden overflow-y-auto flex-column gap-4 p-4">
           {message.map((msg, index) =>
             msg.role === "bot" ? (
-              <BotMessage key={index} messages={msg.message} />
+              <BotMessage
+                key={index}
+                messages={msg.message}
+                data={msg.data || []}
+              />
             ) : (
               <UserMessage key={index} messages={msg.message} />
             )

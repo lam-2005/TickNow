@@ -1,10 +1,14 @@
+import { MovieType } from "@/interfaces/movie.interface";
 import Image from "next/image";
 import React from "react";
+import MovieList from "./MovieList";
 
 const BotMessage = ({
   messages,
+  data,
 }: {
   messages: string[] | React.ReactElement[];
+  data?: MovieType[];
 }) => {
   return (
     <div className=" flex gap-4">
@@ -15,11 +19,12 @@ const BotMessage = ({
         {messages.map((message, index) => (
           <div
             key={index}
-            className="text-background text-sm max-w-[90%] w-fit rounded-xl bg-black/10 p-2.5 break-words"
+            className="text-background text-sm max-w-[90%] w-fit rounded-xl bg-black/10 p-2.5 break-words whitespace-pre-line"
           >
             {message}
           </div>
         ))}
+        {data && data.length > 0 && <MovieList data={data} />}
       </div>
     </div>
   );
