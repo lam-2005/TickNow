@@ -2,13 +2,18 @@ import { MovieType } from "@/interfaces/movie.interface";
 import Image from "next/image";
 import React from "react";
 import MovieList from "./MovieList";
+import { Cinema } from "@/interfaces/cinema.interface";
+import CinemaList from "./CinemaList";
 
 const BotMessage = ({
   messages,
   data,
 }: {
   messages: string[];
-  data?: MovieType[];
+  data?: {
+    movie: MovieType[];
+    cinema: Cinema[];
+  };
 }) => {
   const message = messages[0];
   return (
@@ -26,7 +31,12 @@ const BotMessage = ({
         ) : (
           <></>
         )}
-        {data && data.length > 0 && <MovieList data={data} />}
+        {data && data?.movie && data.movie.length > 0 && (
+          <MovieList data={data.movie} />
+        )}
+        {data && data?.cinema && data.cinema.length > 0 && (
+          <CinemaList cinemas={data.cinema} />
+        )}
       </div>
     </div>
   );

@@ -12,11 +12,15 @@ import { FaSquare } from "react-icons/fa";
 import { chatBotAPI } from "@/services/movie.service";
 import { MovieType } from "@/interfaces/movie.interface";
 import Loading from "./Loading";
+import { Cinema } from "@/interfaces/cinema.interface";
 
 type MessageType = {
   role: "user" | "bot";
   message: string[];
-  data?: MovieType[];
+  data?: {
+    movie: MovieType[];
+    cinema: Cinema[];
+  };
 };
 
 const INITIAL_BOT_MESSAGE: MessageType = {
@@ -71,7 +75,10 @@ const ChatContainer = () => {
         {
           ...res.data,
           message: [res.data.message || "Xin lỗi, tôi chưa hiểu."],
-          data: res.data.data || [],
+          data: {
+            movie: res.data.data?.movie ?? [],
+            cinema: res.data.data?.cinema ?? [],
+          },
         },
       ]);
     } catch (error) {
@@ -84,7 +91,6 @@ const ChatContainer = () => {
       setLoading(false);
     }
   };
-
   const sendMessage = async (content: string) => {
     if (!content.trim()) return;
     setMessage((prev) => [...prev, { role: "user", message: [content] }]);
@@ -163,11 +169,7 @@ const ChatContainer = () => {
         <div className="h-full overflow-x-hidden overflow-y-auto flex-column gap-4 p-4">
           {message.map((msg, index) =>
             msg.role === "bot" ? (
-              <BotMessage
-                key={index}
-                messages={msg.message}
-                data={msg.data || []}
-              />
+              <BotMessage key={index} messages={msg.message} data={msg.data} />
             ) : (
               <UserMessage key={index} messages={msg.message} />
             )
