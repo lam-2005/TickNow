@@ -19,6 +19,7 @@ const ResetPasswordForm = ({ setOpenForm }: { setOpenForm: () => void }) => {
     }
     try {
       await forgetPassAPI(email);
+      setEmail("");
       toast.success("Một liên kết đã gửi đến, hãy kiểm tra email của bạn");
     } catch (error) {
       toast.error(`Không thể gửi email: ${error}`);
