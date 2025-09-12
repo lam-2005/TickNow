@@ -51,6 +51,7 @@ npm install
 
 ### Chạy dự án  
 
-```bash  
+```bash
+npm run build
 npm start  
 ```  
