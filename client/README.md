@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# TickNow  
 
-First, run the development server:
+TickNow là một dự án web cung cấp các chức năng chính liên quan đến việc đặt vé xem phim và quản lý rạp chiếu phim.  
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Website
+  
+Truy cập website tại: [ticknow.xyz](https://ticknow.xyz)  
+> **Lưu ý**: Khi truy cập website, do API backend được host trên server miễn phí nên có thể mất một chút thời gian để khởi tạo lần đầu. Vui lòng chờ vài phút nếu thấy website tải lâu
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Chức năng chính  
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Người dùng  
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Hiển thị phim**: Danh sách phim sắp chiếu và đang chiếu.  
+- **Lịch chiếu**: Cho phép chọn ngày chiếu, phim chiếu và rạp chiếu.  
+- **Bài viết**: Xem các bài viết liên quan đến phim và rạp.  
+- **Xem chi tiết phim**: Hiển thị thông tin chi tiết về phim, bao gồm lịch chiếu theo ngày và địa điểm rạp chiếu.  
+- **Đặt ghế**: Chọn ghế ngồi và đặt vé.  
+- **Thanh toán online**: Hỗ trợ thanh toán trực tuyến.  
+- **Quản lý tài khoản**: Đăng nhập, đăng ký, đăng xuất.  
+- ...
 
-## Learn More
+### Admin  
 
-To learn more about Next.js, take a look at the following resources:
+- **Thống kê doanh thu**:  
+    - Theo năm, tháng, ngày.  
+    - Theo phim và rạp (lọc theo ngày).  
+- **Quản lý dữ liệu**:  
+    - Phim, suất chiếu, người dùng, rạp, v.v.  
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Hướng dẫn cài đặt  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Clone dự án  
 
-## Deploy on Vercel
+```bash  
+git clone https://github.com/lam-2005/TickNow.git
+cd client  
+```  
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Cấu hình môi trường  
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Tạo file `.env` và `.env.local` dựa trên các file mẫu `env.example` và `env.example.local`.  
+2. Cập nhật các giá trị cần thiết trong file `.env` và `.env.local`.  
+
+### Cài đặt dependencies  
+
+```bash  
+npm install  
+```  
+
+### Chạy dự án  
+
+```bash  
+npm start  
+```  
