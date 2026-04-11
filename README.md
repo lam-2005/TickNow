@@ -8,6 +8,10 @@ TickNow là một dự án web cung cấp các chức năng chính liên quan đ
 Truy cập website tại: [ticknow.xyz](https://ticknow.xyz)  
 > **Lưu ý**: Khi truy cập website, do API backend được host trên server miễn phí nên có thể mất một chút thời gian để khởi tạo lần đầu. Vui lòng chờ vài phút nếu thấy website tải lâu
 
+Trang Dashboard: [ticknow.xyz/admin](https://ticknow.xyz/admin)  
+> **Email**: admin@gmail.com
+> **Password**: 123123
+
 ## Chức năng chính  
 
 ### Người dùng  
